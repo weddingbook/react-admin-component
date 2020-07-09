@@ -11,7 +11,7 @@ var MyComponent = function () {
 };
 
 var MyComponent2 = function () {
-    return (React.createElement("div", null, "sample!"));
+    return (React.createElement("div", null, "sample 2 \uC785\uB2C8\uB2E4\uC694!!!"));
 };
 
 exports.MyComponent = MyComponent;

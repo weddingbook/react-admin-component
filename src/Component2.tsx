@@ -3,7 +3,7 @@ import React from 'react';
 const MyComponent2= () => {
 	return (
 		<div>
-			sample!
+			sample 2 입니다요!!!
 		</div>
 	)
 }
