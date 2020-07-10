@@ -45,6 +45,7 @@ const PageComonent = () => {
 ```
 ### Modal options
 |property|type|default|description|
+|:-------|:----|:----|:---------|
 |wrap|string|modal-wrap|wrap과 매치되는 ModalArea의 중앙에 모달이 생성됨|
 |title|string||제목|
 |content|string||내용|
@@ -58,6 +59,7 @@ const PageComonent = () => {
 
 
 ### button options
+|:-------|:----|:---------|
 |property|type|descripton|
 |label|string|버튼 라벨|
 |action|function|버튼 클릭 액션|
