@@ -59,7 +59,7 @@ const PageComonent = () => {
 
 
 ### button options
-|:-------|:----|:---------|
 |property|type|descripton|
+|:-------|:----|:---------|
 |label|string|버튼 라벨|
 |action|function|버튼 클릭 액션|
