@@ -31,11 +31,11 @@ import { ModalArea, createConfirm } from 'react-admin-component';
 const PageComonent = () => {
 	const handleClick = () => {
 		createConfirm({
-			wrap: 'chat-modal',
+			wrap: 'test-modal', // ModalArea id와 매치
 			content: `
 				모달 메세지
 			`.trim()
-		})
+		});
 	}
 	return (
 		<ModalArea id="test-area">
@@ -43,7 +43,24 @@ const PageComonent = () => {
 		</ModalArea>
 	);
 }
+
+const PageComonent2 = () => {
+	const handleClick = () => {
+		createConfirm({
+			content: `
+				모달 메세지2
+			`.trim()
+		})
+	}
+	return (
+		<div>
+			{/* ModalArea가 없으면 body밑에 div가 추가되어 해당 영역에 모달 append됨 */}
+			<button onClick={() => handleClick()}>모달 생성</button>
+		</div>
+	);
+}
 ```
+
 ### Modal options
 |property|type|default|description|
 |:-------|:----|:----|:---------|

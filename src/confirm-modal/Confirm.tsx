@@ -111,7 +111,7 @@ function createModalWrap(wrap: string) {
 	elWrap.id = wrap;
 	document.body.appendChild(elWrap);
 }
-export function ModalArea(props: {id: string, children: ReactNode}) {
+export function ModalArea(props: {id: string, children: ReactNode}): ReactNode {
 	return (
 		<div style={{position: 'relative', height: '100%'}}>
 			{props.children}
