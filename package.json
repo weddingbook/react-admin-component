@@ -2,11 +2,11 @@
 	"name": "react-admin-component",
 	"version": "1.0.0",
 	"description": "",
-	"main": "build/index.js",
-	"module": "build/index.es.js",
+	"main": "dist/index.js",
+	"module": "dist/index.es.js",
 	"private": true,
 	"scripts": {
-		"build": "rm -rf ./build && rollup -c"
+		"build": "rm -rf ./dist && rollup -c"
 	},
 	"repository": {
 		"type": "git",

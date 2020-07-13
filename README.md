@@ -12,7 +12,7 @@ yarn build
 ```
 
 컴포넌트 프로젝트를 수정하고 yarn 또는 npm i 로 업데이트 할 경우 업데이트가 안되는것 같다.  
-https://bitbucket.h2m.io/projects/IN_HOUSE/repos/react-admin-component/commits 들어가서 commit id를 dependencies 에 추가
+https://bitbucket.h2m.io/projects/IN_HOUSE/repos/react-admin-component/commits 들어가서 commit id(?) head(?)를 dependencies 에 추가
 
 ```json
 "dependencies": {
@@ -20,10 +20,20 @@ https://bitbucket.h2m.io/projects/IN_HOUSE/repos/react-admin-component/commits �
 }
 ```
 해당 방식으로 코드를 뒤로 돌릴 수 도 있음.
-  
+
+## css import
+```tsx
+import 'react-admin-component/dist/index.css';
+```
+전역에서 css 로딩 해줘야함!
+
+## color assets
+```tsx
+import 'react-admin-component/assets/color.scss';
+```
+어드민 color assets 파일 불러올 수 있음!
 
 ## Components example
-
 ### Modal 기본 사용법
 ```tsx
 import { ModalArea, createConfirm } from 'react-admin-component';
