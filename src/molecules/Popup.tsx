@@ -8,7 +8,6 @@ interface PopupButtonProps {
 	action?: () => void;
 	type?: 'solid' | 'line' | 'text' | 'link';
     color?: 'blue' | 'yellow' | 'green' | 'red';
-    size?: 'xs' | 'small' | 'middle' | 'large';
 	className?: string;
 }
 interface PopupProps {
@@ -41,8 +40,8 @@ class Popup<P extends PopupProps> extends Component<P> {
 			label: '확인'
 		},
 		buttons: [
-			{label: '취소'},
-			{label: '확인'}
+			{label: '취소', type: 'line'},
+			{label: '확인', color: 'red'}
 		]
 	}
 	clickButton(button: PopupButtonProps) {
@@ -121,7 +120,7 @@ class AlertPopup extends Popup<AlertPopupProps> {
 					<span className="circle"></span>
 					<p className="popup-content">{message}</p>
 					<div className="popup-btns">
-						<Button onClick={() => this.clickButton(button)} type={button.type} size={button.size} color={button.color} className={button.className}>
+						<Button onClick={() => this.clickButton(button)} type={button.type} size="small" color={button.color} className={button.className}>
 							{button.label}
 						</Button>
 					</div>
@@ -145,7 +144,7 @@ class ConfirmPopup extends Popup<ConfirmPopupProps> {
 					<p className="popup-content">{message}</p>
 					<div className="popup-btns">
 						{buttons?.map((button, i) => (
-							<Button key={i} onClick={() => this.clickButton(button)} type={button.type} size={button.size} color={button.color} className={button.className}>
+							<Button key={i} onClick={() => this.clickButton(button)} type={button.type} size="small" color={button.color} className={button.className}>
 								{button.label}
 							</Button>
 						))}

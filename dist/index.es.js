@@ -4887,8 +4887,8 @@ var Popup = /** @class */ (function (_super) {
             label: '확인'
         },
         buttons: [
-            { label: '취소' },
-            { label: '확인' }
+            { label: '취소', type: 'line' },
+            { label: '확인', color: 'red' }
         ]
     };
     return Popup;
@@ -4924,7 +4924,7 @@ var AlertPopup = /** @class */ (function (_super) {
                 React.createElement("span", { className: "circle" }),
                 React.createElement("p", { className: "popup-content" }, message),
                 React.createElement("div", { className: "popup-btns" },
-                    React.createElement(Button, { onClick: function () { return _this.clickButton(button); }, type: button.type, size: button.size, color: button.color, className: button.className }, button.label)))));
+                    React.createElement(Button, { onClick: function () { return _this.clickButton(button); }, type: button.type, size: "small", color: button.color, className: button.className }, button.label)))));
     };
     return AlertPopup;
 }(Popup));
@@ -4942,7 +4942,7 @@ var ConfirmPopup = /** @class */ (function (_super) {
                 title && React.createElement("h1", null, title),
                 React.createElement("span", { className: "circle" }),
                 React.createElement("p", { className: "popup-content" }, message),
-                React.createElement("div", { className: "popup-btns" }, buttons === null || buttons === void 0 ? void 0 : buttons.map(function (button, i) { return (React.createElement(Button, { key: i, onClick: function () { return _this.clickButton(button); }, type: button.type, size: button.size, color: button.color, className: button.className }, button.label)); })))));
+                React.createElement("div", { className: "popup-btns" }, buttons === null || buttons === void 0 ? void 0 : buttons.map(function (button, i) { return (React.createElement(Button, { key: i, onClick: function () { return _this.clickButton(button); }, type: button.type, size: "small", color: button.color, className: button.className }, button.label)); })))));
     };
     return ConfirmPopup;
 }(Popup));

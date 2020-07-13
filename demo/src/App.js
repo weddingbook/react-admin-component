@@ -7,14 +7,14 @@ import {
 	Button,
 	Tag,
 	createPopup
-} from 'react-admin-component';
+} from '../../dist/index';
 
 
 function App() {
 	return (
 		<div className="App">
       		<Tag color="green">HI</Tag>
-			<Button onClick={() => createPopup({popupType: 'alert', title:'my title', message: 'hi', button: {label: '확인'}})}>Hello</Button>
+			<Button onClick={() => createPopup({popupType: 'confirm',  message: 'hi'})}>Hello</Button>
 			<Icon name="github" size="32" animation={{type: 'zoom'}}/>
     	</div>
 	);

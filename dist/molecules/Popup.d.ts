@@ -5,7 +5,6 @@ interface PopupButtonProps {
     action?: () => void;
     type?: 'solid' | 'line' | 'text' | 'link';
     color?: 'blue' | 'yellow' | 'green' | 'red';
-    size?: 'xs' | 'small' | 'middle' | 'large';
     className?: string;
 }
 interface PopupProps {

@@ -29,7 +29,7 @@ import 'react-admin-component/dist/index.css';
 
 ## color assets
 ```scss
-@import 'react-admin-component/assets/color.scss';
+@import 'react-admin-component/assets/scss/color.scss';
 ```
 scss파일에서 어드민 공통 color assets 파일 불러올 수 있음!
 
