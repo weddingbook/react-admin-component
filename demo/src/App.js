@@ -5,7 +5,8 @@ import './App.css';
 import Icon from 'react-eva-icons';
 import {
 	Button,
-	Tag
+	Tag,
+	createPopup
 } from 'react-admin-component';
 
 
@@ -13,7 +14,7 @@ function App() {
 	return (
 		<div className="App">
       		<Tag color="green">HI</Tag>
-			<Button>Hello</Button>
+			<Button onClick={() => createPopup({message: 'hi'})}>Hello</Button>
 			<Icon name="github" size="32" animation={{type: 'zoom'}}/>
     	</div>
 	);
