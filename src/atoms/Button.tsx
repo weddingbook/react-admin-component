@@ -10,17 +10,18 @@ type Props = {
     iconName?: string;
     onClick?: any
     disabled?: boolean
-    style?: CSSProperties;
+	style?: CSSProperties;
+	className?: string;
 }
 
 // iconName은 여기서 검색한다 https://akveo.github.io/eva-icons/#/
 
-const Button = ({ children = '버튼', type = 'solid', color = 'blue', size = 'middle', iconName = '', onClick, disabled = false, style }: Props) => {
+const Button = ({ children = '버튼', type = 'solid', color = 'blue', size = 'middle', iconName = '', onClick, disabled = false, style, className}: Props) => {
     const iconButton =
         <button
             style={style}
             onClick={onClick}
-            className={`btn-type-${type} btn-color-${color} btn-size-square btn-icon-text`}
+            className={`btn-type-${type} btn-color-${color} btn-size-square btn-icon-text ${className}`}
         >
             <Icon
                 name={iconName}

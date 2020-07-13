@@ -1,5 +1,6 @@
 import React, { Component, ReactNode } from 'react'
 import { render, unmountComponentAtNode } from 'react-dom'
+import Button from '../atoms/Button'
 import './Confirm.scss'; 
 
 interface ModalButtonProps {
@@ -95,9 +96,9 @@ export default class ConfirmModal extends Component<Partial<ConfirmModalProps>> 
 					}
 					<div className="modal-btns">
 						{buttons?.map((button, i) => (
-							<button key={i} onClick={() => this.clickButton(button)} className={button.className}>
+							<Button key={i} onClick={() => this.clickButton(button)} type="line" className={button.className}>
 								{button.label}
-							</button>
+							</Button>
 						))}
 					</div>
 				</div>
