@@ -4,9 +4,12 @@ import Button from '../atoms/Button'
 import './Confirm.scss'; 
 
 interface ModalButtonProps {
-	label: string
-	action: () => void,
-	className: string
+	label: string;
+	action: () => void;
+	type?: 'solid' | 'line' | 'text' | 'link';
+    color?: 'blue' | 'yellow' | 'green' | 'red';
+    size?: 'xs' | 'small' | 'middle' | 'large';
+	className: string;
 }
 interface ConfirmModalProps {
 	wrap: string;
@@ -26,10 +29,13 @@ export default class ConfirmModal extends Component<Partial<ConfirmModalProps>> 
 		buttons: [
 			{
 				label: '취소',
+				type: 'line',
+				color: 'blue',
 				action: () => {}
 			},
 			{
 				label: '확인',
+				color: 'red',
 				action: () => {}
 			}
 		],
@@ -80,7 +86,7 @@ export default class ConfirmModal extends Component<Partial<ConfirmModalProps>> 
 		}
 	}
 	render() {
-		const { title, content, buttons, childrenElement } = this.props
+		const { title, content, buttons, childrenElement } = this.props;
 		return (
 			<div className="modal-wrap">
 				<div
@@ -96,7 +102,7 @@ export default class ConfirmModal extends Component<Partial<ConfirmModalProps>> 
 					}
 					<div className="modal-btns">
 						{buttons?.map((button, i) => (
-							<Button key={i} onClick={() => this.clickButton(button)} type="line" className={button.className}>
+							<Button key={i} onClick={() => this.clickButton(button)} type={button.type} size={button.size} color={button.color} className={button.className}>
 								{button.label}
 							</Button>
 						))}

@@ -25,7 +25,7 @@ const Button = ({ children = '버튼', type = 'solid', color = 'blue', size = 'm
         >
             <Icon
                 name={iconName}
-                size="medium"
+                size="20"
             />
             {(iconName && children !== '버튼') && <span>{children}</span>}
         </button>
@@ -35,7 +35,7 @@ const Button = ({ children = '버튼', type = 'solid', color = 'blue', size = 'm
             style={style}
             disabled={disabled}
             onClick={onClick}
-            className={`btn-type-${type} btn-color-${color} btn-size-${size}`}
+            className={`btn-type-${type} btn-color-${color} btn-size-${size} ${className}`}
         >
             <span>
                 {children}
