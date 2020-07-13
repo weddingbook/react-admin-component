@@ -8560,9 +8560,9 @@ raw-body@2.4.0:
     iconv-lite "0.4.24"
     unpipe "1.0.0"
 
-"react-admin-component@git+https://bitbucket.h2m.io/scm/in_house/react-admin-component.git#f17ab090514":
+"react-admin-component@git+https://bitbucket.h2m.io/scm/in_house/react-admin-component.git#7bba7e97472":
   version "1.0.0"
-  resolved "git+https://bitbucket.h2m.io/scm/in_house/react-admin-component.git#f17ab0905147ca8d86246998dff0029235a8e70a"
+  resolved "git+https://bitbucket.h2m.io/scm/in_house/react-admin-component.git#7bba7e974722df1dddfea50f7f306e1decb388fe"
   dependencies:
     "@types/react-tooltip" "^4.2.4"
     react-eva-icons "git+https://github.com/weddingbook/react-eva-icons.git"

@@ -11,6 +11,7 @@ declare type Props = {
     style?: CSSProperties;
     dataTip?: boolean;
     dataFor?: string;
+    className?: string;
 };
-declare const Button: ({ children, type, color, size, iconName, onClick, disabled, style, dataTip, dataFor }: Props) => JSX.Element;
+declare const Button: ({ children, type, color, size, iconName, onClick, disabled, style, dataTip, dataFor, className }: Props) => JSX.Element;
 export default Button;
