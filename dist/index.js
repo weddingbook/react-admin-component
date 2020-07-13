@@ -1853,11 +1853,13 @@ function getAnimationObject(optionsAnimation, elementAttrsAnimation) {
 
 unwrapExports(eva);
 
-var Icon_1 = createCommonjsModule(function (module, exports) {
+var dist = createCommonjsModule(function (module, exports) {
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+	value: true
 });
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -1881,113 +1883,103 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @name react-eva-icons
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @author Dimitris Raptis
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @copyright Dimitris Raptis 2018
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @license MIT
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
 
 var Icon = function (_Component) {
-  _inherits(Icon, _Component);
+	_inherits(Icon, _Component);
 
-  function Icon() {
-    _classCallCheck(this, Icon);
+	function Icon() {
+		_classCallCheck(this, Icon);
 
-    return _possibleConstructorReturn(this, (Icon.__proto__ || Object.getPrototypeOf(Icon)).apply(this, arguments));
-  }
+		return _possibleConstructorReturn(this, (Icon.__proto__ || Object.getPrototypeOf(Icon)).apply(this, arguments));
+	}
 
-  _createClass(Icon, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      this.setupEvaIcons();
-    }
-  }, {
-    key: "componentDidUpdate",
-    value: function componentDidUpdate() {
-      this.setupEvaIcons();
-    }
-  }, {
-    key: "setupEvaIcons",
-    value: function setupEvaIcons() {
-      var _props = this.props,
-          fill = _props.fill,
-          animation = _props.animation,
-          size = _props.size;
-
-
-      var config = {
-        fill: fill,
-        width: size,
-        height: size,
-        animation: animation
-      };
-
-      eva$1.replace(config);
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var _props2 = this.props,
-          name = _props2.name,
-          fill = _props2.fill,
-          size = _props2.size,
-          animation = _props2.animation;
+	_createClass(Icon, [{
+		key: "componentDidMount",
+		value: function componentDidMount() {
+			this.setupEvaIcons();
+		}
+	}, {
+		key: "componentDidUpdate",
+		value: function componentDidUpdate() {
+			this.setupEvaIcons();
+		}
+	}, {
+		key: "setupEvaIcons",
+		value: function setupEvaIcons() {
+			var _props = this.props,
+			    fill = _props.fill,
+			    animation = _props.animation,
+			    size = _props.size;
 
 
-      var icon = _react2.default.createElement("i", {
-        "data-eva": name,
-        "data-eva-fill": fill,
-        "data-eva-height": size,
-        "data-eva-width": size
-      });
+			var config = {
+				fill: fill,
+				width: size,
+				height: size,
+				animation: animation
+			};
 
-      return icon;
-    }
-  }]);
+			eva$1.replace(config);
+		}
+	}, {
+		key: "render",
+		value: function render() {
+			var _props2 = this.props,
+			    name = _props2.name,
+			    fill = _props2.fill,
+			    size = _props2.size,
+			    animation = _props2.animation;
+			var type = animation.type,
+			    _animation$hover = animation.hover,
+			    hover = _animation$hover === undefined ? false : _animation$hover,
+			    _animation$infinite = animation.infinite,
+			    infinite = _animation$infinite === undefined ? false : _animation$infinite;
 
-  return Icon;
+			var icon = _react2.default.createElement("i", _extends({
+				"data-eva": name,
+				"data-eva-fill": fill,
+				"data-eva-height": size,
+				"data-eva-width": size
+			}, type !== undefined ? {
+				'data-eva-animation': type,
+				'data-eva-hover': hover,
+				'data-eva-infinite': infinite
+			} : {}));
+			return icon;
+		}
+	}]);
+
+	return Icon;
 }(React__default.Component);
 
 Icon.propTypes = {
-  animation: _propTypes2.default.object,
-  fill: _propTypes2.default.string,
-  name: _propTypes2.default.string,
-  size: _propTypes2.default.string
+	animation: _propTypes2.default.object,
+	fill: _propTypes2.default.string,
+	name: _propTypes2.default.string,
+	size: _propTypes2.default.string
 };
 
 Icon.defaultProps = {
-  animation: {},
-  fill: "#fff",
-  name: "",
-  size: "medium"
+	animation: {},
+	fill: "#fff",
+	name: "",
+	size: "20"
 };
 
 exports.default = Icon;
-});
-
-unwrapExports(Icon_1);
-
-var dist = createCommonjsModule(function (module, exports) {
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-
-
-var _Icon2 = _interopRequireDefault(Icon_1);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = _Icon2.default; /**
-                                   * @name react-eva-icons
-                                   * @author Dimitris Raptis
-                                   * @copyright Dimitris Raptis 2018
-                                   * @license MIT
-                                   */
 });
 
 var Icon = unwrapExports(dist);
 
 // iconName은 여기서 검색한다 https://akveo.github.io/eva-icons/#/
 var Button = function (_a) {
-    var _b = _a.children, children = _b === void 0 ? '버튼' : _b, _c = _a.type, type = _c === void 0 ? 'solid' : _c, _d = _a.color, color = _d === void 0 ? 'blue' : _d, _e = _a.size, size = _e === void 0 ? 'middle' : _e, iconName = _a.iconName, onClick = _a.onClick, _f = _a.disabled, disabled = _f === void 0 ? false : _f, style = _a.style;
+    var _b = _a.children, children = _b === void 0 ? '버튼' : _b, _c = _a.type, type = _c === void 0 ? 'solid' : _c, _d = _a.color, color = _d === void 0 ? 'blue' : _d, _e = _a.size, size = _e === void 0 ? 'middle' : _e, _f = _a.iconName, iconName = _f === void 0 ? '' : _f, onClick = _a.onClick, _g = _a.disabled, disabled = _g === void 0 ? false : _g, style = _a.style;
     var iconButton = React__default.createElement("button", { style: style, onClick: onClick, className: "btn-type-" + type + " btn-color-" + color + " btn-size-square btn-icon-text" },
         React__default.createElement(Icon, { name: iconName, size: "medium" }),
         (iconName && children !== '버튼') && React__default.createElement("span", null, children));
@@ -2152,7 +2144,7 @@ var SelectBox = function (_a) {
     };
     return (React__default.createElement("div", { tabIndex: 0, ref: selectBoxRef, className: "select-box", onClick: onToggleSelectBox, style: __assign({}, style) },
         React__default.createElement("div", { ref: selectedRef, className: "selected-item" }, selectedOption),
-        React__default.createElement(Icon, { name: "arrow-ios-downward-outline", size: "medium" }),
+        React__default.createElement(Icon, { name: "arrow-ios-downward-outline", size: "20" }),
         isShowList && React__default.createElement("ul", { ref: selectListRef, className: "list", style: { height: "" + (listHeight + 'px') } }, options.map(function (option) { return (React__default.createElement("li", { key: option, onClick: function () { onClickOption(option); } }, option)); }))));
 };
 

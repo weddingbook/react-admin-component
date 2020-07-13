@@ -39,7 +39,7 @@ export default class ConfirmModal extends Component<Partial<ConfirmModalProps>> 
 export declare function ModalArea(props: {
     id: string;
     children: ReactNode;
-}): ReactNode;
+}): JSX.Element;
 export declare function createConfirm(properties: Partial<ConfirmModalProps>): void;
 export declare function removeConfirm(wrap?: string): void;
 export {};

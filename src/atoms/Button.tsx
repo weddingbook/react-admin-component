@@ -15,7 +15,7 @@ type Props = {
 
 // iconName은 여기서 검색한다 https://akveo.github.io/eva-icons/#/
 
-const Button = ({ children = '버튼', type = 'solid', color = 'blue', size = 'middle', iconName, onClick, disabled = false, style }: Props) => {
+const Button = ({ children = '버튼', type = 'solid', color = 'blue', size = 'middle', iconName = '', onClick, disabled = false, style }: Props) => {
     const iconButton =
         <button
             style={style}
