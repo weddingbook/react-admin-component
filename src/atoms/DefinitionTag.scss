@@ -1,14 +1,16 @@
-@import '../../assets/color.scss';
+@import "../assets/scss/color.scss";
 
 dl {
     dt {
         font-size: 11px;
-        color: $gray50
+        color: $gray50;
+        line-height: 1.4;
     }
     dd {
         font-size: 13px;
         color: $gray80;
         margin-top: 2px;
+        line-height: 1.4;
     }
 }
 

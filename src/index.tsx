@@ -13,7 +13,6 @@ export { default as ViewMore } from './atoms/ViewMore';
 
 // molecules
 export { default as CombineInput } from './molecules/CombineInput';
-export { default as ConfirmModal, ModalArea, createConfirm, removeConfirm } from './molecules/Confirm';
 export { default as DefinitionTagContainer } from './molecules/DefinitionTagContainer';
 export { default as InputContainer } from './molecules/InputContainer';
 export { default as InputWrapper } from './molecules/InputWrapper';

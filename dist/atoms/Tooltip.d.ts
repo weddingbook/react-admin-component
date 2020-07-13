@@ -3,6 +3,7 @@ import './Tooltip.scss';
 declare type Props = {
     children: string | object;
     id: string;
+    buttonType?: boolean;
 };
-declare const Tooltip: ({ children, id }: Props) => JSX.Element;
+declare const Tooltip: ({ children, id, buttonType }: Props) => JSX.Element;
 export default Tooltip;

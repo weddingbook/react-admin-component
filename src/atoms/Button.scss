@@ -1,4 +1,4 @@
-@import "../../assets/color.scss";
+@import "../assets/scss/color.scss";
 
 button {
   border-radius: 8px;
@@ -70,23 +70,31 @@ button {
   min-width: 68px;
   height: 48px;
   font-size: 15px;
+  padding: 0 20px;
+  padding-bottom: 2px;
 }
 .btn-size-middle {
   min-width: 58px;
   height: 40px;
   font-size: 14px;
+  padding: 0 16px;
+  padding-bottom: 2px;
 }
 .btn-size-small {
   min-width: 48px;
   height: 32px;
   border-radius: 4px;
   font-size: 13px;
+  padding: 0 12px;
+  padding-bottom: 1px;
 }
 .btn-size-xs {
   min-width: 37px;
   height: 24px;
   border-radius: 4px;
   font-size: 11px;
+  padding: 0 8px;
+  padding-bottom: 1px;
 }
 
 // button type
@@ -104,20 +112,26 @@ button {
   &:focus {
     box-shadow: 0 1px 5px 0 transparentize($color: $blue80, $amount: 0.2);
   }
+  &:active {
+    color: white;
+  }
   &:disabled {
     border: 1px solid $gray10;
   }
 }
 .btn-type-line {
-  background-color: transparent;
+  background-color: white;
   &:hover {
-    background-color: transparent;
+    background-color: white;
   }
   &:focus {
     box-shadow: 0 1px 5px 0 transparentize($color: $blue80, $amount: 0.2);
   }
+  &:active {
+    background-color: white;
+  }
   &:disabled {
-    background-color: transparent;
+    background-color: white;
   }
 }
 .btn-type-text {
@@ -131,6 +145,13 @@ button {
   &:focus {
     > span {
       background-color: $gray20;
+    }
+  }
+  &:active {
+    background-color: transparent;
+    border: none;
+    > span {
+      background-color: transparent;
     }
   }
 }
@@ -148,6 +169,13 @@ button {
       background-color: $gray20;
     }
   }
+  &:active {
+    background-color: transparent;
+    border: none;
+    > span {
+      background-color: transparent;
+    }
+  }
 }
 
 // icon 형식
@@ -162,5 +190,24 @@ button {
   }
   > i {
     vertical-align: middle;
+  }
+}
+
+.btn-disabled {
+  &:hover {
+    cursor: not-allowed;
+    color: $gray30;
+    background-color: $gray10;
+
+    &.btn-type-line {
+      border: 1px solid $gray30;
+      background-color: white;
+    }
+    &.btn-type-text {
+      background-color: transparent;
+    }
+    &.btn-type-link {
+      background-color: transparent;
+    }
   }
 }

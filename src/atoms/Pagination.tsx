@@ -53,14 +53,14 @@ const Pagination = ({ pageSize, pageSizeOptions, total, current, onPageChange }:
             </div>
             <ul className='wb-pagination-number-list'>
                 <li onClick={handleClickBackArrow} className={`wb-pagination-arrow wb-pagination-back ${pageIndex !== 0 && 'active'}`} key='arrow-ios-back-outline'>
-                    <Icon name='arrow-ios-back-outline' size='small' />
+                    <Icon name='arrow-ios-back-outline' size='medium' />
                 </li>
                 {[...numberList].splice((pageIndex * 5), 5).map(value => (
                     <li className={`wb-pagination-number ${current === value && 'active'}`} key={value} tabIndex={0} onClick={() => { onPageChange(value, size) }}>
                         <a>{value}</a>
                     </li>))}
                 <li onClick={handleClickForwardArrow} className={`wb-pagination-arrow wb-pagination-forward ${pageIndex !== Math.ceil(pageTotal / 5) - 1 && 'active'}`} key='arrow-ios-forward-outline'>
-                    <Icon name='arrow-ios-forward-outline' size='small' />
+                    <Icon name='arrow-ios-forward-outline' size='medium' />
                 </li>
             </ul>
         </div>

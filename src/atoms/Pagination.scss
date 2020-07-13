@@ -1,4 +1,4 @@
-@import "../../assets/color.scss";
+@import "../assets/scss/color.scss";
 
 .wb-pagination {
     display: flex;
@@ -46,6 +46,7 @@
 
         .wb-pagination-arrow {
             cursor: not-allowed;
+            margin-bottom: 3px;
             &.active {
                 cursor: pointer;
                 > i {

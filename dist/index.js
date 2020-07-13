@@ -7,7 +7,6 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 var React = require('react');
 var React__default = _interopDefault(React);
 var crypto = _interopDefault(require('crypto'));
-var reactDom = require('react-dom');
 var util$1 = _interopDefault(require('util'));
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
@@ -1979,11 +1978,11 @@ var Icon = unwrapExports(dist);
 
 // iconName은 여기서 검색한다 https://akveo.github.io/eva-icons/#/
 var Button = function (_a) {
-    var _b = _a.children, children = _b === void 0 ? '버튼' : _b, _c = _a.type, type = _c === void 0 ? 'solid' : _c, _d = _a.color, color = _d === void 0 ? 'blue' : _d, _e = _a.size, size = _e === void 0 ? 'middle' : _e, _f = _a.iconName, iconName = _f === void 0 ? '' : _f, onClick = _a.onClick, _g = _a.disabled, disabled = _g === void 0 ? false : _g, style = _a.style;
-    var iconButton = React__default.createElement("button", { style: style, onClick: onClick, className: "btn-type-" + type + " btn-color-" + color + " btn-size-square btn-icon-text" },
+    var _b = _a.children, children = _b === void 0 ? '버튼' : _b, _c = _a.type, type = _c === void 0 ? 'solid' : _c, _d = _a.color, color = _d === void 0 ? 'blue' : _d, _e = _a.size, size = _e === void 0 ? 'middle' : _e, _f = _a.iconName, iconName = _f === void 0 ? '' : _f, onClick = _a.onClick, _g = _a.disabled, disabled = _g === void 0 ? false : _g, style = _a.style, dataTip = _a.dataTip, dataFor = _a.dataFor;
+    var iconButton = React__default.createElement("button", { style: style, onClick: onClick, className: "btn-type-" + type + " btn-color-" + color + " " + (disabled ? 'btn-disabled' : '') + " btn-size-square btn-icon-text", "data-tip": dataTip, "data-for": dataFor },
         React__default.createElement(Icon, { name: iconName, size: "medium" }),
         (iconName && children !== '버튼') && React__default.createElement("span", null, children));
-    var normalButton = React__default.createElement("button", { style: style, disabled: disabled, onClick: onClick, className: "btn-type-" + type + " btn-color-" + color + " btn-size-" + size },
+    var normalButton = React__default.createElement("button", { style: style, disabled: disabled, onClick: onClick, className: "btn-type-" + type + " btn-color-" + color + " btn-size-" + size + " " + (disabled ? 'btn-disabled' : ''), "data-tip": dataTip, "data-for": dataFor },
         React__default.createElement("span", null, children));
     return (iconName ? iconButton : normalButton);
 };
@@ -2020,20 +2019,6 @@ LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
 OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
 PERFORMANCE OF THIS SOFTWARE.
 ***************************************************************************** */
-/* global Reflect, Promise */
-
-var extendStatics = function(d, b) {
-    extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return extendStatics(d, b);
-};
-
-function __extends(d, b) {
-    extendStatics(d, b);
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-}
 
 var __assign = function() {
     __assign = Object.assign || function __assign(t) {
@@ -2144,7 +2129,7 @@ var SelectBox = function (_a) {
     };
     return (React__default.createElement("div", { tabIndex: 0, ref: selectBoxRef, className: "select-box", onClick: onToggleSelectBox, style: __assign({}, style) },
         React__default.createElement("div", { ref: selectedRef, className: "selected-item" }, selectedOption),
-        React__default.createElement(Icon, { name: "arrow-ios-downward-outline", size: "20" }),
+        React__default.createElement(Icon, { name: "arrow-ios-downward-outline", size: "medium" }),
         isShowList && React__default.createElement("ul", { ref: selectListRef, className: "list", style: { height: "" + (listHeight + 'px') } }, options.map(function (option) { return (React__default.createElement("li", { key: option, onClick: function () { onClickOption(option); } }, option)); }))));
 };
 
@@ -2184,19 +2169,21 @@ var Pagination = function (_a) {
                 total)),
         React__default.createElement("ul", { className: 'wb-pagination-number-list' },
             React__default.createElement("li", { onClick: handleClickBackArrow, className: "wb-pagination-arrow wb-pagination-back " + (pageIndex !== 0 && 'active'), key: 'arrow-ios-back-outline' },
-                React__default.createElement(Icon, { name: 'arrow-ios-back-outline', size: 'small' })),
+                React__default.createElement(Icon, { name: 'arrow-ios-back-outline', size: 'medium' })),
             __spreadArrays(numberList).splice((pageIndex * 5), 5).map(function (value) { return (React__default.createElement("li", { className: "wb-pagination-number " + (current === value && 'active'), key: value, tabIndex: 0, onClick: function () { onPageChange(value, size); } },
                 React__default.createElement("a", null, value))); }),
             React__default.createElement("li", { onClick: handleClickForwardArrow, className: "wb-pagination-arrow wb-pagination-forward " + (pageIndex !== Math.ceil(pageTotal / 5) - 1 && 'active'), key: 'arrow-ios-forward-outline' },
-                React__default.createElement(Icon, { name: 'arrow-ios-forward-outline', size: 'small' })))));
+                React__default.createElement(Icon, { name: 'arrow-ios-forward-outline', size: 'medium' })))));
 };
 
 var SpecialInput = function (_a) {
-    var children = _a.children, style = _a.style, iconName = _a.iconName, afterString = _a.afterString;
-    return (React__default.createElement("div", { className: 'special-input', style: style },
-        React__default.createElement(Icon, { name: iconName, size: "medium" }),
-        children,
-        afterString && React__default.createElement("span", null, afterString)));
+    var children = _a.children, style = _a.style, iconName = _a.iconName, afterString = _a.afterString, recommendOptions = _a.recommendOptions, onSelectRecommendOptionSet = _a.onSelectRecommendOptionSet;
+    return (React__default.createElement(React__default.Fragment, null,
+        React__default.createElement("div", { className: 'special-input', style: style },
+            React__default.createElement(Icon, { name: iconName, size: "medium" }),
+            afterString ? React__default.cloneElement(children, { className: 'after-string' }) : children,
+            afterString && React__default.createElement("span", null, afterString),
+            (recommendOptions && onSelectRecommendOptionSet) && React__default.createElement(InputRecommend, { options: recommendOptions, onSelectOptionSet: onSelectRecommendOptionSet }))));
 };
 
 var SwitchButton = function (_a) {
@@ -4002,17 +3989,8 @@ function (_React$Component) {
 
 // TODO: arrow 위치 변경되어야 함
 var Tooltip = function (_a) {
-    var children = _a.children, id = _a.id;
-    return (React__default.createElement(ReactTooltip, { id: id, uuid: id, overridePosition: function (_a, currentEvent, currentTarget, node) {
-            var left = _a.left, top = _a.top;
-            var d = document.documentElement;
-            console.log(currentEvent, currentTarget);
-            left = Math.min(d.clientWidth - node.clientWidth, left);
-            top = Math.min(d.clientHeight - node.clientHeight, top);
-            left = Math.max(20, left);
-            top = Math.max(20, top);
-            return { top: top, left: left };
-        } }, children));
+    var children = _a.children, id = _a.id, buttonType = _a.buttonType;
+    return (React__default.createElement(ReactTooltip, { className: "" + (buttonType ? 'btn-tooltip' : ''), id: id, uuid: id, effect: "solid" }, children));
 };
 
 var ViewMore = function (_a) {
@@ -4030,118 +4008,8 @@ var CombineInput = function (_a) {
     var children = _a.children, title = _a.title;
     return (React__default.createElement("div", { className: 'combine-input-container' },
         React__default.createElement("span", null, title),
-        React__default.createElement("div", { className: 'combine-input-list' }, children)));
+        React__default.createElement("div", { className: 'combine-input-list', style: { gridTemplateColumns: "repeat(auto-fill, minmax(" + (1 / children.length) * 100 + "%, 1fr)" } }, children)));
 };
-
-var ConfirmModal = /** @class */ (function (_super) {
-    __extends(ConfirmModal, _super);
-    function ConfirmModal() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    ConfirmModal.prototype.clickButton = function (button) {
-        button.action();
-        this.closeModal();
-    };
-    ConfirmModal.prototype.clickOverlay = function () {
-        var _a = this.props, closeOnClickOutside = _a.closeOnClickOutside, onClickOutside = _a.onClickOutside;
-        var isClickOutside = true;
-        if (closeOnClickOutside && isClickOutside) {
-            if (onClickOutside) {
-                onClickOutside();
-            }
-            this.closeModal();
-        }
-        if (onClickOutside) {
-            onClickOutside();
-        }
-    };
-    ConfirmModal.prototype.closeModal = function () {
-        var afterClose = this.props.afterClose;
-        removeConfirm(this.props.wrap);
-        if (afterClose) {
-            afterClose();
-        }
-    };
-    ConfirmModal.prototype.keyboardClose = function (e) {
-        var closeOnEsc = this.props.closeOnEsc;
-        var isKeyCodeEscape = e.keyCode === 27;
-        if (closeOnEsc && isKeyCodeEscape) {
-            this.closeModal();
-        }
-    };
-    ConfirmModal.prototype.componentDidMount = function () {
-        var _this = this;
-        window.addEventListener('keydown', function (e) { return _this.keyboardClose(e); });
-    };
-    ConfirmModal.prototype.componentWillUnmount = function () {
-        var _this = this;
-        window.removeEventListener('keydown', function (e) { return _this.keyboardClose(e); });
-        if (this.props.willUnmount) {
-            this.props.willUnmount();
-        }
-    };
-    ConfirmModal.prototype.render = function () {
-        var _this = this;
-        var _a = this.props, title = _a.title, content = _a.content, buttons = _a.buttons, childrenElement = _a.childrenElement;
-        return (React__default.createElement("div", { className: "modal-wrap" },
-            React__default.createElement("div", { className: "overlay", onClick: this.clickOverlay.bind(this) }),
-            React__default.createElement("div", { className: "modal" },
-                title && React__default.createElement("h1", null, title),
-                React__default.createElement("span", { className: "circle" }),
-                React__default.createElement("p", { className: "modal-content" }, content),
-                childrenElement &&
-                    childrenElement(),
-                React__default.createElement("div", { className: "modal-btns" }, buttons === null || buttons === void 0 ? void 0 : buttons.map(function (button, i) { return (React__default.createElement("button", { key: i, onClick: function () { return _this.clickButton(button); }, className: button.className }, button.label)); })))));
-    };
-    ConfirmModal.defaultProps = {
-        wrap: 'modal-wrap',
-        buttons: [
-            {
-                label: '취소',
-                action: function () { }
-            },
-            {
-                label: '확인',
-                action: function () { }
-            }
-        ],
-        closeOnClickOutside: true,
-        closeOnEsc: true,
-        onClickOutside: function () {
-            console.log(1);
-        }
-    };
-    return ConfirmModal;
-}(React.Component));
-function createModalWrap(wrap) {
-    var elWrap = document.createElement('div');
-    elWrap.id = wrap;
-    document.body.appendChild(elWrap);
-}
-function ModalArea(props) {
-    return (React__default.createElement("div", { style: { position: 'relative', height: '100%' } },
-        props.children,
-        React__default.createElement("div", { id: props.id })));
-}
-function createConfirm(properties) {
-    var wrap = properties.wrap || 'modal-wrap';
-    var elWrap = document.getElementById(wrap);
-    if (elWrap) {
-        reactDom.render(React__default.createElement(ConfirmModal, __assign({}, properties)), elWrap);
-    }
-    else {
-        createModalWrap(wrap);
-        elWrap = document.getElementById(wrap);
-        reactDom.render(React__default.createElement(ConfirmModal, __assign({}, properties)), elWrap);
-    }
-}
-function removeConfirm(wrap) {
-    if (wrap === void 0) { wrap = 'modal-wrap'; }
-    var target = document.getElementById(wrap);
-    if (target) {
-        reactDom.unmountComponentAtNode(target);
-    }
-}
 
 var isBuffer = function isBuffer(arg) {
   return arg instanceof Buffer;
@@ -4926,11 +4794,13 @@ var InputContainer = function (_a) {
 };
 
 var InputWrapper = function (_a) {
-    var children = _a.children, invalid = _a.invalid, _b = _a.errorMessage, errorMessage = _b === void 0 ? 'Error message' : _b, informationMessage = _a.informationMessage;
-    return (React__default.createElement("div", { className: 'input-wrapper' },
-        children,
-        informationMessage && React__default.createElement("span", { className: 'input-message' }, informationMessage),
-        (invalid && errorMessage) && React__default.createElement("span", { className: 'input-message error' }, errorMessage)));
+    var children = _a.children, style = _a.style, invalid = _a.invalid, _b = _a.errorMessage, errorMessage = _b === void 0 ? 'Error message' : _b, informationMessage = _a.informationMessage, options = _a.options, onSelectOptionSet = _a.onSelectOptionSet;
+    return (React__default.createElement(React__default.Fragment, null,
+        React__default.createElement("div", { className: 'input-wrapper', style: style },
+            children,
+            (options && onSelectOptionSet) && React__default.createElement(InputRecommend, { options: options, onSelectOptionSet: onSelectOptionSet, invalid: invalid, informationMessage: informationMessage }),
+            informationMessage && React__default.createElement("span", { className: 'input-message' }, informationMessage),
+            (invalid && errorMessage) && React__default.createElement("span", { className: 'input-message error' }, errorMessage))));
 };
 
 var Modal = function (_a) {
@@ -4986,14 +4856,12 @@ var SectionContainer = function (_a) {
 exports.Button = Button;
 exports.ButtonTypeInput = ButtonTypeInput;
 exports.CombineInput = CombineInput;
-exports.ConfirmModal = ConfirmModal;
 exports.DefinitionTag = DefinitionTag;
 exports.DefinitionTagContainer = DefinitionTagContainer;
 exports.InputContainer = InputContainer;
 exports.InputRecommend = InputRecommend;
 exports.InputWrapper = InputWrapper;
 exports.Modal = Modal;
-exports.ModalArea = ModalArea;
 exports.Pagination = Pagination;
 exports.Popup = Popup;
 exports.SearchBox = SearchBox;
@@ -5005,6 +4873,4 @@ exports.SwitchButton = SwitchButton;
 exports.Tag = Tag;
 exports.Tooltip = Tooltip;
 exports.ViewMore = ViewMore;
-exports.createConfirm = createConfirm;
-exports.removeConfirm = removeConfirm;
 //# sourceMappingURL=index.js.map

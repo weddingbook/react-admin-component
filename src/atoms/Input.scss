@@ -1,0 +1,63 @@
+@import "../assets/scss/color.scss";
+
+.input-component {
+    display: inline-flex;
+    flex-direction: column;
+    .input-wrapper {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        background-color: white;
+        height: 32px;
+        border-radius: 4px;
+        border: 1px solid $gray20;
+        padding: 8px 0px 8px 12px;
+
+        &:focus-within {
+            outline: none;
+            border: 1px solid $blue60;
+            box-shadow: 0 1px 5px 0 rgba(28, 71, 154, 0.3);
+        }
+        
+        input {
+            border: none;
+            padding-right: 8px;
+            width: 100%;
+            height: 100%;
+            &:focus {
+                outline: none;
+                border: none;
+                box-shadow: none;
+            }
+            &.after-string {
+                text-align: right;
+            }
+        }
+
+        > i > svg {
+            fill: $gray20;
+        }
+        span.unit {
+            font-size: 13px;
+            line-height: 32px;
+            padding-right: 12px;
+            padding-bottom: 1px;
+        }
+    }
+
+    .input-message {
+        position: relative;
+        margin-top: 4px;
+        font-size: 10px;
+        color: $gray60;
+        &::before {
+            content: "*";
+        }
+        &.error {
+            &::before {
+                content: "";
+            }
+            color: $red60;
+        }
+    }
+}

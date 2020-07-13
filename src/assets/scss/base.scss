@@ -1,0 +1,386 @@
+@import "../assets/scss/color.scss";
+@import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css);
+
+$selectArrowSvg: "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><g data-name='Layer 2'><g data-name='arrow-ios-downward'><rect width='24' height='24' opacity='0'/><path d='M12 16a1 1 0 0 1-.64-.23l-6-5a1 1 0 1 1 1.28-1.54L12 13.71l5.36-4.32a1 1 0 0 1 1.41.15 1 1 0 0 1-.14 1.46l-6 4.83A1 1 0 0 1 12 16z'/></g></g></svg>";
+
+body {
+    background-color: $blue8;
+    font-size: 13px;
+}
+* {
+    font-family: "Spoqa Han Sans", "Sans-serif";
+}
+.only-sr {
+    display: none;
+}
+
+// table 관련 CSS
+
+// antd table CSS 덮어쓰기
+.ant-table-thead {
+    // height: 141px;
+    > tr > th {
+        text-align: center;
+        font-weight: normal;
+        font-size: 11px;
+        color: $gray50;
+        background-color: $blue5;
+        border-top: 1px solid $gray10;
+        border-bottom: 1px solid $gray10;
+
+        &.ant-table-column-sort {
+            background-color: $blue5;
+            color: $blue80;
+        }
+        > span {
+            color: $gray50;
+            > span > i {
+                > svg {
+                    fill: $gray70;
+                }
+            }
+        }
+    }
+}
+.ant-table-tbody > tr {
+    &.ant-table-row:hover > td {
+        background: $blue10;
+    }
+    > td {
+        vertical-align: middle;
+        text-align: center;
+        font-weight: normal;
+        font-size: 13px;
+        color: $gray80;
+        background-color: white;
+        border-bottom: 1px solid $gray10;
+    }
+}
+
+.ant-table-column-sorters {
+    > span > span {
+        display: inline-flex;
+        align-items: center;
+        > .table-sort-icon {
+            // margin-top: 10px;
+            display: none;
+            &.active {
+                display: inherit;
+                > i {
+                    > svg {
+                        fill: $blue80;
+                    }
+                }
+            }
+            &.default-sorter-icon.active {
+                display: inherit;
+                > i {
+                    > svg {
+                        fill: $gray70;
+                    }
+                }
+            }
+            > i {
+                > svg {
+                    margin-top: -4px;
+                    margin-left: 4px;
+                    vertical-align: middle;
+                    fill: $gray70;
+                }
+            }
+        }
+    }
+}
+
+
+// ant-picker 공통 CSS 덮어쓰기
+
+.ant-picker {
+    border: 1px solid $gray20;
+    border-radius: 4px;
+    &.ant-picker-focused {
+        border: 1px solid $blue60;
+        &:hover {
+            border: 1px solid $blue60;
+        }
+    }
+    &:hover {
+        border: 1px solid $gray20;;
+    }
+}
+.ant-picker-focused {
+    box-shadow: none;
+}
+
+// antd time-picker CSS 덮어쓰기
+
+.ant-picker-time-panel-column > {
+    li.ant-picker-time-panel-cell-selected .ant-picker-time-panel-cell-inner {
+        background: $blue60;
+        color: white;
+    }
+    li.ant-picker-time-panel-cell .ant-picker-time-panel-cell-inner:hover {
+        background: $blue10;
+    }
+}
+
+// antd date-picker CSS 덮어쓰기
+
+.ant-picker-cell-in-view.ant-picker-cell-selected .ant-picker-cell-inner,
+.ant-picker-cell-in-view.ant-picker-cell-range-start .ant-picker-cell-inner,
+.ant-picker-cell-in-view.ant-picker-cell-range-end .ant-picker-cell-inner {
+    background: $blue60;
+}
+
+.ant-picker-cell-in-view.ant-picker-cell-in-range::before {
+    background: #c4d7fb;
+}
+
+
+// input 관련 CSS
+input,
+textarea {
+    height: 32px;
+    padding: 5px 12px 6px;
+    border: 1px solid $gray20;
+    border-radius: 4px;
+    color: $gray100;
+    &::placeholder {
+        color: $gray40;
+    }
+    &:focus {
+        outline: none;
+        border: 1px solid $blue60;
+        box-shadow: 0 1px 5px 0 rgba(28, 71, 154, 0.3);
+    }
+    &:disabled {
+        color: $gray30;
+        background-color: $gray10;
+        cursor: not-allowed;
+    }
+    &:invalid {
+        border: 1px solid $red60;
+    }
+}
+
+textarea {
+    height: 110px;
+}
+
+select {
+    height: 32px;
+    background-color: white;
+    border-radius: 4px;
+    border: 1px solid $gray20;
+    padding: 6px 12px;
+    font-size: 13px;
+    color: $gray100;
+    -moz-appearance: none; /* Firefox */
+    -webkit-appearance: none; /* Safari and Chrome */
+    appearance: none;
+    background-image: url("data:image/svg+xml;utf8," + $selectArrowSvg);
+    background-repeat: no-repeat;
+    background-size: 16px;
+    background-position-x: 95%;
+    background-position-y: 6px;
+
+    &:focus {
+        outline: none;
+        border: 1px solid $blue60;
+        box-shadow: 0 1px 5px 0 rgba(28, 71, 154, 0.3);
+    }
+}
+
+label {
+    font-size: 11px;
+    color: $gray50;
+    & + input {
+        margin-left: 8px;
+    }
+    & + textarea {
+        margin-left: 8px;
+    }
+    & + select {
+        margin-left: 8px;
+    }
+    & + .special-input {
+        margin-left: 8px;
+    }
+    & + .select-box {
+        margin-left: 8px;
+    }
+    & + .input-wrapper {
+        margin-left: 8px;
+    }
+}
+.input-box {
+    display: flex;
+    align-items: center;
+
+    label {
+        & + input {
+            margin-left: 8px;
+        }
+        & + textarea {
+            margin-left: 8px;
+        }
+        & + select {
+            margin-left: 8px;
+        }
+        & + .special-input {
+            margin-left: 8px;
+        }
+        & + .select-box {
+            margin-left: 8px;
+        }
+        & + .input-wrapper {
+            margin-left: 8px;
+        }
+    }
+
+    & + & {
+        margin-left: 8px;
+    }
+}
+
+// date-picker 안에 있는 input 덮어쓰기
+.ant-picker-input {
+    > input {
+        &::placeholder {
+            color: $gray40;
+        }
+        &:focus {
+            border: none;
+        }
+    }
+}
+
+// date-picker 아이콘 색상 변경
+.anticon {
+    &.anticon-clock-circle{
+        > svg {
+            fill: $gray40;
+        }
+    }
+    &.anticon-calendar{
+        > svg {
+            fill: $gray40;
+        }
+    }
+}
+
+// 기본 checkbox, radio의 스타일 설정
+@supports (-webkit-appearance: none) or (-moz-appearance: none) {
+    input[class="checkbox-input"],
+    input[class="radio-input"] {
+        --active: #275efe;
+        --active-inner: #fff;
+        --focus: 2px rgba(39, 94, 254, 0.3);
+        --background: #fff;
+        --disabled: #f6f8ff;
+        --disabled-inner: #e1e6f9;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        height: 18px;
+        outline: none;
+        display: inline-block;
+        vertical-align: top;
+        position: relative;
+        margin: 0;
+        padding: 0;
+        cursor: pointer;
+        border: 1px solid $gray20;
+        background: var(--b, var(--background));
+        transition: background 0.3s, border-color 0.3s, box-shadow 0.2s;
+        &:after {
+            content: "";
+            display: block;
+            left: 0;
+            top: 0;
+            position: absolute;
+            transition: transform var(--d-t, 0.3s) var(--d-t-e, ease), opacity var(--d-o, 0.2s);
+        }
+        &:checked {
+            --b: var(--active);
+            background-color: $blue60;
+            --d-o: 0.3s;
+            --d-t: 0.6s;
+            --d-t-e: cubic-bezier(0.2, 0.85, 0.32, 1.2);
+            & + label {
+                color: $gray100;
+            }
+        }
+        &:disabled {
+            background-color: $gray30;
+            border: 1px solid $gray30;
+            --b: var(--disabled);
+            cursor: not-allowed;
+            &:checked {
+                --b: var(--disabled-inner);
+                --bc: var(--border);
+            }
+            & + label {
+                cursor: not-allowed;
+                color: $gray30;
+            }
+        }
+        &:focus {
+            border: 1px solid $blue60;
+            box-shadow: 0 1px 5px 0 rgba(28, 71, 154, 0.3);
+        }
+        &:not(.switch) {
+            &:after {
+                opacity: var(--o, 0);
+            }
+            &:checked {
+                --o: 1;
+            }
+        }
+        & + label {
+            display: inline-block;
+            font-size: 13px;
+            line-height: 18px;
+            color: $gray50;
+            // vertical-align: top;
+            cursor: pointer;
+            margin-left: 8px;
+        }
+    }
+    input[class="checkbox-input"] {
+        border-radius: 2px;
+        &:not(.switch) {
+            width: 18px;
+            &:after {
+                width: 5px;
+                height: 9px;
+                border: 1px solid var(--active-inner);
+                border-top: 0;
+                border-left: 0;
+                left: 6px;
+                top: 2px;
+                transform: rotate(var(--r, 20deg));
+            }
+            &:checked {
+                --r: 43deg;
+            }
+        }
+    }
+    input[class="radio-input"] {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        &:after {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--active-inner);
+            opacity: 0;
+            left: 5px;
+            top: 5px;
+        }
+        & + label {
+            margin-left: 6px;
+            text-align: center;
+        }
+    }
+}

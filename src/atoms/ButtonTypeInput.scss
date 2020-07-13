@@ -1,4 +1,4 @@
-@import "../../assets/color.scss";
+@import "../assets/scss/color.scss";
 
 .btn-type-input {
     display: inline-flex;
@@ -16,7 +16,7 @@
         box-shadow: 0 1px 5px 0 rgba(28, 71, 154, 0.3);
     }
     span {
-        margin-right: 4px;react-eva-icons
+        margin-right: 4px;
         i > svg {
             fill: $blue60;
         }

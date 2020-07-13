@@ -10,22 +10,25 @@ type Props = {
     iconName?: string;
     onClick?: any
     disabled?: boolean
-	style?: CSSProperties;
-	className?: string;
+    style?: CSSProperties;
+    dataTip?: boolean
+    dataFor?: string;
 }
 
 // iconName은 여기서 검색한다 https://akveo.github.io/eva-icons/#/
 
-const Button = ({ children = '버튼', type = 'solid', color = 'blue', size = 'middle', iconName = '', onClick, disabled = false, style, className}: Props) => {
+const Button = ({ children = '버튼', type = 'solid', color = 'blue', size = 'middle', iconName = '', onClick, disabled = false, style, dataTip, dataFor }: Props) => {
     const iconButton =
         <button
             style={style}
             onClick={onClick}
-            className={`btn-type-${type} btn-color-${color} btn-size-square btn-icon-text ${className}`}
+            className={`btn-type-${type} btn-color-${color} ${disabled ? 'btn-disabled' : ''} btn-size-square btn-icon-text`}
+            data-tip={dataTip}
+            data-for={dataFor}
         >
             <Icon
                 name={iconName}
-                size="20"
+                size="medium"
             />
             {(iconName && children !== '버튼') && <span>{children}</span>}
         </button>
@@ -35,7 +38,9 @@ const Button = ({ children = '버튼', type = 'solid', color = 'blue', size = 'm
             style={style}
             disabled={disabled}
             onClick={onClick}
-            className={`btn-type-${type} btn-color-${color} btn-size-${size} ${className}`}
+            className={`btn-type-${type} btn-color-${color} btn-size-${size} ${disabled ? 'btn-disabled' : ''}`}
+            data-tip={dataTip}
+            data-for={dataFor}
         >
             <span>
                 {children}

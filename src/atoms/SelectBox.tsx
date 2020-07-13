@@ -80,7 +80,7 @@ const SelectBox = ({ options, selectedOption, style, onSelectOptionSet }: Props)
             </div>
             <Icon
                 name="arrow-ios-downward-outline"
-                size="20"
+                size="medium"
             />
             {isShowList && <ul
                 ref={selectListRef}
