@@ -33,6 +33,27 @@ import 'react-admin-component/dist/index.css';
 ```
 scss파일에서 어드민 공통 color assets 파일 불러올 수 있음!
 
+## Icons (eva icons)
+```tsx
+import Icon from 'react-eva-icons';
+
+const Test = () => {
+	return (
+		<Icon 
+			name="github"
+			fill="#000"
+			size="20"
+			animation={{
+				type: 'zoom'
+				hover: true,
+				infinite: true
+			}}
+		/>
+	);
+}
+```
+`react-admin-component`에서 react-eva-icons를 의존하고있음. 그냥 쓰면 됨.
+
 ## Components example
 ### Modal 기본 사용법
 ```tsx
