@@ -4874,6 +4874,7 @@ var Popup = /** @class */ (function (_super) {
     };
     Popup.prototype.componentDidMount = function () {
         var _this = this;
+        console.log('c c 1');
         window.addEventListener('keydown', function (e) { return _this.keyboardClose(e); });
     };
     Popup.prototype.componentWillUnmount = function () {
@@ -4890,6 +4891,8 @@ var Popup = /** @class */ (function (_super) {
         willUnmount: function () { },
         afterClose: function () { },
         onClickOutside: function () { },
+        delay: 3000,
+        position: ['right', 'top'],
         button: {
             label: '확인'
         },
@@ -4905,9 +4908,17 @@ var ToastPopup = /** @class */ (function (_super) {
     function ToastPopup() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
+    ToastPopup.prototype.componentDidMount = function () {
+        var _this = this;
+        var delay = this.props.delay;
+        console.log('t 1');
+        setTimeout(function () {
+            _this.closePopup();
+        }, delay);
+    };
     ToastPopup.prototype.render = function () {
-        var _a = this.props, title = _a.title, message = _a.message;
-        return (React__default.createElement("div", { className: "popup-wrap" },
+        var _a = this.props, title = _a.title, message = _a.message, position = _a.position;
+        return (React__default.createElement("div", { className: "popup-wrap " + position[0] + " " + position[1] },
             React__default.createElement("div", { className: "overlay", onClick: this.clickOverlay.bind(this) }),
             React__default.createElement("div", { className: "popup" },
                 title && React__default.createElement("h1", null, title),

@@ -22,6 +22,10 @@ interface PopupProps {
 	afterClose?: () => void;
 	onClickOutside?: () => void;
 }
+interface ToastPopupProps extends PopupProps {
+	position: ['left' | 'center' | 'right', 'top' | 'center' | 'bottom'];
+	delay: number;
+}
 interface AlertPopupProps extends PopupProps {
 	button: PopupButtonProps;
 }
@@ -36,6 +40,8 @@ class Popup<P extends PopupProps> extends Component<P> {
 		willUnmount: () => {},
 		afterClose: () => {},
 		onClickOutside: () => {},
+		delay: 3000,
+		position: ['right', 'top'],
 		button: {
 			label: '확인'
 		},
@@ -78,6 +84,7 @@ class Popup<P extends PopupProps> extends Component<P> {
 		}
 	}
 	componentDidMount() {
+		console.log('c c 1')
 		window.addEventListener('keydown', e => this.keyboardClose(e))
 	}
 	componentWillUnmount() {
@@ -87,11 +94,18 @@ class Popup<P extends PopupProps> extends Component<P> {
 		}
 	}
 }
-class ToastPopup extends Popup<PopupProps> {
+class ToastPopup extends Popup<ToastPopupProps> {
+	componentDidMount() {
+		const { delay } = this.props;
+		console.log('t 1')
+		setTimeout(() => {
+			this.closePopup();	
+		}, delay);
+	}
 	render() {
-		const { title, message } = this.props;
+		const { title, message, position } = this.props;
 		return (
-			<div className="popup-wrap">
+			<div className={`popup-wrap ${position[0]} ${position[1]}`}>
 				<div
 					className="overlay"
 					onClick={this.clickOverlay.bind(this)}

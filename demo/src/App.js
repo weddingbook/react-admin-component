@@ -14,7 +14,7 @@ function App() {
 	return (
 		<div className="App">
       		<Tag color="green">HI</Tag>
-			<Button onClick={() => createPopup({popupType: 'confirm',  message: 'hi'})}>Hello</Button>
+			<Button onClick={() => createPopup({popupType: 'toast',  message: 'hi'})}>Hello</Button>
 			<Icon name="github" size="32" animation={{type: 'zoom'}}/>
     	</div>
 	);
