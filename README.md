@@ -25,13 +25,13 @@ https://bitbucket.h2m.io/projects/IN_HOUSE/repos/react-admin-component/commits �
 ```tsx
 import 'react-admin-component/dist/index.css';
 ```
-전역에서 css 로딩 해줘야함!
+전역(일반적으로 src/index.js)에서 css 로딩 해줘야함!!
 
 ## color assets
-```tsx
-import 'react-admin-component/assets/color.scss';
+```scss
+@import 'react-admin-component/assets/color.scss';
 ```
-어드민 color assets 파일 불러올 수 있음!
+scss파일에서 어드민 공통 color assets 파일 불러올 수 있음!
 
 ## Components example
 ### Modal 기본 사용법
