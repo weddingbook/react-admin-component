@@ -25,7 +25,7 @@ interface ConfirmModalProps {
 }
 export default class ConfirmModal extends Component<Partial<ConfirmModalProps>> {
 	static defaultProps = {
-		wrap: 'modal-wrap',
+		wrap: 'confirm-modal-wrap',
 		buttons: [
 			{
 				label: '취소',
@@ -88,7 +88,7 @@ export default class ConfirmModal extends Component<Partial<ConfirmModalProps>> 
 	render() {
 		const { title, content, buttons, childrenElement } = this.props;
 		return (
-			<div className="modal-wrap">
+			<div className="confirm-modal-wrap">
 				<div
 					className="overlay"
 					onClick={this.clickOverlay.bind(this)}
@@ -127,7 +127,7 @@ export function ModalArea(props: {id: string, children: ReactNode}) {
 	)
 }
 export function createConfirm(properties: Partial<ConfirmModalProps>) {
-	const wrap = properties.wrap || 'modal-wrap';
+	const wrap = properties.wrap || 'confirm-modal-wrap';
 	let elWrap = document.getElementById(wrap);
 	if (elWrap) {
 		render(<ConfirmModal {...properties} />, elWrap);
@@ -137,7 +137,7 @@ export function createConfirm(properties: Partial<ConfirmModalProps>) {
 		render(<ConfirmModal {...properties} />, elWrap);
 	}
 }
-export function removeConfirm(wrap = 'modal-wrap') {
+export function removeConfirm(wrap = 'confirm-modal-wrap') {
 	const target = document.getElementById(wrap);
 	if (target) {
 		unmountComponentAtNode(target);
