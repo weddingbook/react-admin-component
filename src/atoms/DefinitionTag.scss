@@ -1,0 +1,30 @@
+@import '../color.scss';
+
+dl {
+    dt {
+        font-size: 11px;
+        color: $gray50
+    }
+    dd {
+        font-size: 13px;
+        color: $gray80;
+        margin-top: 2px;
+    }
+}
+
+
+.definition-tag-row {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    dt {
+        text-align: right;
+        font-size: 11px;
+        color: $gray50
+    }
+    dd {
+        font-size: 13px;
+        color: $gray100;
+        margin-top: 0px;
+        margin-left: 20px;
+    }
+}

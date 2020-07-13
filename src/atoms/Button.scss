@@ -1,0 +1,166 @@
+@import "../color.scss";
+
+button {
+  border-radius: 8px;
+  color: white;
+  font-weight: bold;
+  font-size: 15px;
+  &:disabled {
+    color: $gray30;
+    border: 1px solid $gray30;
+    background-color: $gray10;
+  }
+}
+
+@mixin buttonColor($color) {
+  background-color: $color;
+  border: 1px solid $color;
+  color: $color;
+  > i > svg {
+    fill: $color
+  }
+}
+@mixin baseStyleLinkAndText() {
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+
+// button color
+.btn-color-blue {
+  @include buttonColor($blue60);
+  &:hover {
+    @include buttonColor($blue40);
+  }
+  &:active {
+    @include buttonColor($blue80);
+  }
+}
+.btn-color-yellow {
+  @include buttonColor($yellow60);
+  &:hover {
+    @include buttonColor($yellow40);
+  }
+  &:active {
+    @include buttonColor($yellow80);
+  }
+}
+.btn-color-green {
+  @include buttonColor($green60);
+  &:hover {
+    @include buttonColor($green40);
+  }
+  &:active {
+    @include buttonColor($green80);
+  }
+}
+.btn-color-red {
+  @include buttonColor($red60);
+  &:hover {
+    @include buttonColor($red40);
+  }
+  &:active {
+    @include buttonColor($red80);
+  }
+}
+
+// button size
+
+.btn-size-large {
+  min-width: 68px;
+  height: 48px;
+  font-size: 15px;
+}
+.btn-size-middle {
+  min-width: 58px;
+  height: 40px;
+  font-size: 14px;
+}
+.btn-size-small {
+  min-width: 48px;
+  height: 32px;
+  border-radius: 4px;
+  font-size: 13px;
+}
+.btn-size-xs {
+  min-width: 37px;
+  height: 24px;
+  border-radius: 4px;
+  font-size: 11px;
+}
+
+// button type
+.btn-type-solid {
+  color: white;
+  > i > svg {
+    fill: white
+  }
+  &:hover {
+    color: white;
+    > i > svg {
+      fill: white
+    }
+  }
+  &:focus {
+    box-shadow: 0 1px 5px 0 transparentize($color: $blue80, $amount: 0.2);
+  }
+  &:disabled {
+    border: 1px solid $gray10;
+  }
+}
+.btn-type-line {
+  background-color: transparent;
+  &:hover {
+    background-color: transparent;
+  }
+  &:focus {
+    box-shadow: 0 1px 5px 0 transparentize($color: $blue80, $amount: 0.2);
+  }
+  &:disabled {
+    background-color: transparent;
+  }
+}
+.btn-type-text {
+  @include baseStyleLinkAndText();
+  &:hover {
+    @include baseStyleLinkAndText();
+  }
+  &:disabled {
+    @include baseStyleLinkAndText();
+  }
+  &:focus {
+    > span {
+      background-color: $gray20;
+    }
+  }
+}
+.btn-type-link {
+  @include baseStyleLinkAndText();
+  text-decoration: underline;
+  &:hover {
+    @include baseStyleLinkAndText();
+  }
+  &:disabled {
+    @include baseStyleLinkAndText();
+  }
+  &:focus {
+    > span {
+      background-color: $gray20;
+    }
+  }
+}
+
+// icon 형식
+.btn-icon-text {
+  min-width: 55px;
+  height: 48px;
+  padding: 0px 18px;
+  
+  > span {
+    line-height: 48px;
+    margin-left: 8px;
+  }
+  > i {
+    vertical-align: middle;
+  }
+}

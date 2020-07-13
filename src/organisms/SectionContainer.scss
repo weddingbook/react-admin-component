@@ -1,0 +1,6 @@
+.section-container {
+    display: grid;
+}
+.section-container + .section-container {
+    margin-top: 20px;
+}

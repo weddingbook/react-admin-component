@@ -1,0 +1,13 @@
+@import "../color.scss";
+
+.view-more-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+
+    .view-more-rowData {
+        font-size: 11px;
+        color: $gray50;
+    }
+}

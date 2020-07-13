@@ -1,0 +1,21 @@
+@import "../color.scss";
+
+.input-container {
+    display: flex;
+    align-items: center;
+    span {
+        font-size: 11px;
+        color: $gray50;
+    }
+    .input-list {
+        display: flex;
+        flex-wrap: wrap;
+        margin-left: 8px;
+        > label + input {
+            margin-left: 8px;
+        }
+        > * {
+            vertical-align: middle;
+        }
+    }
+}

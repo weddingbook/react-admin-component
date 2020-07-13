@@ -1,0 +1,181 @@
+@import "../color.scss";
+
+.combine-input-container {
+    > span {
+        font-size: 11px;
+        color: $gray50;
+    }
+    .combine-input-list {
+        display: inline-block;
+        margin-left: 8px;
+        > input {
+            border-radius: 0;
+            vertical-align: middle;
+            border-right: none;
+
+            &:focus {
+                border: 1px solid $blue60;
+                box-shadow: 0 1px 5px 0 rgba(28, 71, 154, 0.3);
+            }
+            &:invalid {
+                border: 1px solid $red60;
+            }
+        }
+        > input:first-child {
+            border-radius: 4px 0 0 4px;
+            &:focus {
+                border: 1px solid $blue60;
+                box-shadow: 0 1px 5px 0 rgba(28, 71, 154, 0.3);
+            }
+            &:invalid {
+                border: 1px solid $red60;
+            }
+        }
+        > input:last-child {
+            border-radius: 0 4px 4px 0;
+            border: 1px solid $gray20;
+            &:focus {
+                border: 1px solid $blue60;
+                box-shadow: 0 1px 5px 0 rgba(28, 71, 154, 0.3);
+            }
+            &:invalid {
+                border: 1px solid $red60;
+            }
+        }
+
+        .select-box {
+            border-radius: 0;
+            vertical-align: middle;
+            border-right: none;
+            &:focus {
+                border: 1px solid $blue60;
+                box-shadow: 0 1px 5px 0 rgba(28, 71, 154, 0.3);
+            }
+            &:invalid {
+                border: 1px solid $red60;
+            }
+        }
+        .select-box:first-child {
+            border-radius: 4px 0 0 4px;
+            &:focus {
+                border: 1px solid $blue60;
+                box-shadow: 0 1px 5px 0 rgba(28, 71, 154, 0.3);
+            }
+            &:invalid {
+                border: 1px solid $red60;
+            }
+        }
+        .select-box:last-child {
+            border-radius: 0 4px 4px 0;
+            border: 1px solid $gray20;
+            &:focus {
+                border: 1px solid $blue60;
+                box-shadow: 0 1px 5px 0 rgba(28, 71, 154, 0.3);
+            }
+            &:invalid {
+                border: 1px solid $red60;
+            }
+        }
+
+        .special-input {
+            border-radius: 0;
+            vertical-align: middle;
+            border-right: none;
+
+            &:focus-within {
+                border: 1px solid $blue60;
+                box-shadow: 0 1px 5px 0 rgba(28, 71, 154, 0.3);
+            }
+        }
+        .special-input:first-child {
+            border-radius: 4px 0 0 4px;
+            &:focus-within {
+                border: 1px solid $blue60;
+                border-right: 1px solid $blue60;
+                box-shadow: 0 1px 5px 0 rgba(28, 71, 154, 0.3);
+            }
+        }
+        .special-input:last-child {
+            border-radius: 0 4px 4px 0;
+            border: 1px solid $gray20;
+
+            &:focus-within {
+                border: 1px solid $blue60;
+                box-shadow: 0 1px 5px 0 rgba(28, 71, 154, 0.3);
+            }
+            &:has() {
+            }
+            // invalid 어캐함
+            // https://github.com/w3c/csswg-drafts/issues/3072
+        }
+
+        .input-wrapper {
+            vertical-align: middle;
+            > input {
+                border-radius: 0;
+                border-right: none;
+
+                &:focus {
+                    border: 1px solid $blue60;
+                    box-shadow: 0 1px 5px 0 rgba(28, 71, 154, 0.3);
+                }
+                &:invalid {
+                    border: 1px solid $red60;
+                }
+            }
+        }
+        .input-wrapper:first-child {
+            > input {
+                border-radius: 4px 0 0 4px;
+                border-right: none;
+                &:focus {
+                    border: 1px solid $blue60;
+                    box-shadow: 0 1px 5px 0 rgba(28, 71, 154, 0.3);
+                }
+                &:invalid {
+                    border: 1px solid $red60;
+                }
+            }
+        }
+        .input-wrapper:last-child {
+            > input {
+                border-radius: 0 4px 4px 0;
+                border: 1px solid $gray20;
+
+                &:focus {
+                    border: 1px solid $blue60;
+                    box-shadow: 0 1px 5px 0 rgba(28, 71, 154, 0.3);
+                }
+                &:invalid {
+                    border: 1px solid $red60;
+                }
+            }
+        }
+
+        .ant-picker {
+            vertical-align: middle;
+            border-radius: 0;
+            border-right: none;
+            &.ant-picker-focused {
+                border: 1px solid $blue60;
+                box-shadow: 0 1px 5px 0 rgba(28, 71, 154, 0.3);
+            }
+        }
+        .ant-picker:first-child {
+            border-radius: 4px 0 0 4px;
+            border-right: none;
+            &.ant-picker-focused {
+                border: 1px solid $blue60;
+                box-shadow: 0 1px 5px 0 rgba(28, 71, 154, 0.3);
+            }
+        }
+        .ant-picker:last-child {
+            border-radius: 0 4px 4px 0;
+            border: 1px solid $gray20;
+            &.ant-picker-focused {
+                border: 1px solid $blue60;
+                box-shadow: 0 1px 5px 0 rgba(28, 71, 154, 0.3);
+            }
+        }
+    }
+}

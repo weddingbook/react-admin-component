@@ -1,0 +1,64 @@
+@import "../color.scss";
+
+.wb-pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+
+    .wb-pagination-page-area {
+        .wb-pagination-total {
+            font-size: 11px;
+            color: $gray50;
+            margin-left: 8px;
+        }
+    }
+
+    .wb-pagination-number-list {
+        display: flex;
+        align-items: center;
+        margin-top: 4px;
+        > .wb-pagination-number {
+            max-width: 24px;
+            height: 24px;
+            line-height: 20px;
+            cursor: pointer;
+            &:focus {
+                outline: none;
+            }
+            &:active {
+                outline: none;
+            }
+            &.active {
+                > a {
+                    color: $gray30;
+                }
+            }
+            > a {
+                padding: 3px 8px;
+                font-size: 11px;
+                color: $blue60;
+            }
+        }
+        > li + li {
+            margin-left: 4px;
+        }
+
+        .wb-pagination-arrow {
+            cursor: not-allowed;
+            &.active {
+                cursor: pointer;
+                > i {
+                    > svg {
+                        fill: $blue60;
+                    }
+                }
+            }
+            > i {
+                > svg {
+                    fill: $gray30;
+                }
+            }
+        }
+    }
+}

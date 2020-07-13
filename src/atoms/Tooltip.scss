@@ -1,0 +1,24 @@
+@import "../color.scss";
+
+.__react_component_tooltip {
+    .section {
+        padding: 10px 0;
+        background-color: transparent;
+        header {
+            .header-top {
+                h1 {
+                    color: white;
+                }
+            }
+        }
+
+        dt {
+            font-size: 11px;
+            color: $gray70;
+        }
+        dd {
+            font-size: 13px;
+            color: white;
+        }
+    }
+}

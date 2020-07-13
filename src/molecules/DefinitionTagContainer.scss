@@ -1,0 +1,6 @@
+.definition-tag-container {
+    display: grid;
+}
+.definition-tag-container + .definition-tag-container {
+    margin-top: 16px;
+}

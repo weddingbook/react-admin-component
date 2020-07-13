@@ -1,0 +1,47 @@
+@import "../color.scss";
+
+.search-box {
+    display: grid;
+    padding: 16px 16px 20px;
+    border-radius: 2px;
+    background-color: $gray5;
+
+    > .search-box-item {
+        display: grid;
+        align-items: center;
+        grid-template-columns: 150px 1fr;
+        margin-top: 16px;
+
+        > label {
+            justify-self: end;
+        }
+    }
+    .input-container {
+        display: grid;
+        align-items: center;
+        grid-template-columns: 150px 1fr;
+        margin-top: 16px;
+
+        > span {
+            justify-self: end;
+        }
+        > .input-list {
+            display: flex;
+            flex-wrap: initial;
+        }
+    }
+    .combine-input-container {
+        display: grid;
+        align-items: center;
+        grid-template-columns: 150px 1fr;
+        margin-top: 16px;
+
+        > span {
+            justify-self: end;
+        }
+        > .combine-input-list {
+            display: flex;
+            flex-wrap: initial;
+        }
+    }
+}

@@ -1,0 +1,40 @@
+@import "../color.scss";
+
+.popup {
+    width: 384px;
+    border-radius: 8px;
+    padding: 12px;
+    background-color: white;
+    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
+
+    > span {
+        display: inline-block;
+        margin: 4px 12px;
+        font-size: 13px;
+        color: $gray100;
+        line-height: 1.5;
+    }
+    > .btn-area {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 16px;
+
+        button + button {
+            margin-left: 8px;
+        }
+    }
+}
+.alert-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+}
+.red {
+    background-color: $red60;
+}
+.green {
+    background-color: $green60;
+}
+.yellow {
+    background-color: $yellow60;
+}

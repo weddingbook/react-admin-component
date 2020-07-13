@@ -6,7 +6,7 @@
 	"module": "build/index.es.js",
 	"private": true,
 	"scripts": {
-		"build": "rollup -c"
+		"build": "rm -rf ./build && rollup -c"
 	},
 	"repository": {
 		"type": "git",
@@ -14,6 +14,11 @@
 	},
 	"author": "",
 	"license": "ISC",
+	"dependencies": {
+		"@types/react-tooltip": "^4.2.4",
+		"react-tooltip": "^4.2.7",
+		"react-eva-icons": "git+https://github.com/weddingbook/react-eva-icons.git"
+	},
 	"devDependencies": {
 		"@types/react": "^16.9.41",
 		"@types/react-dom": "^16.9.8",
@@ -22,10 +27,12 @@
 		"rollup-plugin-commonjs": "^10.1.0",
 		"rollup-plugin-node-resolve": "^5.2.0",
 		"rollup-plugin-peer-deps-external": "^2.2.3",
+		"rollup-plugin-scss": "^2.5.0",
 		"rollup-plugin-typescript2": "^0.27.1",
 		"typescript": "^3.9.6"
 	},
 	"peerDependencies": {
+		"node-sass": "^4.14.1",
 		"react": "^16.13.1",
 		"react-dom": "^16.13.1"
 	}

@@ -1,6 +1,6 @@
 import React, { Component, ReactNode } from 'react'
 import { render, unmountComponentAtNode } from 'react-dom'
-import './confirm.scss'; 
+import './Confirm.scss'; 
 
 interface ModalButtonProps {
 	label: string
@@ -87,7 +87,7 @@ export default class ConfirmModal extends Component<Partial<ConfirmModalProps>> 
 					onClick={this.clickOverlay.bind(this)}
 				/>
 				<div className="modal">
-					{/* {title && <h1>{title}</h1>} */}
+					{title && <h1>{title}</h1>}
 					<span className="circle"></span>
 					<p className="modal-content">{content}</p>
 					{childrenElement &&
