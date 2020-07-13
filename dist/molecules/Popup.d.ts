@@ -1,24 +1,24 @@
 import { ReactNode } from 'react';
 import './Popup.scss';
 interface PopupButtonProps {
-    label: string;
-    action: () => void;
+    label?: string;
+    action?: () => void;
     type?: 'solid' | 'line' | 'text' | 'link';
     color?: 'blue' | 'yellow' | 'green' | 'red';
     size?: 'xs' | 'small' | 'middle' | 'large';
-    className: string;
+    className?: string;
 }
 interface PopupProps {
-    wrap: string;
+    wrap?: string;
     popupType: 'toast' | 'alert' | 'confirm';
-    title: string;
+    title?: string;
     message: string;
     messageType: 'success' | 'warn' | 'fail';
-    closeOnClickOutside: boolean;
-    closeOnEsc: boolean;
-    willUnmount: () => void;
-    afterClose: () => void;
-    onClickOutside: () => void;
+    closeOnClickOutside?: boolean;
+    closeOnEsc?: boolean;
+    willUnmount?: () => void;
+    afterClose?: () => void;
+    onClickOutside?: () => void;
 }
 interface AlertPopupProps extends PopupProps {
     button: PopupButtonProps;

@@ -4840,7 +4840,9 @@ var Popup = /** @class */ (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Popup.prototype.clickButton = function (button) {
-        button.action();
+        if (button.action) {
+            button.action();
+        }
         this.closePopup();
     };
     Popup.prototype.clickOverlay = function () {
@@ -4884,7 +4886,17 @@ var Popup = /** @class */ (function (_super) {
     Popup.defaultProps = {
         wrap: 'common-popup',
         closeOnClickOutside: true,
-        closeOnEsc: true
+        closeOnEsc: true,
+        willUnmount: function () { },
+        afterClose: function () { },
+        onClickOutside: function () { },
+        button: {
+            label: '확인'
+        },
+        buttons: [
+            { label: '취소' },
+            { label: '확인' }
+        ]
     };
     return Popup;
 }(React.Component));

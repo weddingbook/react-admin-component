@@ -7,7 +7,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "react": "^16.13.1",
-    "react-admin-component": "git+https://bitbucket.h2m.io/scm/in_house/react-admin-component.git#7bba7e97472",
+    "react-admin-component": "git+https://bitbucket.h2m.io/scm/in_house/react-admin-component.git#a1dda8618ec",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1"
   },

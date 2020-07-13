@@ -4,24 +4,24 @@ import Button from '../atoms/Button'
 import './Popup.scss'; 
 
 interface PopupButtonProps {
-	label: string;
-	action: () => void;
+	label?: string;
+	action?: () => void;
 	type?: 'solid' | 'line' | 'text' | 'link';
     color?: 'blue' | 'yellow' | 'green' | 'red';
     size?: 'xs' | 'small' | 'middle' | 'large';
-	className: string;
+	className?: string;
 }
 interface PopupProps {
-	wrap: string;
+	wrap?: string;
 	popupType: 'toast' | 'alert' | 'confirm';
-	title: string;
+	title?: string;
 	message: string;
 	messageType: 'success' | 'warn' | 'fail';
-	closeOnClickOutside: boolean;
-	closeOnEsc: boolean;
-	willUnmount: () => void;
-	afterClose: () => void;
-	onClickOutside: () => void;
+	closeOnClickOutside?: boolean;
+	closeOnEsc?: boolean;
+	willUnmount?: () => void;
+	afterClose?: () => void;
+	onClickOutside?: () => void;
 }
 interface AlertPopupProps extends PopupProps {
 	button: PopupButtonProps;
@@ -33,10 +33,22 @@ class Popup<P extends PopupProps> extends Component<P> {
 	static defaultProps = {
 		wrap: 'common-popup',
 		closeOnClickOutside: true,
-		closeOnEsc: true
+		closeOnEsc: true,
+		willUnmount: () => {},
+		afterClose: () => {},
+		onClickOutside: () => {},
+		button: {
+			label: '확인'
+		},
+		buttons: [
+			{label: '취소'},
+			{label: '확인'}
+		]
 	}
 	clickButton(button: PopupButtonProps) {
-		button.action();
+		if (button.action) {
+			button.action();
+		}
 		this.closePopup();
 	}
 	clickOverlay() {
@@ -94,6 +106,7 @@ class ToastPopup extends Popup<PopupProps> {
 		)
 	}
 }
+
 class AlertPopup extends Popup<AlertPopupProps> {
 	render() {
 		const { title, message, button } = this.props;
