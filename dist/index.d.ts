@@ -13,7 +13,7 @@ export { default as CombineInput } from './molecules/CombineInput';
 export { default as DefinitionTagContainer } from './molecules/DefinitionTagContainer';
 export { default as InputContainer } from './molecules/InputContainer';
 export { default as Modal } from './molecules/Modal';
-export { default as Popup } from './molecules/Popup';
+export { PopupArea, createPopup, removePopup } from './molecules/Popup';
 export { default as SearchBox } from './molecules/SearchBox';
 export { default as Section } from './molecules/Section';
 export { default as SectionContainer } from './organisms/SectionContainer';

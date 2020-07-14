@@ -5,15 +5,16 @@ import './App.css';
 import Icon from 'react-eva-icons';
 import {
 	Button,
-	Tag
-} from 'react-admin-component';
+	Tag,
+	createPopup
+} from '../../dist/index';
 
 
 function App() {
 	return (
 		<div className="App">
       		<Tag color="green">HI</Tag>
-			<Button>Hello</Button>
+			<Button onClick={() => createPopup({popupType: 'toast',  message: 'hi'})}>Hello</Button>
 			<Icon name="github" size="32" animation={{type: 'zoom'}}/>
     	</div>
 	);

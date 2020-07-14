@@ -8,6 +8,7 @@ var React = require('react');
 var React__default = _interopDefault(React);
 var crypto = _interopDefault(require('crypto'));
 var util$1 = _interopDefault(require('util'));
+var reactDom = require('react-dom');
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
@@ -1978,11 +1979,11 @@ var Icon = unwrapExports(dist);
 
 // iconName은 여기서 검색한다 https://akveo.github.io/eva-icons/#/
 var Button = function (_a) {
-    var _b = _a.children, children = _b === void 0 ? '버튼' : _b, _c = _a.type, type = _c === void 0 ? 'solid' : _c, _d = _a.color, color = _d === void 0 ? 'blue' : _d, _e = _a.size, size = _e === void 0 ? 'middle' : _e, _f = _a.iconName, iconName = _f === void 0 ? '' : _f, onClick = _a.onClick, _g = _a.disabled, disabled = _g === void 0 ? false : _g, style = _a.style, dataTip = _a.dataTip, dataFor = _a.dataFor;
-    var iconButton = React__default.createElement("button", { style: style, onClick: onClick, className: "btn-type-" + type + " btn-color-" + color + " " + (disabled ? 'btn-disabled' : '') + " btn-size-square btn-icon-text", "data-tip": dataTip, "data-for": dataFor },
+    var _b = _a.children, children = _b === void 0 ? '버튼' : _b, _c = _a.type, type = _c === void 0 ? 'solid' : _c, _d = _a.color, color = _d === void 0 ? 'blue' : _d, _e = _a.size, size = _e === void 0 ? 'middle' : _e, _f = _a.iconName, iconName = _f === void 0 ? '' : _f, onClick = _a.onClick, _g = _a.disabled, disabled = _g === void 0 ? false : _g, style = _a.style, dataTip = _a.dataTip, dataFor = _a.dataFor, className = _a.className;
+    var iconButton = React__default.createElement("button", { style: style, onClick: onClick, className: "btn-type-" + type + " btn-color-" + color + " " + (disabled ? 'btn-disabled' : '') + " btn-size-square btn-icon-text " + className, "data-tip": dataTip, "data-for": dataFor },
         React__default.createElement(Icon, { name: iconName, size: "medium" }),
         (iconName && children !== '버튼') && React__default.createElement("span", null, children));
-    var normalButton = React__default.createElement("button", { style: style, disabled: disabled, onClick: onClick, className: "btn-type-" + type + " btn-color-" + color + " btn-size-" + size + " " + (disabled ? 'btn-disabled' : ''), "data-tip": dataTip, "data-for": dataFor },
+    var normalButton = React__default.createElement("button", { style: style, disabled: disabled, onClick: onClick, className: "btn-type-" + type + " btn-color-" + color + " btn-size-" + size + " " + (disabled ? 'btn-disabled' : '') + " " + className, "data-tip": dataTip, "data-for": dataFor },
         React__default.createElement("span", null, children));
     return (iconName ? iconButton : normalButton);
 };
@@ -2012,6 +2013,20 @@ LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
 OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
 PERFORMANCE OF THIS SOFTWARE.
 ***************************************************************************** */
+/* global Reflect, Promise */
+
+var extendStatics = function(d, b) {
+    extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return extendStatics(d, b);
+};
+
+function __extends(d, b) {
+    extendStatics(d, b);
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+}
 
 var __assign = function() {
     __assign = Object.assign || function __assign(t) {
@@ -4822,15 +4837,181 @@ var Modal = function (_a) {
             footerComponent && React__default.createElement("footer", null, footerComponent))));
 };
 
-var Popup = function (_a) {
-    var children = _a.children, style = _a.style, _b = _a.color, color = _b === void 0 ? 'red' : _b, cancelButtonComponent = _a.cancelButtonComponent, actionButtonComponent = _a.actionButtonComponent;
-    return (React__default.createElement("div", { className: 'popup', style: style },
-        React__default.createElement("div", { className: "alert-dot " + color }),
-        React__default.createElement("span", null, children),
-        actionButtonComponent && React__default.createElement("div", { className: 'btn-area' },
-            cancelButtonComponent,
-            actionButtonComponent)));
-};
+var Popup = /** @class */ (function (_super) {
+    __extends(Popup, _super);
+    function Popup() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    Popup.prototype.clickButton = function (button) {
+        if (button.action) {
+            button.action();
+        }
+        this.closePopup();
+    };
+    Popup.prototype.clickOverlay = function () {
+        var _a = this.props, closeOnClickOutside = _a.closeOnClickOutside, onClickOutside = _a.onClickOutside;
+        var isClickOutside = true;
+        if (closeOnClickOutside && isClickOutside) {
+            if (onClickOutside) {
+                onClickOutside();
+            }
+            this.closePopup();
+        }
+        if (onClickOutside) {
+            onClickOutside();
+        }
+    };
+    Popup.prototype.closePopup = function () {
+        var afterClose = this.props.afterClose;
+        removePopup(this.props);
+        if (afterClose) {
+            afterClose();
+        }
+    };
+    Popup.prototype.keyboardClose = function (e) {
+        var closeOnEsc = this.props.closeOnEsc;
+        var isKeyCodeEscape = e.keyCode === 27;
+        if (closeOnEsc && isKeyCodeEscape) {
+            this.closePopup();
+        }
+    };
+    Popup.prototype.componentDidMount = function () {
+        var _this = this;
+        console.log('c c 1');
+        window.addEventListener('keydown', function (e) { return _this.keyboardClose(e); });
+    };
+    Popup.prototype.componentWillUnmount = function () {
+        var _this = this;
+        window.removeEventListener('keydown', function (e) { return _this.keyboardClose(e); });
+        if (this.props.willUnmount) {
+            this.props.willUnmount();
+        }
+    };
+    Popup.defaultProps = {
+        wrap: 'common-popup',
+        closeOnClickOutside: true,
+        closeOnEsc: true,
+        willUnmount: function () { },
+        afterClose: function () { },
+        onClickOutside: function () { },
+        delay: 3000,
+        position: ['right', 'top'],
+        button: {
+            label: '확인'
+        },
+        buttons: [
+            { label: '취소', type: 'line' },
+            { label: '확인', color: 'red' }
+        ]
+    };
+    return Popup;
+}(React.Component));
+var ToastPopup = /** @class */ (function (_super) {
+    __extends(ToastPopup, _super);
+    function ToastPopup() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    ToastPopup.prototype.componentDidMount = function () {
+        var _this = this;
+        var delay = this.props.delay;
+        console.log('t 1');
+        setTimeout(function () {
+            _this.closePopup();
+        }, delay);
+    };
+    ToastPopup.prototype.render = function () {
+        var _a = this.props, title = _a.title, message = _a.message, position = _a.position;
+        return (React__default.createElement("div", { className: "popup-wrap " + position[0] + " " + position[1] },
+            React__default.createElement("div", { className: "overlay", onClick: this.clickOverlay.bind(this) }),
+            React__default.createElement("div", { className: "popup" },
+                title && React__default.createElement("h1", null, title),
+                React__default.createElement("span", { className: "circle" }),
+                React__default.createElement("p", { className: "popup-content" }, message))));
+    };
+    return ToastPopup;
+}(Popup));
+var AlertPopup = /** @class */ (function (_super) {
+    __extends(AlertPopup, _super);
+    function AlertPopup() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    AlertPopup.prototype.render = function () {
+        var _this = this;
+        var _a = this.props, title = _a.title, message = _a.message, button = _a.button;
+        return (React__default.createElement("div", { className: "popup-wrap" },
+            React__default.createElement("div", { className: "overlay", onClick: this.clickOverlay.bind(this) }),
+            React__default.createElement("div", { className: "popup" },
+                title && React__default.createElement("h1", null, title),
+                React__default.createElement("span", { className: "circle" }),
+                React__default.createElement("p", { className: "popup-content" }, message),
+                React__default.createElement("div", { className: "popup-btns" },
+                    React__default.createElement(Button, { onClick: function () { return _this.clickButton(button); }, type: button.type, size: "small", color: button.color, className: button.className }, button.label)))));
+    };
+    return AlertPopup;
+}(Popup));
+var ConfirmPopup = /** @class */ (function (_super) {
+    __extends(ConfirmPopup, _super);
+    function ConfirmPopup() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    ConfirmPopup.prototype.render = function () {
+        var _this = this;
+        var _a = this.props, title = _a.title, message = _a.message, buttons = _a.buttons;
+        return (React__default.createElement("div", { className: "popup-wrap" },
+            React__default.createElement("div", { className: "overlay", onClick: this.clickOverlay.bind(this) }),
+            React__default.createElement("div", { className: "popup" },
+                title && React__default.createElement("h1", null, title),
+                React__default.createElement("span", { className: "circle" }),
+                React__default.createElement("p", { className: "popup-content" }, message),
+                React__default.createElement("div", { className: "popup-btns" }, buttons === null || buttons === void 0 ? void 0 : buttons.map(function (button, i) { return (React__default.createElement(Button, { key: i, onClick: function () { return _this.clickButton(button); }, type: button.type, size: "small", color: button.color, className: button.className }, button.label)); })))));
+    };
+    return ConfirmPopup;
+}(Popup));
+function createPopupWrap(wrap) {
+    var elWrap = document.createElement('div');
+    elWrap.id = wrap;
+    document.body.appendChild(elWrap);
+}
+function renderPopup(type, options, elWrap) {
+    switch (type) {
+        case 'toast':
+            reactDom.render(React__default.createElement(ToastPopup, __assign({}, options)), elWrap);
+            break;
+        case 'alert':
+            reactDom.render(React__default.createElement(AlertPopup, __assign({}, options)), elWrap);
+            break;
+        case 'confirm':
+            reactDom.render(React__default.createElement(ConfirmPopup, __assign({}, options)), elWrap);
+            break;
+    }
+}
+function PopupArea(props) {
+    return (React__default.createElement("div", { style: { position: 'relative', height: '100%' } },
+        props.children,
+        React__default.createElement("div", { id: props.id })));
+}
+function createPopup(options) {
+    var popupType = options.popupType;
+    var wrap = options.wrap || (popupType !== 'toast' ? 'common-popup' : 'common-toast-popup');
+    var elWrap = document.getElementById(wrap);
+    if (elWrap) {
+        renderPopup(popupType, options, elWrap);
+    }
+    else {
+        createPopupWrap(wrap);
+        elWrap = document.getElementById(wrap);
+        renderPopup(popupType, options, elWrap);
+    }
+}
+function removePopup(_a) {
+    var _b = _a.wrap, wrap = _b === void 0 ? 'common-popup' : _b, popupType = _a.popupType;
+    if (popupType === 'toast')
+        wrap = 'common-toast-popup';
+    var target = document.getElementById(wrap);
+    if (target) {
+        reactDom.unmountComponentAtNode(target);
+    }
+}
 
 var SearchBox = function (_a) {
     var children = _a.children, style = _a.style, stage = _a.stage;
@@ -4866,7 +5047,7 @@ exports.InputContainer = InputContainer;
 exports.InputRecommend = InputRecommend;
 exports.Modal = Modal;
 exports.Pagination = Pagination;
-exports.Popup = Popup;
+exports.PopupArea = PopupArea;
 exports.SearchBox = SearchBox;
 exports.Section = Section;
 exports.SectionContainer = SectionContainer;
@@ -4875,4 +5056,6 @@ exports.SwitchButton = SwitchButton;
 exports.Tag = Tag;
 exports.Tooltip = Tooltip;
 exports.ViewMore = ViewMore;
+exports.createPopup = createPopup;
+exports.removePopup = removePopup;
 //# sourceMappingURL=index.js.map
