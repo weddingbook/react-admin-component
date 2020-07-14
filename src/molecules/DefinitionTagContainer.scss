@@ -4,3 +4,11 @@
 .definition-tag-container + .definition-tag-container {
     margin-top: 16px;
 }
+
+.modal-item + .definition-tag-container {
+    margin-top: 16px;
+}
+
+.combine-input-container + .definition-tag-container {
+    margin-top: 16px;
+}

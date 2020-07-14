@@ -9,10 +9,14 @@
     }
     .input-list {
         display: flex;
+        align-items: center;
         flex-wrap: wrap;
         margin-left: 8px;
         > label + input {
             margin-left: 12px;
+        }
+        > input + .input-component {
+            margin-left: 8px;
         }
         > * {
             vertical-align: middle;

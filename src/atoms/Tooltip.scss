@@ -15,8 +15,11 @@
     &.type-dark {
         background-color: $gray90;
     }
+    &.show {
+        opacity: 1 !important;
+    }
     .section {
-        padding: 10px 0;
+        padding: 0;
         background-color: transparent;
         header {
             .header-top {

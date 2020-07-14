@@ -59,23 +59,29 @@
         }
         > .modal-contents {
             padding: 20px 20px 24px;
-            > .modal-item {
+            .modal-item {
                 display: grid;
-                align-items: center;
 
                 > label {
+                    position: relative;
+                    top: 10px;
                     justify-self: end;
+                }
+
+                button {
+                    justify-self: start;
                 }
             }
             div + .modal-item {
                 margin-top: 16px;
             }
 
-            > .combine-input-container {
+            .combine-input-container {
                 display: grid;
-                align-items: center;
 
                 > span {
+                    position: relative;
+                    top: 10px;
                     justify-self: end;
                 }
                 > .combine-input-list {
@@ -83,6 +89,13 @@
                 }
             }
             div + .combine-input-container {
+                margin-top: 16px;
+            }
+
+            .input-container {
+                display: grid;
+            }
+            div + .input-container {
                 margin-top: 16px;
             }
         }
@@ -96,10 +109,10 @@
 .modal-size-small {
     width: 384px;
     > .modal-contents {
-        > .modal-item {
+        .modal-item {
             grid-template-columns: 96px 1fr;
         }
-        > .combine-input-container {
+        .combine-input-container {
             grid-template-columns: 96px 1fr;
         }
         .definition-tag-row {
@@ -110,10 +123,10 @@
 .modal-size-medium {
     width: 768px;
     > .modal-contents {
-        > .modal-item {
+        .modal-item {
             grid-template-columns: 192px 1fr;
         }
-        > .combine-input-container {
+        .combine-input-container {
             grid-template-columns: 192px 1fr;
         }
         .definition-tag-row {
@@ -124,10 +137,10 @@
 .modal-size-large {
     width: 1152px;
     > .modal-contents {
-        > .modal-item {
+        .modal-item {
             grid-template-columns: 288px 1fr;
         }
-        > .combine-input-container {
+        .combine-input-container {
             grid-template-columns: 288px 1fr;
         }
         .definition-tag-row {

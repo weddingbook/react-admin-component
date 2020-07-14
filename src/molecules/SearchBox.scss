@@ -10,14 +10,17 @@
         display: grid;
         align-items: center;
         grid-template-columns: 15% 1fr;
-        & + & {
-            margin-top: 16px;
-        }
 
         > label {
             justify-self: end;
         }
     }
+    &.stage-1 {
+        .search-box-item + .search-box-item {
+            margin-top: 16px;
+        }
+    }
+
     .input-container {
         display: grid;
         align-items: center;

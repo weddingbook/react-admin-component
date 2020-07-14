@@ -1,24 +1,31 @@
 @import "../assets/scss/color.scss";
 
 .input-component {
+    position: relative;
     display: inline-flex;
     flex-direction: column;
-    .input-wrapper {
-        position: relative;
+    vertical-align: middle;
+
+    .default-input-wrapper {
         display: inline-flex;
         align-items: center;
         background-color: white;
         height: 32px;
         border-radius: 4px;
         border: 1px solid $gray20;
-        padding: 8px 0px 8px 12px;
 
+        &.after-string {
+            padding: 8px 0px 8px 12px;
+        }
         &:focus-within {
             outline: none;
             border: 1px solid $blue60;
             box-shadow: 0 1px 5px 0 rgba(28, 71, 154, 0.3);
         }
-        
+        &.error {
+            border: 1px solid $red60;
+        }
+
         input {
             border: none;
             padding-right: 8px;
@@ -34,14 +41,17 @@
             }
         }
 
-        > i > svg {
-            fill: $gray20;
+        > i {
+            // padding-left: 8px;
+            > svg {
+                fill: $gray20;
+            }
         }
         span.unit {
             font-size: 13px;
-            line-height: 32px;
             padding-right: 12px;
             padding-bottom: 1px;
+            white-space: nowrap;
         }
     }
 

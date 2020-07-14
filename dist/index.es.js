@@ -1992,13 +1992,6 @@ var ButtonTypeInput = function (_a) {
             title)));
 };
 
-var DefinitionTag = function (_a) {
-    var children = _a.children, title = _a.title, direction = _a.direction;
-    return (React.createElement("dl", { className: "definition-tag-" + direction },
-        React.createElement("dt", null, title),
-        React.createElement("dd", null, children)));
-};
-
 /*! *****************************************************************************
 Copyright (c) Microsoft Corporation.
 
@@ -2039,6 +2032,18 @@ var __assign = function() {
     return __assign.apply(this, arguments);
 };
 
+function __rest(s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+}
+
 function __spreadArrays() {
     for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
     for (var r = Array(s), k = 0, i = 0; i < il; i++)
@@ -2047,7 +2052,13 @@ function __spreadArrays() {
     return r;
 }
 
-// input과 InputRecommend를 InputWrapper로 감싸주세요.
+var DefinitionTag = function (_a) {
+    var children = _a.children, style = _a.style, _b = _a.title, title = _b === void 0 ? '' : _b, direction = _a.direction;
+    return (React.createElement("dl", { className: "definition-tag-" + direction, style: __assign({}, style) },
+        React.createElement("dt", null, title),
+        React.createElement("dd", null, children)));
+};
+
 var InputRecommend = function (_a) {
     var options = _a.options, style = _a.style, onSelectOptionSet = _a.onSelectOptionSet, invalid = _a.invalid, informationMessage = _a.informationMessage;
     var _b = useState(true), isShowList = _b[0], setShowList = _b[1];
@@ -2184,14 +2195,17 @@ var Pagination = function (_a) {
                 React.createElement(Icon, { name: 'arrow-ios-forward-outline', size: 'medium' })))));
 };
 
-var SpecialInput = function (_a) {
-    var children = _a.children, style = _a.style, iconName = _a.iconName, afterString = _a.afterString, recommendOptions = _a.recommendOptions, onSelectRecommendOptionSet = _a.onSelectRecommendOptionSet;
+var Input = function (_a) {
+    var style = _a.style, inputStyle = _a.inputStyle, iconName = _a.iconName, afterString = _a.afterString, recommendOptions = _a.recommendOptions, onSelectRecommendOptionSet = _a.onSelectRecommendOptionSet, _b = _a.errorMessage, errorMessage = _b === void 0 ? 'Error message' : _b, _c = _a.informationMessage, informationMessage = _c === void 0 ? '' : _c, _d = _a.required, required = _d === void 0 ? false : _d, rest = __rest(_a, ["style", "inputStyle", "iconName", "afterString", "recommendOptions", "onSelectRecommendOptionSet", "errorMessage", "informationMessage", "required"]);
     return (React.createElement(React.Fragment, null,
-        React.createElement("div", { className: 'special-input', style: style },
-            React.createElement(Icon, { name: iconName, size: "medium" }),
-            afterString ? React.cloneElement(children, { className: 'after-string' }) : children,
-            afterString && React.createElement("span", null, afterString),
-            (recommendOptions && onSelectRecommendOptionSet) && React.createElement(InputRecommend, { options: recommendOptions, onSelectOptionSet: onSelectRecommendOptionSet }))));
+        React.createElement("div", { className: "input-component " + ((required || informationMessage) ? 'message' : ''), style: style },
+            React.createElement("div", { className: "default-input-wrapper " + (iconName ? 'after-string' : '') + " " + (required ? 'error' : ''), style: inputStyle },
+                iconName && React.createElement(Icon, { name: iconName, size: "medium" }),
+                React.createElement("input", __assign({}, rest, { className: "" + (afterString ? 'after-string' : ''), required: required })),
+                afterString && React.createElement("span", { className: 'unit' }, afterString)),
+            (recommendOptions && onSelectRecommendOptionSet) && React.createElement(InputRecommend, { invalid: required, informationMessage: informationMessage, options: recommendOptions, onSelectOptionSet: onSelectRecommendOptionSet }),
+            informationMessage && React.createElement("span", { className: 'input-message' }, informationMessage),
+            (required && errorMessage) && React.createElement("span", { className: 'input-message error' }, errorMessage))));
 };
 
 var SwitchButton = function (_a) {
@@ -3995,10 +4009,11 @@ function (_React$Component) {
   clickable: false
 }), _defineProperty(_class2, "supportedWrappers", ["div", "span"]), _defineProperty(_class2, "displayName", "ReactTooltip"), _temp)) || _class) || _class) || _class) || _class) || _class) || _class) || _class;
 
+// https://github.com/wwayne/react-tooltip#readme
 // TODO: arrow 위치 변경되어야 함
 var Tooltip = function (_a) {
     var children = _a.children, id = _a.id, buttonType = _a.buttonType;
-    return (React.createElement(ReactTooltip, { className: "" + (buttonType ? 'btn-tooltip' : ''), id: id, uuid: id, effect: "solid" }, children));
+    return (React.createElement(ReactTooltip, { className: "" + (buttonType ? 'btn-tooltip' : ''), id: id, uuid: id, effect: "solid", arrowColor: "#323232", backgroundColor: "#323232" }, children));
 };
 
 var ViewMore = function (_a) {
@@ -4013,8 +4028,8 @@ var ViewMore = function (_a) {
 };
 
 var CombineInput = function (_a) {
-    var children = _a.children, title = _a.title;
-    return (React.createElement("div", { className: 'combine-input-container' },
+    var children = _a.children, style = _a.style, title = _a.title;
+    return (React.createElement("div", { className: 'combine-input-container', style: __assign({}, style) },
         React.createElement("span", null, title),
         React.createElement("div", { className: 'combine-input-list', style: { gridTemplateColumns: "repeat(auto-fill, minmax(" + (1 / children.length) * 100 + "%, 1fr)" } }, children)));
 };
@@ -4788,10 +4803,8 @@ var util_23 = util.promisify;
 var util_24 = util.callbackify;
 
 var DefinitionTagContainer = function (_a) {
-    var children = _a.children;
-    return (React.createElement("div", { className: 'definition-tag-container', style: {
-            gridTemplateColumns: "repeat(" + (util_5(children) ? children.length : 1) + ", 1fr)",
-        } }, children));
+    var children = _a.children, style = _a.style;
+    return (React.createElement("div", { className: 'definition-tag-container', style: __assign(__assign({}, style), { gridTemplateColumns: "repeat(" + (util_5(children) ? children.length : 1) + ", 1fr)" }) }, children));
 };
 
 var InputContainer = function (_a) {
@@ -4799,16 +4812,6 @@ var InputContainer = function (_a) {
     return (React.createElement("div", { className: 'input-container' },
         React.createElement("span", null, title),
         React.createElement("div", { className: 'input-list' }, children)));
-};
-
-var InputWrapper = function (_a) {
-    var children = _a.children, style = _a.style, invalid = _a.invalid, _b = _a.errorMessage, errorMessage = _b === void 0 ? 'Error message' : _b, informationMessage = _a.informationMessage, options = _a.options, onSelectOptionSet = _a.onSelectOptionSet;
-    return (React.createElement(React.Fragment, null,
-        React.createElement("div", { className: 'input-wrapper', style: style },
-            children,
-            (options && onSelectOptionSet) && React.createElement(InputRecommend, { options: options, onSelectOptionSet: onSelectOptionSet, invalid: invalid, informationMessage: informationMessage }),
-            informationMessage && React.createElement("span", { className: 'input-message' }, informationMessage),
-            (invalid && errorMessage) && React.createElement("span", { className: 'input-message error' }, errorMessage))));
 };
 
 var Modal = function (_a) {
@@ -4980,7 +4983,7 @@ function removePopup(_a) {
 var SearchBox = function (_a) {
     var children = _a.children, style = _a.style, stage = _a.stage;
     var grid = "repeat(" + stage + ", 1fr)";
-    return (React.createElement("section", { className: 'search-box', style: __assign(__assign({}, style), { gridTemplateColumns: grid }) }, children));
+    return (React.createElement("section", { className: "search-box stage-" + stage, style: __assign(__assign({}, style), { gridTemplateColumns: grid }) }, children));
 };
 
 var Section = function (_a) {
@@ -4999,10 +5002,6 @@ var ToastContext = React.createContext({
 });
 var ToastContainer = function () {
     var toasts = useContext(ToastContext).toasts;
-    useEffect(function () {
-        console.log('container props');
-        console.log(toasts);
-    }, [toasts]);
     return (React.createElement(Fragment$1, null, toasts.map(function (toast) {
         return React.createElement(Toast, __assign({}, toast, { key: toast.id }));
     })));
@@ -5093,5 +5092,5 @@ var SectionContainer = function (_a) {
         } }, children));
 };
 
-export { Button, ButtonTypeInput, CombineInput, DefinitionTag, DefinitionTagContainer, InputContainer, InputRecommend, InputWrapper, Modal, Pagination, PopupArea, SearchBox, Section, SectionContainer, SelectBox, SpecialInput, SwitchButton, Tag, Tooltip, ViewMore, createPopup, removePopup, useToast };
+export { Button, ButtonTypeInput, CombineInput, DefinitionTag, DefinitionTagContainer, Input, InputContainer, InputRecommend, Modal, Pagination, PopupArea, SearchBox, Section, SectionContainer, SelectBox, SwitchButton, Tag, Tooltip, ViewMore, createPopup, removePopup, useToast };
 //# sourceMappingURL=index.es.js.map

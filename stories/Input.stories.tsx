@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { withKnobs } from '@storybook/addon-knobs'
 import Section from '../components/molecules/Section';
-import InputWrapper from '../components/molecules/InputWrapper';
 import CombineInput from '../components/molecules/CombineInput';
-import SpecialInput from '../components/atoms/SpecialInput';
 import { TimePicker, DatePicker } from 'antd';
+import Input from '../components/atoms/Input';
 
 export default {
     title: 'Input',
@@ -26,9 +25,7 @@ export const InputStory = () => {
             </div>
             <div className='section-box-item'>
                 <label>Error</label>
-                <InputWrapper invalid={true}>
-                    <input required={true}></input>
-                </InputWrapper>
+                <Input required={true} />
             </div>
             <div className='section-box-item'>
                 <label>Disabled</label>
@@ -36,22 +33,16 @@ export const InputStory = () => {
             </div>
             <div className='section-box-item'>
                 <label>Info</label>
-                <InputWrapper informationMessage='information'>
-                    <input placeholder='placeholder'></input>
-                </InputWrapper>
+                <Input informationMessage='information' placeholder='placeholder' />
             </div>
             <CombineInput title='Combined'>
                 <DatePicker placeholder='0000-00-00' />
                 <TimePicker placeholder='23:59' use12Hours format="h:mm a" minuteStep={5} />
-                <SpecialInput iconName='people-outline' afterString={'명'}>
-                    <input placeholder='보증인원'></input>
-                </SpecialInput>
+                <Input iconName='people-outline' afterString='명' placeholder='보증인원' />
                 <input placeholder='홀이름' />
             </CombineInput>
             <CombineInput>
-                <SpecialInput iconName='people-outline' afterString={'명'}>
-                    <input placeholder='보증인원'></input>
-                </SpecialInput>
+                <Input iconName='people-outline' afterString='명' placeholder='보증인원' />
                 <input placeholder='홀이름' />
             </CombineInput>
             <div className='section-box-item'>
@@ -60,20 +51,31 @@ export const InputStory = () => {
             </div>
             <div className='section-box-item'>
                 <label>Info</label>
-                <SpecialInput iconName='search-outline'>
-                    <InputWrapper>
-                        <input value={inputValue} placeholder='키워드 검색' onChange={(e) => (onSetInputValue(e.target.value))}></input>
-                    </InputWrapper>
-                </SpecialInput>
+                <Input iconName='search-outline' placeholder='키워드 검색' />
             </div>
             <CombineInput>
-                <SpecialInput iconName='people-outline' afterString={'명'}>
-                    <input placeholder='보증인원'></input>
-                </SpecialInput>
-                <input placeholder='홀이름' />
-                <InputWrapper>
-                    <input required={true}></input>
-                </InputWrapper>
+                <Input
+                    recommendOptions={options}
+                    placeholder='hihi'
+                    value={inputValue}
+                    onChange={(e) => { onSetInputValue(e.target.value) }}
+                />
+                <Input
+                    informationMessage='hihi'
+                    value={inputValue}
+                    recommendOptions={options}
+                    onSelectRecommendOptionSet={onSetInputValue}
+                    onChange={(e) => { onSetInputValue(e.target.value) }}
+                />
+                <Input
+                    iconName='people-outline'
+                    informationMessage='hihi'
+                    afterString='명'
+                    recommendOptions={options}
+                    placeholder='hihi'
+                    value={inputValue}
+                    onChange={(e) => { onSetInputValue(e.target.value) }}
+                />
             </CombineInput>
         </Section>
     )
