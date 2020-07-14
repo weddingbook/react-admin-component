@@ -5,11 +5,9 @@ type Props = {
     options: Array<any>
     style?: CSSProperties
     onSelectOptionSet: (option: any) => void
-    invalid?: boolean
-    informationMessage?: string
+    invalid: boolean
+    informationMessage: string
 }
-
-// input과 InputRecommend를 InputWrapper로 감싸주세요.
 
 const InputRecommend = ({ options, style, onSelectOptionSet, invalid, informationMessage }: Props) => {
     const [isShowList, setShowList] = useState<boolean>(true)

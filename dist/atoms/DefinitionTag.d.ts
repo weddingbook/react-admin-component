@@ -1,9 +1,10 @@
-/// <reference types="react" />
+import { CSSProperties } from 'react';
 import './DefinitionTag.scss';
 declare type Props = {
     children: string | object;
-    title: string;
+    title?: string;
     direction?: 'row' | 'column';
+    style?: CSSProperties;
 };
-declare const DefinitionTag: ({ children, title, direction }: Props) => JSX.Element;
+declare const DefinitionTag: ({ children, style, title, direction }: Props) => JSX.Element;
 export default DefinitionTag;

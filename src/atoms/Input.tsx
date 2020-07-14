@@ -5,6 +5,7 @@ import InputRecommend from './InputRecommend';
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
     style?: CSSProperties,
+    inputStyle?: CSSProperties
     iconName?: string,
     afterString?: string
     recommendOptions?: Array<any>
@@ -13,11 +14,11 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
     informationMessage?: string
 }
 
-const Input = ({ style, iconName, afterString, recommendOptions, onSelectRecommendOptionSet, errorMessage, informationMessage, required, ...rest }: Props) => {
+const Input = ({ style, inputStyle, iconName, afterString, recommendOptions, onSelectRecommendOptionSet, errorMessage = 'Error message', informationMessage = '', required = false, ...rest }: Props) => {
     return (
         <>
-            <div className='input-component' style={style}>
-                <div className='input-wrapper'>
+            <div className={`input-component ${(required || informationMessage) ? 'message' : ''}`} style={style}>
+                <div className={`default-input-wrapper ${iconName ? 'after-string' : ''} ${required ? 'error' : ''}`} style={inputStyle}>
                     {iconName && <Icon
                         name={iconName}
                         size="medium"
@@ -25,7 +26,7 @@ const Input = ({ style, iconName, afterString, recommendOptions, onSelectRecomme
                     <input {...rest} className={`${afterString ? 'after-string' : ''}`} required={required} />
                     {afterString && <span className='unit'>{afterString}</span>}
                 </div>
-                {(recommendOptions && onSelectRecommendOptionSet) && <InputRecommend options={recommendOptions} onSelectOptionSet={onSelectRecommendOptionSet} />}
+                {(recommendOptions && onSelectRecommendOptionSet) && <InputRecommend invalid={required} informationMessage={informationMessage} options={recommendOptions} onSelectOptionSet={onSelectRecommendOptionSet} />}
                 {informationMessage && <span className='input-message'>{informationMessage}</span>}
                 {(required && errorMessage) && <span className='input-message error'>{errorMessage}</span>}
             </div>

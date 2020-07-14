@@ -10,7 +10,7 @@ type Props = {
 const SearchBox = ({ children, style, stage }: Props) => {
     const grid = `repeat(${stage}, 1fr)`;
     return (
-        <section className='search-box' style={{...style, gridTemplateColumns: grid }}>
+        <section className={`search-box stage-${stage}`} style={{...style, gridTemplateColumns: grid }}>
            {children}
         </section>
     )

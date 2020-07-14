@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { withKnobs, select } from '@storybook/addon-knobs'
 import SearchBox from '../components/molecules/SearchBox';
-import SpecialInput from '../components/atoms/SpecialInput';
 import InputContainer from '../components/molecules/InputContainer';
 import CombineInput from '../components/molecules/CombineInput';
 import SelectBox from '../components/atoms/SelectBox';
+import Input from '../components/atoms/Input';
 
 export default {
     title: '검색박스',
@@ -26,15 +26,11 @@ export const SearchBoxStory = () => {
     }, 1)}>
         <div className='search-box-item'>
             <label>검색</label>
-            <SpecialInput iconName='search-outline'>
-                <input placeholder='입력하면 바로 검색합니다.'></input>
-            </SpecialInput>
+            <Input iconName='search-outline' placeholder='입력하면 바로 검색합니다.'/>
         </div>
         <div className='search-box-item'>
             <label>기간</label>
-            <SpecialInput iconName='search-outline' afterString='명'>
-                <input placeholder='입력하면 바로 검색합니다.'></input>
-            </SpecialInput>
+            <Input iconName='search-outline' afterString='명' placeholder='입력하면 바로 검색합니다.'/>
         </div>
         <InputContainer title='카테고리'>
             <input className='checkbox-input' type='checkbox' id='checkbox-input' />
@@ -55,13 +51,9 @@ export const SearchBoxStory = () => {
             <label htmlFor='checkbox-input' >삭제</label>
         </InputContainer>
         <CombineInput title='Combined'>
-            <SpecialInput iconName='calendar-outline' afterString='명'>
-                <input placeholder='보증인원'></input>
-            </SpecialInput>
+            <Input iconName='calendar-outline' afterString='명' placeholder='보증인원'/>
             <input placeholder='혼나자'></input>
-            <SpecialInput iconName='calendar-outline' afterString='명'>
-                <input placeholder='보증인원'></input>
-            </SpecialInput>
+            <Input iconName='calendar-outline' afterString='명' placeholder='보증인원'/>
         </CombineInput>
         <CombineInput title='Combined'>
             <SelectBox options={options} selectedOption={selectedOption} onSelectOptionSet={onSet} />
