@@ -22,10 +22,6 @@ interface PopupProps {
 	afterClose?: () => void;
 	onClickOutside?: () => void;
 }
-interface ToastPopupProps extends PopupProps {
-	position: ['left' | 'center' | 'right', 'top' | 'center' | 'bottom'];
-	delay: number;
-}
 interface AlertPopupProps extends PopupProps {
 	button: PopupButtonProps;
 }
@@ -77,6 +73,7 @@ class Popup<P extends PopupProps> extends Component<P> {
 		}
 	}
 	keyboardClose(e: KeyboardEvent) {
+		console.log('keyboard close');
 		const { closeOnEsc } = this.props;
 		const isKeyCodeEscape = e.keyCode === 27
 		if (closeOnEsc && isKeyCodeEscape) {
@@ -84,39 +81,14 @@ class Popup<P extends PopupProps> extends Component<P> {
 		}
 	}
 	componentDidMount() {
-		console.log('c c 1')
 		window.addEventListener('keydown', e => this.keyboardClose(e))
 	}
 	componentWillUnmount() {
+		console.log('will unmount')
 		window.removeEventListener('keydown', (e) => this.keyboardClose(e))
 		if (this.props.willUnmount) {
 			this.props.willUnmount();
 		}
-	}
-}
-class ToastPopup extends Popup<ToastPopupProps> {
-	componentDidMount() {
-		const { delay } = this.props;
-		console.log('t 1')
-		setTimeout(() => {
-			this.closePopup();	
-		}, delay);
-	}
-	render() {
-		const { title, message, position } = this.props;
-		return (
-			<div className={`popup-wrap ${position[0]} ${position[1]}`}>
-				<div
-					className="overlay"
-					onClick={this.clickOverlay.bind(this)}
-				/>
-				<div className="popup">
-					{title && <h1>{title}</h1>}
-					<span className="circle"></span>
-					<p className="popup-content">{message}</p>
-				</div>
-			</div>
-		)
 	}
 }
 
@@ -176,9 +148,6 @@ function createPopupWrap(wrap: string) {
 }
 function renderPopup(type: string, options: PopupProps, elWrap: HTMLElement) {
 	switch (type) {
-		case 'toast':
-			render(<ToastPopup {...(options as PopupProps)} />, elWrap);
-			break;
 		case 'alert':
 			render(<AlertPopup {...(options as AlertPopupProps)} />, elWrap);
 			break;

@@ -17,4 +17,5 @@ export { default as Modal } from './molecules/Modal';
 export { PopupArea, createPopup, removePopup } from './molecules/Popup';
 export { default as SearchBox } from './molecules/SearchBox';
 export { default as Section } from './molecules/Section';
+export { useToast } from './molecules/Toast';
 export { default as SectionContainer } from './organisms/SectionContainer';

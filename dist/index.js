@@ -4866,6 +4866,7 @@ var Popup = /** @class */ (function (_super) {
         }
     };
     Popup.prototype.keyboardClose = function (e) {
+        console.log('keyboard close');
         var closeOnEsc = this.props.closeOnEsc;
         var isKeyCodeEscape = e.keyCode === 27;
         if (closeOnEsc && isKeyCodeEscape) {
@@ -4874,11 +4875,11 @@ var Popup = /** @class */ (function (_super) {
     };
     Popup.prototype.componentDidMount = function () {
         var _this = this;
-        console.log('c c 1');
         window.addEventListener('keydown', function (e) { return _this.keyboardClose(e); });
     };
     Popup.prototype.componentWillUnmount = function () {
         var _this = this;
+        console.log('will unmount');
         window.removeEventListener('keydown', function (e) { return _this.keyboardClose(e); });
         if (this.props.willUnmount) {
             this.props.willUnmount();
@@ -4903,30 +4904,6 @@ var Popup = /** @class */ (function (_super) {
     };
     return Popup;
 }(React.Component));
-var ToastPopup = /** @class */ (function (_super) {
-    __extends(ToastPopup, _super);
-    function ToastPopup() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    ToastPopup.prototype.componentDidMount = function () {
-        var _this = this;
-        var delay = this.props.delay;
-        console.log('t 1');
-        setTimeout(function () {
-            _this.closePopup();
-        }, delay);
-    };
-    ToastPopup.prototype.render = function () {
-        var _a = this.props, title = _a.title, message = _a.message, position = _a.position;
-        return (React__default.createElement("div", { className: "popup-wrap " + position[0] + " " + position[1] },
-            React__default.createElement("div", { className: "overlay", onClick: this.clickOverlay.bind(this) }),
-            React__default.createElement("div", { className: "popup" },
-                title && React__default.createElement("h1", null, title),
-                React__default.createElement("span", { className: "circle" }),
-                React__default.createElement("p", { className: "popup-content" }, message))));
-    };
-    return ToastPopup;
-}(Popup));
 var AlertPopup = /** @class */ (function (_super) {
     __extends(AlertPopup, _super);
     function AlertPopup() {
@@ -4971,9 +4948,6 @@ function createPopupWrap(wrap) {
 }
 function renderPopup(type, options, elWrap) {
     switch (type) {
-        case 'toast':
-            reactDom.render(React__default.createElement(ToastPopup, __assign({}, options)), elWrap);
-            break;
         case 'alert':
             reactDom.render(React__default.createElement(AlertPopup, __assign({}, options)), elWrap);
             break;
@@ -5027,6 +5001,98 @@ var Section = function (_a) {
         children));
 };
 
+var ToastContext = React__default.createContext({
+    toasts: []
+});
+var ToastContainer = function () {
+    var toasts = React.useContext(ToastContext).toasts;
+    React.useEffect(function () {
+        console.log('container props');
+        console.log(toasts);
+    }, [toasts]);
+    return (React__default.createElement(React.Fragment, null, toasts.map(function (toast) {
+        return React__default.createElement(Toast, __assign({}, toast, { key: toast.id }));
+    })));
+};
+var Toast = function (props) {
+    var removeToast = useToast().removeToast;
+    var title = props.title, message = props.message, afterClose = props.afterClose, delay = props.delay;
+    var id = new Date().getTime();
+    var closeToast = function () {
+        removeToast(id);
+        if (afterClose) {
+            afterClose();
+        }
+    };
+    React.useEffect(function () {
+        setTimeout(function () {
+            closeToast();
+        }, delay);
+        return function () {
+            console.log('unmo');
+        };
+    }, []);
+    return (React__default.createElement("div", { id: "toast-" + id, className: "toast" },
+        title && React__default.createElement("h1", null, title),
+        React__default.createElement("span", { className: "circle" }),
+        React__default.createElement("p", { className: "toast-content" }, message)));
+};
+Toast.defaultProps = {
+    closeOnClickOutside: true,
+    closeOnEsc: true,
+    willUnmount: function () { },
+    afterClose: function () { },
+    onClickOutside: function () { },
+    delay: 3000,
+    position: ['right', 'top']
+};
+var toastState = { toasts: [] };
+function toastReducer(state, action) {
+    switch (action.type) {
+        case 'create':
+            return { toasts: __spreadArrays(state.toasts, [action.payload]) };
+        default:
+            throw new Error();
+    }
+}
+var useToast = function () {
+    var _a = React.useReducer(toastReducer, toastState), state = _a[0], dispatch = _a[1];
+    React.useEffect(function () {
+        var position =  ['right', 'top'] ;
+        var wrap = "toast-" + position.join('-');
+        var elWrap = document.getElementById(wrap);
+        if (!elWrap) {
+            elWrap = document.createElement('div');
+            elWrap.id = wrap;
+            document.body.appendChild(elWrap);
+        }
+        elWrap.classList.add('toast-wrap');
+        reactDom.render(React__default.createElement(ToastContext.Provider, { value: { toasts: state.toasts } },
+            state.toasts,
+            React__default.createElement(ToastContainer, null)), elWrap);
+    }, []);
+    var createToast = function (options) {
+        dispatch({ type: 'create', payload: options });
+    };
+    var removeToast = function (id) {
+        console.log(id);
+        console.log(state.toasts);
+        // const wrap = `toast-${props.id}`;
+        // const target = document.getElementById(wrap);
+        // if (target) {
+        // 	unmountComponentAtNode(target);
+        // }
+    };
+    var removeAllToast = function () {
+        // setToasts([]);
+    };
+    return {
+        createToast: createToast,
+        removeToast: removeToast,
+        removeAllToast: removeAllToast
+    };
+};
+
 var SectionContainer = function (_a) {
     var children = _a.children;
     return (React__default.createElement("div", { className: 'section-container', style: {
@@ -5056,4 +5122,5 @@ exports.Tooltip = Tooltip;
 exports.ViewMore = ViewMore;
 exports.createPopup = createPopup;
 exports.removePopup = removePopup;
+exports.useToast = useToast;
 //# sourceMappingURL=index.js.map
