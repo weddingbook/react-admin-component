@@ -5030,5 +5030,5 @@ var SectionContainer = function (_a) {
         } }, children));
 };
 
-export { Button, ButtonTypeInput, CombineInput, DefinitionTag, DefinitionTagContainer, InputContainer, InputRecommend, InputWrapper, Modal, Pagination, PopupArea, SearchBox, Section, SectionContainer, SelectBox, SpecialInput, SwitchButton, Tag, Tooltip, ViewMore, createPopup, removePopup };
+export { Button, ButtonTypeInput, CombineInput, DefinitionTag, DefinitionTagContainer, Input, InputContainer, InputRecommend, Modal, Pagination, PopupArea, SearchBox, Section, SectionContainer, SelectBox, SwitchButton, Tag, Tooltip, ViewMore, createPopup, removePopup };
 //# sourceMappingURL=index.es.js.map
