@@ -121,13 +121,14 @@ export const useToast = () => {
 		}
 	}
 	const removeToastState = (id: string, position: string) => {
-		setToasts(() => {
-			const result: ToastStoreProps = { ...toasts };
-			console.log(id)
-			console.log(position)
-			// result[position] = [...toasts[position].filter((toast: ToastProps) => toast.id !== id), {}]
-			return result;
-		});
+		console.log(id, position)
+		// setToasts(() => {
+		// 	const result: ToastStoreProps = { ...toasts };
+		// 	console.log(id)
+		// 	console.log(position)
+		// 	result[position] = [...toasts[position].filter((toast: ToastProps) => toast.id !== id), {}]
+		// 	return result;
+		// });
 	}
 	const removeAllToast = () => {
 		setToasts({

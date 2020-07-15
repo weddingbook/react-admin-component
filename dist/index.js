@@ -5082,13 +5082,14 @@ var useToast = function () {
         }
     };
     var removeToastState = function (id, position) {
-        setToasts(function () {
-            var result = __assign({}, toasts);
-            console.log(id);
-            console.log(position);
-            // result[position] = [...toasts[position].filter((toast: ToastProps) => toast.id !== id), {}]
-            return result;
-        });
+        console.log(id, position);
+        // setToasts(() => {
+        // 	const result: ToastStoreProps = { ...toasts };
+        // 	console.log(id)
+        // 	console.log(position)
+        // 	result[position] = [...toasts[position].filter((toast: ToastProps) => toast.id !== id), {}]
+        // 	return result;
+        // });
     };
     var removeAllToast = function () {
         setToasts({
