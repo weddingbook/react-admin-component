@@ -4997,26 +4997,26 @@ var Section = function (_a) {
         children));
 };
 
+var toastPositionMatrix = [
+    ['left-top', 'LEFT_TOP'],
+    ['left-bottom', 'LEFT_BOTTOM'],
+    ['right-top', 'RIGHT_TOP'],
+    ['right-bottom', 'RIGHT_BOTTOM'],
+];
 var ToastContainer = function (_a) {
-    var toasts = _a.toasts, removeToast = _a.removeToast;
-    return (React.createElement("div", { className: "toast-wrap" },
-        React.createElement("div", { className: "left-top" }, toasts['LEFT_TOP'].map(function (toast) {
-            return React.createElement(Toast, __assign({}, toast, { key: toast.id, removeToast: removeToast }));
-        })),
-        React.createElement("div", { className: "left-bottom" }, toasts['LEFT_BOTTOM'].map(function (toast) {
-            return React.createElement(Toast, __assign({}, toast, { key: toast.id, removeToast: removeToast }));
-        })),
-        React.createElement("div", { className: "right-top" }, toasts['RIGHT_TOP'].map(function (toast) {
-            return React.createElement(Toast, __assign({}, toast, { key: toast.id, removeToast: removeToast }));
-        })),
-        React.createElement("div", { className: "right-bottom" }, toasts['RIGHT_BOTTOM'].map(function (toast) {
-            return React.createElement(Toast, __assign({}, toast, { key: toast.id, removeToast: removeToast }));
-        }))));
+    var toasts = _a.toasts, removeToast = _a.removeToast, removeToastState = _a.removeToastState;
+    useEffect(function () {
+        console.log('toast-container');
+    }, [toasts]);
+    return (React.createElement("div", { className: "toast-wrap" }, toastPositionMatrix.map(function (position) { return (React.createElement("div", { className: position[0], key: position[0] }, toasts[position[1]].map(function (toast) {
+        return React.createElement(Toast, __assign({}, toast, { key: toast.id, removeToast: removeToast, removeToastState: removeToastState }));
+    }))); })));
 };
 var Toast = function (props) {
-    var id = props.id, title = props.title, message = props.message, afterClose = props.afterClose, delay = props.delay, removeToast = props.removeToast;
+    var id = props.id, title = props.title, message = props.message, afterClose = props.afterClose, removeToast = props.removeToast, removeToastState = props.removeToastState, delay = props.delay, color = props.color, position = props.position;
     var closeToast = function () {
-        removeToast(id);
+        removeToast(id, position);
+        removeToastState(id, position);
         if (afterClose) {
             afterClose();
         }
@@ -5031,7 +5031,7 @@ var Toast = function (props) {
     }, []);
     return (React.createElement("div", { id: "toast-" + id, className: "toast" },
         title && React.createElement("h1", null, title),
-        React.createElement("span", { className: "circle" }),
+        React.createElement("div", { className: "circle " + color }),
         React.createElement("p", { className: "toast-content" }, message)));
 };
 Toast.defaultProps = {
@@ -5065,21 +5065,37 @@ var useToast = function () {
             return result;
         });
     };
-    var removeToast = function (id) {
+    var removeToast = function (id, position) {
         var _a;
         var wrapper = (_a = document.getElementById("toast-" + id)) === null || _a === void 0 ? void 0 : _a.parentElement;
         var target = document.getElementById("toast-" + id);
-        if (target) {
+        if (wrapper && target) {
             wrapper.removeChild(target);
+            console.log(position);
         }
     };
+    var removeToastState = function (id, position) {
+        setToasts(function () {
+            var result = __assign({}, toasts);
+            console.log(id);
+            console.log(position);
+            // result[position] = [...toasts[position].filter((toast: ToastProps) => toast.id !== id), {}]
+            return result;
+        });
+    };
     var removeAllToast = function () {
-        // setToasts([]);
+        setToasts({
+            'LEFT_TOP': [],
+            'LEFT_BOTTOM': [],
+            'RIGHT_TOP': [],
+            'RIGHT_BOTTOM': []
+        });
     };
     return {
         toasts: toasts,
         createToast: createToast,
         removeToast: removeToast,
+        removeToastState: removeToastState,
         removeAllToast: removeAllToast
     };
 };
