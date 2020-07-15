@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { withKnobs } from '@storybook/addon-knobs'
-import Pagination from '../components/atoms/Pagination';
 import { Table } from 'antd'
-import Button from '../components/atoms/Button';
+import { Button, Pagination } from '../index';
+
 
 export default {
     title: '페이지네이션',

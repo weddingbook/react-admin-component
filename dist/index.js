@@ -5108,6 +5108,16 @@ var useToast = function () {
     };
 };
 
+var Divider = function (_a) {
+    var style = _a.style;
+    return (React__default.createElement("div", { className: 'divider', style: __assign({}, style) }));
+};
+
+var ModalItem = function (_a) {
+    var children = _a.children, style = _a.style;
+    return (React__default.createElement("div", { className: 'modal-item', style: __assign({}, style) }, children));
+};
+
 var SectionContainer = function (_a) {
     var children = _a.children;
     return (React__default.createElement("div", { className: 'section-container', style: {
@@ -5115,15 +5125,50 @@ var SectionContainer = function (_a) {
         } }, children));
 };
 
+function useCheckBox(defaultList) {
+    var _a = React.useState(defaultList), list = _a[0], setList = _a[1];
+    var onChange = React.useCallback(function (e, value) {
+        setList(list.map(function (item) { return (__assign(__assign({}, item), { checked: item.id === value.id ? e.target.checked : item.checked })); }));
+    }, [list, setList]);
+    return {
+        list: list,
+        onChange: onChange
+    };
+}
+
+function useModal() {
+    var _a = React.useState(false), modalToggle = _a[0], setModalToggle = _a[1];
+    var onOpenModal = React.useCallback(function () { return setModalToggle(true); }, [setModalToggle]);
+    var onCloseModal = React.useCallback(function () { return setModalToggle(false); }, [setModalToggle]);
+    return {
+        modalToggle: modalToggle,
+        onOpenModal: onOpenModal,
+        onCloseModal: onCloseModal,
+    };
+}
+
+function useRadioBox(defaultList) {
+    var _a = React.useState(defaultList), list = _a[0], setList = _a[1];
+    var onChange = React.useCallback(function (value) {
+        setList(list.map(function (item) { return (__assign(__assign({}, item), { checked: item.id === value.id ? true : false })); }));
+    }, [list, setList]);
+    return {
+        list: list,
+        onChange: onChange
+    };
+}
+
 exports.Button = Button;
 exports.ButtonTypeInput = ButtonTypeInput;
 exports.CombineInput = CombineInput;
 exports.DefinitionTag = DefinitionTag;
 exports.DefinitionTagContainer = DefinitionTagContainer;
+exports.Divider = Divider;
 exports.Input = Input;
 exports.InputContainer = InputContainer;
 exports.InputRecommend = InputRecommend;
 exports.Modal = Modal;
+exports.ModalItem = ModalItem;
 exports.Pagination = Pagination;
 exports.PopupArea = PopupArea;
 exports.SearchBox = SearchBox;
@@ -5137,5 +5182,8 @@ exports.Tooltip = Tooltip;
 exports.ViewMore = ViewMore;
 exports.createPopup = createPopup;
 exports.removePopup = removePopup;
+exports.useCheckBox = useCheckBox;
+exports.useModal = useModal;
+exports.useRadioBox = useRadioBox;
 exports.useToast = useToast;
 //# sourceMappingURL=index.js.map

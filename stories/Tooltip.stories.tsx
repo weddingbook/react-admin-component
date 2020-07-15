@@ -1,10 +1,6 @@
 import React from 'react';
 import { withKnobs } from '@storybook/addon-knobs'
-import Tooltip from '../components/atoms/Tooltip';
-import Section from '../components/molecules/Section';
-import DefinitionTagContainer from '../components/molecules/DefinitionTagContainer';
-import DefinitionTag from '../components/atoms/DefinitionTag';
-import Button from '../components/atoms/Button';
+import { Button, DefinitionTag, DefinitionTagContainer, Section, Tooltip } from '../index'
 
 export default {
     title: '툴팁',

@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { withKnobs } from '@storybook/addon-knobs'
 import { Table } from 'antd'
-import ViewMore from '../components/atoms/ViewMore';
-import Button from '../components/atoms/Button';
+import { Button, ViewMore } from '../index'
 
 export default {
     title: '더 보기',

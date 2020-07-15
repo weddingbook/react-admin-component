@@ -1,18 +1,9 @@
 import React, { useState } from 'react';
-import DefinitionTag from '../components/atoms/DefinitionTag'
-import DefinitionTagContainer from '../components/molecules/DefinitionTagContainer';
 import { withKnobs, select } from '@storybook/addon-knobs'
-import Button from '../components/atoms/Button';
-import Modal from '../components/molecules/Modal';
-import SelectBox from '../components/atoms/SelectBox';
-import useModal from '../hooks/useModal';
-import CombineInput from '../components/molecules/CombineInput';
-import Input from '../components/atoms/Input';
+import { useModal } from '../index';
 import { DatePicker, TimePicker } from 'antd';
-import InputContainer from '../components/molecules/InputContainer';
-import ButtonTypeInput from '../components/atoms/ButtonTypeInput';
-import ModalItem from '../components/molecules/ModalItem';
-import Divider from '../components/atoms/Divider';
+import { Divider, ModalItem, ButtonTypeInput, InputContainer, Input, CombineInput, SelectBox, Modal, Button, DefinitionTag, DefinitionTagContainer } from '../index';
+
 
 export default {
     title: '모달',
@@ -199,7 +190,7 @@ export const ModalStoryWithInform = () => {
             </DefinitionTagContainer>
 
             <Divider />
-            
+
             <DefinitionTagContainer>
                 <DefinitionTag title='신청자/연락처' direction='row'>
                     홍길동 신부님 010-1234-1234
@@ -378,7 +369,7 @@ export const ModalStoryWithInform = () => {
                 <label>승인상태</label>
                 <SelectBox style={{ width: '273px' }} options={options} onSelectOptionSet={onSet} selectedOption={selectedOption} />
             </ModalItem>
-            <Divider/>
+            <Divider />
             <DefinitionTagContainer>
                 <DefinitionTag title='비고' direction='row'>
                 </DefinitionTag>

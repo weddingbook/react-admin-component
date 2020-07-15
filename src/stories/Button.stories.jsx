@@ -36,19 +36,3 @@ export const ButtonStory = () => <Button
         'headphones-outline': 'headphones-outline',
     }, '')}
 />
-
-export const ButtonStoryDisabled = () => <Button
-    type={select('버튼타입', {
-        solid: 'solid',
-        line: 'line',
-        text: 'text',
-        link: 'link'
-    }, 'solid')}
-    color={select('색깔', {
-        blue: 'blue',
-        green: 'green',
-        yellow: 'yellow',
-        red: 'red'
-    }, 'blue')}
-    disabled={true}
-/>

@@ -1,7 +1,8 @@
 import React from 'react';
-import InputContainer from '../components/molecules/InputContainer';
-import useRadioBox from '../hooks/useRadioBox';
-import useCheckBox from '../hooks/useCheckBox';
+import { useRadioBox } from '../index';
+import { useCheckBox } from '../index';
+import { InputContainer } from '../index';
+
 
 const RadioAndCheckBoxInput = () => {
     const { list: checkBoxList, onChange: onChange2 } = useCheckBox([

@@ -1,6 +1,6 @@
 import React from 'react';
-import DefinitionTag from '../components/atoms/DefinitionTag'
-import DefinitionTagContainer from '../components/molecules/DefinitionTagContainer';
+import { DefinitionTagContainer, DefinitionTag } from '../index';
+
 import { withKnobs, select } from '@storybook/addon-knobs'
 
 export default {

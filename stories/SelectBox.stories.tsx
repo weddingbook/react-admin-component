@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { withKnobs } from '@storybook/addon-knobs'
-import SelectBox from '../components/atoms/SelectBox';
+import { SelectBox } from '../index';
 
 export default {
     title: 'SelectBox',

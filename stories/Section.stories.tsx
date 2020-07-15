@@ -1,9 +1,6 @@
 import React from 'react';
-import DefinitionTag from '../components/atoms/DefinitionTag'
-import DefinitionTagContainer from '../components/molecules/DefinitionTagContainer';
-import Section from '../components/molecules/Section';
 import { withKnobs, text } from '@storybook/addon-knobs'
-import Button from '../components/atoms/Button';
+import { Button, Section, DefinitionTagContainer, DefinitionTag } from '../index';
 
 export default {
     title: '섹션',

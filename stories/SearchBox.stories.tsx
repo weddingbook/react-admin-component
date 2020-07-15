@@ -1,10 +1,6 @@
 import React, { useState } from 'react';
 import { withKnobs, select } from '@storybook/addon-knobs'
-import SearchBox from '../components/molecules/SearchBox';
-import InputContainer from '../components/molecules/InputContainer';
-import CombineInput from '../components/molecules/CombineInput';
-import SelectBox from '../components/atoms/SelectBox';
-import Input from '../components/atoms/Input';
+import { Input, SelectBox, CombineInput, InputContainer, SearchBox } from '../index';
 
 export default {
     title: '검색박스',

@@ -1,6 +1,6 @@
 import React from 'react';
 import { withKnobs, text, select } from '@storybook/addon-knobs'
-import Tag from '../components/atoms/Tag';
+import { Tag } from '../index'
 
 
 export default {

@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { withKnobs } from '@storybook/addon-knobs'
-import Section from '../components/molecules/Section';
-import CombineInput from '../components/molecules/CombineInput';
+import { Section, CombineInput, Input } from '../src/index';
 import { TimePicker, DatePicker } from 'antd';
-import Input from '../components/atoms/Input';
 
 export default {
     title: 'Input',

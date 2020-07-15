@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, Component } from 'react';
+import React, { useState, useRef, useEffect, Component, useCallback } from 'react';
 import crypto from 'crypto';
 import util$1 from 'util';
 import { unmountComponentAtNode, render } from 'react-dom';
@@ -5101,6 +5101,16 @@ var useToast = function () {
     };
 };
 
+var Divider = function (_a) {
+    var style = _a.style;
+    return (React.createElement("div", { className: 'divider', style: __assign({}, style) }));
+};
+
+var ModalItem = function (_a) {
+    var children = _a.children, style = _a.style;
+    return (React.createElement("div", { className: 'modal-item', style: __assign({}, style) }, children));
+};
+
 var SectionContainer = function (_a) {
     var children = _a.children;
     return (React.createElement("div", { className: 'section-container', style: {
@@ -5108,5 +5118,38 @@ var SectionContainer = function (_a) {
         } }, children));
 };
 
-export { Button, ButtonTypeInput, CombineInput, DefinitionTag, DefinitionTagContainer, Input, InputContainer, InputRecommend, Modal, Pagination, PopupArea, SearchBox, Section, SectionContainer, SelectBox, SwitchButton, Tag, ToastContainer, Tooltip, ViewMore, createPopup, removePopup, useToast };
+function useCheckBox(defaultList) {
+    var _a = useState(defaultList), list = _a[0], setList = _a[1];
+    var onChange = useCallback(function (e, value) {
+        setList(list.map(function (item) { return (__assign(__assign({}, item), { checked: item.id === value.id ? e.target.checked : item.checked })); }));
+    }, [list, setList]);
+    return {
+        list: list,
+        onChange: onChange
+    };
+}
+
+function useModal() {
+    var _a = useState(false), modalToggle = _a[0], setModalToggle = _a[1];
+    var onOpenModal = useCallback(function () { return setModalToggle(true); }, [setModalToggle]);
+    var onCloseModal = useCallback(function () { return setModalToggle(false); }, [setModalToggle]);
+    return {
+        modalToggle: modalToggle,
+        onOpenModal: onOpenModal,
+        onCloseModal: onCloseModal,
+    };
+}
+
+function useRadioBox(defaultList) {
+    var _a = useState(defaultList), list = _a[0], setList = _a[1];
+    var onChange = useCallback(function (value) {
+        setList(list.map(function (item) { return (__assign(__assign({}, item), { checked: item.id === value.id ? true : false })); }));
+    }, [list, setList]);
+    return {
+        list: list,
+        onChange: onChange
+    };
+}
+
+export { Button, ButtonTypeInput, CombineInput, DefinitionTag, DefinitionTagContainer, Divider, Input, InputContainer, InputRecommend, Modal, ModalItem, Pagination, PopupArea, SearchBox, Section, SectionContainer, SelectBox, SwitchButton, Tag, ToastContainer, Tooltip, ViewMore, createPopup, removePopup, useCheckBox, useModal, useRadioBox, useToast };
 //# sourceMappingURL=index.es.js.map
