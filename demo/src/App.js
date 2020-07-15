@@ -1,8 +1,6 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useEffect } from 'react';
 import './App.css';
 
-import Icon from 'react-eva-icons';
 import {
 	Button,
 	Tag,
@@ -13,21 +11,23 @@ import {
 
 
 function App() {
-	const {createToast, toasts, removeToast} = useToast(); 
-
+	const { createToast, toasts, removeToast, removeToastState } = useToast();
+	useEffect(() => {
+		console.log('toast!')
+	}, [toasts])
 	return (
 		<div className="App">
-      		<Tag color="green">HI</Tag>
+			<Tag color="green">HI</Tag>
 			<Button onClick={() => {
-				createToast({message: `abcd`, position: 'RIGHT_TOP'});
+				createToast({ message: `1,000 포인트 지급되었습니다.`, position: 'RIGHT_TOP', color: 'red' });
 			}}>RGHT_TOP</Button>
 			<Button onClick={() => {
-				createToast({message: `abcde`, position: 'RIGHT_BOTTOM'});
+				createToast({ message: `abcde`, position: 'RIGHT_BOTTOM', color: 'green' });
 			}}>RIGHT_BOTTOM</Button>
 
 
-			<ToastContainer toasts={toasts} removeToast={removeToast}/>
-    	</div>
+			<ToastContainer toasts={toasts} removeToast={removeToast} removeToastState={removeToastState} />
+		</div>
 	);
 }
 

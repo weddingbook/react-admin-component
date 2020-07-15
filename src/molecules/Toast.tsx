@@ -9,12 +9,21 @@ interface ToastProps {
 	closeOnClickOutside?: boolean;
 	closeOnEsc?: boolean;
 	position: 'RIGHT_TOP' | 'RIGHT_BOTTOM' | 'LEFT_TOP' | 'LEFT_BOTTOM';
+	color: 'red' | 'yellow' | 'green';
 	delay: number;
 	willUnmount?: () => void;
 	afterClose?: () => void;
 	onClickOutside?: () => void;
-	removeToast: (id: string) => void;
+	removeToast: (id: string, position: string) => void;
+	removeToastState: (id: string, position: string) => void;
 }
+
+interface ToastContainerProps {
+	toasts: ToastStoreProps,
+	removeToast: () => void,
+	removeToastState: () => void
+}
+
 interface ToastStoreProps {
 	'LEFT_TOP': ToastProps[];
 	'LEFT_BOTTOM': ToastProps[];
@@ -22,38 +31,35 @@ interface ToastStoreProps {
 	'RIGHT_BOTTOM': ToastProps[];
 }
 
+const toastPositionMatrix = [
+	['left-top', 'LEFT_TOP'],
+	['left-bottom', 'LEFT_BOTTOM'],
+	['right-top', 'RIGHT_TOP'],
+	['right-bottom', 'RIGHT_BOTTOM'],
+]
 
-export const ToastContainer = ({ toasts, removeToast }: { toasts: ToastStoreProps, removeToast: () => void }) => {
+export const ToastContainer = ({ toasts, removeToast, removeToastState }: ToastContainerProps) => {
+	useEffect(() => {
+		console.log('toast-container')
+	}, [toasts])
 	return (
 		<div className="toast-wrap">
-			<div className="left-top">
-				{toasts['LEFT_TOP'].map((toast: ToastProps) => {
-					return <Toast {...toast} key={toast.id} removeToast={removeToast} />
-				})}
-			</div>
-			<div className="left-bottom">
-				{toasts['LEFT_BOTTOM'].map((toast: ToastProps) => {
-					return <Toast {...toast} key={toast.id} removeToast={removeToast} />
-				})}
-			</div>
-			<div className="right-top">
-				{toasts['RIGHT_TOP'].map((toast: ToastProps) => {
-					return <Toast {...toast} key={toast.id} removeToast={removeToast} />
-				})}
-			</div>
-			<div className="right-bottom">
-				{toasts['RIGHT_BOTTOM'].map((toast: ToastProps) => {
-					return <Toast {...toast} key={toast.id} removeToast={removeToast} />
-				})}
-			</div>
+			{toastPositionMatrix.map(position => (
+				<div className={position[0]} key={position[0]}>
+					{toasts[position[1]].map((toast: ToastProps) => {
+						return <Toast {...toast} key={toast.id} removeToast={removeToast} removeToastState={removeToastState} />
+					})}
+				</div>
+			))}
 		</div>
 	)
 }
 
 const Toast = (props: ToastProps) => {
-	const { id, title, message, afterClose, delay, removeToast } = props;
+	const { id, title, message, afterClose, removeToast, removeToastState, delay, color, position } = props;
 	const closeToast = () => {
-		removeToast(id);
+		removeToast(id, position);
+		removeToastState(id, position)
 		if (afterClose) {
 			afterClose();
 		}
@@ -69,7 +75,7 @@ const Toast = (props: ToastProps) => {
 	return (
 		<div id={`toast-${id}`} className="toast">
 			{title && <h1>{title}</h1>}
-			<span className="circle"></span>
+			<div className={`circle ${color}`}></div>
 			<p className="toast-content">{message}</p>
 		</div>
 	)
@@ -91,7 +97,7 @@ export const useToast = () => {
 		'RIGHT_TOP': [],
 		'RIGHT_BOTTOM': []
 	});
-	const generateUuid = ():string => {
+	const generateUuid = (): string => {
 		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
 			var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
 			return v.toString(16);
@@ -106,20 +112,36 @@ export const useToast = () => {
 			return result;
 		});
 	}
-	const removeToast = (id: string) => {
+	const removeToast = (id: string, position: string) => {
 		const wrapper = document.getElementById(`toast-${id}`)?.parentElement!;
 		const target = document.getElementById(`toast-${id}`);
-		if (target) {
+		if (wrapper && target) {
 			wrapper.removeChild(target)
+			console.log(position)
 		}
 	}
+	const removeToastState = (id: string, position: string) => {
+		setToasts(() => {
+			const result: ToastStoreProps = { ...toasts };
+			console.log(id)
+			console.log(position)
+			// result[position] = [...toasts[position].filter((toast: ToastProps) => toast.id !== id), {}]
+			return result;
+		});
+	}
 	const removeAllToast = () => {
-		// setToasts([]);
+		setToasts({
+			'LEFT_TOP': [],
+			'LEFT_BOTTOM': [],
+			'RIGHT_TOP': [],
+			'RIGHT_BOTTOM': []
+		});
 	}
 	return {
 		toasts,
 		createToast,
 		removeToast,
+		removeToastState,
 		removeAllToast
 	}
 };

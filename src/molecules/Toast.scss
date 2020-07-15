@@ -1,4 +1,3 @@
-
 .toast-wrap {
 	> div {
 		position: absolute;
@@ -7,36 +6,58 @@
 		top: 0;
 		bottom: 0;
 	}
-	.left-top {right: auto; bottom: auto;}
-	.left-bottom {right: auto; top: auto;}
-	.right-top {left: auto; bottom: auto;}
-	.right-bottom {left: auto; top: auto;};
+	.left-top {
+		right: auto;
+		bottom: auto;
+	}
+	.left-bottom {
+		right: auto;
+		top: auto;
+	}
+	.right-top {
+		left: auto;
+		bottom: auto;
+	}
+	.right-bottom {
+		left: auto;
+		top: auto;
+	}
 	.toast {
-		position: relative;
-		padding: 24px 16px 16px 24px;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
 		min-width: 384px;
 		border-radius: 8px;
+		padding: 12px 16px 16px 12px;
+		background-color: white;
+		box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
 		box-sizing: border-box;
-		box-shadow: 0 4px 10px 0 rgba(0, 0, 0, .1);
-		background-color: #fff;
 		z-index: 1000;
 		.circle {
-			position: absolute;
-			left: 12px;
-			top: 12px;
 			width: 6px;
 			height: 6px;
 			border-radius: 50%;
-			background-color: #df032b;
+
+			&.red {
+				background-color: $red60;
+			}
+			&.green {
+				background-color: $green60;
+			}
+			&.yellow {
+				background-color: $yellow60;
+			}
 		}
 		& + .toast {
 			margin-top: 4px;
 		}
-	}
-	.toast-content {
-		line-height: 19px;
-		font-size: 13px;
-		color: #191919;
-		white-space: pre-line;
+
+		.toast-content {
+			
+			margin: 4px 12px;
+			font-size: 13px;
+			color: $gray100;
+			line-height: 1.5;
+		}
 	}
 }
