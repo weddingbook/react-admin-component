@@ -1,17 +1,20 @@
-#toast-left-top {right: auto; bottom: auto;}
-#toast-left-bottom {right: auto; top: auto;}
-#toast-right-top {left: auto; bottom: auto;}
-#toast-right-bottom {left: auto; top: auto;};
+
 .toast-wrap {
-	position: absolute;
-	left: 0;
-	right: 0;
-	top: 0;
-	bottom: 0;
-	min-width: 384px;
+	> div {
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 0;
+		bottom: 0;
+	}
+	.left-top {right: auto; bottom: auto;}
+	.left-bottom {right: auto; top: auto;}
+	.right-top {left: auto; bottom: auto;}
+	.right-bottom {left: auto; top: auto;};
 	.toast {
 		position: relative;
 		padding: 24px 16px 16px 24px;
+		min-width: 384px;
 		border-radius: 8px;
 		box-sizing: border-box;
 		box-shadow: 0 4px 10px 0 rgba(0, 0, 0, .1);

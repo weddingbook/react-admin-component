@@ -1,43 +1,59 @@
-import React, { useReducer, useEffect, useContext, Fragment } from 'react'
-import { render } from 'react-dom';
-import './Toast.scss'; 
+import React, { useState, useEffect } from 'react'
+import './Toast.scss';
 
-interface ToastContainerProps {
-	toasts: ToastProps[]
-}
 interface ToastProps {
-	id: number,
+	id: string,
 	title?: string;
 	message: string;
 	messageType: 'success' | 'warn' | 'fail';
 	closeOnClickOutside?: boolean;
 	closeOnEsc?: boolean;
-	position: ['left' | 'right', 'top' | 'bottom'];
+	position: 'RIGHT_TOP' | 'RIGHT_BOTTOM' | 'LEFT_TOP' | 'LEFT_BOTTOM';
 	delay: number;
 	willUnmount?: () => void;
 	afterClose?: () => void;
 	onClickOutside?: () => void;
+	removeToast: () => void;
 }
-const ToastContext = React.createContext<ToastContainerProps>({
-	toasts: []
-})
-const ToastContainer = () => {
-	const { toasts } = useContext(ToastContext);
+interface ToastStoreProps {
+	'LEFT_TOP': ToastProps[];
+	'LEFT_BOTTOM': ToastProps[];
+	'RIGHT_TOP': ToastProps[];
+	'RIGHT_BOTTOM': ToastProps[];
+}
+
+
+export const ToastContainer = ({ toasts, removeToast }: { toasts: ToastStoreProps, removeToast: () => void }) => {
 	return (
-		<Fragment>
-			{toasts.map((toast: ToastProps) => {
-				return <Toast {...toast} key={toast.id}/>
-			})}
-		</Fragment>
+		<div className="toast-wrap">
+			<div className="left-top">
+				{toasts['LEFT_TOP'].map((toast: ToastProps) => {
+					return <Toast {...toast} key={toast.id} removeToast={removeToast} />
+				})}
+			</div>
+			<div className="left-bottom">
+				{toasts['LEFT_BOTTOM'].map((toast: ToastProps) => {
+					return <Toast {...toast} key={toast.id} removeToast={removeToast} />
+				})}
+			</div>
+			<div className="right-top">
+				{toasts['RIGHT_TOP'].map((toast: ToastProps) => {
+					return <Toast {...toast} key={toast.id} removeToast={removeToast} />
+				})}
+			</div>
+			<div className="right-bottom">
+				{toasts['RIGHT_BOTTOM'].map((toast: ToastProps) => {
+					return <Toast {...toast} key={toast.id} removeToast={removeToast} />
+				})}
+			</div>
+		</div>
 	)
 }
 
 const Toast = (props: ToastProps) => {
-	const { removeToast } = useToast();
-	const { title, message, afterClose, delay } = props;
-	const id = new Date().getTime();
+	const { id, title, message, afterClose, delay } = props;
 	const closeToast = () => {
-		removeToast(id);
+		// removeToast(id);
 		if (afterClose) {
 			afterClose();
 		}
@@ -61,47 +77,39 @@ const Toast = (props: ToastProps) => {
 Toast.defaultProps = {
 	closeOnClickOutside: true,
 	closeOnEsc: true,
-	willUnmount: () => {},
-	afterClose: () => {},
-	onClickOutside: () => {},
+	willUnmount: () => { },
+	afterClose: () => { },
+	onClickOutside: () => { },
 	delay: 3000,
-	position: ['right', 'top']
+	position: 'RIGHT_TOP'
 }
 
-const toastState: ToastContainerProps = {toasts: []}
-function toastReducer(state: ToastContainerProps, action: any) {
-	switch (action.type) {
-		case 'create':
-			return {toasts: [...state.toasts, action.payload]}
-		default:
-			throw new Error();
-	}
-}
 export const useToast = () => {
-	const [state, dispatch] = useReducer(toastReducer, toastState);
-	useEffect(() => {
-		const {position = ['right', 'top']} = {};
-		const wrap = `toast-${position.join('-')}`;
-		let elWrap = document.getElementById(wrap);
-		if (!elWrap) {
-			elWrap = document.createElement('div');
-			elWrap.id = wrap;
-			document.body.appendChild(elWrap);
-		}
-		elWrap.classList.add('toast-wrap');
-		render(
-			<ToastContext.Provider value={{toasts: state.toasts}}>
-				{state.toasts}
-				<ToastContainer />
-			</ToastContext.Provider>
-		, elWrap);
-	}, []);
+	const [toasts, setToasts] = useState<ToastStoreProps>({
+		'LEFT_TOP': [],
+		'LEFT_BOTTOM': [],
+		'RIGHT_TOP': [],
+		'RIGHT_BOTTOM': []
+	});
+	const generateUuid = ():string => {
+		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+			var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+			return v.toString(16);
+		});
+	}
 	const createToast = (options: ToastProps) => {
-		dispatch({type: 'create', payload: options});
+		const position = options.position || 'RIGHT_TOP';
+		options.id = generateUuid();
+		setToasts(() => {
+			const result: ToastStoreProps = { ...toasts };
+			result[position] = [...toasts[position], options]
+			return result;
+		});
+		console.log(toasts);
 	}
 	const removeToast = (id: number) => {
 		console.log(id);
-		console.log(state.toasts);
+		console.log(toasts);
 		// const wrap = `toast-${props.id}`;
 		// const target = document.getElementById(wrap);
 		// if (target) {
@@ -112,6 +120,7 @@ export const useToast = () => {
 		// setToasts([]);
 	}
 	return {
+		toasts,
 		createToast,
 		removeToast,
 		removeAllToast

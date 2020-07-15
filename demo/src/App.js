@@ -6,23 +6,27 @@ import Icon from 'react-eva-icons';
 import {
 	Button,
 	Tag,
-	useToast
+	useToast,
+	ToastContainer
 } from '../../dist/index';
 
 
+
 function App() {
-	let c = 0;
-	const {createToast, toasts} = useToast(); 
+	const {createToast, toasts, removeToast} = useToast(); 
 
 	return (
 		<div className="App">
       		<Tag color="green">HI</Tag>
 			<Button onClick={() => {
-				createToast({message: `${c} abc`});
-				c++;
-			}}>Hello</Button>
-			<Icon name="github" size="32" animation={{type: 'zoom'}}/>
-			{/* <ToastContainer toasts={toasts} /> */}
+				createToast({message: `abcd`, position: 'RIGHT_TOP'});
+			}}>RGHT_TOP</Button>
+			<Button onClick={() => {
+				createToast({message: `abcde`, position: 'RIGHT_BOTTOM'});
+			}}>RIGHT_BOTTOM</Button>
+
+
+			<ToastContainer toasts={toasts} removeToast={removeToast}/>
     	</div>
 	);
 }
