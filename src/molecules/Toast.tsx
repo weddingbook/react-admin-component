@@ -13,7 +13,7 @@ interface ToastProps {
 	willUnmount?: () => void;
 	afterClose?: () => void;
 	onClickOutside?: () => void;
-	removeToast: () => void;
+	removeToast: (id: string) => void;
 }
 interface ToastStoreProps {
 	'LEFT_TOP': ToastProps[];
@@ -51,9 +51,9 @@ export const ToastContainer = ({ toasts, removeToast }: { toasts: ToastStoreProp
 }
 
 const Toast = (props: ToastProps) => {
-	const { id, title, message, afterClose, delay } = props;
+	const { id, title, message, afterClose, delay, removeToast } = props;
 	const closeToast = () => {
-		// removeToast(id);
+		removeToast(id);
 		if (afterClose) {
 			afterClose();
 		}
@@ -105,16 +105,13 @@ export const useToast = () => {
 			result[position] = [...toasts[position], options]
 			return result;
 		});
-		console.log(toasts);
 	}
-	const removeToast = (id: number) => {
-		console.log(id);
-		console.log(toasts);
-		// const wrap = `toast-${props.id}`;
-		// const target = document.getElementById(wrap);
-		// if (target) {
-		// 	unmountComponentAtNode(target);
-		// }
+	const removeToast = (id: string) => {
+		const wrapper = document.getElementById(`toast-${id}`)?.parentElement!;
+		const target = document.getElementById(`toast-${id}`);
+		if (target) {
+			wrapper.removeChild(target)
+		}
 	}
 	const removeAllToast = () => {
 		// setToasts([]);

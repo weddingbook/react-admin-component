@@ -12,7 +12,7 @@ interface ToastProps {
     willUnmount?: () => void;
     afterClose?: () => void;
     onClickOutside?: () => void;
-    removeToast: () => void;
+    removeToast: (id: string) => void;
 }
 interface ToastStoreProps {
     'LEFT_TOP': ToastProps[];
@@ -27,7 +27,7 @@ export declare const ToastContainer: ({ toasts, removeToast }: {
 export declare const useToast: () => {
     toasts: ToastStoreProps;
     createToast: (options: ToastProps) => void;
-    removeToast: (id: number) => void;
+    removeToast: (id: string) => void;
     removeAllToast: () => void;
 };
 export {};

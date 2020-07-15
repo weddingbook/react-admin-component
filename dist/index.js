@@ -5021,9 +5021,9 @@ var ToastContainer = function (_a) {
         }))));
 };
 var Toast = function (props) {
-    var id = props.id, title = props.title, message = props.message, afterClose = props.afterClose, delay = props.delay;
+    var id = props.id, title = props.title, message = props.message, afterClose = props.afterClose, delay = props.delay, removeToast = props.removeToast;
     var closeToast = function () {
-        // removeToast(id);
+        removeToast(id);
         if (afterClose) {
             afterClose();
         }
@@ -5071,16 +5071,14 @@ var useToast = function () {
             result[position] = __spreadArrays(toasts[position], [options]);
             return result;
         });
-        console.log(toasts);
     };
     var removeToast = function (id) {
-        console.log(id);
-        console.log(toasts);
-        // const wrap = `toast-${props.id}`;
-        // const target = document.getElementById(wrap);
-        // if (target) {
-        // 	unmountComponentAtNode(target);
-        // }
+        var _a;
+        var wrapper = (_a = document.getElementById("toast-" + id)) === null || _a === void 0 ? void 0 : _a.parentElement;
+        var target = document.getElementById("toast-" + id);
+        if (target) {
+            wrapper.removeChild(target);
+        }
     };
     var removeAllToast = function () {
         // setToasts([]);
