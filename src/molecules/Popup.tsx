@@ -177,7 +177,7 @@ export function createPopup(options: PopupProps | AlertPopupProps | ConfirmPopup
 		renderPopup(popupType, options, elWrap!);
 	}
 }
-export function removePopup({wrap = 'common-popup'}: PopupProps) {
+export function removePopup({wrap = 'common-popup'}: Partial<PopupProps>) {
 	const target = document.getElementById(wrap);
 	if (target) {
 		unmountComponentAtNode(target);
