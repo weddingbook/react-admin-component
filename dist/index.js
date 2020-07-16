@@ -1981,7 +1981,7 @@ var Icon = unwrapExports(dist);
 var Button = function (_a) {
     var _b = _a.children, children = _b === void 0 ? '버튼' : _b, _c = _a.type, type = _c === void 0 ? 'solid' : _c, _d = _a.color, color = _d === void 0 ? 'blue' : _d, _e = _a.size, size = _e === void 0 ? 'middle' : _e, _f = _a.iconName, iconName = _f === void 0 ? '' : _f, onClick = _a.onClick, _g = _a.disabled, disabled = _g === void 0 ? false : _g, style = _a.style, dataTip = _a.dataTip, dataFor = _a.dataFor, className = _a.className;
     var iconButton = React__default.createElement("button", { style: style, onClick: onClick, className: "btn-type-" + type + " btn-color-" + color + " " + (disabled ? 'btn-disabled' : '') + " btn-size-square btn-icon-text " + className, "data-tip": dataTip, "data-for": dataFor },
-        React__default.createElement(Icon, { name: iconName, size: "medium" }),
+        React__default.createElement(Icon, { name: iconName, size: "18" }),
         (iconName && children !== '버튼') && React__default.createElement("span", null, children));
     var normalButton = React__default.createElement("button", { style: style, disabled: disabled, onClick: onClick, className: "btn-type-" + type + " btn-color-" + color + " btn-size-" + size + " " + (disabled ? 'btn-disabled' : '') + " " + className, "data-tip": dataTip, "data-for": dataFor },
         React__default.createElement("span", null, children));
@@ -1995,7 +1995,7 @@ var ButtonTypeInput = function (_a) {
             React__default.createElement("input", { className: 'only-sr', type: type, checked: checked, id: title, onChange: onChange, disabled: disabled }),
             (checked) &&
                 React__default.createElement("span", null,
-                    React__default.createElement(Icon, { name: "checkmark-outline", size: "small" })),
+                    React__default.createElement(Icon, { name: "checkmark-outline", size: "14" })),
             title)));
 };
 
@@ -2155,7 +2155,7 @@ var SelectBox = function (_a) {
     };
     return (React__default.createElement("div", { tabIndex: 0, ref: selectBoxRef, className: "select-box", onClick: onToggleSelectBox, style: __assign({}, style) },
         React__default.createElement("div", { ref: selectedRef, className: "selected-item" }, selectedOption),
-        React__default.createElement(Icon, { name: "arrow-ios-downward-outline", size: "medium" }),
+        React__default.createElement(Icon, { name: "arrow-ios-downward-outline", size: "18" }),
         isShowList && React__default.createElement("ul", { ref: selectListRef, className: "list", style: { height: "" + (listHeight + 'px') } }, options.map(function (option) { return (React__default.createElement("li", { key: option, onClick: function () { onClickOption(option); } }, option)); }))));
 };
 
@@ -2195,11 +2195,11 @@ var Pagination = function (_a) {
                 total)),
         React__default.createElement("ul", { className: 'wb-pagination-number-list' },
             React__default.createElement("li", { onClick: handleClickBackArrow, className: "wb-pagination-arrow wb-pagination-back " + (pageIndex !== 0 && 'active'), key: 'arrow-ios-back-outline' },
-                React__default.createElement(Icon, { name: 'arrow-ios-back-outline', size: 'medium' })),
+                React__default.createElement(Icon, { name: 'arrow-ios-back-outline', size: '18' })),
             __spreadArrays(numberList).splice((pageIndex * 5), 5).map(function (value) { return (React__default.createElement("li", { className: "wb-pagination-number " + (current === value && 'active'), key: value, tabIndex: 0, onClick: function () { onPageChange(value, size); } },
                 React__default.createElement("a", null, value))); }),
             React__default.createElement("li", { onClick: handleClickForwardArrow, className: "wb-pagination-arrow wb-pagination-forward " + (pageIndex !== Math.ceil(pageTotal / 5) - 1 && 'active'), key: 'arrow-ios-forward-outline' },
-                React__default.createElement(Icon, { name: 'arrow-ios-forward-outline', size: 'medium' })))));
+                React__default.createElement(Icon, { name: 'arrow-ios-forward-outline', size: '18' })))));
 };
 
 var Input = function (_a) {
@@ -2207,7 +2207,7 @@ var Input = function (_a) {
     return (React__default.createElement(React__default.Fragment, null,
         React__default.createElement("div", { className: "input-component " + ((required || informationMessage) ? 'message' : ''), style: style },
             React__default.createElement("div", { className: "default-input-wrapper " + (iconName ? 'after-string' : '') + " " + (required ? 'error' : ''), style: inputStyle },
-                iconName && React__default.createElement(Icon, { name: iconName, size: "medium" }),
+                iconName && React__default.createElement(Icon, { name: iconName, size: "18" }),
                 React__default.createElement("input", __assign({}, rest, { className: "" + (afterString ? 'after-string' : ''), required: required })),
                 afterString && React__default.createElement("span", { className: 'unit' }, afterString)),
             (recommendOptions && onSelectRecommendOptionSet) && React__default.createElement(InputRecommend, { invalid: required, informationMessage: informationMessage, options: recommendOptions, onSelectOptionSet: onSelectRecommendOptionSet }),
@@ -4737,6 +4737,7 @@ var Popup = /** @class */ (function (_super) {
     };
     Popup.defaultProps = {
         wrap: 'common-popup',
+        messageType: 'success',
         closeOnClickOutside: true,
         closeOnEsc: true,
         willUnmount: function () { },
@@ -4761,8 +4762,8 @@ var AlertPopup = /** @class */ (function (_super) {
     }
     AlertPopup.prototype.render = function () {
         var _this = this;
-        var _a = this.props, title = _a.title, message = _a.message, button = _a.button;
-        return (React__default.createElement("div", { className: "popup-wrap" },
+        var _a = this.props, title = _a.title, message = _a.message, messageType = _a.messageType, button = _a.button;
+        return (React__default.createElement("div", { className: "popup-wrap " + messageType },
             React__default.createElement("div", { className: "overlay", onClick: this.clickOverlay.bind(this) }),
             React__default.createElement("div", { className: "popup" },
                 title && React__default.createElement("h1", null, title),
@@ -4780,8 +4781,8 @@ var ConfirmPopup = /** @class */ (function (_super) {
     }
     ConfirmPopup.prototype.render = function () {
         var _this = this;
-        var _a = this.props, title = _a.title, message = _a.message, buttons = _a.buttons;
-        return (React__default.createElement("div", { className: "popup-wrap" },
+        var _a = this.props, title = _a.title, message = _a.message, messageType = _a.messageType, buttons = _a.buttons;
+        return (React__default.createElement("div", { className: "popup-wrap " + messageType },
             React__default.createElement("div", { className: "overlay", onClick: this.clickOverlay.bind(this) }),
             React__default.createElement("div", { className: "popup" },
                 title && React__default.createElement("h1", null, title),
@@ -4812,8 +4813,8 @@ function PopupArea(props) {
         React__default.createElement("div", { id: props.id })));
 }
 function createPopup(options) {
-    var popupType = options.popupType;
-    var wrap = options.wrap || (popupType !== 'toast' ? 'common-popup' : 'common-toast-popup');
+    var popupType = options.type;
+    var wrap = options.wrap || 'common-popup';
     var elWrap = document.getElementById(wrap);
     if (elWrap) {
         renderPopup(popupType, options, elWrap);
@@ -4825,9 +4826,7 @@ function createPopup(options) {
     }
 }
 function removePopup(_a) {
-    var _b = _a.wrap, wrap = _b === void 0 ? 'common-popup' : _b, popupType = _a.popupType;
-    if (popupType === 'toast')
-        wrap = 'common-toast-popup';
+    var _b = _a.wrap, wrap = _b === void 0 ? 'common-popup' : _b;
     var target = document.getElementById(wrap);
     if (target) {
         reactDom.unmountComponentAtNode(target);
@@ -4957,7 +4956,7 @@ var useToast = function () {
     }), toasts = _a[0], setToasts = _a[1];
     var generateUuid = function () {
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-            var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+            var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
             return v.toString(16);
         });
     };

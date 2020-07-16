@@ -9,10 +9,10 @@ interface PopupButtonProps {
 }
 interface PopupProps {
     wrap?: string;
-    popupType: 'toast' | 'alert' | 'confirm';
+    type: 'alert' | 'confirm';
     title?: string;
     message: string;
-    messageType: 'success' | 'warn' | 'fail';
+    messageType?: 'success' | 'warn' | 'fail';
     closeOnClickOutside?: boolean;
     closeOnEsc?: boolean;
     willUnmount?: () => void;
@@ -30,5 +30,5 @@ export declare function PopupArea(props: {
     children: ReactNode;
 }): JSX.Element;
 export declare function createPopup(options: PopupProps | AlertPopupProps | ConfirmPopupProps): void;
-export declare function removePopup({ wrap, popupType }: PopupProps): void;
+export declare function removePopup({ wrap }: PopupProps): void;
 export {};

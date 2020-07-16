@@ -12,10 +12,10 @@ interface PopupButtonProps {
 }
 interface PopupProps {
 	wrap?: string;
-	popupType: 'toast' | 'alert' | 'confirm';
+	type: 'alert' | 'confirm';
 	title?: string;
 	message: string;
-	messageType: 'success' | 'warn' | 'fail';
+	messageType?: 'success' | 'warn' | 'fail';
 	closeOnClickOutside?: boolean;
 	closeOnEsc?: boolean;
 	willUnmount?: () => void;
@@ -31,6 +31,7 @@ interface ConfirmPopupProps extends PopupProps {
 class Popup<P extends PopupProps> extends Component<P> {
 	static defaultProps = {
 		wrap: 'common-popup',
+		messageType: 'success',
 		closeOnClickOutside: true,
 		closeOnEsc: true,
 		willUnmount: () => {},
@@ -94,9 +95,9 @@ class Popup<P extends PopupProps> extends Component<P> {
 
 class AlertPopup extends Popup<AlertPopupProps> {
 	render() {
-		const { title, message, button } = this.props;
+		const { title, message, messageType, button } = this.props;
 		return (
-			<div className="popup-wrap">
+			<div className={`popup-wrap ${messageType}`}>
 				<div
 					className="overlay"
 					onClick={this.clickOverlay.bind(this)}
@@ -117,9 +118,9 @@ class AlertPopup extends Popup<AlertPopupProps> {
 }
 class ConfirmPopup extends Popup<ConfirmPopupProps> {
 	render() {
-		const { title, message, buttons } = this.props;
+		const { title, message, messageType, buttons } = this.props;
 		return (
-			<div className="popup-wrap">
+			<div className={`popup-wrap ${messageType}`}>
 				<div
 					className="overlay"
 					onClick={this.clickOverlay.bind(this)}
@@ -165,8 +166,8 @@ export function PopupArea(props: {id: string, children: ReactNode}) {
 	)
 }
 export function createPopup(options: PopupProps | AlertPopupProps | ConfirmPopupProps) {
-	const popupType = options.popupType;
-	const wrap = options.wrap || (popupType !== 'toast' ? 'common-popup' : 'common-toast-popup');
+	const popupType = options.type;
+	const wrap = options.wrap || 'common-popup';
 	let elWrap = document.getElementById(wrap);
 	if (elWrap) {
 		renderPopup(popupType, options, elWrap);
@@ -176,8 +177,7 @@ export function createPopup(options: PopupProps | AlertPopupProps | ConfirmPopup
 		renderPopup(popupType, options, elWrap!);
 	}
 }
-export function removePopup({wrap = 'common-popup', popupType}: PopupProps) {
-	if (popupType === 'toast') wrap = 'common-toast-popup';
+export function removePopup({wrap = 'common-popup'}: PopupProps) {
 	const target = document.getElementById(wrap);
 	if (target) {
 		unmountComponentAtNode(target);
