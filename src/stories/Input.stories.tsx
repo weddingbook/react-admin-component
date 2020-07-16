@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { withKnobs } from '@storybook/addon-knobs'
-import { Section, CombineInput, Input } from '../src/index';
+import { Section, CombineInput, Input } from '../index'
 import { TimePicker, DatePicker } from 'antd';
 
 export default {

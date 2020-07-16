@@ -1,53 +1,54 @@
 {
-	"name": "react-admin-component",
-	"version": "1.0.0",
-	"description": "",
-	"main": "dist/index.js",
-	"module": "dist/index.es.js",
-	"private": true,
-	"scripts": {
-		"storybook": "start-storybook -p 6006",
-		"build": "rm -rf ./dist && rollup -c"
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://bitbucket.h2m.io/scm/in_house/react-admin-component.git"
-	},
-	"author": "",
-	"license": "ISC",
-	"dependencies": {
-		"@storybook/preset-create-react-app": "^3.1.4",
-		"@types/react-tooltip": "^4.2.4",
-		"antd": "^4.4.2",
-		"react-docgen-typescript-loader": "^3.7.2",
-		"react-eva-icons": "git+https://github.com/weddingbook/react-eva-icons.git",
-		"react-scripts": "^3.4.1",
-		"react-tooltip": "^4.2.7"
-	},
-	"devDependencies": {
-		"@babel/core": "^7.10.2",
-		"@storybook/addon-actions": "^5.3.19",
-		"@storybook/addon-knobs": "^5.3.19",
-		"@storybook/addon-links": "^5.3.19",
-		"@storybook/addons": "^5.3.19",
-		"@storybook/preset-scss": "^1.0.2",
-		"@storybook/react": "^5.3.19",
-		"@types/react": "^16.9.41",
-		"@types/react-dom": "^16.9.8",
-		"babel-loader": "^8.1.0",
-		"react-scripts-ts": "^3.1.0",
-		"rollup": "^2.21.0",
-		"rollup-plugin-commonjs": "^10.1.0",
-		"rollup-plugin-node-resolve": "^5.2.0",
-		"rollup-plugin-peer-deps-external": "^2.2.3",
-		"rollup-plugin-scss": "^2.5.0",
-		"rollup-plugin-typescript2": "^0.27.1",
-		"sass-loader": "^9.0.2",
-		"typescript": "^3.9.6"
-	},
-	"peerDependencies": {
-		"node-sass": "^4.14.1",
-		"react": "^16.13.1",
-		"react-dom": "^16.13.1"
-	}
+  "name": "react-admin-component",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "module": "dist/index.es.js",
+  "private": true,
+  "scripts": {
+    "storybook": "start-storybook -p 9009",
+    "build": "rm -rf ./dist && rollup -c",
+    "build-storybook": "build-storybook"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://bitbucket.h2m.io/scm/in_house/react-admin-component.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@storybook/preset-create-react-app": "^3.1.4",
+    "@types/react-tooltip": "^4.2.4",
+    "antd": "^4.4.2",
+    "react-docgen-typescript-loader": "^3.7.2",
+    "react-eva-icons": "git+https://github.com/weddingbook/react-eva-icons.git",
+    "react-scripts": "^3.4.1",
+    "react-tooltip": "^4.2.7"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.10.2",
+    "@storybook/addon-actions": "^5.3.19",
+    "@storybook/addon-knobs": "^5.3.19",
+    "@storybook/addon-links": "^5.3.19",
+    "@storybook/addons": "^5.3.19",
+    "@storybook/preset-scss": "^1.0.2",
+    "@storybook/react": "^5.3.19",
+    "@types/react": "^16.9.41",
+    "@types/react-dom": "^16.9.8",
+    "babel-loader": "^8.1.0",
+    "react-scripts-ts": "^3.1.0",
+    "rollup": "^2.21.0",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-peer-deps-external": "^2.2.3",
+    "rollup-plugin-scss": "^2.5.0",
+    "rollup-plugin-typescript2": "^0.27.1",
+    "sass-loader": "^9.0.2",
+    "typescript": "^3.9.6"
+  },
+  "peerDependencies": {
+    "node-sass": "^4.14.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  }
 }
