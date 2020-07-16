@@ -30,5 +30,5 @@ export declare function PopupArea(props: {
     children: ReactNode;
 }): JSX.Element;
 export declare function createPopup(options: PopupProps | AlertPopupProps | ConfirmPopupProps): void;
-export declare function removePopup({ wrap }: PopupProps): void;
+export declare function removePopup({ wrap }: Partial<PopupProps>): void;
 export {};
