@@ -263,8 +263,8 @@ export const ModalStoryWithInform = () => {
                     <InputContainer>
                         <input type='checkbox' className='checkbox-input' ></input>
                         <label>불포함</label>
-                        <ButtonTypeInput type='checkbox' title='음주류' checked={false} onChange={() => { }} disabled={true} />
-                        <ButtonTypeInput type='checkbox' title='봉사료' checked={false} onChange={() => { }} disabled={true} />
+                        <ButtonTypeInput type='checkbox' title='음주류' checked={true} onChange={() => { }} disabled={false} />
+                        <ButtonTypeInput type='checkbox' title='봉사료' checked={true} onChange={() => { }} disabled={false} />
                         <ButtonTypeInput type='checkbox' title='부가세' checked={false} onChange={() => { }} disabled={true} />
                     </InputContainer>
                 </ModalItem>

@@ -29,7 +29,7 @@ const Button = ({ children = '버튼', type = 'solid', color = 'blue', size = 'm
         >
             <Icon
                 name={iconName}
-                size="medium"
+                size="18"
             />
             {(iconName && children !== '버튼') && <span>{children}</span>}
         </button>

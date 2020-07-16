@@ -21,7 +21,7 @@ const Input = ({ style, inputStyle, iconName, afterString, recommendOptions, onS
                 <div className={`default-input-wrapper ${iconName ? 'after-string' : ''} ${required ? 'error' : ''}`} style={inputStyle}>
                     {iconName && <Icon
                         name={iconName}
-                        size="medium"
+                        size="18"
                     />}
                     <input {...rest} className={`${afterString ? 'after-string' : ''}`} required={required} />
                     {afterString && <span className='unit'>{afterString}</span>}
