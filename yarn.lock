@@ -14445,7 +14445,7 @@ react-error-overlay@^6.0.3, react-error-overlay@^6.0.7:
 
 "react-eva-icons@git+https://github.com/weddingbook/react-eva-icons.git":
   version "0.0.8"
-  resolved "git+https://github.com/weddingbook/react-eva-icons.git#3cc4aa16930433e228080fb91f978378760acf9e"
+  resolved "git+https://github.com/weddingbook/react-eva-icons.git#575cac0c225e4edaf0389d4c5b75aceec684611c"
   dependencies:
     eva-icons "^1.1.1"
 

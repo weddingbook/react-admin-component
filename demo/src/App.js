@@ -3,7 +3,6 @@ import './App.css';
 
 import {
 	Button,
-	Tag,
 	useToast,
 	ToastContainer
 } from '../../dist/index';
@@ -17,14 +16,13 @@ function App() {
 	}, [toasts])
 	return (
 		<div className="App">
-			<Tag color="green">HI</Tag>
+			<Button size="large" iconName="github" iconSize="24"></Button>
 			<Button onClick={() => {
 				createToast({ message: `1,000 포인트 지급되었습니다.`, position: 'RIGHT_TOP', color: 'red' });
 			}}>RGHT_TOP</Button>
 			<Button onClick={() => {
 				createToast({ message: `abcde`, position: 'RIGHT_BOTTOM', color: 'green' });
 			}}>RIGHT_BOTTOM</Button>
-
 
 			<ToastContainer toasts={toasts} removeToast={removeToast} removeToastState={removeToastState} />
 		</div>

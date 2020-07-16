@@ -1979,9 +1979,9 @@ var Icon = unwrapExports(dist);
 
 // iconName은 여기서 검색한다 https://akveo.github.io/eva-icons/#/
 var Button = function (_a) {
-    var _b = _a.children, children = _b === void 0 ? '버튼' : _b, _c = _a.type, type = _c === void 0 ? 'solid' : _c, _d = _a.color, color = _d === void 0 ? 'blue' : _d, _e = _a.size, size = _e === void 0 ? 'middle' : _e, _f = _a.iconName, iconName = _f === void 0 ? '' : _f, onClick = _a.onClick, _g = _a.disabled, disabled = _g === void 0 ? false : _g, style = _a.style, dataTip = _a.dataTip, dataFor = _a.dataFor, className = _a.className;
-    var iconButton = React__default.createElement("button", { style: style, onClick: onClick, className: "btn-type-" + type + " btn-color-" + color + " " + (disabled ? 'btn-disabled' : '') + " btn-size-square btn-icon-text " + className, "data-tip": dataTip, "data-for": dataFor },
-        React__default.createElement(Icon, { name: iconName, size: "18" }),
+    var _b = _a.children, children = _b === void 0 ? '버튼' : _b, _c = _a.type, type = _c === void 0 ? 'solid' : _c, _d = _a.color, color = _d === void 0 ? 'blue' : _d, _e = _a.size, size = _e === void 0 ? 'middle' : _e, _f = _a.iconName, iconName = _f === void 0 ? '' : _f, _g = _a.iconSize, iconSize = _g === void 0 ? 18 : _g, onClick = _a.onClick, _h = _a.disabled, disabled = _h === void 0 ? false : _h, style = _a.style, dataTip = _a.dataTip, dataFor = _a.dataFor, className = _a.className;
+    var iconButton = React__default.createElement("button", { style: style, onClick: onClick, className: "btn-type-" + type + " btn-color-" + color + " " + (disabled ? 'btn-disabled' : '') + " btn-icon-text " + className, "data-tip": dataTip, "data-for": dataFor },
+        React__default.createElement(Icon, { name: iconName, size: iconSize }),
         (iconName && children !== '버튼') && React__default.createElement("span", null, children));
     var normalButton = React__default.createElement("button", { style: style, disabled: disabled, onClick: onClick, className: "btn-type-" + type + " btn-color-" + color + " btn-size-" + size + " " + (disabled ? 'btn-disabled' : '') + " " + className, "data-tip": dataTip, "data-for": dataFor },
         React__default.createElement("span", null, children));
