@@ -1,6 +1,6 @@
 /// <reference types="react" />
 import './Toast.scss';
-interface ToastProps {
+export interface ToastProps {
     id: string;
     title?: string;
     message: string;
@@ -21,18 +21,11 @@ interface ToastContainerProps {
     removeToast: () => void;
     removeToastState: () => void;
 }
-interface ToastStoreProps {
+export interface ToastStoreProps {
     'LEFT_TOP': ToastProps[];
     'LEFT_BOTTOM': ToastProps[];
     'RIGHT_TOP': ToastProps[];
     'RIGHT_BOTTOM': ToastProps[];
 }
 export declare const ToastContainer: ({ toasts, removeToast, removeToastState }: ToastContainerProps) => JSX.Element;
-export declare const useToast: () => {
-    toasts: ToastStoreProps;
-    createToast: (options: ToastProps) => void;
-    removeToast: (id: string, position: string) => void;
-    removeToastState: (id: string, position: string) => void;
-    removeAllToast: () => void;
-};
 export {};

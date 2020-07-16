@@ -19,7 +19,7 @@ export { default as Modal } from './molecules/Modal';
 export { PopupArea, createPopup, removePopup } from './molecules/Popup';
 export { default as SearchBox } from './molecules/SearchBox';
 export { default as Section } from './molecules/Section';
-export { useToast, ToastContainer } from './molecules/Toast';
+export { ToastContainer } from './molecules/Toast';
 export { default as Divider } from './atoms/Divider';
 export { default as ModalItem } from './molecules/ModalItem';
 
@@ -30,3 +30,4 @@ export { default as SectionContainer } from './organisms/SectionContainer';
 export { default as useCheckBox } from './hooks/useCheckBox';
 export { default as useModal } from './hooks/useModal';
 export { default as useRadioBox } from './hooks/useRadioBox';
+export { useToast } from './hooks/useToast';

@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import './Toast.scss';
 
-interface ToastProps {
+export interface ToastProps {
 	id: string,
 	title?: string;
 	message: string;
@@ -24,7 +24,7 @@ interface ToastContainerProps {
 	removeToastState: () => void
 }
 
-interface ToastStoreProps {
+export interface ToastStoreProps {
 	'LEFT_TOP': ToastProps[];
 	'LEFT_BOTTOM': ToastProps[];
 	'RIGHT_TOP': ToastProps[];
@@ -89,61 +89,4 @@ Toast.defaultProps = {
 	delay: 3000,
 	position: 'RIGHT_TOP'
 }
-
-export const useToast = () => {
-	const [toasts, setToasts] = useState<ToastStoreProps>({
-		'LEFT_TOP': [],
-		'LEFT_BOTTOM': [],
-		'RIGHT_TOP': [],
-		'RIGHT_BOTTOM': []
-	});
-	const generateUuid = (): string => {
-		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-			var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-			return v.toString(16);
-		});
-	}
-	const createToast = (options: ToastProps) => {
-		const position = options.position || 'RIGHT_TOP';
-		options.id = generateUuid();
-		setToasts(() => {
-			const result: ToastStoreProps = { ...toasts };
-			result[position] = [...toasts[position], options]
-			return result;
-		});
-	}
-	const removeToast = (id: string, position: string) => {
-		const wrapper = document.getElementById(`toast-${id}`)?.parentElement!;
-		const target = document.getElementById(`toast-${id}`);
-		if (wrapper && target) {
-			wrapper.removeChild(target)
-			console.log(position)
-		}
-	}
-	const removeToastState = (id: string, position: string) => {
-		console.log(id, position)
-		// setToasts(() => {
-		// 	const result: ToastStoreProps = { ...toasts };
-		// 	console.log(id)
-		// 	console.log(position)
-		// 	result[position] = [...toasts[position].filter((toast: ToastProps) => toast.id !== id), {}]
-		// 	return result;
-		// });
-	}
-	const removeAllToast = () => {
-		setToasts({
-			'LEFT_TOP': [],
-			'LEFT_BOTTOM': [],
-			'RIGHT_TOP': [],
-			'RIGHT_BOTTOM': []
-		});
-	}
-	return {
-		toasts,
-		createToast,
-		removeToast,
-		removeToastState,
-		removeAllToast
-	}
-};
 
