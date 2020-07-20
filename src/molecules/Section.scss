@@ -18,6 +18,13 @@
                 color: $gray80;
                 line-height: 1.5;
             }
+            .section-btn-area {
+                display: flex;
+
+                button + button {
+                    margin-left: 8px;
+                }
+            }
         }
         .header-bottom {
             font-size: 11px;

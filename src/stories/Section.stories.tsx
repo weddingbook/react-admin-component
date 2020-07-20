@@ -13,7 +13,12 @@ export default {
 export const SectionStory = () => <Section
     title={text('제목', '기본정보')}
     subTitle={text('부제목', '기본정보')}
-    buttonComponent={<Button type='line' size='small'>수정</Button>}
+    buttonComponent={
+        <>
+            <Button type='line' size='small'>수정</Button>
+            <Button type='line' size='small'>수정</Button>
+        </>
+    }
 >
     <DefinitionTagContainer>
         <DefinitionTag
