@@ -1972,7 +1972,7 @@ var Icon = unwrapExports(dist);
 
 // iconName은 여기서 검색한다 https://akveo.github.io/eva-icons/#/
 var Button = function (_a) {
-    var _b = _a.children, children = _b === void 0 ? '버튼' : _b, _c = _a.type, type = _c === void 0 ? 'solid' : _c, _d = _a.color, color = _d === void 0 ? 'blue' : _d, _e = _a.size, size = _e === void 0 ? 'middle' : _e, _f = _a.iconName, iconName = _f === void 0 ? '' : _f, _g = _a.iconSize, iconSize = _g === void 0 ? 18 : _g, onClick = _a.onClick, _h = _a.disabled, disabled = _h === void 0 ? false : _h, style = _a.style, dataTip = _a.dataTip, dataFor = _a.dataFor, className = _a.className;
+    var _b = _a.children, children = _b === void 0 ? '버튼' : _b, _c = _a.type, type = _c === void 0 ? 'solid' : _c, _d = _a.color, color = _d === void 0 ? 'blue' : _d, _e = _a.size, size = _e === void 0 ? 'middle' : _e, _f = _a.iconName, iconName = _f === void 0 ? '' : _f, _g = _a.iconSize, iconSize = _g === void 0 ? '18' : _g, onClick = _a.onClick, _h = _a.disabled, disabled = _h === void 0 ? false : _h, style = _a.style, dataTip = _a.dataTip, dataFor = _a.dataFor, className = _a.className;
     var iconButton = React.createElement("button", { style: style, onClick: onClick, className: "btn-type-" + type + " btn-color-" + color + " " + (disabled ? 'btn-disabled' : '') + " btn-icon-text " + className, "data-tip": dataTip, "data-for": dataFor },
         React.createElement(Icon, { name: iconName, size: iconSize }),
         (iconName && children !== '버튼') && React.createElement("span", null, children));
@@ -4838,7 +4838,7 @@ var Section = function (_a) {
         React.createElement("header", null,
             React.createElement("div", { className: 'header-top' },
                 React.createElement("h1", null, title),
-                buttonComponent),
+                React.createElement("div", { className: 'section-btn-area' }, buttonComponent)),
             React.createElement("div", { className: 'header-bottom' }, subTitle)),
         children));
 };
