@@ -15,7 +15,8 @@ export const SectionStory = () => <Section
     subTitle={text('부제목', '기본정보')}
     buttonComponent={
         <>
-            <Button type='line' size='small'>수정</Button>
+            <Button size='small' iconName='search-outline' type='line' ></Button>
+            <Button size='small' iconName='search-outline' type='line' >아이콘</Button>
             <Button type='line' size='small'>수정</Button>
         </>
     }

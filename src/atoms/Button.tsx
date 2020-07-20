@@ -23,7 +23,7 @@ const Button = ({ children = '버튼', type = 'solid', color = 'blue', size = 'm
         <button
             style={style}
             onClick={onClick}
-            className={`btn-type-${type} btn-color-${color} ${disabled ? 'btn-disabled' : ''} btn-icon-text ${className}`}
+            className={`btn-type-${type} btn-color-${color} btn-size-${size} ${disabled ? 'btn-disabled' : ''} btn-icon-text ${className}`}
             data-tip={dataTip}
             data-for={dataFor}
         >
