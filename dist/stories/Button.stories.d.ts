@@ -20,3 +20,4 @@ declare const _default: {
 export default _default;
 export declare const ButtonStory: () => JSX.Element;
 export declare const ButtonStoryDisabled: () => JSX.Element;
+export declare const ButtonStoryWithIcon: () => JSX.Element;
