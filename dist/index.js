@@ -4833,10 +4833,19 @@ function removePopup(_a) {
     }
 }
 
+var Divider = function (_a) {
+    var style = _a.style;
+    return (React__default.createElement("div", { className: 'divider', style: __assign({}, style) }));
+};
+
 var SearchBox = function (_a) {
-    var children = _a.children, style = _a.style, stage = _a.stage;
+    var children = _a.children, style = _a.style, stage = _a.stage, buttonTitle = _a.buttonTitle, onClickSearchButton = _a.onClickSearchButton;
     var grid = "repeat(" + stage + ", 1fr)";
-    return (React__default.createElement("section", { className: "search-box stage-" + stage, style: __assign(__assign({}, style), { gridTemplateColumns: grid }) }, children));
+    return (React__default.createElement("div", { className: 'search-box-wrapper' },
+        React__default.createElement("section", { className: "search-box stage-" + stage, style: __assign(__assign({}, style), { gridTemplateColumns: grid }) }, children),
+        React__default.createElement(Divider, { style: { backgroundColor: '#eef2fa', marginTop: '16px', marginBottom: '12px' } }),
+        React__default.createElement("div", { className: 'btn-area' },
+            React__default.createElement(Button, { size: 'small', onClick: onClickSearchButton }, buttonTitle))));
 };
 
 var Section = function (_a) {
@@ -4895,11 +4904,6 @@ Toast.defaultProps = {
     onClickOutside: function () { },
     delay: 3000,
     position: 'RIGHT_TOP'
-};
-
-var Divider = function (_a) {
-    var style = _a.style;
-    return (React__default.createElement("div", { className: 'divider', style: __assign({}, style) }));
 };
 
 var ModalItem = function (_a) {
