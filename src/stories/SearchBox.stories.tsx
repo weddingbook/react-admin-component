@@ -75,3 +75,19 @@ export const SearchBoxStory = () => {
         </CombineInput>
     </SearchBox>
 }
+
+export const SearchBoxStoryWithChild = () => {
+    const onClickSearchButton = () => {
+
+    };
+
+    return <SearchBox stage={select('1단, 2단 선택', {
+        '1': 1,
+        '2': 2
+    }, 1)} buttonTitle='검색하기' onClickSearchButton={onClickSearchButton}>
+        <div className='search-box-item'>
+            <label>검색</label>
+            <Input iconName='search-outline' placeholder='입력하면 바로 검색합니다.'/>
+        </div>
+    </SearchBox>
+}

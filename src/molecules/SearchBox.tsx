@@ -1,10 +1,10 @@
-import React, { CSSProperties } from 'react';
+import React, { CSSProperties, ReactChild } from 'react';
 import './SearchBox.scss';
 import Button from '../atoms/Button';
 import Divider from '../atoms/Divider';
 
 type Props = {
-    children: Array<any>,
+    children: Array<any> | ReactChild,
     style?: CSSProperties,
     stage: 1 | 2,
     buttonTitle: string
