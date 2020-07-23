@@ -3,6 +3,8 @@ import { withKnobs, select } from '@storybook/addon-knobs'
 import { useModal } from '../index';
 import { DatePicker, TimePicker } from 'antd';
 import { Divider, ModalItem, ButtonTypeInput, InputContainer, Input, CombineInput, SelectBox, Modal, Button, DefinitionTag, DefinitionTagContainer } from '../index';
+import useRadioBox from '../hooks/useRadioBox';
+import useCheckBox from '../hooks/useCheckBox';
 
 
 export default {
@@ -37,6 +39,74 @@ export const ModalStory = () => <Modal size={select('사이즈', {
         </DefinitionTag>
     </DefinitionTagContainer>
 </Modal>
+
+export const ModalStoryWithCheckBoxAndRadioBox = () => {
+    const [keyword, setKeyword] = useState('')
+
+    const { list: checkBoxList, onChange: onChange2 } = useCheckBox([
+        {
+            id: '42123',
+            name: '웨딩홀',
+            checked: false
+        },
+        {
+            id: '12123',
+            name: '가전가구',
+            checked: false
+        },
+        {
+            id: '22123',
+            name: '스드메',
+            checked: false
+        }
+    ])
+    const { list: radioButtonList, onChange: onChangeRadioBox } = useRadioBox([
+        {
+            id: 1,
+            name: 'LEADER',
+            value: 'LEADER',
+            checked: false,
+        },
+        {
+            id: 2,
+            name: 'MEMBER',
+            value: 'MEMBER',
+            checked: true
+        },
+    ])
+    // actions
+    const onChange = (e: any) => {
+        setKeyword(e.target.value)
+    }
+    return <Modal size={select('사이즈', {
+        small: 'small',
+        medium: 'medium',
+        large: 'large'
+    }, 'small')} actionButtonComponent={<Button onClick={onClick} size='small' type='solid' disabled={true}>확인</Button>}>
+        <ModalItem>
+            <label>Team Member</label>
+            <Input value={keyword} onChange={(e) => { onChange(e) }} placeholder='Type MemberName Or Email Or TeamName OR Grade...' />
+        </ModalItem>
+        <ModalItem className='checkbox-radio'>
+            <label className='checkbox-radio'>체크박스</label>
+            <InputContainer>
+                {checkBoxList.map((value) => (<React.Fragment key={value.id}>
+                    <input type='checkbox' className='checkbox-input' value={value.id} checked={value.checked} onChange={(e) => { onChange2(e, value) }}></input>
+                    <label>{value.name}</label>
+                </React.Fragment>))}
+            </InputContainer>
+        </ModalItem>
+        <ModalItem className='checkbox-radio'>
+            <label className='checkbox-radio'>Grade</label>
+            <InputContainer>
+                {radioButtonList.map((value) => (<React.Fragment key={value.id}>
+                    <input type='radio' className='radio-input' value={value.value} checked={value.checked} onChange={() => { onChangeRadioBox(value) }}></input>
+                    <label>{value.name}</label>
+                </React.Fragment>))}
+            </InputContainer>
+        </ModalItem>
+    </Modal>
+}
 
 export const ModalStoryWithLong = () => {
     const { modalToggle, onCloseModal, onOpenModal } = useModal();

@@ -62,10 +62,18 @@
             .modal-item {
                 display: grid;
 
+                &.checkbox-radio {
+                    align-items: center;
+                }
+
                 > label {
                     position: relative;
                     top: 10px;
                     justify-self: end;
+
+                    &.checkbox-radio {
+                        top: 0;
+                    }
                 }
 
                 button {
