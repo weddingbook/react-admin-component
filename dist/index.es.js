@@ -4900,8 +4900,8 @@ Toast.defaultProps = {
 };
 
 var ModalItem = function (_a) {
-    var children = _a.children, style = _a.style;
-    return (React.createElement("div", { className: 'modal-item', style: __assign({}, style) }, children));
+    var children = _a.children, className = _a.className, style = _a.style;
+    return (React.createElement("div", { className: "modal-item " + className, style: __assign({}, style) }, children));
 };
 
 var SectionContainer = function (_a) {
