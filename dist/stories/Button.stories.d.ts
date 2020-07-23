@@ -3,9 +3,9 @@ declare const _default: {
     title: string;
     component: ({ children, type, color, size, iconName, iconSize, onClick, disabled, style, dataTip, dataFor, className }: {
         children?: string | object | undefined;
-        type?: "solid" | "line" | "text" | "link" | undefined;
+        type?: "link" | "line" | "text" | "solid" | undefined;
         color?: "blue" | "yellow" | "green" | "red" | undefined;
-        size?: "xs" | "small" | "middle" | "large" | undefined;
+        size?: "small" | "xs" | "middle" | "large" | undefined;
         iconName?: string | undefined;
         iconSize?: string | number | undefined;
         onClick?: any;

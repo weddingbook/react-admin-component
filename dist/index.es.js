@@ -2082,6 +2082,9 @@ var InputRecommend = function (_a) {
         if (!invalid && informationMessage)
             setMarginTop('-14px');
     }, [invalid, informationMessage, setMarginTop]);
+    useEffect(function () {
+        setShowList(true);
+    }, [options]);
     var onClickOption = function (option) {
         onSelectOptionSet(option);
     };

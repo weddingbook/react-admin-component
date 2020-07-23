@@ -4,7 +4,7 @@ declare const _default: {
     component: ({ children, style, stage, buttonTitle, onClickSearchButton }: {
         children: any[];
         style?: React.CSSProperties | undefined;
-        stage: 2 | 1;
+        stage: 1 | 2;
         buttonTitle: string;
         onClickSearchButton: () => void;
     }) => JSX.Element;

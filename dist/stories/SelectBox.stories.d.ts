@@ -3,7 +3,7 @@ declare const _default: {
     title: string;
     component: ({ options, selectedOption, style, onSelectOptionSet }: {
         options: any[];
-        selectedOption: string | number;
+        selectedOption: React.Key;
         style?: React.CSSProperties | undefined;
         onSelectOptionSet: (option: any) => void;
     }) => JSX.Element;
