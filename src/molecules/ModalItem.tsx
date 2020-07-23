@@ -2,13 +2,14 @@ import React, { CSSProperties } from 'react';
 import './ModalItem.scss';
 
 type Props = {
-    children?: object,
-    style?: CSSProperties,
+    children?: object
+    style?: CSSProperties
+    className?: string
 }
 
-const ModalItem = ({ children, style }: Props) => {
+const ModalItem = ({ children, className, style }: Props) => {
     return (
-        <div className='modal-item' style={{...style}}>
+        <div className={`modal-item ${className}`} style={{...style}}>
             {children}
         </div>
     )

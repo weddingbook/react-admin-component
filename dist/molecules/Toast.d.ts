@@ -16,7 +16,7 @@ export interface ToastProps {
     removeToast: (id: string, position: string) => void;
     removeToastState: (id: string, position: string) => void;
 }
-interface ToastContainerProps {
+export interface ToastContainerProps {
     toasts: ToastStoreProps;
     removeToast: () => void;
     removeToastState: () => void;
@@ -28,4 +28,3 @@ export interface ToastStoreProps {
     'RIGHT_BOTTOM': ToastProps[];
 }
 export declare const ToastContainer: ({ toasts, removeToast, removeToastState }: ToastContainerProps) => JSX.Element;
-export {};

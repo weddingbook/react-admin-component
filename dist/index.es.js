@@ -1972,8 +1972,8 @@ var Icon = unwrapExports(dist);
 
 // iconName은 여기서 검색한다 https://akveo.github.io/eva-icons/#/
 var Button = function (_a) {
-    var _b = _a.children, children = _b === void 0 ? '버튼' : _b, _c = _a.type, type = _c === void 0 ? 'solid' : _c, _d = _a.color, color = _d === void 0 ? 'blue' : _d, _e = _a.size, size = _e === void 0 ? 'middle' : _e, _f = _a.iconName, iconName = _f === void 0 ? '' : _f, _g = _a.iconSize, iconSize = _g === void 0 ? 18 : _g, onClick = _a.onClick, _h = _a.disabled, disabled = _h === void 0 ? false : _h, style = _a.style, dataTip = _a.dataTip, dataFor = _a.dataFor, className = _a.className;
-    var iconButton = React.createElement("button", { style: style, onClick: onClick, className: "btn-type-" + type + " btn-color-" + color + " " + (disabled ? 'btn-disabled' : '') + " btn-icon-text " + className, "data-tip": dataTip, "data-for": dataFor },
+    var _b = _a.children, children = _b === void 0 ? '버튼' : _b, _c = _a.type, type = _c === void 0 ? 'solid' : _c, _d = _a.color, color = _d === void 0 ? 'blue' : _d, _e = _a.size, size = _e === void 0 ? 'middle' : _e, _f = _a.iconName, iconName = _f === void 0 ? '' : _f, _g = _a.iconSize, iconSize = _g === void 0 ? '18' : _g, onClick = _a.onClick, _h = _a.disabled, disabled = _h === void 0 ? false : _h, style = _a.style, dataTip = _a.dataTip, dataFor = _a.dataFor, className = _a.className;
+    var iconButton = React.createElement("button", { style: style, onClick: onClick, className: "btn-type-" + type + " btn-color-" + color + " btn-size-" + size + " " + (disabled ? 'btn-disabled' : '') + " btn-icon-text " + className, "data-tip": dataTip, "data-for": dataFor },
         React.createElement(Icon, { name: iconName, size: iconSize }),
         (iconName && children !== '버튼') && React.createElement("span", null, children));
     var normalButton = React.createElement("button", { style: style, disabled: disabled, onClick: onClick, className: "btn-type-" + type + " btn-color-" + color + " btn-size-" + size + " " + (disabled ? 'btn-disabled' : '') + " " + className, "data-tip": dataTip, "data-for": dataFor },
@@ -2082,6 +2082,9 @@ var InputRecommend = function (_a) {
         if (!invalid && informationMessage)
             setMarginTop('-14px');
     }, [invalid, informationMessage, setMarginTop]);
+    useEffect(function () {
+        setShowList(true);
+    }, [options]);
     var onClickOption = function (option) {
         onSelectOptionSet(option);
     };
@@ -4826,10 +4829,19 @@ function removePopup(_a) {
     }
 }
 
+var Divider = function (_a) {
+    var style = _a.style;
+    return (React.createElement("div", { className: 'divider', style: __assign({}, style) }));
+};
+
 var SearchBox = function (_a) {
-    var children = _a.children, style = _a.style, stage = _a.stage;
+    var children = _a.children, style = _a.style, stage = _a.stage, buttonTitle = _a.buttonTitle, onClickSearchButton = _a.onClickSearchButton;
     var grid = "repeat(" + stage + ", 1fr)";
-    return (React.createElement("section", { className: "search-box stage-" + stage, style: __assign(__assign({}, style), { gridTemplateColumns: grid }) }, children));
+    return (React.createElement("div", { className: 'search-box-wrapper' },
+        React.createElement("section", { className: "search-box stage-" + stage, style: __assign(__assign({}, style), { gridTemplateColumns: grid }) }, children),
+        React.createElement(Divider, { style: { backgroundColor: '#eef2fa', marginTop: '16px', marginBottom: '12px' } }),
+        React.createElement("div", { className: 'btn-area' },
+            React.createElement(Button, { size: 'small', onClick: onClickSearchButton }, buttonTitle))));
 };
 
 var Section = function (_a) {
@@ -4838,7 +4850,7 @@ var Section = function (_a) {
         React.createElement("header", null,
             React.createElement("div", { className: 'header-top' },
                 React.createElement("h1", null, title),
-                buttonComponent),
+                React.createElement("div", { className: 'section-btn-area' }, buttonComponent)),
             React.createElement("div", { className: 'header-bottom' }, subTitle)),
         children));
 };
@@ -4890,14 +4902,9 @@ Toast.defaultProps = {
     position: 'RIGHT_TOP'
 };
 
-var Divider = function (_a) {
-    var style = _a.style;
-    return (React.createElement("div", { className: 'divider', style: __assign({}, style) }));
-};
-
 var ModalItem = function (_a) {
-    var children = _a.children, style = _a.style;
-    return (React.createElement("div", { className: 'modal-item', style: __assign({}, style) }, children));
+    var children = _a.children, className = _a.className, style = _a.style;
+    return (React.createElement("div", { className: "modal-item " + className, style: __assign({}, style) }, children));
 };
 
 var SectionContainer = function (_a) {

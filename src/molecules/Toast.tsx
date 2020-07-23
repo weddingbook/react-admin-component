@@ -18,7 +18,7 @@ export interface ToastProps {
 	removeToastState: (id: string, position: string) => void;
 }
 
-interface ToastContainerProps {
+export interface ToastContainerProps {
 	toasts: ToastStoreProps,
 	removeToast: () => void,
 	removeToastState: () => void
