@@ -32,6 +32,10 @@ const InputRecommend = ({ options, style, onSelectOptionSet, invalid, informatio
         if (!invalid && informationMessage) setMarginTop('-14px');
     }, [invalid, informationMessage, setMarginTop])
 
+    useEffect(() => {
+        setShowList(true)
+    }, [options]);
+    
     const onClickOption = (option: any) => {
         onSelectOptionSet!(option);
     }
