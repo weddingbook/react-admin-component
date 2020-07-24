@@ -15,16 +15,33 @@ export const PopupStory = () => {
         createPopup({
             type: 'alert',
             message: '안녕하세요',
-            closeOnClickOutside: true,
             button: {
                 'label': '확인',
-                'action': () => {},
+                'action': () => { },
             },
+        })
+    }
+    const onCreatePopup2 = () => {
+        createPopup({
+            type: 'confirm',
+            messageType: 'fail',
+            message: '안녕하세요',
+            closeOnClickOutside: false,
+            buttons: [{
+                'label': '취소',
+                'type': 'line',
+                'action': () => { },
+            }, {
+                'label': '확인',
+                'color': 'red',
+                'action': () => { },
+            }],
         })
     }
     return (
         <>
-            <Button onClick={onCreatePopup}>팝업</Button>
+            <Button onClick={onCreatePopup}>1버튼 팝업</Button>
+            <Button onClick={onCreatePopup2}>2버튼 팝업</Button>
         </>
     )
 }

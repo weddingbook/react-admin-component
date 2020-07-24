@@ -60,6 +60,10 @@
 		display: flex;
 		justify-content: flex-end;
 		margin-top: 16px;
+
+		button + button {
+            margin-left: 8px;
+        }
 	}
 }
 .confirm-popup {
