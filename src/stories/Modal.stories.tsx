@@ -5,6 +5,7 @@ import { DatePicker, TimePicker } from 'antd';
 import { Divider, ModalItem, ButtonTypeInput, InputContainer, Input, CombineInput, SelectBox, Modal, Button, DefinitionTag, DefinitionTagContainer } from '../index';
 import useRadioBox from '../hooks/useRadioBox';
 import useCheckBox from '../hooks/useCheckBox';
+import TabMenu from '../atoms/TabMenu';
 
 
 export default {
@@ -39,6 +40,38 @@ export const ModalStory = () => <Modal size={select('사이즈', {
         </DefinitionTag>
     </DefinitionTagContainer>
 </Modal>
+
+export const ModalStoryWithTab = () => {
+    const menuList = ['Tab active', 'Tab2', 'Tab3'];
+
+    const [selectedMenu, setSelectedMenu] = useState(menuList[0]);
+    const onSelectMenu = (menu: string) => {
+        setSelectedMenu(menu)
+    }
+    return <Modal size={select('사이즈', {
+        small: 'small',
+        medium: 'medium',
+        large: 'large'
+    }, 'small')} actionButtonComponent={<Button onClick={onClick} size='small' type='solid' disabled={true}>확인</Button>}>
+        <TabMenu tabList={menuList} onSelectMenu={onSelectMenu} selectedMenu={selectedMenu} />
+        <DefinitionTagContainer>
+            <DefinitionTag title='휴대폰정보' direction='row'>
+                아이폰, 앱버전 : 4.20.0, OS버전 : 13.2.2 <br />
+                3783c640-d39f-11e8-b933-0aea5320e7f2
+            </DefinitionTag>
+        </DefinitionTagContainer>
+        <DefinitionTagContainer>
+            <DefinitionTag title='닉네임' direction='row'>
+                띄지않고최대여덟
+            </DefinitionTag>
+        </DefinitionTagContainer>
+        <DefinitionTagContainer>
+            <DefinitionTag title='상태' direction='row'>
+                활성
+            </DefinitionTag>
+        </DefinitionTagContainer>
+    </Modal>
+}
 
 export const ModalStoryWithCheckBoxAndRadioBox = () => {
     const [keyword, setKeyword] = useState('')

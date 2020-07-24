@@ -1,0 +1,34 @@
+@import "../assets/scss/color.scss";
+
+.tab-menu {
+    display: flex;
+    flex-direction: column;
+    padding-left: 0;
+    background-color: white;
+    > ul {
+        display: flex;
+        align-items: center;
+        > li {
+            color: $gray40;
+            font-size: 11px;
+            cursor: pointer;
+            padding-bottom: 12px;
+            &.on {
+                color: $gray100;
+                font-size: 13px;
+                font-weight: 700;
+                border-bottom: 2px solid $gray90;
+            }
+            & + li {
+                margin-left: 24px;
+            }
+        }
+        color: blue;
+    }
+}
+.divider {
+    &.in-tab-menu {
+        margin-top: -1px;
+        margin-bottom: 20px;
+    }
+}
