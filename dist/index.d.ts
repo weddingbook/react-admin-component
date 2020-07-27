@@ -16,7 +16,7 @@ export { default as Modal } from './molecules/Modal';
 export { PopupArea, createPopup, removePopup } from './molecules/Popup';
 export { default as SearchBox } from './molecules/SearchBox';
 export { default as Section } from './molecules/Section';
-export { ToastContainer } from './molecules/Toast';
+export { ToastContainer, ToastContainerProps, ToastProps, ToastStoreProps } from './molecules/Toast';
 export { default as Divider } from './atoms/Divider';
 export { default as ModalItem } from './molecules/ModalItem';
 export { default as SectionContainer } from './organisms/SectionContainer';

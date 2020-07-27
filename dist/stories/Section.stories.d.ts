@@ -11,4 +11,5 @@ declare const _default: {
 };
 export default _default;
 export declare const SectionStory: () => JSX.Element;
+export declare const SectionStoryWithTabMenu: () => JSX.Element;
 export declare const SectionStroyMultiple: () => JSX.Element;
