@@ -1,7 +1,15 @@
 import { useState } from 'react';
 import { ToastStoreProps, ToastProps } from '../molecules/Toast'
 
-export const useToast = () => {
+export type ToastHooksProps = {
+    toasts: ToastStoreProps;
+    createToast: (options: ToastProps) => void;
+    removeToast: (id: string, position: string) => void;
+    removeToastState: (id: string, position: string) => void;
+    removeAllToast: () => void;
+}
+
+export const useToast = (): ToastHooksProps => {
     const [toasts, setToasts] = useState<ToastStoreProps>({
         'LEFT_TOP': [],
         'LEFT_BOTTOM': [],

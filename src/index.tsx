@@ -30,4 +30,4 @@ export { default as SectionContainer } from './organisms/SectionContainer';
 export { default as useCheckBox } from './hooks/useCheckBox';
 export { default as useModal } from './hooks/useModal';
 export { default as useRadioBox } from './hooks/useRadioBox';
-export { useToast } from './hooks/useToast';
+export { useToast, ToastHooksProps } from './hooks/useToast';
