@@ -1,10 +1,39 @@
 @import "../assets/scss/color.scss";
 
+.page-tab-menu {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 59px;
+    padding: 20px;
+    background-color: $blue5;
+
+    > li {
+        a {
+            font-size: 11px;
+            color: $gray40;
+
+            &.on {
+                font-size: 13px;
+                font-weight: 700;
+                color: $gray80;
+            }
+        }
+        & + li {
+            margin-left: 24px;
+        }
+    }
+}
 .tab-menu {
     display: flex;
     flex-direction: column;
     padding-left: 0;
     background-color: white;
+
+    &.list-tab {
+        margin-left: -12px;
+    }
+
     > ul {
         display: flex;
         align-items: center;
@@ -13,17 +42,43 @@
             font-size: 11px;
             cursor: pointer;
             padding-bottom: 12px;
-            &.on {
-                color: $gray100;
-                font-size: 13px;
+
+            &.modal-tab-item {
+                &.on {
+                    color: $gray100;
+                    font-size: 13px;
+                    font-weight: 700;
+                    border-bottom: 2px solid $gray90;
+                }
+                & + li {
+                    margin-left: 24px;
+                }
+            }
+
+            &.list-tab-item {
+                padding: 6px 12px 7px;
+                border: solid 1px $blue60;
+                border-right: none;
+                height: 32px;
                 font-weight: 700;
-                border-bottom: 2px solid $gray90;
+                color: $blue60;
+
+                &.list-tab-item:first-child {
+                    border-radius: 4px 0 0 4px;
+                }
+
+                &.list-tab-item:last-child {
+                    border: solid 1px $blue60;
+                    border-radius: 0 4px 4px 0;
+                }
+
+                &.on {
+                    background-color: $blue10;
+                    color: $blue60;
+                }
             }
-            & + li {
-                margin-left: 24px;
-            }
+            
         }
-        color: blue;
     }
 }
 .divider {
