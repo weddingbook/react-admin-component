@@ -17,7 +17,7 @@ export const PaginationStory = () => {
 
     for (let i = 0; i < 219; i++) {
         dataSourceTest.push({
-            key: '3',
+            key: i,
             th_Label1: <span>YYYY-MM-DD<br />HH:MM</span>,
             th_Label2: i,
             th_Label3: `Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`,
@@ -40,7 +40,6 @@ export const PaginationStory = () => {
             defaultSortOrder: 'ascend',
             key: 'th_Label2',
             sorter: (a, b) => {
-                console.log({ a, b });
                 // api를 호출하여 해당 컬럼의 sort를 값으로 줘서 호춣하고 그 값을 받아와야 함.
                 // 그럼 값이 새로 생성되니까
                 // return a.th_Label2 - b.th_Label2
