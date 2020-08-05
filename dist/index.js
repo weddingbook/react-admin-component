@@ -1977,6 +1977,29 @@ exports.default = Icon;
 
 var Icon = unwrapExports(dist);
 
+var Breadcrumb = function (_a) {
+    var breadcrumbs = _a.breadcrumbs, menuMap = _a.menuMap, onChangePage = _a.onChangePage;
+    return (React__default.createElement(React__default.Fragment, null,
+        React__default.createElement("div", { className: 'breadcrumb' }, breadcrumbs.map(function (value, index) {
+            if (!value)
+                return React__default.createElement(React__default.Fragment, { key: index });
+            if (!value.menuId) {
+                return React__default.createElement(React__default.Fragment, { key: index },
+                    React__default.createElement("span", null,
+                        React__default.createElement(Icon, { name: "arrow-ios-forward-outline", size: "14", fill: '#c8c8c8' })),
+                    React__default.createElement("span", { className: 'breadcrumb-item', key: value.name }, value.name));
+            }
+            if (!value.parentMenuId) {
+                return React__default.createElement(React__default.Fragment, { key: index },
+                    React__default.createElement("span", { className: 'breadcrumb-item depth1', key: value.name }, value.name));
+            }
+            return (React__default.createElement(React__default.Fragment, { key: value.menuId },
+                React__default.createElement("span", null,
+                    React__default.createElement(Icon, { name: "arrow-ios-forward-outline", size: "14", fill: '#c8c8c8' })),
+                React__default.createElement("span", { className: 'breadcrumb-item depth2', onClick: function () { return onChangePage(menuMap[value.menuId]); } }, value.name)));
+        }))));
+};
+
 // iconName은 여기서 검색한다 https://akveo.github.io/eva-icons/#/
 var Button = function (_a) {
     var _b = _a.children, children = _b === void 0 ? '버튼' : _b, _c = _a.type, type = _c === void 0 ? 'solid' : _c, _d = _a.color, color = _d === void 0 ? 'blue' : _d, _e = _a.size, size = _e === void 0 ? 'middle' : _e, _f = _a.iconName, iconName = _f === void 0 ? '' : _f, _g = _a.iconSize, iconSize = _g === void 0 ? '18' : _g, onClick = _a.onClick, _h = _a.disabled, disabled = _h === void 0 ? false : _h, style = _a.style, dataTip = _a.dataTip, dataFor = _a.dataFor, className = _a.className;
@@ -5012,6 +5035,7 @@ var useToast = function () {
     };
 };
 
+exports.Breadcrumb = Breadcrumb;
 exports.Button = Button;
 exports.ButtonTypeInput = ButtonTypeInput;
 exports.CombineInput = CombineInput;

@@ -1970,6 +1970,29 @@ exports.default = Icon;
 
 var Icon = unwrapExports(dist);
 
+var Breadcrumb = function (_a) {
+    var breadcrumbs = _a.breadcrumbs, menuMap = _a.menuMap, onChangePage = _a.onChangePage;
+    return (React.createElement(React.Fragment, null,
+        React.createElement("div", { className: 'breadcrumb' }, breadcrumbs.map(function (value, index) {
+            if (!value)
+                return React.createElement(React.Fragment, { key: index });
+            if (!value.menuId) {
+                return React.createElement(React.Fragment, { key: index },
+                    React.createElement("span", null,
+                        React.createElement(Icon, { name: "arrow-ios-forward-outline", size: "14", fill: '#c8c8c8' })),
+                    React.createElement("span", { className: 'breadcrumb-item', key: value.name }, value.name));
+            }
+            if (!value.parentMenuId) {
+                return React.createElement(React.Fragment, { key: index },
+                    React.createElement("span", { className: 'breadcrumb-item depth1', key: value.name }, value.name));
+            }
+            return (React.createElement(React.Fragment, { key: value.menuId },
+                React.createElement("span", null,
+                    React.createElement(Icon, { name: "arrow-ios-forward-outline", size: "14", fill: '#c8c8c8' })),
+                React.createElement("span", { className: 'breadcrumb-item depth2', onClick: function () { return onChangePage(menuMap[value.menuId]); } }, value.name)));
+        }))));
+};
+
 // iconName은 여기서 검색한다 https://akveo.github.io/eva-icons/#/
 var Button = function (_a) {
     var _b = _a.children, children = _b === void 0 ? '버튼' : _b, _c = _a.type, type = _c === void 0 ? 'solid' : _c, _d = _a.color, color = _d === void 0 ? 'blue' : _d, _e = _a.size, size = _e === void 0 ? 'middle' : _e, _f = _a.iconName, iconName = _f === void 0 ? '' : _f, _g = _a.iconSize, iconSize = _g === void 0 ? '18' : _g, onClick = _a.onClick, _h = _a.disabled, disabled = _h === void 0 ? false : _h, style = _a.style, dataTip = _a.dataTip, dataFor = _a.dataFor, className = _a.className;
@@ -5005,5 +5028,5 @@ var useToast = function () {
     };
 };
 
-export { Button, ButtonTypeInput, CombineInput, DefinitionTag, DefinitionTagContainer, Divider, Input, InputContainer, InputRecommend, Modal, ModalItem, Pagination, PopupArea, SearchBox, Section, SectionContainer, SelectBox, SwitchButton, Tag, ToastContainer, Tooltip, ViewMore, createPopup, removePopup, useCheckBox, useModal, useRadioBox, useToast };
+export { Breadcrumb, Button, ButtonTypeInput, CombineInput, DefinitionTag, DefinitionTagContainer, Divider, Input, InputContainer, InputRecommend, Modal, ModalItem, Pagination, PopupArea, SearchBox, Section, SectionContainer, SelectBox, SwitchButton, Tag, ToastContainer, Tooltip, ViewMore, createPopup, removePopup, useCheckBox, useModal, useRadioBox, useToast };
 //# sourceMappingURL=index.es.js.map

@@ -3,7 +3,7 @@ import './Breadcrumb.scss';
 import Icon from 'react-eva-icons';
 
 type Props = {
-    breadcrumbs: any
+    breadcrumbs: MenuItem[]
     menuMap: {
         [key: string]: string
     }

@@ -1,4 +1,5 @@
 // atoms
+export { default as Breadcrumb } from './atoms/Breadcrumb';
 export { default as Button } from './atoms/Button';
 export { default as ButtonTypeInput } from './atoms/ButtonTypeInput';
 export { default as DefinitionTag } from './atoms/DefinitionTag';

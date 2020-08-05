@@ -1,7 +1,7 @@
 /// <reference types="react" />
 import './Breadcrumb.scss';
 declare type Props = {
-    breadcrumbs: any;
+    breadcrumbs: MenuItem[];
     menuMap: {
         [key: string]: string;
     };
