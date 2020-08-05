@@ -1,0 +1,25 @@
+@import "../assets/scss/color.scss";
+
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    height: 40px;
+    padding: 13px 20px 14px;
+
+    .breadcrumb-item {
+        font-size: 10px;
+        color: $gray50;
+        padding: 0 8px 1px;
+
+        &.depth1 {
+            padding: 0 8px 1px 0;
+        }
+
+        &.depth2 {
+            font-weight: 700;
+            color: $blue60;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    }
+}

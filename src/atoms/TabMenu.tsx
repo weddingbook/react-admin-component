@@ -1,6 +1,5 @@
 import React from 'react';
 import './TabMenu.scss';
-import ButtonTypeInput from './ButtonTypeInput';
 
 type Props = {
     tabList: string[]
@@ -8,15 +7,6 @@ type Props = {
     selectedMenu: string
     type?: 'page' | 'modal' | 'section' | 'list'
 }
-
-export const PageTabMenu = ({ tabList }: Props) => {
-    return <ul className='page-tab-menu'>
-        {tabList.map(value => {
-            return (<li key={value}>{value}</li>)
-        })}
-    </ul>
-}
-
 
 const TabMenu = ({ tabList, onSelectMenu, selectedMenu, type = 'modal' }: Props) => {
     return (

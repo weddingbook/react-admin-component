@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { withKnobs } from '@storybook/addon-knobs'
-import TabMenu, { PageTabMenu, ModalAndSectionTabMenu } from '../atoms/TabMenu';
+import TabMenu from '../atoms/TabMenu';
 import Section from '../molecules/Section';
 import Button from '../atoms/Button';
 import DefinitionTagContainer from '../molecules/DefinitionTagContainer';
@@ -10,24 +10,11 @@ import ModalItem from '../molecules/ModalItem';
 import Input from '../atoms/Input';
 
 export default {
-    title: '페이지 탭 메뉴',
-    component: PageTabMenu,
+    title: '탭 메뉴',
+    component: TabMenu,
     decorators: [withKnobs]
 };
 
-export const PageTabMenuStory = () => {
-    const tabList = [<a className='on'>안녕</a>, <a>하세요</a>]
-
-    const [selectedMenu, setSelectedMenu] = useState(tabList[0]);
-    const onSelectMenu = (menu: string) => {
-        setSelectedMenu(menu)
-    }
-    return (
-        <>
-            <PageTabMenu tabList={tabList} selectedMenu={selectedMenu} onSelectMenu={onSelectMenu} />
-        </>
-    )
-}
 
 export const SectionTabMenuStory = () => {
     const tabList = ['All Auth', 'Personal Auth', 'Team Auth'];
