@@ -39,11 +39,10 @@ export const BreadcrumbStory = () => {
             "uri": null, "name": "자원관리", "visible": true, "order": 1, "authorityType": "READ"
         },
         { "menuId": 7, "parentMenuId": 1, "children": [], "uri": "/api/b2b/teams", "name": "팀 관리", "visible": true, "order": 0, "authorityType": "WRITE" },
-        { "menuId": 9, "parentMenuId": 1, "children": [], "uri": "/api/b2b/authorities/members", "name": "직원권한 관리", "visible": false, "order": 0, "authorityType": "WRITE" }
     ]
 
     const onChangePage = (pathname: string) => {
-        // history.push(pathname)
+        console.log(pathname)
     }
     return <Breadcrumb menuMap={menuMap} breadcrumbs={breadcrumbs} onChangePage={onChangePage} />
 }
