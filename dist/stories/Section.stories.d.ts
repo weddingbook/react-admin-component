@@ -4,7 +4,7 @@ declare const _default: {
     component: ({ children, style, title, direction }: {
         children: string | object;
         title?: string | undefined;
-        direction?: "column" | "row" | undefined;
+        direction?: "row" | "column" | undefined;
         style?: React.CSSProperties | undefined;
     }) => JSX.Element;
     decorators: ((...args: any) => any)[];
