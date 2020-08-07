@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { withKnobs } from '@storybook/addon-knobs'
 import { Section, CombineInput, Input } from '../index'
 import { TimePicker, DatePicker } from 'antd';
+import Button from '../atoms/Button';
 
 export default {
     title: 'Input',
@@ -75,6 +76,30 @@ export const InputStory = () => {
                     onChange={(e) => { onSetInputValue(e.target.value) }}
                 />
             </CombineInput>
+        </Section>
+    )
+}
+
+export const InputStoryWithAutoComplete = () => {
+    const [options, setOptions] = useState(['안녕', '길다길어셀렉트 길다길어 셀렉트2', '길다길어셀렉트 길다길어 셀렉트3', 'ㅇㅇ', 'ㄴㄴ']);
+    const [inputValue, defaultInputValue] = useState('')
+    const onSetInputValue = (value: string) => {
+        defaultInputValue(value)
+    }
+    return (
+        <Section title='Input Story'>
+            <Input
+                value={inputValue}
+                recommendListButton={<>
+                    <Button>안녕하세요</Button>
+                    <Button size='large' color='yellow'>어서오세요</Button>
+                    <Button type='line' size='xs' color='green'>안녕하세요</Button>
+                    <Button color='red'>어서오세요</Button>
+                </>}
+                recommendOptions={options}
+                onSelectRecommendOptionSet={onSetInputValue}
+                onChange={(e) => { onSetInputValue(e.target.value) }}
+            />
         </Section>
     )
 }
