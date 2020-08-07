@@ -2120,7 +2120,7 @@ var InputRecommend = function (_a) {
     };
     return (React__default.createElement(React__default.Fragment, null, isShowList && React__default.createElement("ul", { ref: selectListRef, className: "input-recommend", style: __assign(__assign({}, style), { marginTop: marginTop }) },
         options.map(function (option) { return (React__default.createElement("li", { key: option, onClick: function () { onClickOption(option); } }, option)); }),
-        recommendListButton)));
+        React__default.createElement("div", { className: 'button-area' }, recommendListButton))));
 };
 
 var SelectBox = function (_a) {
