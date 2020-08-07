@@ -12,6 +12,13 @@
             align-items: center;
             grid-template-columns: 15% 1fr;
 
+            &.checkbox-radio {
+                > .input-container {
+                    grid-template-columns: 0% 1fr;
+                    margin-top: 0;
+                }
+            }
+            
             > label {
                 justify-self: end;
             }
