@@ -55,7 +55,9 @@ const InputRecommend = ({ options, style, recommendListButton, onSelectOptionSet
                         {option}
                     </li>
                 ))}
-                {recommendListButton}
+                <div className='button-area'>
+                    {recommendListButton}
+                </div>
             </ul>}
         </>
     )
