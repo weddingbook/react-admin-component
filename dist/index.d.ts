@@ -20,6 +20,7 @@ export { default as Section } from './molecules/Section';
 export { ToastContainer, ToastContainerProps, ToastProps, ToastStoreProps } from './molecules/Toast';
 export { default as Divider } from './atoms/Divider';
 export { default as ModalItem } from './molecules/ModalItem';
+export { default as ImageSlider } from './molecules/ImageSlider';
 export { default as SectionContainer } from './organisms/SectionContainer';
 export { default as useCheckBox } from './hooks/useCheckBox';
 export { default as useModal } from './hooks/useModal';

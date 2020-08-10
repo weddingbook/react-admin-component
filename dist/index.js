@@ -4939,6 +4939,46 @@ var ModalItem = function (_a) {
     return (React__default.createElement("div", { className: "modal-item " + className, style: __assign({}, style) }, children));
 };
 
+var ImageSlider = function (_a) {
+    var style = _a.style, imageUrlList = _a.imageUrlList, _b = _a.imageWidth, imageWidth = _b === void 0 ? 90 : _b, _c = _a.imageHeight, imageHeight = _c === void 0 ? 60 : _c;
+    var ref = React.useRef(null);
+    var _d = React.useState(false), isRefScroll = _d[0], setIsRefScroll = _d[1];
+    var _e = React.useState(false), isRefScrollEnd = _e[0], setIsRefScrollEnd = _e[1];
+    var _f = React.useState(0), refScrollLeft = _f[0], setRefScrollLeft = _f[1];
+    React.useEffect(function () {
+        if (ref.current) {
+            var _a = ref.current, scrollWidth = _a.scrollWidth, offsetWidth = _a.offsetWidth;
+            setIsRefScroll(scrollWidth > offsetWidth);
+        }
+    }, [ref.current]);
+    var onClickSliderArrow = React.useCallback(function (direction) {
+        var _a;
+        if (ref.current) {
+            var _b = ref.current, scrollLeft = _b.scrollLeft, scrollWidth = _b.scrollWidth, offsetWidth = _b.offsetWidth;
+            if (direction === 'back') {
+                ref.current.scrollLeft -= imageWidth + 8;
+                console.log(ref.current.offsetWidth);
+                setRefScrollLeft((_a = ref.current) === null || _a === void 0 ? void 0 : _a.scrollLeft);
+                setIsRefScrollEnd(scrollLeft === scrollWidth - offsetWidth);
+            }
+            else {
+                ref.current.scrollLeft += imageWidth + 8;
+                setRefScrollLeft(scrollLeft);
+                setIsRefScrollEnd(scrollLeft === scrollWidth - offsetWidth);
+            }
+        }
+    }, [ref.current]);
+    var onClickImageItem = function (url) {
+        window.open(url, '_black');
+    };
+    return (React__default.createElement("div", { className: 'image-slider', style: __assign({}, style) },
+        React__default.createElement("span", { className: "arrow " + ((isRefScroll && refScrollLeft) ? 'on' : ''), onClick: function () { return onClickSliderArrow('back'); } },
+            React__default.createElement(Icon, { name: 'arrow-ios-back-outline', fill: '#dedede', size: '35' })),
+        React__default.createElement("div", { className: 'image-item-wrapper', ref: ref }, imageUrlList.map(function (value, index) { return (React__default.createElement("img", { onClick: function () { return onClickImageItem(value); }, key: value + "-" + index, width: imageWidth, height: imageHeight, src: value })); })),
+        React__default.createElement("span", { className: "arrow " + ((isRefScroll && !isRefScrollEnd) ? 'on' : ''), onClick: function () { return onClickSliderArrow('forward'); } },
+            React__default.createElement(Icon, { name: 'arrow-ios-forward-outline', fill: '#dedede', size: '35' }))));
+};
+
 var SectionContainer = function (_a) {
     var children = _a.children;
     return (React__default.createElement("div", { className: 'section-container', style: {
@@ -5044,6 +5084,7 @@ exports.CombineInput = CombineInput;
 exports.DefinitionTag = DefinitionTag;
 exports.DefinitionTagContainer = DefinitionTagContainer;
 exports.Divider = Divider;
+exports.ImageSlider = ImageSlider;
 exports.Input = Input;
 exports.InputContainer = InputContainer;
 exports.InputRecommend = InputRecommend;
