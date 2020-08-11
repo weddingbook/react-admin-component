@@ -1,6 +1,6 @@
 @import "../assets/scss/color.scss";
 
-.image-slider {
+.image-slider-container {
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -8,9 +8,8 @@
     overflow-x: scroll;
 
     > span.arrow {
-        cursor: not-allowed;
+        cursor: pointer;
         &.on {
-            cursor: pointer;
 
             > i > svg {
                 fill: $blue60;
@@ -18,18 +17,21 @@
         }
     }
 
-    .image-item-wrapper {
+    .image-outer-slider {
         width: 100%;
-        display: flex;
-        justify-content: flex-start;
-        overflow-x: scroll;
-        scroll-behavior: smooth;
+        overflow-x: hidden;
+        .image-inner-slider {
+            width: 100vw;
+            display: flex;
+            scroll-behavior: smooth;
 
-        > img {
-            cursor: pointer;
-
-            & + img {
-                margin-left: 8px;
+            > li {
+                img {
+                    cursor: pointer;
+                }
+                & + li {
+                    margin-left: 8px;
+                }
             }
         }
     }

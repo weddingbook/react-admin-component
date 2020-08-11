@@ -10,50 +10,52 @@ type Props = {
 }
 
 const ImageSlider = ({ style, imageUrlList, imageWidth = 90, imageHeight = 60 }: Props) => {
-    const ref = useRef<HTMLDivElement>(null)
-    const [isRefScroll, setIsRefScroll] = useState(false);
-    const [isRefScrollEnd, setIsRefScrollEnd] = useState(false);
-    const [refScrollLeft, setRefScrollLeft] = useState(0);
+    const innerRef = useRef<HTMLUListElement>(null)
+    const outerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        if (ref.current) {
-            const { scrollWidth, offsetWidth } = ref.current;
-            setIsRefScroll(scrollWidth > offsetWidth)
+        if (innerRef.current) {
+            innerRef.current.style.transition = "all 0.5s ease-in-out";
         }
-    }, [ref.current])
+    }, [innerRef.current]);
 
     const onClickSliderArrow = useCallback((direction: string) => {
-        if (ref.current) {
-            const { scrollLeft, scrollWidth, offsetWidth } = ref.current;
+        if (innerRef.current && outerRef.current) {
+            let nowWidth = 0;
+            innerRef.current.style.transform && (nowWidth = Math.abs(parseInt(innerRef.current.style.transform.split('(')[1], 10)));
+
             if (direction === 'back') {
-                ref.current.scrollLeft -= imageWidth + 8
-                console.log(ref.current.offsetWidth)
-                setRefScrollLeft(ref.current?.scrollLeft)
-                setIsRefScrollEnd(scrollLeft === scrollWidth - offsetWidth)
+                innerRef.current.style.transform = `translateX(-${nowWidth - (imageWidth + 8)}px)`;
             } else {
-                ref.current.scrollLeft += imageWidth + 8
-                setRefScrollLeft(scrollLeft)
-                setIsRefScrollEnd(scrollLeft === scrollWidth - offsetWidth)
+                const outerWidth = outerRef.current?.offsetWidth;
+                if ((imageWidth + 8) * imageUrlList.length - nowWidth < outerWidth) {
+                    return;
+                }
+                innerRef.current.style.transform = `translateX(-${nowWidth + imageWidth + 8}px)`;
             }
         }
-    }, [ref.current])
+    }, [innerRef.current, outerRef.current])
 
     const onClickImageItem = (url: string) => {
         window.open(url, '_black')
     }
     return (
-        <div className='image-slider' style={{ ...style }}>
-            <span className={`arrow ${(isRefScroll && refScrollLeft) ? 'on' : ''}`} onClick={() => onClickSliderArrow('back')}>
+        <div className='image-slider-container' style={{ ...style }}>
+            <span className={`arrow`} onClick={() => onClickSliderArrow('back')}>
                 <Icon name='arrow-ios-back-outline' fill='#dedede' size='35' />
             </span>
-            <div className='image-item-wrapper' ref={ref}>
-                {
-                    imageUrlList.map((value, index) => (
-                        <img onClick={() => onClickImageItem(value)} key={`${value}-${index}`} width={imageWidth} height={imageHeight} src={value} />
-                    ))
-                }
+            <div className='image-outer-slider' ref={outerRef}>
+                <ul className='image-inner-slider' ref={innerRef}>
+                    {
+                        imageUrlList.map((value, index) => (
+                            <li onClick={() => onClickImageItem(value)} key={`${value}-${index}`}>
+                                <img width={imageWidth} height={imageHeight} src={value} />
+                            </li>
+                        ))
+                    }
+                </ul>
             </div>
-            <span className={`arrow ${(isRefScroll && !isRefScrollEnd) ? 'on' : ''}`} onClick={() => onClickSliderArrow('forward')}>
+            <span className={`arrow`} onClick={() => onClickSliderArrow('forward')}>
                 <Icon name='arrow-ios-forward-outline' fill='#dedede' size='35' />
             </span>
         </div>

@@ -22,7 +22,7 @@ const srcList = [
     'https://image.bugsm.co.kr/album/images/500/203001/20300127.jpg',
     'https://t1.daumcdn.net/cfile/tistory/992DB34E5AE4FC0131',
     'https://t1.daumcdn.net/cfile/tistory/992DB34E5AE4FC0131',
-
+    
 ]
 
 export const ImageSliderStory = () => {
