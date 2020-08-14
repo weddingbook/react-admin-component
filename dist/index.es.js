@@ -4932,6 +4932,46 @@ var ModalItem = function (_a) {
     return (React.createElement("div", { className: "modal-item " + className, style: __assign({}, style) }, children));
 };
 
+var ImageSlider = function (_a) {
+    var style = _a.style, imageUrlList = _a.imageUrlList, _b = _a.imageWidth, imageWidth = _b === void 0 ? 90 : _b, _c = _a.imageHeight, imageHeight = _c === void 0 ? 60 : _c;
+    var ref = useRef(null);
+    var _d = useState(false), isRefScroll = _d[0], setIsRefScroll = _d[1];
+    var _e = useState(false), isRefScrollEnd = _e[0], setIsRefScrollEnd = _e[1];
+    var _f = useState(0), refScrollLeft = _f[0], setRefScrollLeft = _f[1];
+    useEffect(function () {
+        if (ref.current) {
+            var _a = ref.current, scrollWidth = _a.scrollWidth, offsetWidth = _a.offsetWidth;
+            setIsRefScroll(scrollWidth > offsetWidth);
+        }
+    }, [ref.current]);
+    var onClickSliderArrow = useCallback(function (direction) {
+        var _a;
+        if (ref.current) {
+            var _b = ref.current, scrollLeft = _b.scrollLeft, scrollWidth = _b.scrollWidth, offsetWidth = _b.offsetWidth;
+            if (direction === 'back') {
+                ref.current.scrollLeft -= imageWidth + 8;
+                console.log(ref.current.offsetWidth);
+                setRefScrollLeft((_a = ref.current) === null || _a === void 0 ? void 0 : _a.scrollLeft);
+                setIsRefScrollEnd(scrollLeft === scrollWidth - offsetWidth);
+            }
+            else {
+                ref.current.scrollLeft += imageWidth + 8;
+                setRefScrollLeft(scrollLeft);
+                setIsRefScrollEnd(scrollLeft === scrollWidth - offsetWidth);
+            }
+        }
+    }, [ref.current]);
+    var onClickImageItem = function (url) {
+        window.open(url, '_black');
+    };
+    return (React.createElement("div", { className: 'image-slider', style: __assign({}, style) },
+        React.createElement("span", { className: "arrow " + ((isRefScroll && refScrollLeft) ? 'on' : ''), onClick: function () { return onClickSliderArrow('back'); } },
+            React.createElement(Icon, { name: 'arrow-ios-back-outline', fill: '#dedede', size: '35' })),
+        React.createElement("div", { className: 'image-item-wrapper', ref: ref }, imageUrlList.map(function (value, index) { return (React.createElement("img", { onClick: function () { return onClickImageItem(value); }, key: value + "-" + index, width: imageWidth, height: imageHeight, src: value })); })),
+        React.createElement("span", { className: "arrow " + ((isRefScroll && !isRefScrollEnd) ? 'on' : ''), onClick: function () { return onClickSliderArrow('forward'); } },
+            React.createElement(Icon, { name: 'arrow-ios-forward-outline', fill: '#dedede', size: '35' }))));
+};
+
 var SectionContainer = function (_a) {
     var children = _a.children;
     return (React.createElement("div", { className: 'section-container', style: {
@@ -5030,5 +5070,5 @@ var useToast = function () {
     };
 };
 
-export { Breadcrumb, Button, ButtonTypeInput, CombineInput, DefinitionTag, DefinitionTagContainer, Divider, Input, InputContainer, InputRecommend, Modal, ModalItem, Pagination, PopupArea, SearchBox, Section, SectionContainer, SelectBox, SwitchButton, Tag, ToastContainer, Tooltip, ViewMore, createPopup, removePopup, useCheckBox, useModal, useRadioBox, useToast };
+export { Breadcrumb, Button, ButtonTypeInput, CombineInput, DefinitionTag, DefinitionTagContainer, Divider, ImageSlider, Input, InputContainer, InputRecommend, Modal, ModalItem, Pagination, PopupArea, SearchBox, Section, SectionContainer, SelectBox, SwitchButton, Tag, ToastContainer, Tooltip, ViewMore, createPopup, removePopup, useCheckBox, useModal, useRadioBox, useToast };
 //# sourceMappingURL=index.es.js.map

@@ -23,6 +23,7 @@ export { default as Section } from './molecules/Section';
 export { ToastContainer, ToastContainerProps, ToastProps, ToastStoreProps } from './molecules/Toast';
 export { default as Divider } from './atoms/Divider';
 export { default as ModalItem } from './molecules/ModalItem';
+export { default as ImageSlider } from './molecules/ImageSlider';
 
 // organisms
 export { default as SectionContainer } from './organisms/SectionContainer';
