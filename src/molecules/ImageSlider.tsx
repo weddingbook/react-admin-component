@@ -1,4 +1,4 @@
-import React, { CSSProperties, useRef, useCallback, useEffect } from 'react';
+import React, { CSSProperties, useRef, useCallback } from 'react';
 import './ImageSlider.scss';
 import Icon from 'react-eva-icons';
 
