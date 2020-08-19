@@ -6,6 +6,7 @@ import { Divider, ModalItem, ButtonTypeInput, InputContainer, Input, CombineInpu
 import useRadioBox from '../hooks/useRadioBox';
 import useCheckBox from '../hooks/useCheckBox';
 import TabMenu from '../atoms/TabMenu';
+import SwitchButton from '../atoms/SwitchButton';
 
 
 export default {
@@ -70,6 +71,34 @@ export const ModalStoryWithTab = () => {
                 활성
             </DefinitionTag>
         </DefinitionTagContainer>
+    </Modal>
+}
+export const ModalStoryWithToggleSwitch = () => {
+    const [switchToggle, setSwitchToggle] = useState(false);
+    const [keyword, setKeyword] = useState('')
+
+    // actions
+    const onChange = (e: any) => {
+        setKeyword(e.target.value)
+    }
+    return <Modal size={select('사이즈', {
+        small: 'small',
+        medium: 'medium',
+        large: 'large'
+    }, 'medium')} actionButtonComponent={<Button onClick={onClick} size='small' type='solid' disabled={true}>확인</Button>}>
+        <ModalItem>
+            <label>Team Member</label>
+            <Input value={keyword} onChange={(e) => { onChange(e) }} placeholder='Type MemberName Or Email..' />
+        </ModalItem>
+        <ModalItem className='checkbox-radio'>
+            <label className='checkbox-radio'>Toggle</label>
+            <InputContainer>
+                <SwitchButton
+                    toggleValue={switchToggle}
+                    onClick={setSwitchToggle}
+                />
+            </InputContainer>
+        </ModalItem>
     </Modal>
 }
 
