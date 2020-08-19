@@ -13,12 +13,6 @@ const ImageSlider = ({ style, imageUrlList, imageWidth = 90, imageHeight = 60 }:
     const innerRef = useRef<HTMLUListElement>(null)
     const outerRef = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
-        if (innerRef.current) {
-            innerRef.current.style.transition = 'transform 0.5s ease-in-out';
-        }
-    }, [innerRef.current]);
-
     const onClickSliderArrow = useCallback((direction: string) => {
         if (innerRef.current && outerRef.current) {
             let nowWidth = 0;

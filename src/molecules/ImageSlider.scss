@@ -24,6 +24,7 @@
             width: 100vw;
             display: flex;
             scroll-behavior: smooth;
+            transition: transform 0.5s ease-in-out;
 
             > li {
                 img {
