@@ -10,6 +10,7 @@ import CombineInput from '../molecules/CombineInput';
 import { DatePicker, TimePicker } from 'antd';
 import SectionContainer from '../organisms/SectionContainer';
 import Section from '../molecules/Section';
+import { DefinitionTag, DefinitionTagContainer } from '..';
 
 
 export default {
@@ -176,11 +177,45 @@ export const ImageSliderInSectionStory = () => {
 
     return (
         <>
-            {/* <SectionContainer> */}
-                <Section title='Photo Catalog'>
-                    {productPhotoList.length ? <ImageSlider imageWidth={300} imageHeight={400} imageUrlList={productPhotoList.map(value => value.url)} /> : <></>}
+            <SectionContainer>
+                <Section title='Default Information'>
+                    <DefinitionTagContainer>
+                        <DefinitionTag
+                            title='Classification code'
+                        >안녕</DefinitionTag>
+                        <DefinitionTag
+                            title='Product name'
+                        >상품이름</DefinitionTag>
+                        <DefinitionTag
+                            title='Created Date'
+                        >2020-02-02</DefinitionTag>
+                    </DefinitionTagContainer>
+                    <DefinitionTagContainer>
+                        <DefinitionTag
+                            title='Product explanation'
+                        >
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean elementum velit et tempus rhoncus. Nullam accumsan sapien lacus, nec vehicula turpis ullamcorper et. Sed mattis nisi at dapibus aliquam. Donec nunc nulla, rutrum eu venenatis nec, sodales sit amet augue. Nam mollis purus vel magna rutrum mattis. Suspendisse ullamcorper egestas nunc ut blandit. Etiam laoreet non massa quis sagittis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec augue eros, mattis quis dapibus non, bibendum et nunc. Proin libero tortor, aliquet sit amet mollis sodales, iaculis nec diam. Donec eu pellentesque dolor. Nam aliquet, nunc id condimentum accumsan, lectus lorem ullamcorper eros, tristique blandit nunc magna vitae eros. Nam non ornare diam, non cursus orci. Nunc mollis pretium est.
+
+                            Cras dictum tortor vel porttitor pulvinar. Sed tortor ex, accumsan et lorem vitae, vulputate vulputate sapien. Duis aliquet ultrices urna nec laoreet. Nam ullamcorper, odio vitae aliquam euismod, nibh quam congue tortor, accumsan dictum quam erat a arcu. Curabitur commodo non diam eget efficitur. In non mauris finibus, auctor elit in, egestas est. Aenean vel blandit mauris, in volutpat nisl. Quisque dapibus augue eget fringilla ultricies. In interdum augue volutpat odio mollis, a pretium purus lacinia. Cras vitae mattis mauris. Cras ac nunc ac turpis tempus finibus vitae ultrices leo. Donec at mollis justo. Sed pulvinar, arcu eu cursus aliquam, purus elit sodales dolor, eu sollicitudin arcu enim ac sem.
+
+                        </DefinitionTag>
+                    </DefinitionTagContainer>
+                    <DefinitionTagContainer>
+                        <DefinitionTag
+                            title='공급'
+                        >800000</DefinitionTag>
+                        <DefinitionTag
+                            title='판매'
+                        >800000</DefinitionTag>
+                        <DefinitionTag
+                            title='대여'
+                        >800000</DefinitionTag>
+                    </DefinitionTagContainer>
                 </Section>
-            {/* </SectionContainer> */}
+            </SectionContainer>
+            <Section title='Photo Catalog'>
+                {productPhotoList.length ? <ImageSlider imageWidth={300} imageHeight={400} imageUrlList={productPhotoList.map(value => value.url)} /> : <></>}
+            </Section>
         </>
     )
 }
