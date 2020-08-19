@@ -15,7 +15,7 @@ const ImageSlider = ({ style, imageUrlList, imageWidth = 90, imageHeight = 60 }:
 
     useEffect(() => {
         if (innerRef.current) {
-            innerRef.current.style.transition = "all 0.5s ease-in-out";
+            innerRef.current.style.transition = 'all 0.5s ease-in-out';
         }
     }, [innerRef.current]);
 

@@ -22,7 +22,7 @@ const Input = ({ style, inputStyle, iconName, afterString, recommendListButton, 
                 <div className={`default-input-wrapper ${iconName ? 'after-string' : ''} ${required ? 'error' : ''}`} style={inputStyle}>
                     {iconName && <Icon
                         name={iconName}
-                        size="18"
+                        size='18'
                     />}
                     <input {...rest} className={`${afterString ? 'after-string' : ''}`} required={required} />
                     {afterString && <span className='unit'>{afterString}</span>}

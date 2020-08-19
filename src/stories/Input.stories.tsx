@@ -36,7 +36,7 @@ export const InputStory = () => {
             </div>
             <CombineInput title='Combined'>
                 <DatePicker placeholder='0000-00-00' />
-                <TimePicker placeholder='23:59' use12Hours format="h:mm a" minuteStep={5} />
+                <TimePicker placeholder='23:59' use12Hours format='h:mm a' minuteStep={5} />
                 <Input iconName='people-outline' afterString='명' placeholder='보증인원' />
                 <input placeholder='홀이름' />
             </CombineInput>

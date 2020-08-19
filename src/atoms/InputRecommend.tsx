@@ -44,7 +44,7 @@ const InputRecommend = ({ options, style, recommendListButton, onSelectOptionSet
         <>
             {isShowList && <ul
                 ref={selectListRef}
-                className="input-recommend"
+                className='input-recommend'
                 style={{ ...style, marginTop }}
             >
                 {options.map(option => (

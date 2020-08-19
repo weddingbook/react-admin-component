@@ -31,8 +31,8 @@ const Breadcrumb = ({ breadcrumbs, menuMap, onChangePage }: Props) => {
                             return <React.Fragment key={index}>
                                 <span>
                                     <Icon
-                                        name="arrow-ios-forward-outline"
-                                        size="14"
+                                        name='arrow-ios-forward-outline'
+                                        size='14'
                                         fill='#c8c8c8'
                                     />
                                 </span>
@@ -52,8 +52,8 @@ const Breadcrumb = ({ breadcrumbs, menuMap, onChangePage }: Props) => {
                             <React.Fragment key={value.menuId}>
                                 <span>
                                     <Icon
-                                        name="arrow-ios-forward-outline"
-                                        size="14"
+                                        name='arrow-ios-forward-outline'
+                                        size='14'
                                         fill='#c8c8c8'
                                     />
                                 </span>

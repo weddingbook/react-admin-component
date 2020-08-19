@@ -353,7 +353,7 @@ export const ModalStoryWithInform = () => {
             <div style={{ width: '100%', backgroundColor: '#fafafa', marginTop: '24px', padding: '20px 20px 24px 0' }}>
                 <CombineInput title='가능일시/보증인원'>
                     <DatePicker placeholder='0000-00-00' />
-                    <TimePicker placeholder='23:59' use12Hours format="h:mm a" minuteStep={5} />
+                    <TimePicker placeholder='23:59' use12Hours format='h:mm a' minuteStep={5} />
                     <Input iconName='calendar-outline' afterString='명' placeholder='보증인원' />
                     <Input placeholder='홀이름' />
                 </CombineInput>
@@ -437,7 +437,7 @@ export const ModalStoryWithInform = () => {
                 </DefinitionTagContainer>
                 <CombineInput title='방문예정일시 변경' style={{ marginTop: '24px' }}>
                     <DatePicker placeholder='0000-00-00' />
-                    <TimePicker placeholder='23:59' format="h:mm a" minuteStep={5} />
+                    <TimePicker placeholder='23:59' format='h:mm a' minuteStep={5} />
                 </CombineInput>
                 <ModalItem>
                     <label></label>

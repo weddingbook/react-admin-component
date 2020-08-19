@@ -43,7 +43,7 @@ export const ToastContainer = ({ toasts, removeToast, removeToastState }: ToastC
 		console.log('toast-container')
 	}, [toasts])
 	return (
-		<div className="toast-wrap">
+		<div className='toast-wrap'>
 			{toastPositionMatrix.map(position => (
 				<div className={position[0]} key={position[0]}>
 					{toasts[position[1]].map((toast: ToastProps) => {
@@ -73,10 +73,10 @@ const Toast = (props: ToastProps) => {
 		}
 	}, []);
 	return (
-		<div id={`toast-${id}`} className="toast">
+		<div id={`toast-${id}`} className='toast'>
 			{title && <h1>{title}</h1>}
 			<div className={`circle ${color}`}></div>
-			<p className="toast-content">{message}</p>
+			<p className='toast-content'>{message}</p>
 		</div>
 	)
 }

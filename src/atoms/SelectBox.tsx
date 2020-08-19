@@ -33,7 +33,7 @@ const SelectBox = ({ options, selectedOption, style, onSelectOptionSet }: Props)
 
     const onClickOption = (option: any) => {
         onSelectOptionSet!(option);
-        selectItem && (selectItem.style.marginBottom = "0");
+        selectItem && (selectItem.style.marginBottom = '0');
         setShowList(false)
     }
     const onToggleSelectBox = () => {
@@ -66,25 +66,25 @@ const SelectBox = ({ options, selectedOption, style, onSelectOptionSet }: Props)
                 listHeight = originListHeight;
             }
         } else {
-            selectItem && (selectItem.style.marginBottom = "0");
+            selectItem && (selectItem.style.marginBottom = '0');
         }
         setShowList(!isShowList)
     };
     return (
-        <div tabIndex={0} ref={selectBoxRef} className="select-box" onClick={onToggleSelectBox} style={{ ...style }}>
+        <div tabIndex={0} ref={selectBoxRef} className='select-box' onClick={onToggleSelectBox} style={{ ...style }}>
             <div
                 ref={selectedRef}
-                className="selected-item"
+                className='selected-item'
             >
                 {selectedOption}
             </div>
             <Icon
-                name="arrow-ios-downward-outline"
-                size="18"
+                name='arrow-ios-downward-outline'
+                size='18'
             />
             {isShowList && <ul
                 ref={selectListRef}
-                className="list"
+                className='list'
                 style={{ height: `${listHeight + 'px'}` }}
             >
                 {options.map(option => (

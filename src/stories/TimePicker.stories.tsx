@@ -9,7 +9,7 @@ export default {
 
 export const TimePickerStory = () => {
     return (
-        <TimePicker placeholder='00:00' use12Hours format="h:mm a" minuteStep={5} />
+        <TimePicker placeholder='00:00' use12Hours format='h:mm a' minuteStep={5} />
 
     )
 }
