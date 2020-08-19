@@ -1,5 +1,9 @@
 .section-container {
     display: grid;
+    
+    .section + .section {
+        margin-left: 20px;
+    }
 }
 
 .section + .section-container {
