@@ -17,6 +17,7 @@ declare const _default: {
 export default _default;
 export declare const ModalStory: () => JSX.Element;
 export declare const ModalStoryWithTab: () => JSX.Element;
+export declare const ModalStoryWithToggleSwitch: () => JSX.Element;
 export declare const ModalStoryWithCheckBoxAndRadioBox: () => JSX.Element;
 export declare const ModalStoryWithLong: () => JSX.Element;
 export declare const ModalStoryWithInform: () => JSX.Element;

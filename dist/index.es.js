@@ -1979,7 +1979,7 @@ var Breadcrumb = function (_a) {
             if (!value.menuId) {
                 return React.createElement(React.Fragment, { key: index },
                     React.createElement("span", null,
-                        React.createElement(Icon, { name: "arrow-ios-forward-outline", size: "14", fill: '#c8c8c8' })),
+                        React.createElement(Icon, { name: 'arrow-ios-forward-outline', size: '14', fill: '#c8c8c8' })),
                     React.createElement("span", { className: 'breadcrumb-item', key: value.name }, value.name));
             }
             if (!value.parentMenuId) {
@@ -1988,7 +1988,7 @@ var Breadcrumb = function (_a) {
             }
             return (React.createElement(React.Fragment, { key: value.menuId },
                 React.createElement("span", null,
-                    React.createElement(Icon, { name: "arrow-ios-forward-outline", size: "14", fill: '#c8c8c8' })),
+                    React.createElement(Icon, { name: 'arrow-ios-forward-outline', size: '14', fill: '#c8c8c8' })),
                 React.createElement("span", { className: 'breadcrumb-item depth2', onClick: function () { return onChangePage(menuMap[value.menuId]); } }, value.name)));
         }))));
 };
@@ -2011,7 +2011,7 @@ var ButtonTypeInput = function (_a) {
             React.createElement("input", { className: 'only-sr', type: type, checked: checked, id: title, onChange: onChange, disabled: disabled }),
             (checked) &&
                 React.createElement("span", null,
-                    React.createElement(Icon, { name: "checkmark-outline", size: "14" })),
+                    React.createElement(Icon, { name: 'checkmark-outline', size: '14' })),
             title)));
 };
 
@@ -2111,7 +2111,7 @@ var InputRecommend = function (_a) {
     var onClickOption = function (option) {
         onSelectOptionSet(option);
     };
-    return (React.createElement(React.Fragment, null, isShowList && React.createElement("ul", { ref: selectListRef, className: "input-recommend", style: __assign(__assign({}, style), { marginTop: marginTop }) },
+    return (React.createElement(React.Fragment, null, isShowList && React.createElement("ul", { ref: selectListRef, className: 'input-recommend', style: __assign(__assign({}, style), { marginTop: marginTop }) },
         options.map(function (option) { return (React.createElement("li", { key: option, onClick: function () { onClickOption(option); } }, option)); }),
         React.createElement("div", { className: 'button-area' }, recommendListButton))));
 };
@@ -2137,7 +2137,7 @@ var SelectBox = function (_a) {
     }, [isShowList]);
     var onClickOption = function (option) {
         onSelectOptionSet(option);
-        selectItem && (selectItem.style.marginBottom = "0");
+        selectItem && (selectItem.style.marginBottom = '0');
         setShowList(false);
     };
     var onToggleSelectBox = function () {
@@ -2170,14 +2170,14 @@ var SelectBox = function (_a) {
             }
         }
         else {
-            selectItem && (selectItem.style.marginBottom = "0");
+            selectItem && (selectItem.style.marginBottom = '0');
         }
         setShowList(!isShowList);
     };
-    return (React.createElement("div", { tabIndex: 0, ref: selectBoxRef, className: "select-box", onClick: onToggleSelectBox, style: __assign({}, style) },
-        React.createElement("div", { ref: selectedRef, className: "selected-item" }, selectedOption),
-        React.createElement(Icon, { name: "arrow-ios-downward-outline", size: "18" }),
-        isShowList && React.createElement("ul", { ref: selectListRef, className: "list", style: { height: "" + (listHeight + 'px') } }, options.map(function (option) { return (React.createElement("li", { key: option, onClick: function () { onClickOption(option); } }, option)); }))));
+    return (React.createElement("div", { tabIndex: 0, ref: selectBoxRef, className: 'select-box', onClick: onToggleSelectBox, style: __assign({}, style) },
+        React.createElement("div", { ref: selectedRef, className: 'selected-item' }, selectedOption),
+        React.createElement(Icon, { name: 'arrow-ios-downward-outline', size: '18' }),
+        isShowList && React.createElement("ul", { ref: selectListRef, className: 'list', style: { height: "" + (listHeight + 'px') } }, options.map(function (option) { return (React.createElement("li", { key: option, onClick: function () { onClickOption(option); } }, option)); }))));
 };
 
 var Pagination = function (_a) {
@@ -2228,7 +2228,7 @@ var Input = function (_a) {
     return (React.createElement(React.Fragment, null,
         React.createElement("div", { className: "input-component " + ((required || informationMessage) ? 'message' : ''), style: style },
             React.createElement("div", { className: "default-input-wrapper " + (iconName ? 'after-string' : '') + " " + (required ? 'error' : ''), style: inputStyle },
-                iconName && React.createElement(Icon, { name: iconName, size: "18" }),
+                iconName && React.createElement(Icon, { name: iconName, size: '18' }),
                 React.createElement("input", __assign({}, rest, { className: "" + (afterString ? 'after-string' : ''), required: required })),
                 afterString && React.createElement("span", { className: 'unit' }, afterString)),
             (recommendOptions && onSelectRecommendOptionSet) && React.createElement(InputRecommend, { invalid: required, informationMessage: informationMessage, recommendListButton: recommendListButton, options: recommendOptions, onSelectOptionSet: onSelectRecommendOptionSet }),
@@ -4041,7 +4041,7 @@ function (_React$Component) {
 // TODO: arrow 위치 변경되어야 함
 var Tooltip = function (_a) {
     var children = _a.children, id = _a.id, buttonType = _a.buttonType;
-    return (React.createElement(ReactTooltip, { className: "" + (buttonType ? 'btn-tooltip' : ''), id: id, uuid: id, effect: "solid", arrowColor: "#323232", backgroundColor: "#323232" }, children));
+    return (React.createElement(ReactTooltip, { className: "" + (buttonType ? 'btn-tooltip' : ''), id: id, uuid: id, effect: 'solid', arrowColor: '#323232', backgroundColor: '#323232' }, children));
 };
 
 var ViewMore = function (_a) {
@@ -4785,13 +4785,13 @@ var AlertPopup = /** @class */ (function (_super) {
         var _this = this;
         var _a = this.props, title = _a.title, message = _a.message, messageType = _a.messageType, button = _a.button;
         return (React.createElement("div", { className: "popup-wrap " + messageType },
-            React.createElement("div", { className: "overlay", onClick: this.clickOverlay.bind(this) }),
-            React.createElement("div", { className: "popup" },
+            React.createElement("div", { className: 'overlay', onClick: this.clickOverlay.bind(this) }),
+            React.createElement("div", { className: 'popup' },
                 title && React.createElement("h1", null, title),
-                React.createElement("span", { className: "circle" }),
-                React.createElement("p", { className: "popup-content" }, message),
-                React.createElement("div", { className: "popup-btns" },
-                    React.createElement(Button, { onClick: function () { return _this.clickButton(button); }, type: button.type, size: "small", color: button.color, className: button.className }, button.label)))));
+                React.createElement("span", { className: 'circle' }),
+                React.createElement("p", { className: 'popup-content' }, message),
+                React.createElement("div", { className: 'popup-btns' },
+                    React.createElement(Button, { onClick: function () { return _this.clickButton(button); }, type: button.type, size: 'small', color: button.color, className: button.className }, button.label)))));
     };
     return AlertPopup;
 }(Popup));
@@ -4804,12 +4804,12 @@ var ConfirmPopup = /** @class */ (function (_super) {
         var _this = this;
         var _a = this.props, title = _a.title, message = _a.message, messageType = _a.messageType, buttons = _a.buttons;
         return (React.createElement("div", { className: "popup-wrap " + messageType },
-            React.createElement("div", { className: "overlay", onClick: this.clickOverlay.bind(this) }),
-            React.createElement("div", { className: "popup" },
+            React.createElement("div", { className: 'overlay', onClick: this.clickOverlay.bind(this) }),
+            React.createElement("div", { className: 'popup' },
                 title && React.createElement("h1", null, title),
-                React.createElement("span", { className: "circle" }),
-                React.createElement("p", { className: "popup-content" }, message),
-                React.createElement("div", { className: "popup-btns" }, buttons === null || buttons === void 0 ? void 0 : buttons.map(function (button, i) { return (React.createElement(Button, { key: i, onClick: function () { return _this.clickButton(button); }, type: button.type, size: "small", color: button.color, className: button.className }, button.label)); })))));
+                React.createElement("span", { className: 'circle' }),
+                React.createElement("p", { className: 'popup-content' }, message),
+                React.createElement("div", { className: 'popup-btns' }, buttons === null || buttons === void 0 ? void 0 : buttons.map(function (button, i) { return (React.createElement(Button, { key: i, onClick: function () { return _this.clickButton(button); }, type: button.type, size: 'small', color: button.color, className: button.className }, button.label)); })))));
     };
     return ConfirmPopup;
 }(Popup));
@@ -4891,7 +4891,7 @@ var ToastContainer = function (_a) {
     useEffect(function () {
         console.log('toast-container');
     }, [toasts]);
-    return (React.createElement("div", { className: "toast-wrap" }, toastPositionMatrix.map(function (position) { return (React.createElement("div", { className: position[0], key: position[0] }, toasts[position[1]].map(function (toast) {
+    return (React.createElement("div", { className: 'toast-wrap' }, toastPositionMatrix.map(function (position) { return (React.createElement("div", { className: position[0], key: position[0] }, toasts[position[1]].map(function (toast) {
         return React.createElement(Toast, __assign({}, toast, { key: toast.id, removeToast: removeToast, removeToastState: removeToastState }));
     }))); })));
 };
@@ -4912,10 +4912,10 @@ var Toast = function (props) {
             console.log('unmo');
         };
     }, []);
-    return (React.createElement("div", { id: "toast-" + id, className: "toast" },
+    return (React.createElement("div", { id: "toast-" + id, className: 'toast' },
         title && React.createElement("h1", null, title),
         React.createElement("div", { className: "circle " + color }),
-        React.createElement("p", { className: "toast-content" }, message)));
+        React.createElement("p", { className: 'toast-content' }, message)));
 };
 Toast.defaultProps = {
     closeOnClickOutside: true,
@@ -4934,41 +4934,35 @@ var ModalItem = function (_a) {
 
 var ImageSlider = function (_a) {
     var style = _a.style, imageUrlList = _a.imageUrlList, _b = _a.imageWidth, imageWidth = _b === void 0 ? 90 : _b, _c = _a.imageHeight, imageHeight = _c === void 0 ? 60 : _c;
-    var ref = useRef(null);
-    var _d = useState(false), isRefScroll = _d[0], setIsRefScroll = _d[1];
-    var _e = useState(false), isRefScrollEnd = _e[0], setIsRefScrollEnd = _e[1];
-    var _f = useState(0), refScrollLeft = _f[0], setRefScrollLeft = _f[1];
-    useEffect(function () {
-        if (ref.current) {
-            var _a = ref.current, scrollWidth = _a.scrollWidth, offsetWidth = _a.offsetWidth;
-            setIsRefScroll(scrollWidth > offsetWidth);
-        }
-    }, [ref.current]);
+    var innerRef = useRef(null);
+    var outerRef = useRef(null);
     var onClickSliderArrow = useCallback(function (direction) {
         var _a;
-        if (ref.current) {
-            var _b = ref.current, scrollLeft = _b.scrollLeft, scrollWidth = _b.scrollWidth, offsetWidth = _b.offsetWidth;
+        if (innerRef.current && outerRef.current) {
+            var nowWidth = 0;
+            innerRef.current.style.transform && (nowWidth = Math.abs(parseInt(innerRef.current.style.transform.split('(')[1], 10)));
             if (direction === 'back') {
-                ref.current.scrollLeft -= imageWidth + 8;
-                console.log(ref.current.offsetWidth);
-                setRefScrollLeft((_a = ref.current) === null || _a === void 0 ? void 0 : _a.scrollLeft);
-                setIsRefScrollEnd(scrollLeft === scrollWidth - offsetWidth);
+                innerRef.current.style.transform = "translateX(-" + (nowWidth - (imageWidth + 8)) + "px)";
             }
             else {
-                ref.current.scrollLeft += imageWidth + 8;
-                setRefScrollLeft(scrollLeft);
-                setIsRefScrollEnd(scrollLeft === scrollWidth - offsetWidth);
+                var outerWidth_1 = (_a = outerRef.current) === null || _a === void 0 ? void 0 : _a.offsetWidth;
+                if ((imageWidth + 8) * imageUrlList.length - nowWidth < outerWidth_1) {
+                    return;
+                }
+                innerRef.current.style.transform = "translateX(-" + (nowWidth + imageWidth + 8) + "px)";
             }
         }
-    }, [ref.current]);
+    }, [innerRef.current, outerRef.current]);
     var onClickImageItem = function (url) {
         window.open(url, '_black');
     };
-    return (React.createElement("div", { className: 'image-slider', style: __assign({}, style) },
-        React.createElement("span", { className: "arrow " + ((isRefScroll && refScrollLeft) ? 'on' : ''), onClick: function () { return onClickSliderArrow('back'); } },
+    return (React.createElement("div", { className: 'image-slider-container', style: __assign({}, style) },
+        React.createElement("span", { className: "arrow", onClick: function () { return onClickSliderArrow('back'); } },
             React.createElement(Icon, { name: 'arrow-ios-back-outline', fill: '#dedede', size: '35' })),
-        React.createElement("div", { className: 'image-item-wrapper', ref: ref }, imageUrlList.map(function (value, index) { return (React.createElement("img", { onClick: function () { return onClickImageItem(value); }, key: value + "-" + index, width: imageWidth, height: imageHeight, src: value })); })),
-        React.createElement("span", { className: "arrow " + ((isRefScroll && !isRefScrollEnd) ? 'on' : ''), onClick: function () { return onClickSliderArrow('forward'); } },
+        React.createElement("div", { className: 'image-outer-slider', ref: outerRef },
+            React.createElement("ul", { className: 'image-inner-slider', ref: innerRef }, imageUrlList.map(function (value, index) { return (React.createElement("li", { onClick: function () { return onClickImageItem(value); }, key: value + "-" + index },
+                React.createElement("img", { width: imageWidth, height: imageHeight, src: value }))); }))),
+        React.createElement("span", { className: "arrow", onClick: function () { return onClickSliderArrow('forward'); } },
             React.createElement(Icon, { name: 'arrow-ios-forward-outline', fill: '#dedede', size: '35' }))));
 };
 
