@@ -211,6 +211,8 @@ export const ImageSliderInSectionStory = () => {
                             title='대여'
                         >800000</DefinitionTag>
                     </DefinitionTagContainer>
+                    {productPhotoList.length ? <ImageSlider imageWidth={300} imageHeight={400} imageUrlList={productPhotoList.map(value => value.url)} /> : <></>}
+
                 </Section>
             </SectionContainer>
             <Section title='Photo Catalog'>

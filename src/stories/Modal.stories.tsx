@@ -518,3 +518,51 @@ export const ModalStoryWithInform = () => {
         </Modal>}
     </>
 }
+
+export const ModalStoryWithIndent = () => {
+    return <Modal size='large'>
+        <ModalItem>
+            <label>Product explanation</label>
+            <textarea />
+        </ModalItem>
+        <ModalItem>
+            <label>공급</label>
+            <Input />
+        </ModalItem>
+        <ModalItem>
+            <label>판매</label>
+            <Input />
+        </ModalItem>
+        <ModalItem>
+            <label>대여</label>
+            <Input />
+        </ModalItem>
+        <ModalItem style={{ marginTop: '24px' }}>
+            <label>Related Product</label>
+            <Button onClick={() => {}} size='xs' className='in-modal-item'>Connect Other Product</Button>
+        </ModalItem>
+        <ModalItem>
+            <label>Tag</label>
+            <div
+                style={{ marginLeft: '8px' }}
+            >
+                <ModalItem className='indent'>
+                    <label >Style</label>
+                    <Input />
+                </ModalItem>
+                <ModalItem style={{ gridTemplateColumns: '60px 1fr' }}>
+                    <label>Sleeves</label>
+                    <Input />
+                </ModalItem>
+                <ModalItem style={{ gridTemplateColumns: '60px 1fr' }}>
+                    <label>Brand</label>
+                    <Input />
+                </ModalItem>
+                <ModalItem style={{ gridTemplateColumns: '60px 1fr' }}>
+                    <label>Neckline</label>
+                    <Input />
+                </ModalItem>
+            </div>
+        </ModalItem>
+    </Modal>
+}
