@@ -21,3 +21,4 @@ export declare const ModalStoryWithToggleSwitch: () => JSX.Element;
 export declare const ModalStoryWithCheckBoxAndRadioBox: () => JSX.Element;
 export declare const ModalStoryWithLong: () => JSX.Element;
 export declare const ModalStoryWithInform: () => JSX.Element;
+export declare const ModalStoryWithIndent: () => JSX.Element;
