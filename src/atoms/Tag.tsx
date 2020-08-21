@@ -2,7 +2,7 @@ import React, { CSSProperties } from 'react';
 import './Tag.scss';
 
 type Props = {
-    style: CSSProperties
+    style?: CSSProperties
     children: string
     color: 'green' | 'red' | 'yellow'
 }

@@ -2,7 +2,7 @@ import React from 'react';
 declare const _default: {
     title: string;
     component: ({ children, color, style }: {
-        style: React.CSSProperties;
+        style?: React.CSSProperties | undefined;
         children: string;
         color: "green" | "red" | "yellow";
     }) => JSX.Element;
