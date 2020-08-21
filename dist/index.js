@@ -2261,8 +2261,8 @@ var SwitchButton = function (_a) {
 };
 
 var Tag = function (_a) {
-    var children = _a.children, color = _a.color;
-    return (React__default.createElement("div", { className: "tag " + color + "-tag" }, children));
+    var children = _a.children, color = _a.color, style = _a.style;
+    return (React__default.createElement("div", { className: "tag " + color + "-tag", style: __assign({}, style) }, children));
 };
 
 function rng() {
