@@ -19,8 +19,8 @@ const ButtonTypeInput = ({ type, title, checked, disabled = false, onChange }: P
                 {(checked) &&
                     <span>
                         <Icon
-                            name="checkmark-outline"
-                            size="14"
+                            name='checkmark-outline'
+                            size='14'
                         />
                     </span>
                 }

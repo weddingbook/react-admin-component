@@ -1,0 +1,39 @@
+@import "../assets/scss/color.scss";
+
+.image-slider-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    overflow-x: scroll;
+
+    > span.arrow {
+        cursor: pointer;
+        &.on {
+
+            > i > svg {
+                fill: $blue60;
+            }
+        }
+    }
+
+    .image-outer-slider {
+        width: 100%;
+        overflow-x: hidden;
+        .image-inner-slider {
+            width: 100vw;
+            display: flex;
+            scroll-behavior: smooth;
+            transition: transform 0.5s ease-in-out;
+
+            > li {
+                img {
+                    cursor: pointer;
+                }
+                & + li {
+                    margin-left: 8px;
+                }
+            }
+        }
+    }
+}

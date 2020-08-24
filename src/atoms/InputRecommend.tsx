@@ -1,15 +1,16 @@
-import React, { useState, useRef, useEffect, CSSProperties } from 'react';
+import React, { useState, useRef, useEffect, CSSProperties, ReactComponentElement } from 'react';
 import './InputRecommend.scss';
 
 type Props = {
     options: Array<any>
     style?: CSSProperties
+    recommendListButton?: ReactComponentElement<'button'>
     onSelectOptionSet: (option: any) => void
     invalid: boolean
     informationMessage: string
 }
 
-const InputRecommend = ({ options, style, onSelectOptionSet, invalid, informationMessage }: Props) => {
+const InputRecommend = ({ options, style, recommendListButton, onSelectOptionSet, invalid, informationMessage }: Props) => {
     const [isShowList, setShowList] = useState<boolean>(true)
     const [marginTop, setMarginTop] = useState<string>('0');
 
@@ -35,7 +36,7 @@ const InputRecommend = ({ options, style, onSelectOptionSet, invalid, informatio
     useEffect(() => {
         setShowList(true)
     }, [options]);
-    
+
     const onClickOption = (option: any) => {
         onSelectOptionSet!(option);
     }
@@ -43,8 +44,8 @@ const InputRecommend = ({ options, style, onSelectOptionSet, invalid, informatio
         <>
             {isShowList && <ul
                 ref={selectListRef}
-                className="input-recommend"
-                style={{...style, marginTop}}
+                className='input-recommend'
+                style={{ ...style, marginTop }}
             >
                 {options.map(option => (
                     <li
@@ -54,6 +55,9 @@ const InputRecommend = ({ options, style, onSelectOptionSet, invalid, informatio
                         {option}
                     </li>
                 ))}
+                <div className='button-area'>
+                    {recommendListButton}
+                </div>
             </ul>}
         </>
     )

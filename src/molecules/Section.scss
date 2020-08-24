@@ -58,7 +58,6 @@
         }
     }
 }
-
-section + section {
-    margin-left: 20px;
+.section-container + .section {
+    margin-top: 20px;
 }

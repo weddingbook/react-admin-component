@@ -18,8 +18,9 @@ body {
 
 // antd table CSS 덮어쓰기
 .ant-table-thead {
-    // height: 141px;
     > tr > th {
+        height: 40px;
+        padding: 11px 0 12px;
         text-align: center;
         font-weight: normal;
         font-size: 11px;
@@ -58,6 +59,8 @@ body {
 }
 
 .ant-table-column-sorters {
+    height: 41px;
+    padding: 12px;
     > span > span {
         display: inline-flex;
         align-items: center;
@@ -92,7 +95,6 @@ body {
     }
 }
 
-
 // ant-picker 공통 CSS 덮어쓰기
 
 .ant-picker {
@@ -105,7 +107,7 @@ body {
         }
     }
     &:hover {
-        border: 1px solid $gray20;;
+        border: 1px solid $gray20;
     }
 }
 .ant-picker-focused {
@@ -135,7 +137,6 @@ body {
 .ant-picker-cell-in-view.ant-picker-cell-in-range::before {
     background: #c4d7fb;
 }
-
 
 // input 관련 CSS
 input,
@@ -260,12 +261,12 @@ label {
 
 // date-picker 아이콘 색상 변경
 .anticon {
-    &.anticon-clock-circle{
+    &.anticon-clock-circle {
         > svg {
             fill: $gray40;
         }
     }
-    &.anticon-calendar{
+    &.anticon-calendar {
         > svg {
             fill: $gray40;
         }

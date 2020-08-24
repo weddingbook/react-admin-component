@@ -1,9 +1,10 @@
-/// <reference types="react" />
+import React from 'react';
 declare const _default: {
     title: string;
-    component: ({ children, color }: {
+    component: ({ children, color, style }: {
+        style?: React.CSSProperties | undefined;
         children: string;
-        color: "yellow" | "green" | "red";
+        color: "green" | "red" | "yellow" | "gray";
     }) => JSX.Element;
     decorators: ((...args: any) => any)[];
 };

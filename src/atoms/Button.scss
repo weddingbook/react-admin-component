@@ -10,6 +10,10 @@ button {
     border: 1px solid $gray30;
     background-color: $gray10;
   }
+
+  &.in-modal-item {
+    margin: 4px 0 0 8px;
+  }
 }
 
 @mixin buttonColor($color) {
