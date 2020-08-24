@@ -4,7 +4,7 @@ import './Tag.scss';
 type Props = {
     style?: CSSProperties
     children: string
-    color: 'green' | 'red' | 'yellow'
+    color: 'green' | 'red' | 'yellow' | 'gray'
 }
 
 const Tag = ({ children, color, style }: Props) => {
