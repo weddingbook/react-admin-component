@@ -4933,7 +4933,7 @@ var ModalItem = function (_a) {
 };
 
 var ImageSlider = function (_a) {
-    var style = _a.style, imageUrlList = _a.imageUrlList, _b = _a.imageWidth, imageWidth = _b === void 0 ? 90 : _b, _c = _a.imageHeight, imageHeight = _c === void 0 ? 60 : _c;
+    var style = _a.style, imageUrlList = _a.imageUrlList, _b = _a.imageWidth, imageWidth = _b === void 0 ? 90 : _b, _c = _a.imageHeight, imageHeight = _c === void 0 ? 60 : _c, _d = _a.isShowInformationIcon, isShowInformationIcon = _d === void 0 ? true : _d;
     var innerRef = useRef(null);
     var outerRef = useRef(null);
     var onClickSliderArrow = useCallback(function (direction) {
@@ -4960,8 +4960,12 @@ var ImageSlider = function (_a) {
         React.createElement("span", { className: "arrow", onClick: function () { return onClickSliderArrow('back'); } },
             React.createElement(Icon, { name: 'arrow-ios-back-outline', fill: '#dedede', size: '35' })),
         React.createElement("div", { className: 'image-outer-slider', ref: outerRef },
-            React.createElement("ul", { className: 'image-inner-slider', ref: innerRef }, imageUrlList.map(function (value, index) { return (React.createElement("li", { onClick: function () { return onClickImageItem(value); }, key: value + "-" + index },
-                React.createElement("img", { width: imageWidth, height: imageHeight, src: value }))); }))),
+            React.createElement("ul", { className: 'image-inner-slider', ref: innerRef }, imageUrlList.map(function (value, index) { return (React.createElement("li", { onClick: function () { return onClickImageItem(value.url); }, key: value.url + "-" + index },
+                isShowInformationIcon ? React.createElement("div", { style: { width: imageWidth + "px" }, className: 'tag-area' },
+                    value.isRepresentation ? React.createElement(Tag, { style: { position: 'absolute', left: '12px' }, color: 'green' }, "Representation") : React.createElement(React.Fragment, null),
+                    React.createElement(Tag, { style: { position: 'absolute', right: '12px' }, color: value.isShow ? 'green' : 'gray' }, value.isShow ? 'Show' : 'Hidden')) : React.createElement(React.Fragment, null),
+                !value.isShow ? React.createElement("div", { style: { width: imageWidth + "px", height: imageHeight + "px" }, className: 'dimmed' }) : React.createElement(React.Fragment, null),
+                React.createElement("img", { width: imageWidth, height: imageHeight, src: value.url }))); }))),
         React.createElement("span", { className: "arrow", onClick: function () { return onClickSliderArrow('forward'); } },
             React.createElement(Icon, { name: 'arrow-ios-forward-outline', fill: '#dedede', size: '35' }))));
 };
