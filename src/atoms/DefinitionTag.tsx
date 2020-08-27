@@ -2,7 +2,7 @@ import React, { CSSProperties } from 'react';
 import './DefinitionTag.scss';
 
 type Props = {
-    children: string | object,
+    children: number | string | object,
     title?: string,
     direction?: 'row' | 'column'
     style?: CSSProperties
