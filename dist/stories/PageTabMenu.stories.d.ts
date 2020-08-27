@@ -5,7 +5,7 @@ declare const _default: {
         tabList: string[];
         onSelectMenu: (tabMenu: string) => void;
         selectedMenu: string;
-        type?: "page" | "modal" | "section" | "list" | undefined;
+        type?: "list" | "page" | "modal" | "section" | undefined;
     }) => JSX.Element;
     decorators: ((...args: any) => any)[];
 };
