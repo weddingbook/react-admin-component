@@ -56,7 +56,7 @@ const ImageSlider = ({ style, imageUrlList, imageWidth = 90, imageHeight = 60, i
                                         <Tag style={{ position: 'absolute', right: '12px' }} color={value.isShow ? 'green' : 'gray'}>{value.isShow ? 'Show' : 'Hidden'}</Tag>
                                     </div> : <></> 
                                 }
-                                {!value.isShow ? <div style={{ width: `${imageWidth}px`, height: `${imageHeight}px`}} className='dimmed'></div> : <></>}
+                                {(isShowInformationIcon && !value.isShow) ? <div style={{ width: `${imageWidth}px`, height: `${imageHeight}px`}} className='dimmed'></div> : <></>}
                                 <img width={imageWidth} height={imageHeight} src={value.url} />
                             </li>
                         ))
