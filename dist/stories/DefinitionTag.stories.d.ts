@@ -2,7 +2,7 @@ import React from 'react';
 declare const _default: {
     title: string;
     component: ({ children, style, title, direction }: {
-        children: string | object;
+        children: string | number | object;
         title?: string | undefined;
         direction?: "row" | "column" | undefined;
         style?: React.CSSProperties | undefined;
