@@ -4924,7 +4924,7 @@ var ImageSlider = function (_a) {
                 isShowInformationIcon ? React__default.createElement("div", { style: { width: imageWidth + "px" }, className: 'tag-area' },
                     value.isRepresentation ? React__default.createElement(Tag, { style: { position: 'absolute', left: '12px' }, color: 'green' }, "Representation") : React__default.createElement(React__default.Fragment, null),
                     React__default.createElement(Tag, { style: { position: 'absolute', right: '12px' }, color: value.isShow ? 'green' : 'gray' }, value.isShow ? 'Show' : 'Hidden')) : React__default.createElement(React__default.Fragment, null),
-                !value.isShow ? React__default.createElement("div", { style: { width: imageWidth + "px", height: imageHeight + "px" }, className: 'dimmed' }) : React__default.createElement(React__default.Fragment, null),
+                (isShowInformationIcon && !value.isShow) ? React__default.createElement("div", { style: { width: imageWidth + "px", height: imageHeight + "px" }, className: 'dimmed' }) : React__default.createElement(React__default.Fragment, null),
                 React__default.createElement("img", { width: imageWidth, height: imageHeight, src: value.url }))); }))),
         React__default.createElement("span", { className: "arrow", onClick: function () { return onClickSliderArrow('forward'); } },
             React__default.createElement(Icon, { name: 'arrow-ios-forward-outline', fill: '#dedede', size: '35' }))));
