@@ -4887,53 +4887,6 @@ var Section = function (_a) {
         children));
 };
 
-var toastPositionMatrix = [
-    ['left-top', 'LEFT_TOP'],
-    ['left-bottom', 'LEFT_BOTTOM'],
-    ['right-top', 'RIGHT_TOP'],
-    ['right-bottom', 'RIGHT_BOTTOM'],
-];
-var ToastContainer = function (_a) {
-    var toasts = _a.toasts, removeToast = _a.removeToast, removeToastState = _a.removeToastState;
-    React.useEffect(function () {
-        console.log('toast-container');
-    }, [toasts]);
-    return (React__default.createElement("div", { className: 'toast-wrap' }, toastPositionMatrix.map(function (position) { return (React__default.createElement("div", { className: position[0], key: position[0] }, toasts[position[1]].map(function (toast) {
-        return React__default.createElement(Toast, __assign({}, toast, { key: toast.id, removeToast: removeToast, removeToastState: removeToastState }));
-    }))); })));
-};
-var Toast = function (props) {
-    var id = props.id, title = props.title, message = props.message, afterClose = props.afterClose, removeToast = props.removeToast, removeToastState = props.removeToastState, delay = props.delay, color = props.color, position = props.position;
-    var closeToast = function () {
-        removeToast(id, position);
-        removeToastState(id, position);
-        if (afterClose) {
-            afterClose();
-        }
-    };
-    React.useEffect(function () {
-        setTimeout(function () {
-            closeToast();
-        }, delay);
-        return function () {
-            console.log('unmo');
-        };
-    }, []);
-    return (React__default.createElement("div", { id: "toast-" + id, className: 'toast' },
-        title && React__default.createElement("h1", null, title),
-        React__default.createElement("div", { className: "circle " + color }),
-        React__default.createElement("p", { className: 'toast-content' }, message)));
-};
-Toast.defaultProps = {
-    closeOnClickOutside: true,
-    closeOnEsc: true,
-    willUnmount: function () { },
-    afterClose: function () { },
-    onClickOutside: function () { },
-    delay: 3000,
-    position: 'RIGHT_TOP'
-};
-
 var ModalItem = function (_a) {
     var children = _a.children, className = _a.className, style = _a.style;
     return (React__default.createElement("div", { className: "modal-item " + className, style: __assign({}, style) }, children));
@@ -5017,64 +4970,6 @@ function useRadioBox(defaultList) {
     };
 }
 
-var useToast = function () {
-    var _a = React.useState({
-        'LEFT_TOP': [],
-        'LEFT_BOTTOM': [],
-        'RIGHT_TOP': [],
-        'RIGHT_BOTTOM': []
-    }), toasts = _a[0], setToasts = _a[1];
-    var generateUuid = function () {
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-            var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
-            return v.toString(16);
-        });
-    };
-    var createToast = function (options) {
-        var position = options.position || 'RIGHT_TOP';
-        options.id = generateUuid();
-        setToasts(function () {
-            var result = __assign({}, toasts);
-            result[position] = __spreadArrays(toasts[position], [options]);
-            return result;
-        });
-    };
-    var removeToast = function (id, position) {
-        var _a;
-        var wrapper = (_a = document.getElementById("toast-" + id)) === null || _a === void 0 ? void 0 : _a.parentElement;
-        var target = document.getElementById("toast-" + id);
-        if (wrapper && target) {
-            wrapper.removeChild(target);
-            console.log(position);
-        }
-    };
-    var removeToastState = function (id, position) {
-        console.log(id, position);
-        // setToasts(() => {
-        // 	const result: ToastStoreProps = { ...toasts };
-        // 	console.log(id)
-        // 	console.log(position)
-        // 	result[position] = [...toasts[position].filter((toast: ToastProps) => toast.id !== id), {}]
-        // 	return result;
-        // });
-    };
-    var removeAllToast = function () {
-        setToasts({
-            'LEFT_TOP': [],
-            'LEFT_BOTTOM': [],
-            'RIGHT_TOP': [],
-            'RIGHT_BOTTOM': []
-        });
-    };
-    return {
-        toasts: toasts,
-        createToast: createToast,
-        removeToast: removeToast,
-        removeToastState: removeToastState,
-        removeAllToast: removeAllToast
-    };
-};
-
 exports.Breadcrumb = Breadcrumb;
 exports.Button = Button;
 exports.ButtonTypeInput = ButtonTypeInput;
@@ -5096,7 +4991,6 @@ exports.SectionContainer = SectionContainer;
 exports.SelectBox = SelectBox;
 exports.SwitchButton = SwitchButton;
 exports.Tag = Tag;
-exports.ToastContainer = ToastContainer;
 exports.Tooltip = Tooltip;
 exports.ViewMore = ViewMore;
 exports.createPopup = createPopup;
@@ -5104,5 +4998,4 @@ exports.removePopup = removePopup;
 exports.useCheckBox = useCheckBox;
 exports.useModal = useModal;
 exports.useRadioBox = useRadioBox;
-exports.useToast = useToast;
 //# sourceMappingURL=index.js.map
