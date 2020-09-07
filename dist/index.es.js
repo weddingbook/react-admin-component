@@ -2175,26 +2175,26 @@ var SelectBox = function (_a) {
         setShowList(!isShowList);
     };
     return (React.createElement("div", { tabIndex: 0, ref: selectBoxRef, className: 'select-box', onClick: onToggleSelectBox, style: __assign({}, style) },
-        React.createElement("div", { ref: selectedRef, className: 'selected-item' }, selectedOption),
+        React.createElement("div", { ref: selectedRef, className: 'selected-item' }, selectedOption.name),
         React.createElement(Icon, { name: 'arrow-ios-downward-outline', size: '18' }),
-        isShowList && React.createElement("ul", { ref: selectListRef, className: 'list', style: { height: "" + (listHeight + 'px') } }, options.map(function (option) { return (React.createElement("li", { key: option, onClick: function () { onClickOption(option); } }, option)); }))));
+        isShowList && React.createElement("ul", { ref: selectListRef, className: 'list', style: { height: "" + (listHeight + 'px') } }, options.map(function (option) { return (React.createElement("li", { key: option.name, onClick: function () { onClickOption(option); } }, option.name)); }))));
 };
 
 var Pagination = function (_a) {
     var pageSize = _a.pageSize, pageSizeOptions = _a.pageSizeOptions, total = _a.total, current = _a.current, onPageChange = _a.onPageChange;
-    var _b = useState(pageSize), size = _b[0], setSize = _b[1];
+    var _b = useState({ name: String(pageSize), value: pageSize }), size = _b[0], setSize = _b[1];
     var _c = useState(0), pageIndex = _c[0], setPageIndex = _c[1];
     useEffect(function () {
-        onPageChange(pageIndex * 5 + 1, size);
+        onPageChange(pageIndex * 5 + 1, size.value);
     }, [pageIndex, size]);
-    var handleChooseSelectOption = function (pageSize) {
-        setSize(pageSize);
-        onPageChange(1, size);
+    var handleChooseSelectOption = function (pageSizeObject) {
+        setSize(pageSizeObject);
+        onPageChange(1, size.value);
         setPageIndex(0);
     };
     // 숫자 array 만들기
     var numberList = [];
-    var pageTotal = Math.ceil(total / size);
+    var pageTotal = Math.ceil(total / size.value);
     for (var i = 0; i < pageTotal; i++) {
         numberList.push(i + 1);
     }
@@ -2217,7 +2217,7 @@ var Pagination = function (_a) {
         React.createElement("ul", { className: 'wb-pagination-number-list' },
             React.createElement("li", { onClick: handleClickBackArrow, className: "wb-pagination-arrow wb-pagination-back " + (pageIndex !== 0 && 'active'), key: 'arrow-ios-back-outline' },
                 React.createElement(Icon, { name: 'arrow-ios-back-outline', size: '18' })),
-            __spreadArrays(numberList).splice((pageIndex * 5), 5).map(function (value) { return (React.createElement("li", { className: "wb-pagination-number " + (current === value && 'active'), key: value, tabIndex: 0, onClick: function () { onPageChange(value, size); } },
+            __spreadArrays(numberList).splice((pageIndex * 5), 5).map(function (value) { return (React.createElement("li", { className: "wb-pagination-number " + (current === value && 'active'), key: value, tabIndex: 0, onClick: function () { onPageChange(value, size.value); } },
                 React.createElement("a", null, value))); }),
             React.createElement("li", { onClick: handleClickForwardArrow, className: "wb-pagination-arrow wb-pagination-forward " + (pageIndex !== Math.ceil(pageTotal / 5) - 1 && 'active'), key: 'arrow-ios-forward-outline' },
                 React.createElement(Icon, { name: 'arrow-ios-forward-outline', size: '18' })))));

@@ -3,8 +3,8 @@ import './SelectBox.scss';
 import Icon from 'react-eva-icons';
 
 type Props = {
-    options: any[],
-    selectedOption: string | number,
+    options: {value: any, name: string}[],
+    selectedOption: {value: any, name: string},
     style?: CSSProperties
     onSelectOptionSet: (option: any) => void
 }
@@ -31,7 +31,7 @@ const SelectBox = ({ options, selectedOption, style, onSelectOptionSet }: Props)
         }
     }, [isShowList]);
 
-    const onClickOption = (option: any) => {
+    const onClickOption = (option: {value: any, name: string}) => {
         onSelectOptionSet!(option);
         selectItem && (selectItem.style.marginBottom = '0');
         setShowList(false)
@@ -76,7 +76,7 @@ const SelectBox = ({ options, selectedOption, style, onSelectOptionSet }: Props)
                 ref={selectedRef}
                 className='selected-item'
             >
-                {selectedOption}
+                {selectedOption.name}
             </div>
             <Icon
                 name='arrow-ios-downward-outline'
@@ -89,10 +89,10 @@ const SelectBox = ({ options, selectedOption, style, onSelectOptionSet }: Props)
             >
                 {options.map(option => (
                     <li
-                        key={option}
+                        key={option.name}
                         onClick={() => { onClickOption(option) }}
                     >
-                        {option}
+                        {option.name}
                     </li>
                 ))}
             </ul>}
