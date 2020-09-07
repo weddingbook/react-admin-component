@@ -2,14 +2,8 @@ import React from 'react';
 declare const _default: {
     title: string;
     component: ({ options, selectedOption, style, onSelectOptionSet }: {
-        options: {
-            value: any;
-            name: string;
-        }[];
-        selectedOption: {
-            value: any;
-            name: string;
-        };
+        options: any[];
+        selectedOption: React.ReactText;
         style?: React.CSSProperties | undefined;
         onSelectOptionSet: (option: any) => void;
     }) => JSX.Element;
