@@ -5,29 +5,29 @@ import Icon from 'react-eva-icons';
 
 type Props = {
     pageSize: number,
-    pageSizeOptions: Array<number>
+    pageSizeOptions: Array<{name: string, value: any}>
     total: number,
     current: number,
     onPageChange: (page: number, pageSize: number) => void,
 }
 
 const Pagination = ({ pageSize, pageSizeOptions, total, current, onPageChange }: Props) => {
-    const [size, setSize] = useState(pageSize);
+    const [size, setSize] = useState({ name: String(pageSize), value: pageSize});
     const [pageIndex, setPageIndex] = useState(0);
 
     useEffect(() => {
-        onPageChange(pageIndex * 5 + 1, size)
+        onPageChange(pageIndex * 5 + 1, size.value)
     }, [pageIndex, size])
 
-    const handleChooseSelectOption = (pageSize: any) => {
-        setSize(pageSize)
-        onPageChange(1, size)
+    const handleChooseSelectOption = (pageSizeObject: { name: string, value: number}) => {
+        setSize(pageSizeObject)
+        onPageChange(1, size.value)
         setPageIndex(0)
     }
 
     // 숫자 array 만들기
     const numberList = [];
-    const pageTotal = Math.ceil(total / size)
+    const pageTotal = Math.ceil(total / size.value)
 
     for (let i = 0; i < pageTotal; i++) {
         numberList.push(i + 1)
@@ -56,7 +56,7 @@ const Pagination = ({ pageSize, pageSizeOptions, total, current, onPageChange }:
                     <Icon name='arrow-ios-back-outline' size='18' />
                 </li>
                 {[...numberList].splice((pageIndex * 5), 5).map(value => (
-                    <li className={`wb-pagination-number ${current === value && 'active'}`} key={value} tabIndex={0} onClick={() => { onPageChange(value, size) }}>
+                    <li className={`wb-pagination-number ${current === value && 'active'}`} key={value} tabIndex={0} onClick={() => { onPageChange(value, size.value) }}>
                         <a>{value}</a>
                     </li>))}
                 <li onClick={handleClickForwardArrow} className={`wb-pagination-arrow wb-pagination-forward ${pageIndex !== Math.ceil(pageTotal / 5) - 1 && 'active'}`} key='arrow-ios-forward-outline'>

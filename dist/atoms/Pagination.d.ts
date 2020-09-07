@@ -2,7 +2,10 @@
 import './Pagination.scss';
 declare type Props = {
     pageSize: number;
-    pageSizeOptions: Array<number>;
+    pageSizeOptions: Array<{
+        name: string;
+        value: any;
+    }>;
     total: number;
     current: number;
     onPageChange: (page: number, pageSize: number) => void;

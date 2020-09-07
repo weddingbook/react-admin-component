@@ -1,8 +1,14 @@
 import { CSSProperties } from 'react';
 import './SelectBox.scss';
 declare type Props = {
-    options: any[];
-    selectedOption: string | number;
+    options: {
+        value: any;
+        name: string;
+    }[];
+    selectedOption: {
+        value: any;
+        name: string;
+    };
     style?: CSSProperties;
     onSelectOptionSet: (option: any) => void;
 };
