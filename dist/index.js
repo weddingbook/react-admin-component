@@ -2265,6 +2265,16 @@ var Tag = function (_a) {
     return (React__default.createElement("div", { className: "tag " + color + "-tag", style: __assign({}, style) }, children));
 };
 
+var TabMenu = function (_a) {
+    var tabList = _a.tabList, onSelectMenu = _a.onSelectMenu, selectedMenu = _a.selectedMenu, _b = _a.type, type = _b === void 0 ? 'modal' : _b;
+    return (React__default.createElement(React__default.Fragment, null,
+        React__default.createElement("nav", { className: "tab-menu " + (type === 'list' ? 'list-tab' : '') },
+            React__default.createElement("ul", null, tabList.map(function (value) {
+                return React__default.createElement("li", { key: value, onClick: function () { onSelectMenu(value); }, className: (type === 'list' ? 'list-tab-item' : 'modal-tab-item') + " " + (selectedMenu === value ? 'on' : '') }, value);
+            }))),
+        type === ('modal' ) && React__default.createElement("div", { className: 'divider in-tab-menu' })));
+};
+
 function rng() {
   return crypto.randomBytes(16);
 }
@@ -4990,6 +5000,7 @@ exports.Section = Section;
 exports.SectionContainer = SectionContainer;
 exports.SelectBox = SelectBox;
 exports.SwitchButton = SwitchButton;
+exports.TabMenu = TabMenu;
 exports.Tag = Tag;
 exports.Tooltip = Tooltip;
 exports.ViewMore = ViewMore;

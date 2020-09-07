@@ -9,6 +9,7 @@ export { default as SelectBox } from './atoms/SelectBox';
 export { default as Input } from './atoms/Input';
 export { default as SwitchButton } from './atoms/SwitchButton';
 export { default as Tag } from './atoms/Tag';
+export { default as TabMenu } from './atoms/TabMenu';
 export { default as Tooltip } from './atoms/Tooltip';
 export { default as ViewMore } from './atoms/ViewMore';
 

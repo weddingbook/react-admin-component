@@ -2258,6 +2258,16 @@ var Tag = function (_a) {
     return (React.createElement("div", { className: "tag " + color + "-tag", style: __assign({}, style) }, children));
 };
 
+var TabMenu = function (_a) {
+    var tabList = _a.tabList, onSelectMenu = _a.onSelectMenu, selectedMenu = _a.selectedMenu, _b = _a.type, type = _b === void 0 ? 'modal' : _b;
+    return (React.createElement(React.Fragment, null,
+        React.createElement("nav", { className: "tab-menu " + (type === 'list' ? 'list-tab' : '') },
+            React.createElement("ul", null, tabList.map(function (value) {
+                return React.createElement("li", { key: value, onClick: function () { onSelectMenu(value); }, className: (type === 'list' ? 'list-tab-item' : 'modal-tab-item') + " " + (selectedMenu === value ? 'on' : '') }, value);
+            }))),
+        type === ('modal' ) && React.createElement("div", { className: 'divider in-tab-menu' })));
+};
+
 function rng() {
   return crypto.randomBytes(16);
 }
@@ -4963,5 +4973,5 @@ function useRadioBox(defaultList) {
     };
 }
 
-export { Breadcrumb, Button, ButtonTypeInput, CombineInput, DefinitionTag, DefinitionTagContainer, Divider, ImageSlider, Input, InputContainer, InputRecommend, Modal, ModalItem, Pagination, PopupArea, SearchBox, Section, SectionContainer, SelectBox, SwitchButton, Tag, Tooltip, ViewMore, createPopup, removePopup, useCheckBox, useModal, useRadioBox };
+export { Breadcrumb, Button, ButtonTypeInput, CombineInput, DefinitionTag, DefinitionTagContainer, Divider, ImageSlider, Input, InputContainer, InputRecommend, Modal, ModalItem, Pagination, PopupArea, SearchBox, Section, SectionContainer, SelectBox, SwitchButton, TabMenu, Tag, Tooltip, ViewMore, createPopup, removePopup, useCheckBox, useModal, useRadioBox };
 //# sourceMappingURL=index.es.js.map
