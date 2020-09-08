@@ -4964,12 +4964,16 @@ function useModal() {
 
 function useRadioBox(defaultList) {
     var _a = useState(defaultList), list = _a[0], setList = _a[1];
+    var onChangeDefault = function (list) {
+        setList(list);
+    };
     var onChange = useCallback(function (value) {
         setList(list.map(function (item) { return (__assign(__assign({}, item), { checked: item.id === value.id ? true : false })); }));
     }, [list, setList]);
     return {
         list: list,
-        onChange: onChange
+        onChange: onChange,
+        onChangeDefault: onChangeDefault
     };
 }
 
