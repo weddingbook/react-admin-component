@@ -4964,6 +4964,7 @@ function useModal() {
 
 function useRadioBox(defaultList) {
     var _a = useState(defaultList), list = _a[0], setList = _a[1];
+    var selectedItem = list.filter(function (value) { return value.checked; })[0];
     var onChangeDefault = function (list) {
         setList(list);
     };
@@ -4971,6 +4972,7 @@ function useRadioBox(defaultList) {
         setList(list.map(function (item) { return (__assign(__assign({}, item), { checked: item.id === value.id ? true : false })); }));
     }, [list, setList]);
     return {
+        selectedItem: selectedItem,
         list: list,
         onChange: onChange,
         onChangeDefault: onChangeDefault
