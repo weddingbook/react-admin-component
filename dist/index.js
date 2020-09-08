@@ -4700,10 +4700,10 @@ var DefinitionTagContainer = function (_a) {
 };
 
 var InputContainer = function (_a) {
-    var children = _a.children, title = _a.title;
+    var children = _a.children, title = _a.title, inputListStyle = _a.inputListStyle;
     return (React__default.createElement("div", { className: 'input-container' },
         React__default.createElement("span", null, title),
-        React__default.createElement("div", { className: 'input-list' }, children)));
+        React__default.createElement("div", { className: 'input-list', style: inputListStyle }, children)));
 };
 
 var Modal = function (_a) {

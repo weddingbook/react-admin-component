@@ -4,7 +4,7 @@ declare const _default: {
     component: ({ children, color, style }: {
         style?: React.CSSProperties | undefined;
         children: string;
-        color: "yellow" | "green" | "red" | "gray";
+        color: "green" | "red" | "yellow" | "gray";
     }) => JSX.Element;
     decorators: ((...args: any) => any)[];
 };
