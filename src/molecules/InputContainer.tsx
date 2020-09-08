@@ -4,7 +4,7 @@ import './InputContainer.scss';
 type Props = {
     children: object,
     title?: string,
-    inputListStyle: CSSProperties
+    inputListStyle?: CSSProperties
 }
 
 const InputContainer = ({ children, title, inputListStyle }: Props) => {
