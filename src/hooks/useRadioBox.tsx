@@ -3,6 +3,7 @@ import { useCallback, useState } from 'react';
 export default function useRadioBox(defaultList: Array<any>) {
     const [list, setList] = useState(defaultList)
 
+    const selectedItem = list.filter(value => value.checked)[0]
     const onChangeDefault = (list: any[]) => {
         setList(list);
     }
@@ -12,6 +13,7 @@ export default function useRadioBox(defaultList: Array<any>) {
     }, [list, setList])
 
     return {
+        selectedItem,
         list,
         onChange,
         onChangeDefault
