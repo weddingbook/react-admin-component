@@ -1,10 +1,11 @@
 import React from 'react';
 import './TabMenu.scss';
 
+type TabItem = { name: string, value: any }
 type Props = {
-    tabList: string[]
-    onSelectMenu: (tabMenu: string) => void;
-    selectedMenu: string
+    tabList: TabItem[]
+    onSelectMenu: (tabMenu: TabItem) => void;
+    selectedMenu: TabItem
     type?: 'page' | 'modal' | 'section' | 'list'
 }
 
@@ -13,13 +14,13 @@ const TabMenu = ({ tabList, onSelectMenu, selectedMenu, type = 'modal' }: Props)
         <>
             <nav className={`tab-menu ${type === 'list' ? 'list-tab' : ''}`}>
                 <ul>
-                    {tabList.map((value: string) =>
-                        <li 
-                            key={value} 
-                            onClick={() => { onSelectMenu(value) }} 
-                            className={`${type === 'list' ? 'list-tab-item' : 'modal-tab-item'} ${selectedMenu === value ? 'on' : ''}`}
+                    {tabList.map((tab: TabItem) =>
+                        <li
+                            key={tab.value}
+                            onClick={() => { onSelectMenu(tab) }}
+                            className={`${type === 'list' ? 'list-tab-item' : 'modal-tab-item'} ${selectedMenu.value === tab.value ? 'on' : ''}`}
                         >
-                            {value}
+                            {tab.name}
                         </li>
                     )}
                 </ul>

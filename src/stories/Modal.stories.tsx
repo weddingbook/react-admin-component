@@ -43,10 +43,10 @@ export const ModalStory = () => <Modal size={select('사이즈', {
 </Modal>
 
 export const ModalStoryWithTab = () => {
-    const menuList = ['Tab active', 'Tab2', 'Tab3'];
+    const menuList = ['Tab active', 'Tab2', 'Tab3'].map((item, index) => ({ name: item, value: index}));
 
     const [selectedMenu, setSelectedMenu] = useState(menuList[0]);
-    const onSelectMenu = (menu: string) => {
+    const onSelectMenu = (menu: {name: string, value: any}) => {
         setSelectedMenu(menu)
     }
     return <Modal size={select('사이즈', {

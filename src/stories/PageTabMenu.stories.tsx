@@ -17,9 +17,9 @@ export default {
 
 
 export const SectionTabMenuStory = () => {
-    const tabList = ['All Auth', 'Personal Auth', 'Team Auth'];
+    const tabList = ['All Auth', 'Personal Auth', 'Team Auth'].map((item, index) => ({ name: item, value: index }));
     const [selectedMenu, setSelectedMenu] = useState(tabList[0]);
-    const onSelectMenu = (menu: string) => {
+    const onSelectMenu = (menu: { name: string, value: any }) => {
         setSelectedMenu(menu)
     }
 
@@ -35,7 +35,7 @@ export const SectionTabMenuStory = () => {
         >
             <TabMenu tabList={tabList} selectedMenu={selectedMenu} onSelectMenu={onSelectMenu} />
             {
-                selectedMenu === tabList[0] && <>
+                selectedMenu.value === tabList[0].value && <>
                     <DefinitionTagContainer>
                         <DefinitionTag title='휴대폰정보' direction='row'>
                             아이폰, 앱버전 : 4.20.0, OS버전 : 13.2.2 <br />
@@ -55,7 +55,7 @@ export const SectionTabMenuStory = () => {
                 </>
             }
             {
-                selectedMenu === tabList[1] && <>
+                selectedMenu.value === tabList[1].value && <>
                     <DefinitionTagContainer>
                         <DefinitionTag title='다른화면' direction='row'>
                             2
@@ -64,7 +64,7 @@ export const SectionTabMenuStory = () => {
                 </>
             }
             {
-                selectedMenu === tabList[2] && <>
+                selectedMenu.value === tabList[2].value && <>
                     <DefinitionTagContainer>
                         <DefinitionTag title='화면3' direction='row'>
                             화면3
@@ -77,9 +77,9 @@ export const SectionTabMenuStory = () => {
 }
 
 export const ModalTabMenuStory = () => {
-    const tabList = ['화면 1', '화면 2', '화면 3'];
+    const tabList = ['화면 1', '화면 2', '화면 3'].map((item, index) => ({ name: item, value: index }));;
     const [selectedMenu, setSelectedMenu] = useState(tabList[0]);
-    const onSelectMenu = (menu: string) => {
+    const onSelectMenu = (menu: { name: string, value: any }) => {
         setSelectedMenu(menu)
     }
 
@@ -87,7 +87,7 @@ export const ModalTabMenuStory = () => {
         <Modal size={'small'} actionButtonComponent={<Button>확인</Button>}>
             <TabMenu tabList={tabList} selectedMenu={selectedMenu} onSelectMenu={onSelectMenu} />
             {
-                selectedMenu === tabList[0] && <>
+                selectedMenu.value === tabList[0].value && <>
                     <DefinitionTagContainer>
                         <DefinitionTag title='휴대폰정보' direction='row'>
                             아이폰, 앱버전 : 4.20.0, OS버전 : 13.2.2 <br />
@@ -107,7 +107,7 @@ export const ModalTabMenuStory = () => {
                 </>
             }
             {
-                selectedMenu === tabList[1] && <>
+                selectedMenu.value === tabList[1].value && <>
                     <DefinitionTagContainer>
                         <DefinitionTag title='다른화면' direction='row'>
                             2
@@ -116,7 +116,7 @@ export const ModalTabMenuStory = () => {
                 </>
             }
             {
-                selectedMenu === tabList[2] && <>
+                selectedMenu.value === tabList[2].value && <>
                     <DefinitionTagContainer>
                         <DefinitionTag title='화면3' direction='row'>
                             화면3
@@ -129,15 +129,15 @@ export const ModalTabMenuStory = () => {
 }
 
 export const ListTabMenuStory = () => {
-    const tabList = ['화면 1', '화면 2', '화면 3'];
+    const tabList = ['화면 1', '화면 2', '화면 3'].map((item, index) => ({ name: item, value: index }));;
     const [selectedMenu, setSelectedMenu] = useState(tabList[0]);
-    const onSelectMenu = (menu: string) => {
+    const onSelectMenu = (menu: { name: string, value: any }) => {
         setSelectedMenu(menu)
     }
 
-    const modalTabList = ['화면 1', '화면 2', '화면 3'];
+    const modalTabList = ['화면 1', '화면 2', '화면 3'].map((item, index) => ({ name: item, value: index }));;
     const [selectedModalMenu, setSelectedModalMenu] = useState(tabList[0]);
-    const onSelectModalMenu = (menu: string) => {
+    const onSelectModalMenu = (menu: { name: string, value: any }) => {
         setSelectedModalMenu(menu)
     }
 
@@ -169,7 +169,7 @@ export const ListTabMenuStory = () => {
             </DefinitionTagContainer>
 
             {
-                selectedMenu === tabList[0] && <>
+                selectedMenu.value === tabList[0].value && <>
                     <DefinitionTagContainer style={{ marginLeft: '40px' }}>
                         <DefinitionTag title='Label' direction='row'>
                             안녕하세요
@@ -186,7 +186,7 @@ export const ListTabMenuStory = () => {
                 </>
             }
             {
-                selectedMenu === tabList[1] && <>
+                selectedMenu.value === tabList[1].value && <>
                     <DefinitionTagContainer style={{ marginLeft: '40px' }}>
                         <DefinitionTag title='Label' direction='row'>
                             두번째 탭
@@ -203,7 +203,7 @@ export const ListTabMenuStory = () => {
                 </>
             }
             {
-                selectedMenu === tabList[2] && <>
+                selectedMenu.value === tabList[2].value && <>
                     <DefinitionTagContainer style={{ marginLeft: '40px' }}>
                         <DefinitionTag title='Label' direction='row'>
                             세번째 탭
