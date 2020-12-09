@@ -2266,8 +2266,8 @@ var TabMenu = function (_a) {
     var tabList = _a.tabList, onSelectMenu = _a.onSelectMenu, selectedMenu = _a.selectedMenu, _b = _a.type, type = _b === void 0 ? 'modal' : _b;
     return (React.createElement(React.Fragment, null,
         React.createElement("nav", { className: "tab-menu " + (type === 'list' ? 'list-tab' : '') },
-            React.createElement("ul", null, tabList.map(function (value) {
-                return React.createElement("li", { key: value, onClick: function () { onSelectMenu(value); }, className: (type === 'list' ? 'list-tab-item' : 'modal-tab-item') + " " + (selectedMenu === value ? 'on' : '') }, value);
+            React.createElement("ul", null, tabList.map(function (tab) {
+                return React.createElement("li", { key: tab.value, onClick: function () { onSelectMenu(tab); }, className: (type === 'list' ? 'list-tab-item' : 'modal-tab-item') + " " + (selectedMenu.value === tab.value ? 'on' : '') }, tab.name);
             }))),
         type === ('modal' ) && React.createElement("div", { className: 'divider in-tab-menu' })));
 };
