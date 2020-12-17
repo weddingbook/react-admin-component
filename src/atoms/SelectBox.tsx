@@ -1,15 +1,17 @@
 import React, { useState, useRef, useEffect, CSSProperties } from 'react';
 import './SelectBox.scss';
 import Icon from 'react-eva-icons';
+import Input from './Input';
 
 type Props = {
-    options: any[],
-    selectedOption: string | number,
+    options: { value: any, name: string }[],
+    selectedOption: { value: any, name: string },
     style?: CSSProperties
     onSelectOptionSet: (option: any) => void
+    disabled?: boolean
 }
 
-const SelectBox = ({ options, selectedOption, style, onSelectOptionSet }: Props) => {
+const SelectBox = ({ options, selectedOption, style, onSelectOptionSet, disabled }: Props) => {
     const selectedRef = useRef<HTMLDivElement>(null)
     const selectBoxRef = useRef<HTMLDivElement>(null)
     const selectListRef = useRef<HTMLUListElement>(null)
@@ -31,7 +33,7 @@ const SelectBox = ({ options, selectedOption, style, onSelectOptionSet }: Props)
         }
     }, [isShowList]);
 
-    const onClickOption = (option: any) => {
+    const onClickOption = (option: { value: any, name: string }) => {
         onSelectOptionSet!(option);
         selectItem && (selectItem.style.marginBottom = '0');
         setShowList(false)
@@ -70,34 +72,36 @@ const SelectBox = ({ options, selectedOption, style, onSelectOptionSet }: Props)
         }
         setShowList(!isShowList)
     };
-    return (
-        <div tabIndex={0} ref={selectBoxRef} className='select-box' onClick={onToggleSelectBox} style={{ ...style }}>
-            <div
-                ref={selectedRef}
-                className='selected-item'
-            >
-                {selectedOption}
+    {
+        return disabled
+            ? <Input disabled={true} />
+            : <div tabIndex={0} ref={selectBoxRef} className='select-box' onClick={onToggleSelectBox} style={{ ...style }}>
+                <div
+                    ref={selectedRef}
+                    className='selected-item'
+                >
+                    {selectedOption.name}
+                </div>
+                <Icon
+                    name='arrow-ios-downward-outline'
+                    size='18'
+                />
+                {isShowList && <ul
+                    ref={selectListRef}
+                    className='list'
+                    style={{ height: `${listHeight + 'px'}` }}
+                >
+                    {options.map(option => (
+                        <li
+                            key={option.name}
+                            onClick={() => { onClickOption(option) }}
+                        >
+                            {option.name}
+                        </li>
+                    ))}
+                </ul>}
             </div>
-            <Icon
-                name='arrow-ios-downward-outline'
-                size='18'
-            />
-            {isShowList && <ul
-                ref={selectListRef}
-                className='list'
-                style={{ height: `${listHeight + 'px'}` }}
-            >
-                {options.map(option => (
-                    <li
-                        key={option}
-                        onClick={() => { onClickOption(option) }}
-                    >
-                        {option}
-                    </li>
-                ))}
-            </ul>}
-        </div>
-    )
+    }
 }
 
 export default SelectBox

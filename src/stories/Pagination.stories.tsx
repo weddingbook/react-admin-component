@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { withKnobs } from '@storybook/addon-knobs'
 import { Table } from 'antd'
 import { Button, Pagination } from '../index';
+import { ColumnsType } from 'antd/lib/table';
 
 
 export default {
@@ -39,7 +40,7 @@ export const PaginationStory = () => {
             dataIndex: 'th_Label2',
             defaultSortOrder: 'ascend',
             key: 'th_Label2',
-            sorter: (a, b) => {
+            sorter: (value, item) => {
                 // api를 호출하여 해당 컬럼의 sort를 값으로 줘서 호춣하고 그 값을 받아와야 함.
                 // 그럼 값이 새로 생성되니까
                 // return a.th_Label2 - b.th_Label2
@@ -60,7 +61,7 @@ export const PaginationStory = () => {
             dataIndex: 'th_Label5',
             key: 'th_Label5',
         },
-    ];
+    ] as ColumnsType<any>
 
     const [realData, setRealData] = useState([...dataSourceTest].splice(0, 10))
 
@@ -72,7 +73,7 @@ export const PaginationStory = () => {
     return <div style={{ padding: '10px' }}>
         <Table dataSource={realData} columns={columns} pagination={false} showSorterTooltip={false} />
         <Pagination pageSize={10}
-            pageSizeOptions={[10, 50, 100, 1000]}
+            pageSizeOptions={[10, 50, 100, 1000].map(value => ({ value, name: String(value) }))}
             total={dataSourceTest.length}
             current={current}
             onPageChange={onPaginationChange}

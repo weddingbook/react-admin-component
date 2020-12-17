@@ -9,8 +9,8 @@ export default {
 };
 
 export const CombineInputStoryWithSelectBox = () => {
-    const [selectedOption, onSelectedOptionSet] = useState('안녕');
-    const options = ['안녕', '길다길어셀렉트 길다길어 셀렉트2', '길다길어셀렉트 길다길어 셀렉트3'];
+    const [selectedOption, onSelectedOptionSet] = useState({ name: '안녕', value: '안녕' });
+    const options = ['안녕', '길다길어셀렉트 길다길어 셀렉트2', '길다길어셀렉트 길다길어 셀렉트3'].map(value => ({ value, name: value }));
 
     const onSet = (option: any) => {
         onSelectedOptionSet(option)

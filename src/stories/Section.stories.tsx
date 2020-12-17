@@ -50,10 +50,10 @@ export const SectionStory = () => <Section
 </Section>
 
 export const SectionStoryWithTabMenu = () => {
-    const menuList = ['Tab active', 'Tab2', 'Tab3'];
+    const menuList = ['Tab active', 'Tab2', 'Tab3'].map((item, index) => ({ name: item, value: index }));
 
     const [selectedMenu, setSelectedMenu] = useState(menuList[0]);
-    const onSelectMenu = (menu: string) => {
+    const onSelectMenu = (menu: { name: string, value: any }) => {
         setSelectedMenu(menu)
     }
 
@@ -98,10 +98,10 @@ export const SectionStoryWithTabMenu = () => {
 }
 
 export const SectionStroyMultiple = () => {
-    const menuList = ['Tab active', 'Tab2', 'Tab3'];
+    const menuList = ['Tab active', 'Tab2', 'Tab3'].map((item, index) => ({ name: item, value: index }));
 
     const [selectedMenu, setSelectedMenu] = useState(menuList[0]);
-    const onSelectMenu = (menu: string) => {
+    const onSelectMenu = (menu: { name: string, value: any }) => {
         setSelectedMenu(menu)
     }
 

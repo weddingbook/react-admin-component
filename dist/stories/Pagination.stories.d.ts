@@ -3,7 +3,10 @@ declare const _default: {
     title: string;
     component: ({ pageSize, pageSizeOptions, total, current, onPageChange }: {
         pageSize: number;
-        pageSizeOptions: number[];
+        pageSizeOptions: {
+            name: string;
+            value: any;
+        }[];
         total: number;
         current: number;
         onPageChange: (page: number, pageSize: number) => void;

@@ -43,10 +43,10 @@ export const ModalStory = () => <Modal size={select('사이즈', {
 </Modal>
 
 export const ModalStoryWithTab = () => {
-    const menuList = ['Tab active', 'Tab2', 'Tab3'];
+    const menuList = ['Tab active', 'Tab2', 'Tab3'].map((item, index) => ({ name: item, value: index}));
 
     const [selectedMenu, setSelectedMenu] = useState(menuList[0]);
-    const onSelectMenu = (menu: string) => {
+    const onSelectMenu = (menu: {name: string, value: any}) => {
         setSelectedMenu(menu)
     }
     return <Modal size={select('사이즈', {
@@ -173,8 +173,8 @@ export const ModalStoryWithCheckBoxAndRadioBox = () => {
 export const ModalStoryWithLong = () => {
     const { modalToggle, onCloseModal, onOpenModal } = useModal();
 
-    const [selectedOption, onSelectedOptionSet] = useState('안녕');
-    const options = ['안녕', '길다길어셀렉트 길다길어 셀렉트2', '길다길어셀렉트 길다길어 셀렉트3'];
+    const [selectedOption, onSelectedOptionSet] = useState({ name: '안녕', value: '안녕' });
+    const options = ['안녕', '길다길어셀렉트 길다길어 셀렉트2', '길다길어셀렉트 길다길어 셀렉트3'].map(value => ({ value, name: value }));
 
     const onSet = (option: any) => {
         onSelectedOptionSet(option)
@@ -281,13 +281,13 @@ export const ModalStoryWithLong = () => {
 export const ModalStoryWithInform = () => {
     const { modalToggle, onCloseModal, onOpenModal } = useModal();
 
-    const [selectedOption, onSelectedOptionSet] = useState('대기');
-    const [selectedRebateOption, onSelectedRebateOptionSet] = useState('최초');
-    const [selectedPriceUnitOption, onSelectedPriceUnitOptionSet] = useState('원');
+    const [selectedOption, onSelectedOptionSet] = useState({ name: '대기', value: '대기' });
+    const [selectedRebateOption, onSelectedRebateOptionSet] = useState({ name: '최초', value: '최초' });
+    const [selectedPriceUnitOption, onSelectedPriceUnitOptionSet] = useState({ name: '원', value: '원' });
 
-    const options = ['대기', '반려', '승인'];
-    const rebateOptions = ['최초']
-    const priceUnitOptions = ['원', '달러']
+    const options = ['대기', '반려', '승인'].map(value => ({ value, name: value }));
+    const rebateOptions = ['최초'].map(value => ({ value, name: value }));
+    const priceUnitOptions = ['원', '달러'].map(value => ({ value, name: value }));
 
     const onSet = (option: any) => {
         onSelectedOptionSet(option)
@@ -539,7 +539,7 @@ export const ModalStoryWithIndent = () => {
         </ModalItem>
         <ModalItem style={{ marginTop: '24px' }}>
             <label>Related Product</label>
-            <Button onClick={() => {}} size='xs' className='in-modal-item'>Connect Other Product</Button>
+            <Button onClick={() => { }} size='xs' className='in-modal-item'>Connect Other Product</Button>
         </ModalItem>
         <ModalItem>
             <label>Tag</label>

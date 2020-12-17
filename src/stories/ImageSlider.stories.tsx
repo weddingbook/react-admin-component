@@ -28,10 +28,12 @@ const srcList = [
 
 ]
 
+const imageList = srcList.map(value => ({ isShow: true, isRepresentation: true, url: value}))
+
 export const ImageSliderStory = () => {
     return (
         <>
-            <ImageSlider imageUrlList={srcList} />
+            <ImageSlider isShowInformationIcon={false} imageUrlList={imageList} />
         </>
     )
 }
@@ -74,7 +76,7 @@ export const ImageSliderInModalStory = () => {
                 </ModalItem>
                 <ModalItem>
                     <label></label>
-                    <ImageSlider imageUrlList={srcList} />
+                    <ImageSlider isShowInformationIcon={false} imageUrlList={imageList} />
                 </ModalItem>
             </Modal>
         </>
@@ -87,13 +89,16 @@ export const ImageSliderInSectionStory = () => {
             'url': 'https://d31gm4xoou1wz2.cloudfront.net/album/202007/20200728/c6877538-680e-48e7-bc0a-162ce2c98f2f.jpg',
             'title': '2020 더케네스블랑 FW',
             'content': null,
-            'albumId': 438
+            'albumId': 438,
+            'isRepresentation': true,
+            'isShow': true
         },
         {
             'url': 'https://d31gm4xoou1wz2.cloudfront.net/album/202003/20200331/497fd516-5de6-4e9a-a6a2-a4a25b6cec3c.JPG',
             'title': '2020 더케네스블랑 SS',
             'content': null,
-            'albumId': 353
+            'albumId': 353,
+            'isShow': true
         },
         {
             'url': 'https://d31gm4xoou1wz2.cloudfront.net/album/201909/20190911/89466864-7661-4edc-be39-26689e420cd9.jpg',
@@ -175,6 +180,9 @@ export const ImageSliderInSectionStory = () => {
         }
     ]
 
+    const productPhotoList2 = productPhotoList.map(value => 
+        ({...value, isShow: value.isShow ? value.isShow : false, isRepresentation: value.isRepresentation ? value.isRepresentation : false}))
+
     return (
         <>
             <SectionContainer>
@@ -211,12 +219,12 @@ export const ImageSliderInSectionStory = () => {
                             title='대여'
                         >800000</DefinitionTag>
                     </DefinitionTagContainer>
-                    {productPhotoList.length ? <ImageSlider imageWidth={300} imageHeight={400} imageUrlList={productPhotoList.map(value => value.url)} /> : <></>}
+                    {productPhotoList.length ? <ImageSlider imageWidth={300} imageHeight={400} imageUrlList={productPhotoList2} /> : <></>}
 
                 </Section>
             </SectionContainer>
             <Section title='Photo Catalog'>
-                {productPhotoList.length ? <ImageSlider imageWidth={300} imageHeight={400} imageUrlList={productPhotoList.map(value => value.url)} /> : <></>}
+                {productPhotoList.length ? <ImageSlider imageWidth={300} imageHeight={400} imageUrlList={productPhotoList2} /> : <></>}
             </Section>
         </>
     )
