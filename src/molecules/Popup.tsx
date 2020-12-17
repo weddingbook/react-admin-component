@@ -99,15 +99,15 @@ class AlertPopup extends Popup<AlertPopupProps> {
 		return (
 			<div className={`popup-wrap ${messageType}`}>
 				<div
-					className="overlay"
+					className='overlay'
 					onClick={this.clickOverlay.bind(this)}
 				/>
-				<div className="popup">
+				<div className='popup'>
 					{title && <h1>{title}</h1>}
-					<span className="circle"></span>
-					<p className="popup-content">{message}</p>
-					<div className="popup-btns">
-						<Button onClick={() => this.clickButton(button)} type={button.type} size="small" color={button.color} className={button.className}>
+					<span className='circle'></span>
+					<p className='popup-content'>{message}</p>
+					<div className='popup-btns'>
+						<Button onClick={() => this.clickButton(button)} type={button.type} size='small' color={button.color} className={button.className}>
 							{button.label}
 						</Button>
 					</div>
@@ -122,16 +122,16 @@ class ConfirmPopup extends Popup<ConfirmPopupProps> {
 		return (
 			<div className={`popup-wrap ${messageType}`}>
 				<div
-					className="overlay"
+					className='overlay'
 					onClick={this.clickOverlay.bind(this)}
 				/>
-				<div className="popup">
+				<div className='popup'>
 					{title && <h1>{title}</h1>}
-					<span className="circle"></span>
-					<p className="popup-content">{message}</p>
-					<div className="popup-btns">
+					<span className='circle'></span>
+					<p className='popup-content'>{message}</p>
+					<div className='popup-btns'>
 						{buttons?.map((button, i) => (
-							<Button key={i} onClick={() => this.clickButton(button)} type={button.type} size="small" color={button.color} className={button.className}>
+							<Button key={i} onClick={() => this.clickButton(button)} type={button.type} size='small' color={button.color} className={button.className}>
 								{button.label}
 							</Button>
 						))}

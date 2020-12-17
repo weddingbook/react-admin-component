@@ -52,3 +52,19 @@ export const ButtonStoryDisabled = () => <Button
     }, 'blue')}
     disabled={true}
 />
+
+export const ButtonStoryWithIcon = () =>
+    <>
+        <Button size='small' iconName='search-outline' type='line' ></Button>
+        <Button size='small' iconName='search-outline' type='line' >아이콘</Button>
+        <Button type='line' size='small'>수정</Button>
+        <Button size='xs' iconName='search-outline' type='line' ></Button>
+        <Button size='xs' iconName='search-outline' type='line' >아이콘</Button>
+        <Button type='line' size='xs'>수정</Button>
+        <Button size='large' iconName='search-outline' type='line' ></Button>
+        <Button size='large' iconName='search-outline' type='line' >아이콘</Button>
+        <Button type='line' size='large'>수정</Button>
+        <Button iconName='search-outline' type='line' ></Button>
+        <Button iconName='search-outline' type='line' >아이콘</Button>
+        <Button type='line' >수정</Button>
+    </>

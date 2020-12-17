@@ -14,9 +14,9 @@ const Tooltip = ({ children, id, buttonType }: Props) => {
         <ReactTooltip
             className={`${buttonType ? 'btn-tooltip' : ''}`}
             id={id} uuid={id}
-            effect="solid"
-            arrowColor="#323232"
-            backgroundColor="#323232"
+            effect='solid'
+            arrowColor='#323232'
+            backgroundColor='#323232'
         >
             {children}
         </ReactTooltip>

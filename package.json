@@ -18,10 +18,13 @@
   "license": "ISC",
   "dependencies": {
     "@storybook/preset-create-react-app": "^3.1.4",
+    "@types/react-router-dom": "^5.1.5",
     "@types/react-tooltip": "^4.2.4",
     "antd": "^4.4.2",
     "react-docgen-typescript-loader": "^3.7.2",
     "react-eva-icons": "git+https://github.com/weddingbook/react-eva-icons.git",
+    "react-toastify": "git+https://github.com/weddingbook/react-toastify.git",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "^3.4.1",
     "react-tooltip": "^4.2.7"
   },

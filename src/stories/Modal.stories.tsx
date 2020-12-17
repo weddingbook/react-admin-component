@@ -3,6 +3,10 @@ import { withKnobs, select } from '@storybook/addon-knobs'
 import { useModal } from '../index';
 import { DatePicker, TimePicker } from 'antd';
 import { Divider, ModalItem, ButtonTypeInput, InputContainer, Input, CombineInput, SelectBox, Modal, Button, DefinitionTag, DefinitionTagContainer } from '../index';
+import useRadioBox from '../hooks/useRadioBox';
+import useCheckBox from '../hooks/useCheckBox';
+import TabMenu from '../atoms/TabMenu';
+import SwitchButton from '../atoms/SwitchButton';
 
 
 export default {
@@ -38,11 +42,139 @@ export const ModalStory = () => <Modal size={select('사이즈', {
     </DefinitionTagContainer>
 </Modal>
 
+export const ModalStoryWithTab = () => {
+    const menuList = ['Tab active', 'Tab2', 'Tab3'].map((item, index) => ({ name: item, value: index}));
+
+    const [selectedMenu, setSelectedMenu] = useState(menuList[0]);
+    const onSelectMenu = (menu: {name: string, value: any}) => {
+        setSelectedMenu(menu)
+    }
+    return <Modal size={select('사이즈', {
+        small: 'small',
+        medium: 'medium',
+        large: 'large'
+    }, 'small')} actionButtonComponent={<Button onClick={onClick} size='small' type='solid' disabled={true}>확인</Button>}>
+        <TabMenu tabList={menuList} onSelectMenu={onSelectMenu} selectedMenu={selectedMenu} />
+        <DefinitionTagContainer>
+            <DefinitionTag title='휴대폰정보' direction='row'>
+                아이폰, 앱버전 : 4.20.0, OS버전 : 13.2.2 <br />
+                3783c640-d39f-11e8-b933-0aea5320e7f2
+            </DefinitionTag>
+        </DefinitionTagContainer>
+        <DefinitionTagContainer>
+            <DefinitionTag title='닉네임' direction='row'>
+                띄지않고최대여덟
+            </DefinitionTag>
+        </DefinitionTagContainer>
+        <DefinitionTagContainer>
+            <DefinitionTag title='상태' direction='row'>
+                활성
+            </DefinitionTag>
+        </DefinitionTagContainer>
+    </Modal>
+}
+export const ModalStoryWithToggleSwitch = () => {
+    const [switchToggle, setSwitchToggle] = useState(false);
+    const [keyword, setKeyword] = useState('')
+
+    // actions
+    const onChange = (e: any) => {
+        setKeyword(e.target.value)
+    }
+    return <Modal size={select('사이즈', {
+        small: 'small',
+        medium: 'medium',
+        large: 'large'
+    }, 'medium')} actionButtonComponent={<Button onClick={onClick} size='small' type='solid' disabled={true}>확인</Button>}>
+        <ModalItem>
+            <label>Team Member</label>
+            <Input value={keyword} onChange={(e) => { onChange(e) }} placeholder='Type MemberName Or Email..' />
+        </ModalItem>
+        <ModalItem className='checkbox-radio'>
+            <label className='checkbox-radio'>Toggle</label>
+            <InputContainer>
+                <SwitchButton
+                    toggleValue={switchToggle}
+                    onClick={setSwitchToggle}
+                />
+            </InputContainer>
+        </ModalItem>
+    </Modal>
+}
+
+export const ModalStoryWithCheckBoxAndRadioBox = () => {
+    const [keyword, setKeyword] = useState('')
+
+    const { list: checkBoxList, onChange: onChange2 } = useCheckBox([
+        {
+            id: '42123',
+            name: '웨딩홀',
+            checked: false
+        },
+        {
+            id: '12123',
+            name: '가전가구',
+            checked: false
+        },
+        {
+            id: '22123',
+            name: '스드메',
+            checked: false
+        }
+    ])
+    const { list: radioButtonList, onChange: onChangeRadioBox } = useRadioBox([
+        {
+            id: 1,
+            name: 'LEADER',
+            value: 'LEADER',
+            checked: false,
+        },
+        {
+            id: 2,
+            name: 'MEMBER',
+            value: 'MEMBER',
+            checked: true
+        },
+    ])
+    // actions
+    const onChange = (e: any) => {
+        setKeyword(e.target.value)
+    }
+    return <Modal size={select('사이즈', {
+        small: 'small',
+        medium: 'medium',
+        large: 'large'
+    }, 'small')} actionButtonComponent={<Button onClick={onClick} size='small' type='solid' disabled={true}>확인</Button>}>
+        <ModalItem>
+            <label>Team Member</label>
+            <Input value={keyword} onChange={(e) => { onChange(e) }} placeholder='Type MemberName Or Email Or TeamName OR Grade...' />
+        </ModalItem>
+        <ModalItem className='checkbox-radio'>
+            <label className='checkbox-radio'>체크박스</label>
+            <InputContainer>
+                {checkBoxList.map((value) => (<React.Fragment key={value.id}>
+                    <input type='checkbox' className='checkbox-input' value={value.id} checked={value.checked} onChange={(e) => { onChange2(e, value) }}></input>
+                    <label>{value.name}</label>
+                </React.Fragment>))}
+            </InputContainer>
+        </ModalItem>
+        <ModalItem className='checkbox-radio'>
+            <label className='checkbox-radio'>Grade</label>
+            <InputContainer>
+                {radioButtonList.map((value) => (<React.Fragment key={value.id}>
+                    <input type='radio' className='radio-input' value={value.value} checked={value.checked} onChange={() => { onChangeRadioBox(value) }}></input>
+                    <label>{value.name}</label>
+                </React.Fragment>))}
+            </InputContainer>
+        </ModalItem>
+    </Modal>
+}
+
 export const ModalStoryWithLong = () => {
     const { modalToggle, onCloseModal, onOpenModal } = useModal();
 
-    const [selectedOption, onSelectedOptionSet] = useState('안녕');
-    const options = ['안녕', '길다길어셀렉트 길다길어 셀렉트2', '길다길어셀렉트 길다길어 셀렉트3'];
+    const [selectedOption, onSelectedOptionSet] = useState({ name: '안녕', value: '안녕' });
+    const options = ['안녕', '길다길어셀렉트 길다길어 셀렉트2', '길다길어셀렉트 길다길어 셀렉트3'].map(value => ({ value, name: value }));
 
     const onSet = (option: any) => {
         onSelectedOptionSet(option)
@@ -149,13 +281,13 @@ export const ModalStoryWithLong = () => {
 export const ModalStoryWithInform = () => {
     const { modalToggle, onCloseModal, onOpenModal } = useModal();
 
-    const [selectedOption, onSelectedOptionSet] = useState('대기');
-    const [selectedRebateOption, onSelectedRebateOptionSet] = useState('최초');
-    const [selectedPriceUnitOption, onSelectedPriceUnitOptionSet] = useState('원');
+    const [selectedOption, onSelectedOptionSet] = useState({ name: '대기', value: '대기' });
+    const [selectedRebateOption, onSelectedRebateOptionSet] = useState({ name: '최초', value: '최초' });
+    const [selectedPriceUnitOption, onSelectedPriceUnitOptionSet] = useState({ name: '원', value: '원' });
 
-    const options = ['대기', '반려', '승인'];
-    const rebateOptions = ['최초']
-    const priceUnitOptions = ['원', '달러']
+    const options = ['대기', '반려', '승인'].map(value => ({ value, name: value }));
+    const rebateOptions = ['최초'].map(value => ({ value, name: value }));
+    const priceUnitOptions = ['원', '달러'].map(value => ({ value, name: value }));
 
     const onSet = (option: any) => {
         onSelectedOptionSet(option)
@@ -221,7 +353,7 @@ export const ModalStoryWithInform = () => {
             <div style={{ width: '100%', backgroundColor: '#fafafa', marginTop: '24px', padding: '20px 20px 24px 0' }}>
                 <CombineInput title='가능일시/보증인원'>
                     <DatePicker placeholder='0000-00-00' />
-                    <TimePicker placeholder='23:59' use12Hours format="h:mm a" minuteStep={5} />
+                    <TimePicker placeholder='23:59' use12Hours format='h:mm a' minuteStep={5} />
                     <Input iconName='calendar-outline' afterString='명' placeholder='보증인원' />
                     <Input placeholder='홀이름' />
                 </CombineInput>
@@ -305,7 +437,7 @@ export const ModalStoryWithInform = () => {
                 </DefinitionTagContainer>
                 <CombineInput title='방문예정일시 변경' style={{ marginTop: '24px' }}>
                     <DatePicker placeholder='0000-00-00' />
-                    <TimePicker placeholder='23:59' format="h:mm a" minuteStep={5} />
+                    <TimePicker placeholder='23:59' format='h:mm a' minuteStep={5} />
                 </CombineInput>
                 <ModalItem>
                     <label></label>
@@ -385,4 +517,52 @@ export const ModalStoryWithInform = () => {
             </ModalItem>
         </Modal>}
     </>
+}
+
+export const ModalStoryWithIndent = () => {
+    return <Modal size='large'>
+        <ModalItem>
+            <label>Product explanation</label>
+            <textarea />
+        </ModalItem>
+        <ModalItem>
+            <label>공급</label>
+            <Input />
+        </ModalItem>
+        <ModalItem>
+            <label>판매</label>
+            <Input />
+        </ModalItem>
+        <ModalItem>
+            <label>대여</label>
+            <Input />
+        </ModalItem>
+        <ModalItem style={{ marginTop: '24px' }}>
+            <label>Related Product</label>
+            <Button onClick={() => { }} size='xs' className='in-modal-item'>Connect Other Product</Button>
+        </ModalItem>
+        <ModalItem>
+            <label>Tag</label>
+            <div
+                style={{ marginLeft: '8px' }}
+            >
+                <ModalItem className='indent'>
+                    <label >Style</label>
+                    <Input />
+                </ModalItem>
+                <ModalItem style={{ gridTemplateColumns: '60px 1fr' }}>
+                    <label>Sleeves</label>
+                    <Input />
+                </ModalItem>
+                <ModalItem style={{ gridTemplateColumns: '60px 1fr' }}>
+                    <label>Brand</label>
+                    <Input />
+                </ModalItem>
+                <ModalItem style={{ gridTemplateColumns: '60px 1fr' }}>
+                    <label>Neckline</label>
+                    <Input />
+                </ModalItem>
+            </div>
+        </ModalItem>
+    </Modal>
 }

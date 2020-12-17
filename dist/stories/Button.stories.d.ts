@@ -3,9 +3,9 @@ declare const _default: {
     title: string;
     component: ({ children, type, color, size, iconName, iconSize, onClick, disabled, style, dataTip, dataFor, className }: {
         children?: string | object | undefined;
-        type?: "solid" | "line" | "text" | "link" | undefined;
-        color?: "blue" | "yellow" | "green" | "red" | undefined;
-        size?: "xs" | "small" | "middle" | "large" | undefined;
+        type?: "link" | "line" | "text" | "solid" | undefined;
+        color?: "green" | "red" | "yellow" | "blue" | undefined;
+        size?: "small" | "xs" | "middle" | "large" | undefined;
         iconName?: string | undefined;
         iconSize?: string | number | undefined;
         onClick?: any;
@@ -20,3 +20,4 @@ declare const _default: {
 export default _default;
 export declare const ButtonStory: () => JSX.Element;
 export declare const ButtonStoryDisabled: () => JSX.Element;
+export declare const ButtonStoryWithIcon: () => JSX.Element;

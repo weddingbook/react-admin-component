@@ -1977,10 +1977,33 @@ exports.default = Icon;
 
 var Icon = unwrapExports(dist);
 
+var Breadcrumb = function (_a) {
+    var breadcrumbs = _a.breadcrumbs, menuMap = _a.menuMap, onChangePage = _a.onChangePage;
+    return (React__default.createElement(React__default.Fragment, null,
+        React__default.createElement("div", { className: 'breadcrumb' }, breadcrumbs.map(function (value, index) {
+            if (!value)
+                return React__default.createElement(React__default.Fragment, { key: index });
+            if (!value.menuId) {
+                return React__default.createElement(React__default.Fragment, { key: index },
+                    React__default.createElement("span", null,
+                        React__default.createElement(Icon, { name: 'arrow-ios-forward-outline', size: '14', fill: '#c8c8c8' })),
+                    React__default.createElement("span", { className: 'breadcrumb-item', key: value.name }, value.name));
+            }
+            if (!value.parentMenuId) {
+                return React__default.createElement(React__default.Fragment, { key: index },
+                    React__default.createElement("span", { className: 'breadcrumb-item depth1', key: value.name }, value.name));
+            }
+            return (React__default.createElement(React__default.Fragment, { key: value.menuId },
+                React__default.createElement("span", null,
+                    React__default.createElement(Icon, { name: 'arrow-ios-forward-outline', size: '14', fill: '#c8c8c8' })),
+                React__default.createElement("span", { className: 'breadcrumb-item depth2', onClick: function () { return onChangePage(menuMap[value.menuId]); } }, value.name)));
+        }))));
+};
+
 // iconName은 여기서 검색한다 https://akveo.github.io/eva-icons/#/
 var Button = function (_a) {
-    var _b = _a.children, children = _b === void 0 ? '버튼' : _b, _c = _a.type, type = _c === void 0 ? 'solid' : _c, _d = _a.color, color = _d === void 0 ? 'blue' : _d, _e = _a.size, size = _e === void 0 ? 'middle' : _e, _f = _a.iconName, iconName = _f === void 0 ? '' : _f, _g = _a.iconSize, iconSize = _g === void 0 ? 18 : _g, onClick = _a.onClick, _h = _a.disabled, disabled = _h === void 0 ? false : _h, style = _a.style, dataTip = _a.dataTip, dataFor = _a.dataFor, className = _a.className;
-    var iconButton = React__default.createElement("button", { style: style, onClick: onClick, className: "btn-type-" + type + " btn-color-" + color + " " + (disabled ? 'btn-disabled' : '') + " btn-icon-text " + className, "data-tip": dataTip, "data-for": dataFor },
+    var _b = _a.children, children = _b === void 0 ? '버튼' : _b, _c = _a.type, type = _c === void 0 ? 'solid' : _c, _d = _a.color, color = _d === void 0 ? 'blue' : _d, _e = _a.size, size = _e === void 0 ? 'middle' : _e, _f = _a.iconName, iconName = _f === void 0 ? '' : _f, _g = _a.iconSize, iconSize = _g === void 0 ? '18' : _g, onClick = _a.onClick, _h = _a.disabled, disabled = _h === void 0 ? false : _h, style = _a.style, dataTip = _a.dataTip, dataFor = _a.dataFor, className = _a.className;
+    var iconButton = React__default.createElement("button", { style: style, onClick: onClick, className: "btn-type-" + type + " btn-color-" + color + " btn-size-" + size + " " + (disabled ? 'btn-disabled' : '') + " btn-icon-text " + className, "data-tip": dataTip, "data-for": dataFor },
         React__default.createElement(Icon, { name: iconName, size: iconSize }),
         (iconName && children !== '버튼') && React__default.createElement("span", null, children));
     var normalButton = React__default.createElement("button", { style: style, disabled: disabled, onClick: onClick, className: "btn-type-" + type + " btn-color-" + color + " btn-size-" + size + " " + (disabled ? 'btn-disabled' : '') + " " + className, "data-tip": dataTip, "data-for": dataFor },
@@ -1995,7 +2018,7 @@ var ButtonTypeInput = function (_a) {
             React__default.createElement("input", { className: 'only-sr', type: type, checked: checked, id: title, onChange: onChange, disabled: disabled }),
             (checked) &&
                 React__default.createElement("span", null,
-                    React__default.createElement(Icon, { name: "checkmark-outline", size: "14" })),
+                    React__default.createElement(Icon, { name: 'checkmark-outline', size: '14' })),
             title)));
 };
 
@@ -2067,7 +2090,7 @@ var DefinitionTag = function (_a) {
 };
 
 var InputRecommend = function (_a) {
-    var options = _a.options, style = _a.style, onSelectOptionSet = _a.onSelectOptionSet, invalid = _a.invalid, informationMessage = _a.informationMessage;
+    var options = _a.options, style = _a.style, recommendListButton = _a.recommendListButton, onSelectOptionSet = _a.onSelectOptionSet, invalid = _a.invalid, informationMessage = _a.informationMessage;
     var _b = React.useState(true), isShowList = _b[0], setShowList = _b[1];
     var _c = React.useState('0'), marginTop = _c[0], setMarginTop = _c[1];
     var selectListRef = React.useRef(null);
@@ -2089,14 +2112,32 @@ var InputRecommend = function (_a) {
         if (!invalid && informationMessage)
             setMarginTop('-14px');
     }, [invalid, informationMessage, setMarginTop]);
+    React.useEffect(function () {
+        setShowList(true);
+    }, [options]);
     var onClickOption = function (option) {
         onSelectOptionSet(option);
     };
-    return (React__default.createElement(React__default.Fragment, null, isShowList && React__default.createElement("ul", { ref: selectListRef, className: "input-recommend", style: __assign(__assign({}, style), { marginTop: marginTop }) }, options.map(function (option) { return (React__default.createElement("li", { key: option, onClick: function () { onClickOption(option); } }, option)); }))));
+    return (React__default.createElement(React__default.Fragment, null, isShowList && React__default.createElement("ul", { ref: selectListRef, className: 'input-recommend', style: __assign(__assign({}, style), { marginTop: marginTop }) },
+        options.map(function (option) { return (React__default.createElement("li", { key: option, onClick: function () { onClickOption(option); } }, option)); }),
+        React__default.createElement("div", { className: 'button-area' }, recommendListButton))));
+};
+
+var Input = function (_a) {
+    var style = _a.style, inputStyle = _a.inputStyle, iconName = _a.iconName, afterString = _a.afterString, recommendListButton = _a.recommendListButton, recommendOptions = _a.recommendOptions, onSelectRecommendOptionSet = _a.onSelectRecommendOptionSet, _b = _a.errorMessage, errorMessage = _b === void 0 ? 'Error message' : _b, _c = _a.informationMessage, informationMessage = _c === void 0 ? '' : _c, _d = _a.required, required = _d === void 0 ? false : _d, rest = __rest(_a, ["style", "inputStyle", "iconName", "afterString", "recommendListButton", "recommendOptions", "onSelectRecommendOptionSet", "errorMessage", "informationMessage", "required"]);
+    return (React__default.createElement(React__default.Fragment, null,
+        React__default.createElement("div", { className: "input-component " + ((required || informationMessage) ? 'message' : ''), style: style },
+            React__default.createElement("div", { className: "default-input-wrapper " + (iconName ? 'after-string' : '') + " " + (required ? 'error' : ''), style: inputStyle },
+                iconName && React__default.createElement(Icon, { name: iconName, size: '18' }),
+                React__default.createElement("input", __assign({}, rest, { className: "" + (afterString ? 'after-string' : ''), required: required })),
+                afterString && React__default.createElement("span", { className: 'unit' }, afterString)),
+            (recommendOptions && onSelectRecommendOptionSet) && React__default.createElement(InputRecommend, { invalid: required, informationMessage: informationMessage, recommendListButton: recommendListButton, options: recommendOptions, onSelectOptionSet: onSelectRecommendOptionSet }),
+            informationMessage && React__default.createElement("span", { className: 'input-message' }, informationMessage),
+            (required && errorMessage) && React__default.createElement("span", { className: 'input-message error' }, errorMessage))));
 };
 
 var SelectBox = function (_a) {
-    var options = _a.options, selectedOption = _a.selectedOption, style = _a.style, onSelectOptionSet = _a.onSelectOptionSet;
+    var options = _a.options, selectedOption = _a.selectedOption, style = _a.style, onSelectOptionSet = _a.onSelectOptionSet, disabled = _a.disabled;
     var selectedRef = React.useRef(null);
     var selectBoxRef = React.useRef(null);
     var selectListRef = React.useRef(null);
@@ -2116,7 +2157,7 @@ var SelectBox = function (_a) {
     }, [isShowList]);
     var onClickOption = function (option) {
         onSelectOptionSet(option);
-        selectItem && (selectItem.style.marginBottom = "0");
+        selectItem && (selectItem.style.marginBottom = '0');
         setShowList(false);
     };
     var onToggleSelectBox = function () {
@@ -2149,31 +2190,35 @@ var SelectBox = function (_a) {
             }
         }
         else {
-            selectItem && (selectItem.style.marginBottom = "0");
+            selectItem && (selectItem.style.marginBottom = '0');
         }
         setShowList(!isShowList);
     };
-    return (React__default.createElement("div", { tabIndex: 0, ref: selectBoxRef, className: "select-box", onClick: onToggleSelectBox, style: __assign({}, style) },
-        React__default.createElement("div", { ref: selectedRef, className: "selected-item" }, selectedOption),
-        React__default.createElement(Icon, { name: "arrow-ios-downward-outline", size: "18" }),
-        isShowList && React__default.createElement("ul", { ref: selectListRef, className: "list", style: { height: "" + (listHeight + 'px') } }, options.map(function (option) { return (React__default.createElement("li", { key: option, onClick: function () { onClickOption(option); } }, option)); }))));
+    {
+        return disabled
+            ? React__default.createElement(Input, { disabled: true })
+            : React__default.createElement("div", { tabIndex: 0, ref: selectBoxRef, className: 'select-box', onClick: onToggleSelectBox, style: __assign({}, style) },
+                React__default.createElement("div", { ref: selectedRef, className: 'selected-item' }, selectedOption.name),
+                React__default.createElement(Icon, { name: 'arrow-ios-downward-outline', size: '18' }),
+                isShowList && React__default.createElement("ul", { ref: selectListRef, className: 'list', style: { height: "" + (listHeight + 'px') } }, options.map(function (option) { return (React__default.createElement("li", { key: option.name, onClick: function () { onClickOption(option); } }, option.name)); })));
+    }
 };
 
 var Pagination = function (_a) {
     var pageSize = _a.pageSize, pageSizeOptions = _a.pageSizeOptions, total = _a.total, current = _a.current, onPageChange = _a.onPageChange;
-    var _b = React.useState(pageSize), size = _b[0], setSize = _b[1];
+    var _b = React.useState({ name: String(pageSize), value: pageSize }), size = _b[0], setSize = _b[1];
     var _c = React.useState(0), pageIndex = _c[0], setPageIndex = _c[1];
     React.useEffect(function () {
-        onPageChange(pageIndex * 5 + 1, size);
+        onPageChange(pageIndex * 5 + 1, size.value);
     }, [pageIndex, size]);
-    var handleChooseSelectOption = function (pageSize) {
-        setSize(pageSize);
-        onPageChange(1, size);
+    var handleChooseSelectOption = function (pageSizeObject) {
+        setSize(pageSizeObject);
+        onPageChange(1, size.value);
         setPageIndex(0);
     };
     // 숫자 array 만들기
     var numberList = [];
-    var pageTotal = Math.ceil(total / size);
+    var pageTotal = Math.ceil(total / size.value);
     for (var i = 0; i < pageTotal; i++) {
         numberList.push(i + 1);
     }
@@ -2196,23 +2241,10 @@ var Pagination = function (_a) {
         React__default.createElement("ul", { className: 'wb-pagination-number-list' },
             React__default.createElement("li", { onClick: handleClickBackArrow, className: "wb-pagination-arrow wb-pagination-back " + (pageIndex !== 0 && 'active'), key: 'arrow-ios-back-outline' },
                 React__default.createElement(Icon, { name: 'arrow-ios-back-outline', size: '18' })),
-            __spreadArrays(numberList).splice((pageIndex * 5), 5).map(function (value) { return (React__default.createElement("li", { className: "wb-pagination-number " + (current === value && 'active'), key: value, tabIndex: 0, onClick: function () { onPageChange(value, size); } },
+            __spreadArrays(numberList).splice((pageIndex * 5), 5).map(function (value) { return (React__default.createElement("li", { className: "wb-pagination-number " + (current === value && 'active'), key: value, tabIndex: 0, onClick: function () { onPageChange(value, size.value); } },
                 React__default.createElement("a", null, value))); }),
             React__default.createElement("li", { onClick: handleClickForwardArrow, className: "wb-pagination-arrow wb-pagination-forward " + (pageIndex !== Math.ceil(pageTotal / 5) - 1 && 'active'), key: 'arrow-ios-forward-outline' },
                 React__default.createElement(Icon, { name: 'arrow-ios-forward-outline', size: '18' })))));
-};
-
-var Input = function (_a) {
-    var style = _a.style, inputStyle = _a.inputStyle, iconName = _a.iconName, afterString = _a.afterString, recommendOptions = _a.recommendOptions, onSelectRecommendOptionSet = _a.onSelectRecommendOptionSet, _b = _a.errorMessage, errorMessage = _b === void 0 ? 'Error message' : _b, _c = _a.informationMessage, informationMessage = _c === void 0 ? '' : _c, _d = _a.required, required = _d === void 0 ? false : _d, rest = __rest(_a, ["style", "inputStyle", "iconName", "afterString", "recommendOptions", "onSelectRecommendOptionSet", "errorMessage", "informationMessage", "required"]);
-    return (React__default.createElement(React__default.Fragment, null,
-        React__default.createElement("div", { className: "input-component " + ((required || informationMessage) ? 'message' : ''), style: style },
-            React__default.createElement("div", { className: "default-input-wrapper " + (iconName ? 'after-string' : '') + " " + (required ? 'error' : ''), style: inputStyle },
-                iconName && React__default.createElement(Icon, { name: iconName, size: "18" }),
-                React__default.createElement("input", __assign({}, rest, { className: "" + (afterString ? 'after-string' : ''), required: required })),
-                afterString && React__default.createElement("span", { className: 'unit' }, afterString)),
-            (recommendOptions && onSelectRecommendOptionSet) && React__default.createElement(InputRecommend, { invalid: required, informationMessage: informationMessage, options: recommendOptions, onSelectOptionSet: onSelectRecommendOptionSet }),
-            informationMessage && React__default.createElement("span", { className: 'input-message' }, informationMessage),
-            (required && errorMessage) && React__default.createElement("span", { className: 'input-message error' }, errorMessage))));
 };
 
 var SwitchButton = function (_a) {
@@ -2233,8 +2265,18 @@ var SwitchButton = function (_a) {
 };
 
 var Tag = function (_a) {
-    var children = _a.children, color = _a.color;
-    return (React__default.createElement("div", { className: "tag " + color + "-tag" }, children));
+    var children = _a.children, color = _a.color, style = _a.style;
+    return (React__default.createElement("div", { className: "tag " + color + "-tag", style: __assign({}, style) }, children));
+};
+
+var TabMenu = function (_a) {
+    var tabList = _a.tabList, onSelectMenu = _a.onSelectMenu, selectedMenu = _a.selectedMenu, _b = _a.type, type = _b === void 0 ? 'modal' : _b;
+    return (React__default.createElement(React__default.Fragment, null,
+        React__default.createElement("nav", { className: "tab-menu " + (type === 'list' ? 'list-tab' : '') },
+            React__default.createElement("ul", null, tabList.map(function (tab) {
+                return React__default.createElement("li", { key: tab.value, onClick: function () { onSelectMenu(tab); }, className: (type === 'list' ? 'list-tab-item' : 'modal-tab-item') + " " + (selectedMenu.value === tab.value ? 'on' : '') }, tab.name);
+            }))),
+        type === ('modal' ) && React__default.createElement("div", { className: 'divider in-tab-menu' })));
 };
 
 function rng() {
@@ -4020,7 +4062,7 @@ function (_React$Component) {
 // TODO: arrow 위치 변경되어야 함
 var Tooltip = function (_a) {
     var children = _a.children, id = _a.id, buttonType = _a.buttonType;
-    return (React__default.createElement(ReactTooltip, { className: "" + (buttonType ? 'btn-tooltip' : ''), id: id, uuid: id, effect: "solid", arrowColor: "#323232", backgroundColor: "#323232" }, children));
+    return (React__default.createElement(ReactTooltip, { className: "" + (buttonType ? 'btn-tooltip' : ''), id: id, uuid: id, effect: 'solid', arrowColor: '#323232', backgroundColor: '#323232' }, children));
 };
 
 var ViewMore = function (_a) {
@@ -4662,10 +4704,10 @@ var DefinitionTagContainer = function (_a) {
 };
 
 var InputContainer = function (_a) {
-    var children = _a.children, title = _a.title;
+    var children = _a.children, title = _a.title, inputListStyle = _a.inputListStyle;
     return (React__default.createElement("div", { className: 'input-container' },
         React__default.createElement("span", null, title),
-        React__default.createElement("div", { className: 'input-list' }, children)));
+        React__default.createElement("div", { className: 'input-list', style: inputListStyle }, children)));
 };
 
 var Modal = function (_a) {
@@ -4764,13 +4806,13 @@ var AlertPopup = /** @class */ (function (_super) {
         var _this = this;
         var _a = this.props, title = _a.title, message = _a.message, messageType = _a.messageType, button = _a.button;
         return (React__default.createElement("div", { className: "popup-wrap " + messageType },
-            React__default.createElement("div", { className: "overlay", onClick: this.clickOverlay.bind(this) }),
-            React__default.createElement("div", { className: "popup" },
+            React__default.createElement("div", { className: 'overlay', onClick: this.clickOverlay.bind(this) }),
+            React__default.createElement("div", { className: 'popup' },
                 title && React__default.createElement("h1", null, title),
-                React__default.createElement("span", { className: "circle" }),
-                React__default.createElement("p", { className: "popup-content" }, message),
-                React__default.createElement("div", { className: "popup-btns" },
-                    React__default.createElement(Button, { onClick: function () { return _this.clickButton(button); }, type: button.type, size: "small", color: button.color, className: button.className }, button.label)))));
+                React__default.createElement("span", { className: 'circle' }),
+                React__default.createElement("p", { className: 'popup-content' }, message),
+                React__default.createElement("div", { className: 'popup-btns' },
+                    React__default.createElement(Button, { onClick: function () { return _this.clickButton(button); }, type: button.type, size: 'small', color: button.color, className: button.className }, button.label)))));
     };
     return AlertPopup;
 }(Popup));
@@ -4783,12 +4825,12 @@ var ConfirmPopup = /** @class */ (function (_super) {
         var _this = this;
         var _a = this.props, title = _a.title, message = _a.message, messageType = _a.messageType, buttons = _a.buttons;
         return (React__default.createElement("div", { className: "popup-wrap " + messageType },
-            React__default.createElement("div", { className: "overlay", onClick: this.clickOverlay.bind(this) }),
-            React__default.createElement("div", { className: "popup" },
+            React__default.createElement("div", { className: 'overlay', onClick: this.clickOverlay.bind(this) }),
+            React__default.createElement("div", { className: 'popup' },
                 title && React__default.createElement("h1", null, title),
-                React__default.createElement("span", { className: "circle" }),
-                React__default.createElement("p", { className: "popup-content" }, message),
-                React__default.createElement("div", { className: "popup-btns" }, buttons === null || buttons === void 0 ? void 0 : buttons.map(function (button, i) { return (React__default.createElement(Button, { key: i, onClick: function () { return _this.clickButton(button); }, type: button.type, size: "small", color: button.color, className: button.className }, button.label)); })))));
+                React__default.createElement("span", { className: 'circle' }),
+                React__default.createElement("p", { className: 'popup-content' }, message),
+                React__default.createElement("div", { className: 'popup-btns' }, buttons === null || buttons === void 0 ? void 0 : buttons.map(function (button, i) { return (React__default.createElement(Button, { key: i, onClick: function () { return _this.clickButton(button); }, type: button.type, size: 'small', color: button.color, className: button.className }, button.label)); })))));
     };
     return ConfirmPopup;
 }(Popup));
@@ -4833,10 +4875,19 @@ function removePopup(_a) {
     }
 }
 
+var Divider = function (_a) {
+    var style = _a.style;
+    return (React__default.createElement("div", { className: 'divider', style: __assign({}, style) }));
+};
+
 var SearchBox = function (_a) {
-    var children = _a.children, style = _a.style, stage = _a.stage;
+    var children = _a.children, style = _a.style, stage = _a.stage, buttonTitle = _a.buttonTitle, onClickSearchButton = _a.onClickSearchButton;
     var grid = "repeat(" + stage + ", 1fr)";
-    return (React__default.createElement("section", { className: "search-box stage-" + stage, style: __assign(__assign({}, style), { gridTemplateColumns: grid }) }, children));
+    return (React__default.createElement("div", { className: 'search-box-wrapper' },
+        React__default.createElement("section", { className: "search-box stage-" + stage, style: __assign(__assign({}, style), { gridTemplateColumns: grid }) }, children),
+        React__default.createElement(Divider, { style: { backgroundColor: '#eef2fa', marginTop: '16px', marginBottom: '12px' } }),
+        React__default.createElement("div", { className: 'btn-area' },
+            React__default.createElement(Button, { size: 'small', onClick: onClickSearchButton }, buttonTitle))));
 };
 
 var Section = function (_a) {
@@ -4845,66 +4896,52 @@ var Section = function (_a) {
         React__default.createElement("header", null,
             React__default.createElement("div", { className: 'header-top' },
                 React__default.createElement("h1", null, title),
-                buttonComponent),
+                React__default.createElement("div", { className: 'section-btn-area' }, buttonComponent)),
             React__default.createElement("div", { className: 'header-bottom' }, subTitle)),
         children));
 };
 
-var toastPositionMatrix = [
-    ['left-top', 'LEFT_TOP'],
-    ['left-bottom', 'LEFT_BOTTOM'],
-    ['right-top', 'RIGHT_TOP'],
-    ['right-bottom', 'RIGHT_BOTTOM'],
-];
-var ToastContainer = function (_a) {
-    var toasts = _a.toasts, removeToast = _a.removeToast, removeToastState = _a.removeToastState;
-    React.useEffect(function () {
-        console.log('toast-container');
-    }, [toasts]);
-    return (React__default.createElement("div", { className: "toast-wrap" }, toastPositionMatrix.map(function (position) { return (React__default.createElement("div", { className: position[0], key: position[0] }, toasts[position[1]].map(function (toast) {
-        return React__default.createElement(Toast, __assign({}, toast, { key: toast.id, removeToast: removeToast, removeToastState: removeToastState }));
-    }))); })));
-};
-var Toast = function (props) {
-    var id = props.id, title = props.title, message = props.message, afterClose = props.afterClose, removeToast = props.removeToast, removeToastState = props.removeToastState, delay = props.delay, color = props.color, position = props.position;
-    var closeToast = function () {
-        removeToast(id, position);
-        removeToastState(id, position);
-        if (afterClose) {
-            afterClose();
-        }
-    };
-    React.useEffect(function () {
-        setTimeout(function () {
-            closeToast();
-        }, delay);
-        return function () {
-            console.log('unmo');
-        };
-    }, []);
-    return (React__default.createElement("div", { id: "toast-" + id, className: "toast" },
-        title && React__default.createElement("h1", null, title),
-        React__default.createElement("div", { className: "circle " + color }),
-        React__default.createElement("p", { className: "toast-content" }, message)));
-};
-Toast.defaultProps = {
-    closeOnClickOutside: true,
-    closeOnEsc: true,
-    willUnmount: function () { },
-    afterClose: function () { },
-    onClickOutside: function () { },
-    delay: 3000,
-    position: 'RIGHT_TOP'
-};
-
-var Divider = function (_a) {
-    var style = _a.style;
-    return (React__default.createElement("div", { className: 'divider', style: __assign({}, style) }));
-};
-
 var ModalItem = function (_a) {
-    var children = _a.children, style = _a.style;
-    return (React__default.createElement("div", { className: 'modal-item', style: __assign({}, style) }, children));
+    var children = _a.children, className = _a.className, style = _a.style;
+    return (React__default.createElement("div", { className: "modal-item " + className, style: __assign({}, style) }, children));
+};
+
+var ImageSlider = function (_a) {
+    var style = _a.style, imageUrlList = _a.imageUrlList, _b = _a.imageWidth, imageWidth = _b === void 0 ? 90 : _b, _c = _a.imageHeight, imageHeight = _c === void 0 ? 60 : _c, _d = _a.isShowInformationIcon, isShowInformationIcon = _d === void 0 ? true : _d;
+    var innerRef = React.useRef(null);
+    var outerRef = React.useRef(null);
+    var onClickSliderArrow = React.useCallback(function (direction) {
+        var _a;
+        if (innerRef.current && outerRef.current) {
+            var nowWidth = 0;
+            innerRef.current.style.transform && (nowWidth = Math.abs(parseInt(innerRef.current.style.transform.split('(')[1], 10)));
+            if (direction === 'back') {
+                innerRef.current.style.transform = "translateX(-" + (nowWidth - (imageWidth + 8)) + "px)";
+            }
+            else {
+                var outerWidth_1 = (_a = outerRef.current) === null || _a === void 0 ? void 0 : _a.offsetWidth;
+                if ((imageWidth + 8) * imageUrlList.length - nowWidth < outerWidth_1) {
+                    return;
+                }
+                innerRef.current.style.transform = "translateX(-" + (nowWidth + imageWidth + 8) + "px)";
+            }
+        }
+    }, [innerRef.current, outerRef.current]);
+    var onClickImageItem = function (url) {
+        window.open(url, '_black');
+    };
+    return (React__default.createElement("div", { className: 'image-slider-container', style: __assign({}, style) },
+        React__default.createElement("span", { className: "arrow", onClick: function () { return onClickSliderArrow('back'); } },
+            React__default.createElement(Icon, { name: 'arrow-ios-back-outline', fill: '#dedede', size: '35' })),
+        React__default.createElement("div", { className: 'image-outer-slider', ref: outerRef },
+            React__default.createElement("ul", { className: 'image-inner-slider', ref: innerRef }, imageUrlList.map(function (value, index) { return (React__default.createElement("li", { onClick: function () { return onClickImageItem(value.url); }, key: value.url + "-" + index },
+                isShowInformationIcon ? React__default.createElement("div", { style: { width: imageWidth + "px" }, className: 'tag-area' },
+                    value.isRepresentation ? React__default.createElement(Tag, { style: { position: 'absolute', left: '12px' }, color: 'green' }, "Representation") : React__default.createElement(React__default.Fragment, null),
+                    React__default.createElement(Tag, { style: { position: 'absolute', right: '12px' }, color: value.isShow ? 'green' : 'gray' }, value.isShow ? 'Show' : 'Hidden')) : React__default.createElement(React__default.Fragment, null),
+                (isShowInformationIcon && !value.isShow) ? React__default.createElement("div", { style: { width: imageWidth + "px", height: imageHeight + "px" }, className: 'dimmed' }) : React__default.createElement(React__default.Fragment, null),
+                React__default.createElement("img", { width: imageWidth, height: imageHeight, src: value.url }))); }))),
+        React__default.createElement("span", { className: "arrow", onClick: function () { return onClickSliderArrow('forward'); } },
+            React__default.createElement(Icon, { name: 'arrow-ios-forward-outline', fill: '#dedede', size: '35' }))));
 };
 
 var SectionContainer = function (_a) {
@@ -4938,79 +4975,29 @@ function useModal() {
 
 function useRadioBox(defaultList) {
     var _a = React.useState(defaultList), list = _a[0], setList = _a[1];
+    var selectedItem = list.filter(function (value) { return value.checked; })[0];
+    var onChangeDefault = function (list) {
+        setList(list);
+    };
     var onChange = React.useCallback(function (value) {
         setList(list.map(function (item) { return (__assign(__assign({}, item), { checked: item.id === value.id ? true : false })); }));
     }, [list, setList]);
     return {
+        selectedItem: selectedItem,
         list: list,
-        onChange: onChange
+        onChange: onChange,
+        onChangeDefault: onChangeDefault
     };
 }
 
-var useToast = function () {
-    var _a = React.useState({
-        'LEFT_TOP': [],
-        'LEFT_BOTTOM': [],
-        'RIGHT_TOP': [],
-        'RIGHT_BOTTOM': []
-    }), toasts = _a[0], setToasts = _a[1];
-    var generateUuid = function () {
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-            var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
-            return v.toString(16);
-        });
-    };
-    var createToast = function (options) {
-        var position = options.position || 'RIGHT_TOP';
-        options.id = generateUuid();
-        setToasts(function () {
-            var result = __assign({}, toasts);
-            result[position] = __spreadArrays(toasts[position], [options]);
-            return result;
-        });
-    };
-    var removeToast = function (id, position) {
-        var _a;
-        var wrapper = (_a = document.getElementById("toast-" + id)) === null || _a === void 0 ? void 0 : _a.parentElement;
-        var target = document.getElementById("toast-" + id);
-        if (wrapper && target) {
-            wrapper.removeChild(target);
-            console.log(position);
-        }
-    };
-    var removeToastState = function (id, position) {
-        console.log(id, position);
-        // setToasts(() => {
-        // 	const result: ToastStoreProps = { ...toasts };
-        // 	console.log(id)
-        // 	console.log(position)
-        // 	result[position] = [...toasts[position].filter((toast: ToastProps) => toast.id !== id), {}]
-        // 	return result;
-        // });
-    };
-    var removeAllToast = function () {
-        setToasts({
-            'LEFT_TOP': [],
-            'LEFT_BOTTOM': [],
-            'RIGHT_TOP': [],
-            'RIGHT_BOTTOM': []
-        });
-    };
-    return {
-        toasts: toasts,
-        createToast: createToast,
-        removeToast: removeToast,
-        removeToastState: removeToastState,
-        removeAllToast: removeAllToast
-    };
-};
-
+exports.Breadcrumb = Breadcrumb;
 exports.Button = Button;
 exports.ButtonTypeInput = ButtonTypeInput;
 exports.CombineInput = CombineInput;
 exports.DefinitionTag = DefinitionTag;
 exports.DefinitionTagContainer = DefinitionTagContainer;
 exports.Divider = Divider;
+exports.ImageSlider = ImageSlider;
 exports.Input = Input;
 exports.InputContainer = InputContainer;
 exports.InputRecommend = InputRecommend;
@@ -5023,8 +5010,8 @@ exports.Section = Section;
 exports.SectionContainer = SectionContainer;
 exports.SelectBox = SelectBox;
 exports.SwitchButton = SwitchButton;
+exports.TabMenu = TabMenu;
 exports.Tag = Tag;
-exports.ToastContainer = ToastContainer;
 exports.Tooltip = Tooltip;
 exports.ViewMore = ViewMore;
 exports.createPopup = createPopup;
@@ -5032,5 +5019,4 @@ exports.removePopup = removePopup;
 exports.useCheckBox = useCheckBox;
 exports.useModal = useModal;
 exports.useRadioBox = useRadioBox;
-exports.useToast = useToast;
 //# sourceMappingURL=index.js.map

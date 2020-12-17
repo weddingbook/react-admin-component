@@ -19,7 +19,7 @@ export const ToggleButtonStory = () => {
         }, 'normal')}
         onText={text('토글 on 텍스트', '영업')}
         offText={text('토글 off 텍스트', '휴무')}
-        toggleValue={boolean('토글값', toggle)}
+        toggleValue={toggle}
         onClick={setToggle}
     />
 }

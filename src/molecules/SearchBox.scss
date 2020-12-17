@@ -1,51 +1,67 @@
 @import "../assets/scss/color.scss";
-
-.search-box {
-    display: grid;
-    padding: 16px 16px 20px;
-    border-radius: 2px;
+.search-box-wrapper {
     background-color: $gray5;
-    gap: 0 16px;
-    > .search-box-item {
+    padding: 16px 16px 20px;
+
+    .search-box {
         display: grid;
-        align-items: center;
-        grid-template-columns: 15% 1fr;
-
-        > label {
-            justify-self: end;
-        }
-    }
-    &.stage-1 {
-        .search-box-item + .search-box-item {
-            margin-top: 16px;
-        }
-    }
-
-    .input-container {
-        display: grid;
-        align-items: center;
-        grid-template-columns: 15% 1fr;
-        margin-top: 16px;
-
-        > span {
-            justify-self: end;
-        }
-        > .input-list {
-            display: flex;
-            flex-wrap: initial;
-        }
-    }
-    .combine-input-container {
-        display: grid;
-        align-items: center;
-        grid-template-columns: 15% 1fr;
-        margin-top: 16px;
-
-        > span {
-            justify-self: end;
-        }
-        > .combine-input-list {
+        border-radius: 2px;
+        gap: 0 16px;
+        > .search-box-item {
             display: grid;
+            align-items: center;
+            grid-template-columns: 15% 1fr;
+
+            &.checkbox-radio {
+                > .input-container {
+                    grid-template-columns: 0% 1fr;
+                    margin-top: 0;
+                }
+            }
+            
+            > label {
+                justify-self: end;
+            }
         }
+        &.stage-1 {
+            .search-box-item + .search-box-item {
+                margin-top: 16px;
+            }
+        }
+
+        .input-container {
+            display: grid;
+            align-items: center;
+            grid-template-columns: 15% 1fr;
+            margin-top: 16px;
+
+            > span {
+                justify-self: end;
+            }
+            > .input-list {
+                display: flex;
+                flex-wrap: initial;
+            }
+        }
+        .combine-input-container {
+            display: grid;
+            align-items: center;
+            grid-template-columns: 15% 1fr;
+            margin-top: 16px;
+
+            > span {
+                justify-self: end;
+            }
+            > .combine-input-list {
+                display: grid;
+            }
+        }
+    }
+    > .btn-area {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        margin-top: 12px;
     }
 }
