@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, CSSProperties, ReactComponentElemen
 import './InputRecommend.scss';
 
 type Props = {
-    options: Array<any>
+    options: Array<{name: string, value: any}>
     style?: CSSProperties
     recommendListButton?: ReactComponentElement<'button'>
     onSelectOptionSet: (option: any) => void
@@ -37,7 +37,7 @@ const InputRecommend = ({ options, style, recommendListButton, onSelectOptionSet
         setShowList(true)
     }, [options]);
 
-    const onClickOption = (option: any) => {
+    const onClickOption = (option: {name: string, value: any}) => {
         onSelectOptionSet!(option);
     }
     return (
@@ -49,10 +49,10 @@ const InputRecommend = ({ options, style, recommendListButton, onSelectOptionSet
             >
                 {options.map(option => (
                     <li
-                        key={option}
+                        key={option.value}
                         onClick={() => { onClickOption(option) }}
                     >
-                        {option}
+                        {option.name}
                     </li>
                 ))}
                 <div className='button-area'>
