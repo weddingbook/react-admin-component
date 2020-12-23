@@ -4,8 +4,8 @@ declare const _default: {
     component: ({ children, type, color, size, iconName, iconSize, onClick, disabled, style, dataTip, dataFor, className }: {
         children?: string | object | undefined;
         type?: "link" | "line" | "text" | "solid" | undefined;
-        color?: "green" | "red" | "yellow" | "blue" | undefined;
-        size?: "small" | "xs" | "middle" | "large" | undefined;
+        color?: "blue" | "yellow" | "green" | "red" | undefined;
+        size?: "small" | "large" | "xs" | "middle" | undefined;
         iconName?: string | undefined;
         iconSize?: string | number | undefined;
         onClick?: any;

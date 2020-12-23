@@ -2112,7 +2112,7 @@ var InputRecommend = function (_a) {
         onSelectOptionSet(option);
     };
     return (React.createElement(React.Fragment, null, isShowList && React.createElement("ul", { ref: selectListRef, className: 'input-recommend', style: __assign(__assign({}, style), { marginTop: marginTop }) },
-        options.map(function (option) { return (React.createElement("li", { key: option, onClick: function () { onClickOption(option); } }, option)); }),
+        options.map(function (option) { return (React.createElement("li", { key: option.value, onClick: function () { onClickOption(option); } }, option.name)); }),
         React.createElement("div", { className: 'button-area' }, recommendListButton))));
 };
 
