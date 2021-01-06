@@ -11,9 +11,11 @@ export default {
 };
 
 export const InputStory = () => {
-    const [options, setOptions] = useState(['안녕', '길다길어셀렉트 길다길어 셀렉트2', '길다길어셀렉트 길다길어 셀렉트3', 'ㅇㅇ', 'ㄴㄴ']);
-    const [inputValue, defaultInputValue] = useState('')
-    const onSetInputValue = (value: string) => {
+    const [options, setOptions] = useState(
+        ['안녕', '길다길어셀렉트 길다길어 셀렉트2', '길다길어셀렉트 길다길어 셀렉트3', 'ㅇㅇ', 'ㄴㄴ'].map(item => ({ name: item, value: item }))
+    );
+    const [inputValue, defaultInputValue] = useState({ name: '', value: '' })
+    const onSetInputValue = (value: ({ name: string, value: any })) => {
         defaultInputValue(value)
     }
     return (
@@ -56,15 +58,15 @@ export const InputStory = () => {
                 <Input
                     recommendOptions={options}
                     placeholder='hihi'
-                    value={inputValue}
-                    onChange={(e) => { onSetInputValue(e.target.value) }}
+                    value={inputValue.name}
+                    onChange={(e) => { onSetInputValue({ name: e.target.value, value: e.target.value }) }}
                 />
                 <Input
                     informationMessage='hihi'
-                    value={inputValue}
+                    value={inputValue.name}
                     recommendOptions={options}
                     onSelectRecommendOptionSet={onSetInputValue}
-                    onChange={(e) => { onSetInputValue(e.target.value) }}
+                    onChange={(e) => { onSetInputValue({ name: e.target.value, value: e.target.value }) }}
                 />
                 <Input
                     iconName='people-outline'
@@ -72,8 +74,8 @@ export const InputStory = () => {
                     afterString='명'
                     recommendOptions={options}
                     placeholder='hihi'
-                    value={inputValue}
-                    onChange={(e) => { onSetInputValue(e.target.value) }}
+                    value={inputValue.name}
+                    onChange={(e) => { onSetInputValue({ name: e.target.value, value: e.target.value }) }}
                 />
             </CombineInput>
         </Section>
@@ -81,15 +83,17 @@ export const InputStory = () => {
 }
 
 export const InputStoryWithAutoComplete = () => {
-    const [options, setOptions] = useState(['안녕', '길다길어셀렉트 길다길어 셀렉트2', '길다길어셀렉트 길다길어 셀렉트3', 'ㅇㅇ', 'ㄴㄴ']);
-    const [inputValue, defaultInputValue] = useState('')
-    const onSetInputValue = (value: string) => {
+    const [options, setOptions] = useState(
+        ['안녕', '길다길어셀렉트 길다길어 셀렉트2', '길다길어셀렉트 길다길어 셀렉트3', 'ㅇㅇ', 'ㄴㄴ'].map(item => ({ name: item, value: item }))
+    );
+    const [inputValue, defaultInputValue] = useState({ name: '', value: '' })
+    const onSetInputValue = (value: ({ name: string, value: any })) => {
         defaultInputValue(value)
     }
     return (
         <Section title='Input Story'>
             <Input
-                value={inputValue}
+                value={inputValue.name}
                 recommendListButton={<>
                     <Button>안녕하세요</Button>
                     <Button size='large' color='yellow'>어서오세요</Button>
@@ -98,8 +102,8 @@ export const InputStoryWithAutoComplete = () => {
                 </>}
                 recommendOptions={options}
                 onSelectRecommendOptionSet={onSetInputValue}
-                onChange={(e) => { onSetInputValue(e.target.value) }}
-            />
+                onChange={(e) => { onSetInputValue({ name: e.target.value, value: e.target.value }) }}
+                />
         </Section>
     )
 }

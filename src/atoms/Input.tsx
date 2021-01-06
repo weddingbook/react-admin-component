@@ -9,8 +9,8 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
     iconName?: string,
     afterString?: string
     recommendListButton?: ReactComponentElement<'button'>
-    recommendOptions?: Array<any>
-    onSelectRecommendOptionSet?: (option: any) => void
+    recommendOptions?: Array<{name: string, value: any}>
+    onSelectRecommendOptionSet?: (option: {name: string, value: any}) => void
     errorMessage?: string
     informationMessage?: string
 }
