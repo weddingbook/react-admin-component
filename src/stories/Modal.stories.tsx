@@ -170,6 +170,27 @@ export const ModalStoryWithCheckBoxAndRadioBox = () => {
     </Modal>
 }
 
+export const ModalStoryWithoutScroll = () => {
+    const [selectedOption, onSelectedOptionSet] = useState({ name: '안녕', value: '안녕' });
+
+    const onSet = (option: any) => {
+        onSelectedOptionSet(option)
+    }
+
+    const optionList = ['안녕', '길다길어셀렉트 길다길어 셀렉트2', '길다길어셀렉트 길다길어 셀렉트3', 'ㅇㅇ', 'ㄴㄴ']
+    const optionList2 = optionList.map(value => ({ name: value, value }))
+
+    return(
+        <Modal noScroll>
+            <p style={{marginBottom: 20, lineHeight: 1.5}}>
+                모달이 스크롤 되지 않기를 원할때 {`<Modal noScroll>`} 사용<br/>
+                (아래처럼 셀렉트박스 사용시 같은 경우)
+            </p>
+            <SelectBox style={{ width: '300px' }} selectedOption={selectedOption} options={optionList2} onSelectOptionSet={onSet} />
+        </Modal>
+    )
+}
+
 export const ModalStoryWithLong = () => {
     const { modalToggle, onCloseModal, onOpenModal } = useModal();
 

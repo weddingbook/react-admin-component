@@ -1,4 +1,4 @@
-import React, { CSSProperties } from 'react';
+import React, {CSSProperties} from 'react';
 import './Modal.scss';
 
 type Props = {
@@ -11,13 +11,19 @@ type Props = {
     cancelButtonComponent?: object,
     actionButtonComponent?: object,
     footerComponent?: object,
+    noScroll?: boolean,
 }
 
-const Modal = ({ children, style, title = 'Modal title', subTitle, size = 'small', onClickInBackground = () => { }, cancelButtonComponent, actionButtonComponent, footerComponent }: Props) => {
+const Modal = ({
+                   children, style, title = 'Modal title', subTitle, size = 'small',
+                   noScroll = false,
+                   onClickInBackground = () => {
+                   }, cancelButtonComponent, actionButtonComponent, footerComponent
+               }: Props) => {
     return (
         <div className='modal-wrap'>
-            <div className='overlay' onClick={() => { onClickInBackground() }}></div>
-            <div className={`modal modal-size-${size}`} style={style}>
+            <div className='overlay' onClick={onClickInBackground}/>
+            <div className={`modal modal-size-${size} ${noScroll && 'no-scroll'}`} style={style}>
                 <header>
                     <div className='header-top'>
                         <h1>{title}</h1>
