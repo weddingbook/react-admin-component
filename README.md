@@ -96,6 +96,7 @@ const PageComonent2 = () => {
 |property|type|default|description|
 |:-------|:----|:----|:---------|
 |wrap|string|modal-wrap|wrap과 매치되는 ModalArea의 중앙에 모달이 생성됨|
+|noScroll|boolean|false|모달 스크롤 원하지 않을 때 사용|
 |title|string||제목|
 |content|string||내용|
 |buttons|array|||
@@ -105,6 +106,7 @@ const PageComonent2 = () => {
 |onClickOutside|function||모달 바깥영역 클릭시 콜백|
 |willUnmount|function||모달 unmount 라이프 사이클|
 |afterClose|function||모달 닫힌 이후 콜백|
+ 
 
 
 ### button options
