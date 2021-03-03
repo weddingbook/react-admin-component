@@ -14,7 +14,7 @@ declare const _default: {
             name: string;
             value: any;
         };
-        type?: "page" | "modal" | "section" | "list" | undefined;
+        type?: "section" | "list" | "page" | "modal" | undefined;
     }) => JSX.Element;
     decorators: ((...args: any) => any)[];
 };

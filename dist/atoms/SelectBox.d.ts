@@ -1,14 +1,12 @@
 import { CSSProperties } from 'react';
 import './SelectBox.scss';
+export interface ISelectBoxOption {
+    value: any;
+    name: string;
+}
 declare type Props = {
-    options: {
-        value: any;
-        name: string;
-    }[];
-    selectedOption: {
-        value: any;
-        name: string;
-    };
+    options: ISelectBoxOption[];
+    selectedOption: ISelectBoxOption;
     style?: CSSProperties;
     onSelectOptionSet: (option: any) => void;
     disabled?: boolean;

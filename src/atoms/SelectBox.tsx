@@ -3,9 +3,13 @@ import './SelectBox.scss';
 import Icon from 'react-eva-icons';
 import Input from './Input';
 
+export interface ISelectBoxOption {
+	value: any;
+	name: string;
+}
 type Props = {
-    options: { value: any, name: string }[],
-    selectedOption: { value: any, name: string },
+    options: ISelectBoxOption[],
+    selectedOption: ISelectBoxOption,
     style?: CSSProperties
     onSelectOptionSet: (option: any) => void
     disabled?: boolean

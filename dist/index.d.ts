@@ -4,7 +4,7 @@ export { default as ButtonTypeInput } from './atoms/ButtonTypeInput';
 export { default as DefinitionTag } from './atoms/DefinitionTag';
 export { default as InputRecommend } from './atoms/InputRecommend';
 export { default as Pagination } from './atoms/Pagination';
-export { default as SelectBox } from './atoms/SelectBox';
+export { default as SelectBox, ISelectBoxOption } from './atoms/SelectBox';
 export { default as Input } from './atoms/Input';
 export { default as SwitchButton } from './atoms/SwitchButton';
 export { default as Tag } from './atoms/Tag';
