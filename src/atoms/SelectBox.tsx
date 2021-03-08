@@ -6,6 +6,10 @@ import Input from './Input';
 export interface ISelectBoxOption {
 	value: any;
 	name: string;
+	additionalHtml?: {
+		position?: 'before' | 'after';
+		html: JSX.Element
+	};
 }
 type Props = {
     options: ISelectBoxOption[],
@@ -100,7 +104,19 @@ const SelectBox = ({ options, selectedOption, style, onSelectOptionSet, disabled
                             key={option.name}
                             onClick={() => { onClickOption(option) }}
                         >
-                            {option.name}
+							{option.additionalHtml
+								? <>
+									{option.additionalHtml.position === 'before' && 
+										option.additionalHtml.html
+									}
+									<span>{option.name}</span>
+									{option.additionalHtml.position === 'after' && 
+										option.additionalHtml.html
+									}
+								</>
+								: option.name
+							}
+                            
                         </li>
                     ))}
                 </ul>}
