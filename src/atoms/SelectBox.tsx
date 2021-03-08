@@ -88,7 +88,18 @@ const SelectBox = ({ options, selectedOption, style, onSelectOptionSet, disabled
                     ref={selectedRef}
                     className='selected-item'
                 >
-                    {selectedOption.name}
+					{selectedOption.additionalHtml
+						? <>
+							{selectedOption.additionalHtml.position === 'before' && 
+								selectedOption.additionalHtml.html
+							}
+							<span style={{verticalAlign: 'middle'}}>{selectedOption.name}</span>
+							{selectedOption.additionalHtml.position === 'after' && 
+								selectedOption.additionalHtml.html
+							}
+						</>
+						: selectedOption.name
+					}
                 </div>
                 <Icon
                     name='arrow-ios-downward-outline'
@@ -109,7 +120,7 @@ const SelectBox = ({ options, selectedOption, style, onSelectOptionSet, disabled
 									{option.additionalHtml.position === 'before' && 
 										option.additionalHtml.html
 									}
-									<span>{option.name}</span>
+									<span style={{verticalAlign: 'middle'}}>{option.name}</span>
 									{option.additionalHtml.position === 'after' && 
 										option.additionalHtml.html
 									}

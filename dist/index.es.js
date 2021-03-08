@@ -2191,13 +2191,20 @@ var SelectBox = function (_a) {
         return disabled
             ? React.createElement(Input, { disabled: true })
             : React.createElement("div", { tabIndex: 0, ref: selectBoxRef, className: 'select-box', onClick: onToggleSelectBox, style: __assign({}, style) },
-                React.createElement("div", { ref: selectedRef, className: 'selected-item' }, selectedOption.name),
+                React.createElement("div", { ref: selectedRef, className: 'selected-item' }, selectedOption.additionalHtml
+                    ? React.createElement(React.Fragment, null,
+                        selectedOption.additionalHtml.position === 'before' &&
+                            selectedOption.additionalHtml.html,
+                        React.createElement("span", { style: { verticalAlign: 'middle' } }, selectedOption.name),
+                        selectedOption.additionalHtml.position === 'after' &&
+                            selectedOption.additionalHtml.html)
+                    : selectedOption.name),
                 React.createElement(Icon, { name: 'arrow-ios-downward-outline', size: '18' }),
                 isShowList && React.createElement("ul", { ref: selectListRef, className: 'list', style: { height: "" + (listHeight + 'px') } }, options.map(function (option) { return (React.createElement("li", { key: option.name, onClick: function () { onClickOption(option); } }, option.additionalHtml
                     ? React.createElement(React.Fragment, null,
                         option.additionalHtml.position === 'before' &&
                             option.additionalHtml.html,
-                        React.createElement("span", null, option.name),
+                        React.createElement("span", { style: { verticalAlign: 'middle' } }, option.name),
                         option.additionalHtml.position === 'after' &&
                             option.additionalHtml.html)
                     : option.name)); })));

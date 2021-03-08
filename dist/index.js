@@ -2198,13 +2198,20 @@ var SelectBox = function (_a) {
         return disabled
             ? React__default.createElement(Input, { disabled: true })
             : React__default.createElement("div", { tabIndex: 0, ref: selectBoxRef, className: 'select-box', onClick: onToggleSelectBox, style: __assign({}, style) },
-                React__default.createElement("div", { ref: selectedRef, className: 'selected-item' }, selectedOption.name),
+                React__default.createElement("div", { ref: selectedRef, className: 'selected-item' }, selectedOption.additionalHtml
+                    ? React__default.createElement(React__default.Fragment, null,
+                        selectedOption.additionalHtml.position === 'before' &&
+                            selectedOption.additionalHtml.html,
+                        React__default.createElement("span", { style: { verticalAlign: 'middle' } }, selectedOption.name),
+                        selectedOption.additionalHtml.position === 'after' &&
+                            selectedOption.additionalHtml.html)
+                    : selectedOption.name),
                 React__default.createElement(Icon, { name: 'arrow-ios-downward-outline', size: '18' }),
                 isShowList && React__default.createElement("ul", { ref: selectListRef, className: 'list', style: { height: "" + (listHeight + 'px') } }, options.map(function (option) { return (React__default.createElement("li", { key: option.name, onClick: function () { onClickOption(option); } }, option.additionalHtml
                     ? React__default.createElement(React__default.Fragment, null,
                         option.additionalHtml.position === 'before' &&
                             option.additionalHtml.html,
-                        React__default.createElement("span", null, option.name),
+                        React__default.createElement("span", { style: { verticalAlign: 'middle' } }, option.name),
                         option.additionalHtml.position === 'after' &&
                             option.additionalHtml.html)
                     : option.name)); })));

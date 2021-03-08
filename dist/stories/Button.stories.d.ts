@@ -5,7 +5,7 @@ declare const _default: {
         children?: string | object | undefined;
         type?: "link" | "line" | "text" | "solid" | undefined;
         color?: "blue" | "yellow" | "green" | "red" | undefined;
-        size?: "small" | "xs" | "middle" | "large" | undefined;
+        size?: "small" | "large" | "xs" | "middle" | undefined;
         iconName?: string | undefined;
         iconSize?: string | number | undefined;
         onClick?: any;
