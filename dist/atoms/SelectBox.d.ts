@@ -3,6 +3,10 @@ import './SelectBox.scss';
 export interface ISelectBoxOption {
     value: any;
     name: string;
+	additionalHtml?: {
+		position?: 'before' | 'after';
+		html: JSX.Element
+	};
 }
 declare type Props = {
     options: ISelectBoxOption[];
