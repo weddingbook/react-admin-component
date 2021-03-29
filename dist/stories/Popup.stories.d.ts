@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import { PopupArea } from '../molecules/Popup';
 declare const _default: {
     title: string;

@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import './TabMenu.scss';
 declare type TabItem = {
     name: string;

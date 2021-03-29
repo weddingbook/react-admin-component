@@ -2,13 +2,16 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
 var React = require('react');
-var React__default = _interopDefault(React);
-var crypto = _interopDefault(require('crypto'));
-var util$1 = _interopDefault(require('util'));
+var crypto = require('crypto');
+var util$1 = require('util');
 var reactDom = require('react-dom');
+
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
+var crypto__default = /*#__PURE__*/_interopDefaultLegacy(crypto);
+var util__default = /*#__PURE__*/_interopDefaultLegacy(util$1);
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
@@ -238,34 +241,34 @@ exports.typeOf = typeOf;
   })();
 }
 });
-var reactIs_development_1 = reactIs_development.AsyncMode;
-var reactIs_development_2 = reactIs_development.ConcurrentMode;
-var reactIs_development_3 = reactIs_development.ContextConsumer;
-var reactIs_development_4 = reactIs_development.ContextProvider;
-var reactIs_development_5 = reactIs_development.Element;
-var reactIs_development_6 = reactIs_development.ForwardRef;
-var reactIs_development_7 = reactIs_development.Fragment;
-var reactIs_development_8 = reactIs_development.Lazy;
-var reactIs_development_9 = reactIs_development.Memo;
-var reactIs_development_10 = reactIs_development.Portal;
-var reactIs_development_11 = reactIs_development.Profiler;
-var reactIs_development_12 = reactIs_development.StrictMode;
-var reactIs_development_13 = reactIs_development.Suspense;
-var reactIs_development_14 = reactIs_development.isAsyncMode;
-var reactIs_development_15 = reactIs_development.isConcurrentMode;
-var reactIs_development_16 = reactIs_development.isContextConsumer;
-var reactIs_development_17 = reactIs_development.isContextProvider;
-var reactIs_development_18 = reactIs_development.isElement;
-var reactIs_development_19 = reactIs_development.isForwardRef;
-var reactIs_development_20 = reactIs_development.isFragment;
-var reactIs_development_21 = reactIs_development.isLazy;
-var reactIs_development_22 = reactIs_development.isMemo;
-var reactIs_development_23 = reactIs_development.isPortal;
-var reactIs_development_24 = reactIs_development.isProfiler;
-var reactIs_development_25 = reactIs_development.isStrictMode;
-var reactIs_development_26 = reactIs_development.isSuspense;
-var reactIs_development_27 = reactIs_development.isValidElementType;
-var reactIs_development_28 = reactIs_development.typeOf;
+reactIs_development.AsyncMode;
+reactIs_development.ConcurrentMode;
+reactIs_development.ContextConsumer;
+reactIs_development.ContextProvider;
+reactIs_development.Element;
+reactIs_development.ForwardRef;
+reactIs_development.Fragment;
+reactIs_development.Lazy;
+reactIs_development.Memo;
+reactIs_development.Portal;
+reactIs_development.Profiler;
+reactIs_development.StrictMode;
+reactIs_development.Suspense;
+reactIs_development.isAsyncMode;
+reactIs_development.isConcurrentMode;
+reactIs_development.isContextConsumer;
+reactIs_development.isContextProvider;
+reactIs_development.isElement;
+reactIs_development.isForwardRef;
+reactIs_development.isFragment;
+reactIs_development.isLazy;
+reactIs_development.isMemo;
+reactIs_development.isPortal;
+reactIs_development.isProfiler;
+reactIs_development.isStrictMode;
+reactIs_development.isSuspense;
+reactIs_development.isValidElementType;
+reactIs_development.typeOf;
 
 var reactIs = createCommonjsModule(function (module) {
 
@@ -372,18 +375,18 @@ var objectAssign = shouldUseNative() ? Object.assign : function (target, source)
  * LICENSE file in the root directory of this source tree.
  */
 
-var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
+var ReactPropTypesSecret$1 = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 
-var ReactPropTypesSecret_1 = ReactPropTypesSecret;
+var ReactPropTypesSecret_1 = ReactPropTypesSecret$1;
 
-var printWarning = function() {};
+var printWarning$1 = function() {};
 
 if (process.env.NODE_ENV !== 'production') {
-  var ReactPropTypesSecret$1 = ReactPropTypesSecret_1;
+  var ReactPropTypesSecret = ReactPropTypesSecret_1;
   var loggedTypeFailures = {};
-  var has = Function.call.bind(Object.prototype.hasOwnProperty);
+  var has$1 = Function.call.bind(Object.prototype.hasOwnProperty);
 
-  printWarning = function(text) {
+  printWarning$1 = function(text) {
     var message = 'Warning: ' + text;
     if (typeof console !== 'undefined') {
       console.error(message);
@@ -411,7 +414,7 @@ if (process.env.NODE_ENV !== 'production') {
 function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
   if (process.env.NODE_ENV !== 'production') {
     for (var typeSpecName in typeSpecs) {
-      if (has(typeSpecs, typeSpecName)) {
+      if (has$1(typeSpecs, typeSpecName)) {
         var error;
         // Prop type validation may throw. In case they do, we don't want to
         // fail the render phase where it didn't fail before. So we log it.
@@ -427,12 +430,12 @@ function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
             err.name = 'Invariant Violation';
             throw err;
           }
-          error = typeSpecs[typeSpecName](values, typeSpecName, componentName, location, null, ReactPropTypesSecret$1);
+          error = typeSpecs[typeSpecName](values, typeSpecName, componentName, location, null, ReactPropTypesSecret);
         } catch (ex) {
           error = ex;
         }
         if (error && !(error instanceof Error)) {
-          printWarning(
+          printWarning$1(
             (componentName || 'React class') + ': type specification of ' +
             location + ' `' + typeSpecName + '` is invalid; the type checker ' +
             'function must return `null` or an `Error` but returned a ' + typeof error + '. ' +
@@ -448,7 +451,7 @@ function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
 
           var stack = getStack ? getStack() : '';
 
-          printWarning(
+          printWarning$1(
             'Failed ' + location + ' type: ' + error.message + (stack != null ? stack : '')
           );
         }
@@ -470,11 +473,11 @@ checkPropTypes.resetWarningCache = function() {
 
 var checkPropTypes_1 = checkPropTypes;
 
-var has$1 = Function.call.bind(Object.prototype.hasOwnProperty);
-var printWarning$1 = function() {};
+var has = Function.call.bind(Object.prototype.hasOwnProperty);
+var printWarning = function() {};
 
 if (process.env.NODE_ENV !== 'production') {
-  printWarning$1 = function(text) {
+  printWarning = function(text) {
     var message = 'Warning: ' + text;
     if (typeof console !== 'undefined') {
       console.error(message);
@@ -650,7 +653,7 @@ var factoryWithTypeCheckers = function(isValidElement, throwOnDirectAccess) {
             // Avoid spamming the console because they are often not actionable except for lib authors
             manualPropTypeWarningCount < 3
           ) {
-            printWarning$1(
+            printWarning(
               'You are manually calling a React.PropTypes validation ' +
               'function for the `' + propFullName + '` prop on `' + componentName  + '`. This is deprecated ' +
               'and will throw in the standalone `prop-types` package. ' +
@@ -763,12 +766,12 @@ var factoryWithTypeCheckers = function(isValidElement, throwOnDirectAccess) {
     if (!Array.isArray(expectedValues)) {
       if (process.env.NODE_ENV !== 'production') {
         if (arguments.length > 1) {
-          printWarning$1(
+          printWarning(
             'Invalid arguments supplied to oneOf, expected an array, got ' + arguments.length + ' arguments. ' +
             'A common mistake is to write oneOf(x, y, z) instead of oneOf([x, y, z]).'
           );
         } else {
-          printWarning$1('Invalid argument supplied to oneOf, expected an array.');
+          printWarning('Invalid argument supplied to oneOf, expected an array.');
         }
       }
       return emptyFunctionThatReturnsNull;
@@ -805,7 +808,7 @@ var factoryWithTypeCheckers = function(isValidElement, throwOnDirectAccess) {
         return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected an object.'));
       }
       for (var key in propValue) {
-        if (has$1(propValue, key)) {
+        if (has(propValue, key)) {
           var error = typeChecker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret_1);
           if (error instanceof Error) {
             return error;
@@ -819,14 +822,14 @@ var factoryWithTypeCheckers = function(isValidElement, throwOnDirectAccess) {
 
   function createUnionTypeChecker(arrayOfTypeCheckers) {
     if (!Array.isArray(arrayOfTypeCheckers)) {
-      process.env.NODE_ENV !== 'production' ? printWarning$1('Invalid argument supplied to oneOfType, expected an instance of array.') : void 0;
+      process.env.NODE_ENV !== 'production' ? printWarning('Invalid argument supplied to oneOfType, expected an instance of array.') : void 0;
       return emptyFunctionThatReturnsNull;
     }
 
     for (var i = 0; i < arrayOfTypeCheckers.length; i++) {
       var checker = arrayOfTypeCheckers[i];
       if (typeof checker !== 'function') {
-        printWarning$1(
+        printWarning(
           'Invalid argument supplied to oneOfType. Expected an array of check functions, but ' +
           'received ' + getPostfixForTypeWarning(checker) + ' at index ' + i + '.'
         );
@@ -1536,7 +1539,7 @@ function insertCss(styles, _temp) {
 }
 
 module.exports = insertCss;
-
+//# sourceMappingURL=insertCss.js.map
 
 
 /***/ }),
@@ -1848,7 +1851,7 @@ function getAnimationObject(optionsAnimation, elementAttrsAnimation) {
 
 /******/ });
 });
-
+//# sourceMappingURL=eva.js.map
 });
 
 unwrapExports(eva);
@@ -1865,7 +1868,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 
 
-var _react2 = _interopRequireDefault(React__default);
+var _react2 = _interopRequireDefault(React__default['default']);
 
 
 
@@ -1956,7 +1959,7 @@ var Icon = function (_Component) {
 	}]);
 
 	return Icon;
-}(React__default.Component);
+}(React__default['default'].Component);
 
 Icon.propTypes = {
 	animation: _propTypes2.default.object,
@@ -1979,46 +1982,46 @@ var Icon = unwrapExports(dist);
 
 var Breadcrumb = function (_a) {
     var breadcrumbs = _a.breadcrumbs, menuMap = _a.menuMap, onChangePage = _a.onChangePage;
-    return (React__default.createElement(React__default.Fragment, null,
-        React__default.createElement("div", { className: 'breadcrumb' }, breadcrumbs.map(function (value, index) {
+    return (React__default['default'].createElement(React__default['default'].Fragment, null,
+        React__default['default'].createElement("div", { className: 'breadcrumb' }, breadcrumbs.map(function (value, index) {
             if (!value)
-                return React__default.createElement(React__default.Fragment, { key: index });
+                return React__default['default'].createElement(React__default['default'].Fragment, { key: index });
             if (!value.menuId) {
-                return React__default.createElement(React__default.Fragment, { key: index },
-                    React__default.createElement("span", null,
-                        React__default.createElement(Icon, { name: 'arrow-ios-forward-outline', size: '14', fill: '#c8c8c8' })),
-                    React__default.createElement("span", { className: 'breadcrumb-item', key: value.name }, value.name));
+                return React__default['default'].createElement(React__default['default'].Fragment, { key: index },
+                    React__default['default'].createElement("span", null,
+                        React__default['default'].createElement(Icon, { name: 'arrow-ios-forward-outline', size: '14', fill: '#c8c8c8' })),
+                    React__default['default'].createElement("span", { className: 'breadcrumb-item', key: value.name }, value.name));
             }
             if (!value.parentMenuId) {
-                return React__default.createElement(React__default.Fragment, { key: index },
-                    React__default.createElement("span", { className: 'breadcrumb-item depth1', key: value.name }, value.name));
+                return React__default['default'].createElement(React__default['default'].Fragment, { key: index },
+                    React__default['default'].createElement("span", { className: 'breadcrumb-item depth1', key: value.name }, value.name));
             }
-            return (React__default.createElement(React__default.Fragment, { key: value.menuId },
-                React__default.createElement("span", null,
-                    React__default.createElement(Icon, { name: 'arrow-ios-forward-outline', size: '14', fill: '#c8c8c8' })),
-                React__default.createElement("span", { className: 'breadcrumb-item depth2', onClick: function () { return onChangePage(menuMap[value.menuId]); } }, value.name)));
+            return (React__default['default'].createElement(React__default['default'].Fragment, { key: value.menuId },
+                React__default['default'].createElement("span", null,
+                    React__default['default'].createElement(Icon, { name: 'arrow-ios-forward-outline', size: '14', fill: '#c8c8c8' })),
+                React__default['default'].createElement("span", { className: 'breadcrumb-item depth2', onClick: function () { return onChangePage(menuMap[value.menuId]); } }, value.name)));
         }))));
 };
 
 // iconName은 여기서 검색한다 https://akveo.github.io/eva-icons/#/
 var Button = function (_a) {
     var _b = _a.children, children = _b === void 0 ? '버튼' : _b, _c = _a.type, type = _c === void 0 ? 'solid' : _c, _d = _a.color, color = _d === void 0 ? 'blue' : _d, _e = _a.size, size = _e === void 0 ? 'middle' : _e, _f = _a.iconName, iconName = _f === void 0 ? '' : _f, _g = _a.iconSize, iconSize = _g === void 0 ? '18' : _g, onClick = _a.onClick, _h = _a.disabled, disabled = _h === void 0 ? false : _h, style = _a.style, dataTip = _a.dataTip, dataFor = _a.dataFor, className = _a.className;
-    var iconButton = React__default.createElement("button", { style: style, onClick: onClick, className: "btn-type-" + type + " btn-color-" + color + " btn-size-" + size + " " + (disabled ? 'btn-disabled' : '') + " btn-icon-text " + className, "data-tip": dataTip, "data-for": dataFor },
-        React__default.createElement(Icon, { name: iconName, size: iconSize }),
-        (iconName && children !== '버튼') && React__default.createElement("span", null, children));
-    var normalButton = React__default.createElement("button", { style: style, disabled: disabled, onClick: onClick, className: "btn-type-" + type + " btn-color-" + color + " btn-size-" + size + " " + (disabled ? 'btn-disabled' : '') + " " + className, "data-tip": dataTip, "data-for": dataFor },
-        React__default.createElement("span", null, children));
+    var iconButton = React__default['default'].createElement("button", { style: style, onClick: onClick, className: "btn-type-" + type + " btn-color-" + color + " btn-size-" + size + " " + (disabled ? 'btn-disabled' : '') + " btn-icon-text " + className, "data-tip": dataTip, "data-for": dataFor },
+        React__default['default'].createElement(Icon, { name: iconName, size: iconSize }),
+        (iconName && children !== '버튼') && React__default['default'].createElement("span", null, children));
+    var normalButton = React__default['default'].createElement("button", { style: style, disabled: disabled, onClick: onClick, className: "btn-type-" + type + " btn-color-" + color + " btn-size-" + size + " " + (disabled ? 'btn-disabled' : '') + " " + className, "data-tip": dataTip, "data-for": dataFor },
+        React__default['default'].createElement("span", null, children));
     return (iconName ? iconButton : normalButton);
 };
 
 var ButtonTypeInput = function (_a) {
     var type = _a.type, title = _a.title, checked = _a.checked, _b = _a.disabled, disabled = _b === void 0 ? false : _b, onChange = _a.onChange;
-    return (React__default.createElement(React__default.Fragment, null,
-        React__default.createElement("label", { tabIndex: 0, className: "btn-type-input " + (checked && 'checked') + " " + (disabled && 'disabled'), htmlFor: title },
-            React__default.createElement("input", { className: 'only-sr', type: type, checked: checked, id: title, onChange: onChange, disabled: disabled }),
+    return (React__default['default'].createElement(React__default['default'].Fragment, null,
+        React__default['default'].createElement("label", { tabIndex: 0, className: "btn-type-input " + (checked && 'checked') + " " + (disabled && 'disabled'), htmlFor: title },
+            React__default['default'].createElement("input", { className: 'only-sr', type: type, checked: checked, id: title, onChange: onChange, disabled: disabled }),
             (checked) &&
-                React__default.createElement("span", null,
-                    React__default.createElement(Icon, { name: 'checkmark-outline', size: '14' })),
+                React__default['default'].createElement("span", null,
+                    React__default['default'].createElement(Icon, { name: 'checkmark-outline', size: '14' })),
             title)));
 };
 
@@ -2041,11 +2044,13 @@ PERFORMANCE OF THIS SOFTWARE.
 var extendStatics = function(d, b) {
     extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
     return extendStatics(d, b);
 };
 
 function __extends(d, b) {
+    if (typeof b !== "function" && b !== null)
+        throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
     extendStatics(d, b);
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -2074,6 +2079,7 @@ function __rest(s, e) {
     return t;
 }
 
+/** @deprecated */
 function __spreadArrays() {
     for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
     for (var r = Array(s), k = 0, i = 0; i < il; i++)
@@ -2084,9 +2090,9 @@ function __spreadArrays() {
 
 var DefinitionTag = function (_a) {
     var children = _a.children, style = _a.style, _b = _a.title, title = _b === void 0 ? '' : _b, direction = _a.direction;
-    return (React__default.createElement("dl", { className: "definition-tag-" + direction, style: __assign({}, style) },
-        React__default.createElement("dt", null, title),
-        React__default.createElement("dd", null, children)));
+    return (React__default['default'].createElement("dl", { className: "definition-tag-" + direction, style: __assign({}, style) },
+        React__default['default'].createElement("dt", null, title),
+        React__default['default'].createElement("dd", null, children)));
 };
 
 var InputRecommend = function (_a) {
@@ -2118,22 +2124,22 @@ var InputRecommend = function (_a) {
     var onClickOption = function (option) {
         onSelectOptionSet(option);
     };
-    return (React__default.createElement(React__default.Fragment, null, isShowList && React__default.createElement("ul", { ref: selectListRef, className: 'input-recommend', style: __assign(__assign({}, style), { marginTop: marginTop }) },
-        options.map(function (option) { return (React__default.createElement("li", { key: option.value, onClick: function () { onClickOption(option); } }, option.name)); }),
-        React__default.createElement("div", { className: 'button-area' }, recommendListButton))));
+    return (React__default['default'].createElement(React__default['default'].Fragment, null, isShowList && React__default['default'].createElement("ul", { ref: selectListRef, className: 'input-recommend', style: __assign(__assign({}, style), { marginTop: marginTop }) },
+        options.map(function (option) { return (React__default['default'].createElement("li", { key: option.value, onClick: function () { onClickOption(option); } }, option.name)); }),
+        React__default['default'].createElement("div", { className: 'button-area' }, recommendListButton))));
 };
 
 var Input = function (_a) {
     var style = _a.style, inputStyle = _a.inputStyle, iconName = _a.iconName, afterString = _a.afterString, recommendListButton = _a.recommendListButton, recommendOptions = _a.recommendOptions, onSelectRecommendOptionSet = _a.onSelectRecommendOptionSet, _b = _a.errorMessage, errorMessage = _b === void 0 ? 'Error message' : _b, _c = _a.informationMessage, informationMessage = _c === void 0 ? '' : _c, _d = _a.required, required = _d === void 0 ? false : _d, rest = __rest(_a, ["style", "inputStyle", "iconName", "afterString", "recommendListButton", "recommendOptions", "onSelectRecommendOptionSet", "errorMessage", "informationMessage", "required"]);
-    return (React__default.createElement(React__default.Fragment, null,
-        React__default.createElement("div", { className: "input-component " + ((required || informationMessage) ? 'message' : ''), style: style },
-            React__default.createElement("div", { className: "default-input-wrapper " + (iconName ? 'after-string' : '') + " " + (required ? 'error' : ''), style: inputStyle },
-                iconName && React__default.createElement(Icon, { name: iconName, size: '18' }),
-                React__default.createElement("input", __assign({}, rest, { className: "" + (afterString ? 'after-string' : ''), required: required })),
-                afterString && React__default.createElement("span", { className: 'unit' }, afterString)),
-            (recommendOptions && onSelectRecommendOptionSet) && React__default.createElement(InputRecommend, { invalid: required, informationMessage: informationMessage, recommendListButton: recommendListButton, options: recommendOptions, onSelectOptionSet: onSelectRecommendOptionSet }),
-            informationMessage && React__default.createElement("span", { className: 'input-message' }, informationMessage),
-            (required && errorMessage) && React__default.createElement("span", { className: 'input-message error' }, errorMessage))));
+    return (React__default['default'].createElement(React__default['default'].Fragment, null,
+        React__default['default'].createElement("div", { className: "input-component " + ((required || informationMessage) ? 'message' : ''), style: style },
+            React__default['default'].createElement("div", { className: "default-input-wrapper " + (iconName ? 'after-string' : '') + " " + (required ? 'error' : ''), style: inputStyle },
+                iconName && React__default['default'].createElement(Icon, { name: iconName, size: '18' }),
+                React__default['default'].createElement("input", __assign({}, rest, { className: "" + (afterString ? 'after-string' : ''), required: required })),
+                afterString && React__default['default'].createElement("span", { className: 'unit' }, afterString)),
+            (recommendOptions && onSelectRecommendOptionSet) && React__default['default'].createElement(InputRecommend, { invalid: required, informationMessage: informationMessage, recommendListButton: recommendListButton, options: recommendOptions, onSelectOptionSet: onSelectRecommendOptionSet }),
+            informationMessage && React__default['default'].createElement("span", { className: 'input-message' }, informationMessage),
+            (required && errorMessage) && React__default['default'].createElement("span", { className: 'input-message error' }, errorMessage))));
 };
 
 var SelectBox = function (_a) {
@@ -2196,22 +2202,22 @@ var SelectBox = function (_a) {
     };
     {
         return disabled
-            ? React__default.createElement(Input, { disabled: true })
-            : React__default.createElement("div", { tabIndex: 0, ref: selectBoxRef, className: 'select-box', onClick: onToggleSelectBox, style: __assign({}, style) },
-                React__default.createElement("div", { ref: selectedRef, className: 'selected-item' }, selectedOption.additionalHtml
-                    ? React__default.createElement(React__default.Fragment, null,
+            ? React__default['default'].createElement(Input, { disabled: true })
+            : React__default['default'].createElement("div", { tabIndex: 0, ref: selectBoxRef, className: 'select-box', onClick: onToggleSelectBox, style: __assign({}, style) },
+                React__default['default'].createElement("div", { ref: selectedRef, className: 'selected-item' }, selectedOption.additionalHtml
+                    ? React__default['default'].createElement(React__default['default'].Fragment, null,
                         selectedOption.additionalHtml.position === 'before' &&
                             selectedOption.additionalHtml.html,
-                        React__default.createElement("span", { style: { verticalAlign: 'middle' } }, selectedOption.name),
+                        React__default['default'].createElement("span", { style: { verticalAlign: 'middle' } }, selectedOption.name),
                         selectedOption.additionalHtml.position === 'after' &&
                             selectedOption.additionalHtml.html)
                     : selectedOption.name),
-                React__default.createElement(Icon, { name: 'arrow-ios-downward-outline', size: '18' }),
-                isShowList && React__default.createElement("ul", { ref: selectListRef, className: 'list', style: { height: "" + (listHeight + 'px') } }, options.map(function (option) { return (React__default.createElement("li", { key: option.name, onClick: function () { onClickOption(option); } }, option.additionalHtml
-                    ? React__default.createElement(React__default.Fragment, null,
+                React__default['default'].createElement(Icon, { name: 'arrow-ios-downward-outline', size: '18' }),
+                isShowList && React__default['default'].createElement("ul", { ref: selectListRef, className: 'list', style: { height: "" + (listHeight + 'px') } }, options.map(function (option) { return (React__default['default'].createElement("li", { key: option.name, onClick: function () { onClickOption(option); } }, option.additionalHtml
+                    ? React__default['default'].createElement(React__default['default'].Fragment, null,
                         option.additionalHtml.position === 'before' &&
                             option.additionalHtml.html,
-                        React__default.createElement("span", { style: { verticalAlign: 'middle' } }, option.name),
+                        React__default['default'].createElement("span", { style: { verticalAlign: 'middle' } }, option.name),
                         option.additionalHtml.position === 'after' &&
                             option.additionalHtml.html)
                     : option.name)); })));
@@ -2246,19 +2252,19 @@ var Pagination = function (_a) {
             setPageIndex(pageIndex + 1);
         }
     };
-    return (React__default.createElement("div", { className: 'wb-pagination' },
-        React__default.createElement("div", { className: 'wb-pagination-page-area' },
-            React__default.createElement(SelectBox, { options: pageSizeOptions, selectedOption: size, onSelectOptionSet: handleChooseSelectOption }),
-            React__default.createElement("span", { className: 'wb-pagination-total' },
+    return (React__default['default'].createElement("div", { className: 'wb-pagination' },
+        React__default['default'].createElement("div", { className: 'wb-pagination-page-area' },
+            React__default['default'].createElement(SelectBox, { options: pageSizeOptions, selectedOption: size, onSelectOptionSet: handleChooseSelectOption }),
+            React__default['default'].createElement("span", { className: 'wb-pagination-total' },
                 "/",
                 total)),
-        React__default.createElement("ul", { className: 'wb-pagination-number-list' },
-            React__default.createElement("li", { onClick: handleClickBackArrow, className: "wb-pagination-arrow wb-pagination-back " + (pageIndex !== 0 && 'active'), key: 'arrow-ios-back-outline' },
-                React__default.createElement(Icon, { name: 'arrow-ios-back-outline', size: '18' })),
-            __spreadArrays(numberList).splice((pageIndex * 5), 5).map(function (value) { return (React__default.createElement("li", { className: "wb-pagination-number " + (current === value && 'active'), key: value, tabIndex: 0, onClick: function () { onPageChange(value, size.value); } },
-                React__default.createElement("a", null, value))); }),
-            React__default.createElement("li", { onClick: handleClickForwardArrow, className: "wb-pagination-arrow wb-pagination-forward " + (pageIndex !== Math.ceil(pageTotal / 5) - 1 && 'active'), key: 'arrow-ios-forward-outline' },
-                React__default.createElement(Icon, { name: 'arrow-ios-forward-outline', size: '18' })))));
+        React__default['default'].createElement("ul", { className: 'wb-pagination-number-list' },
+            React__default['default'].createElement("li", { onClick: handleClickBackArrow, className: "wb-pagination-arrow wb-pagination-back " + (pageIndex !== 0 && 'active'), key: 'arrow-ios-back-outline' },
+                React__default['default'].createElement(Icon, { name: 'arrow-ios-back-outline', size: '18' })),
+            __spreadArrays(numberList).splice((pageIndex * 5), 5).map(function (value) { return (React__default['default'].createElement("li", { className: "wb-pagination-number " + (current === value && 'active'), key: value, tabIndex: 0, onClick: function () { onPageChange(value, size.value); } },
+                React__default['default'].createElement("a", null, value))); }),
+            React__default['default'].createElement("li", { onClick: handleClickForwardArrow, className: "wb-pagination-arrow wb-pagination-forward " + (pageIndex !== Math.ceil(pageTotal / 5) - 1 && 'active'), key: 'arrow-ios-forward-outline' },
+                React__default['default'].createElement(Icon, { name: 'arrow-ios-forward-outline', size: '18' })))));
 };
 
 var SwitchButton = function (_a) {
@@ -2267,10 +2273,10 @@ var SwitchButton = function (_a) {
     var onToggle = function () {
         onClick(!toggleValue);
     };
-    return (React__default.createElement("button", { style: { height: toggleHeight }, onClick: onToggle, className: "btn-container toggle-" + (toggleValue ? 'on' : 'off') + " type-text btn-text-" + (toggleValue ? 'on' : 'off') },
+    return (React__default['default'].createElement("button", { style: { height: toggleHeight }, onClick: onToggle, className: "btn-container toggle-" + (toggleValue ? 'on' : 'off') + " type-text btn-text-" + (toggleValue ? 'on' : 'off') },
         (toggleType === 'text' && onText && offText) &&
-            React__default.createElement("span", { className: 'btn-text', style: { padding: "" + (toggleValue ? "0 " + toggleButtonHeight + "px 0 0" : "0 0 0 " + toggleButtonHeight + "px") } }, toggleValue ? onText : offText),
-        React__default.createElement("div", { className: 'btn-toggle', style: {
+            React__default['default'].createElement("span", { className: 'btn-text', style: { padding: "" + (toggleValue ? "0 " + toggleButtonHeight + "px 0 0" : "0 0 0 " + toggleButtonHeight + "px") } }, toggleValue ? onText : offText),
+        React__default['default'].createElement("div", { className: 'btn-toggle', style: {
                 position: 'absolute',
                 width: toggleButtonHeight,
                 height: toggleButtonHeight,
@@ -2280,21 +2286,21 @@ var SwitchButton = function (_a) {
 
 var Tag = function (_a) {
     var children = _a.children, color = _a.color, style = _a.style;
-    return (React__default.createElement("div", { className: "tag " + color + "-tag", style: __assign({}, style) }, children));
+    return (React__default['default'].createElement("div", { className: "tag " + color + "-tag", style: __assign({}, style) }, children));
 };
 
 var TabMenu = function (_a) {
     var tabList = _a.tabList, onSelectMenu = _a.onSelectMenu, selectedMenu = _a.selectedMenu, _b = _a.type, type = _b === void 0 ? 'modal' : _b;
-    return (React__default.createElement(React__default.Fragment, null,
-        React__default.createElement("nav", { className: "tab-menu " + (type === 'list' ? 'list-tab' : '') },
-            React__default.createElement("ul", null, tabList.map(function (tab) {
-                return React__default.createElement("li", { key: tab.value, onClick: function () { onSelectMenu(tab); }, className: (type === 'list' ? 'list-tab-item' : 'modal-tab-item') + " " + (selectedMenu.value === tab.value ? 'on' : '') }, tab.name);
+    return (React__default['default'].createElement(React__default['default'].Fragment, null,
+        React__default['default'].createElement("nav", { className: "tab-menu " + (type === 'list' ? 'list-tab' : '') },
+            React__default['default'].createElement("ul", null, tabList.map(function (tab) {
+                return React__default['default'].createElement("li", { key: tab.value, onClick: function () { onSelectMenu(tab); }, className: (type === 'list' ? 'list-tab-item' : 'modal-tab-item') + " " + (selectedMenu.value === tab.value ? 'on' : '') }, tab.name);
             }))),
-        type === ('modal' ) && React__default.createElement("div", { className: 'divider in-tab-menu' })));
+        type === ('modal' ) && React__default['default'].createElement("div", { className: 'divider in-tab-menu' })));
 };
 
 function rng() {
-  return crypto.randomBytes(16);
+  return crypto__default['default'].randomBytes(16);
 }
 
 /**
@@ -2335,22 +2341,6 @@ function v4(options, buf, offset) {
   }
 
   return buf || bytesToUuid(rnds);
-}
-
-function ___$insertStyle(css) {
-  if (!css) {
-    return;
-  }
-  if (typeof window === 'undefined') {
-    return;
-  }
-
-  var style = document.createElement('style');
-
-  style.setAttribute('type', 'text/css');
-  style.innerHTML = css;
-  document.head.appendChild(style);
-  return css;
 }
 
 function _classCallCheck(instance, Constructor) {
@@ -2491,9 +2481,9 @@ function _possibleConstructorReturn(self, call) {
 
 var CONSTANT = {
   GLOBAL: {
-    HIDE: "__react_tooltip_hide_event",
-    REBUILD: "__react_tooltip_rebuild_event",
-    SHOW: "__react_tooltip_show_event"
+    HIDE: '__react_tooltip_hide_event',
+    REBUILD: '__react_tooltip_rebuild_event',
+    SHOW: '__react_tooltip_show_event'
   }
 };
 
@@ -2507,12 +2497,12 @@ var dispatchGlobalEvent = function dispatchGlobalEvent(eventName, opts) {
   // @see https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent
   var event;
 
-  if (typeof window.CustomEvent === "function") {
+  if (typeof window.CustomEvent === 'function') {
     event = new window.CustomEvent(eventName, {
       detail: opts
     });
   } else {
-    event = document.createEvent("Event");
+    event = document.createEvent('Event');
     event.initEvent(eventName, false, true, opts);
   }
 
@@ -2594,8 +2584,8 @@ function windowListener (target) {
     window.addEventListener(CONSTANT.GLOBAL.SHOW, this.globalShow, false); // Resize
 
     if (resizeHide) {
-      window.removeEventListener("resize", this.onWindowResize);
-      window.addEventListener("resize", this.onWindowResize, false);
+      window.removeEventListener('resize', this.onWindowResize);
+      window.addEventListener('resize', this.onWindowResize, false);
     }
   };
 
@@ -2603,7 +2593,7 @@ function windowListener (target) {
     window.removeEventListener(CONSTANT.GLOBAL.HIDE, this.globalHide);
     window.removeEventListener(CONSTANT.GLOBAL.REBUILD, this.globalRebuild);
     window.removeEventListener(CONSTANT.GLOBAL.SHOW, this.globalShow);
-    window.removeEventListener("resize", this.onWindowResize);
+    window.removeEventListener('resize', this.onWindowResize);
   };
   /**
    * invoked by resize event of window
@@ -2627,13 +2617,13 @@ var checkStatus = function checkStatus(dataEventOff, e) {
   var show = this.state.show;
   var id = this.props.id;
   var isCapture = this.isCapture(e.currentTarget);
-  var currentItem = e.currentTarget.getAttribute("currentItem");
+  var currentItem = e.currentTarget.getAttribute('currentItem');
   if (!isCapture) e.stopPropagation();
 
-  if (show && currentItem === "true") {
+  if (show && currentItem === 'true') {
     if (!dataEventOff) this.hideTooltip(e);
   } else {
-    e.currentTarget.setAttribute("currentItem", "true");
+    e.currentTarget.setAttribute('currentItem', 'true');
     setUntargetItems(e.currentTarget, this.getTargetArray(id));
     this.showTooltip(e);
   }
@@ -2642,15 +2632,15 @@ var checkStatus = function checkStatus(dataEventOff, e) {
 var setUntargetItems = function setUntargetItems(currentTarget, targetArray) {
   for (var i = 0; i < targetArray.length; i++) {
     if (currentTarget !== targetArray[i]) {
-      targetArray[i].setAttribute("currentItem", "false");
+      targetArray[i].setAttribute('currentItem', 'false');
     } else {
-      targetArray[i].setAttribute("currentItem", "true");
+      targetArray[i].setAttribute('currentItem', 'true');
     }
   }
 };
 
 var customListeners = {
-  id: "9b69f92e-d3fe-498b-b1b4-c5e63a51b0cf",
+  id: '9b69f92e-d3fe-498b-b1b4-c5e63a51b0cf',
   set: function set(target, event, listener) {
     if (this.id in target) {
       var map = target[this.id];
@@ -2674,7 +2664,7 @@ var customListeners = {
 function customEvent (target) {
   target.prototype.isCustomEvent = function (ele) {
     var event = this.state.event;
-    return event || !!ele.getAttribute("data-event");
+    return event || !!ele.getAttribute('data-event');
   };
   /* Bind listener for custom event */
 
@@ -2685,9 +2675,9 @@ function customEvent (target) {
     var _this$state = this.state,
         event = _this$state.event,
         eventOff = _this$state.eventOff;
-    var dataEvent = ele.getAttribute("data-event") || event;
-    var dataEventOff = ele.getAttribute("data-event-off") || eventOff;
-    dataEvent.split(" ").forEach(function (event) {
+    var dataEvent = ele.getAttribute('data-event') || event;
+    var dataEventOff = ele.getAttribute('data-event-off') || eventOff;
+    dataEvent.split(' ').forEach(function (event) {
       ele.removeEventListener(event, customListeners.get(ele, event));
       var customListener = checkStatus.bind(_this, dataEventOff);
       customListeners.set(ele, event, customListener);
@@ -2695,7 +2685,7 @@ function customEvent (target) {
     });
 
     if (dataEventOff) {
-      dataEventOff.split(" ").forEach(function (event) {
+      dataEventOff.split(' ').forEach(function (event) {
         ele.removeEventListener(event, _this.hideTooltip);
         ele.addEventListener(event, _this.hideTooltip, false);
       });
@@ -2708,8 +2698,8 @@ function customEvent (target) {
     var _this$state2 = this.state,
         event = _this$state2.event,
         eventOff = _this$state2.eventOff;
-    var dataEvent = event || ele.getAttribute("data-event");
-    var dataEventOff = eventOff || ele.getAttribute("data-event-off");
+    var dataEvent = event || ele.getAttribute('data-event');
+    var dataEventOff = eventOff || ele.getAttribute('data-event-off');
     ele.removeEventListener(dataEvent, customListeners.get(ele, event));
     if (dataEventOff) ele.removeEventListener(dataEventOff, this.hideTooltip);
   };
@@ -2720,7 +2710,7 @@ function customEvent (target) {
  */
 function isCapture (target) {
   target.prototype.isCapture = function (currentTarget) {
-    return currentTarget && currentTarget.getAttribute("data-iscapture") === "true" || this.props.isCapture || false;
+    return currentTarget && currentTarget.getAttribute('data-iscapture') === 'true' || this.props.isCapture || false;
   };
 }
 
@@ -2729,8 +2719,8 @@ function isCapture (target) {
  */
 function getEffect (target) {
   target.prototype.getEffect = function (currentTarget) {
-    var dataEffect = currentTarget.getAttribute("data-effect");
-    return dataEffect || this.props.effect || "float";
+    var dataEffect = currentTarget.getAttribute('data-effect');
+    return dataEffect || this.props.effect || 'float';
   };
 }
 
@@ -2742,7 +2732,7 @@ var makeProxy = function makeProxy(e) {
   var proxy = {};
 
   for (var key in e) {
-    if (typeof e[key] === "function") {
+    if (typeof e[key] === 'function') {
       proxy[key] = e[key].bind(e);
     } else {
       proxy[key] = e[key];
@@ -2758,8 +2748,8 @@ var bodyListener = function bodyListener(callback, options, e) {
       _options$customEvent = options.customEvent,
       customEvent = _options$customEvent === void 0 ? false : _options$customEvent;
   var id = this.props.id;
-  var tip = e.target.getAttribute("data-tip") || null;
-  var forId = e.target.getAttribute("data-for") || null;
+  var tip = e.target.getAttribute('data-tip') || null;
+  var forId = e.target.getAttribute('data-for') || null;
   var target = e.target;
 
   if (this.isCustomEvent(target) && !customEvent) {
@@ -2768,7 +2758,7 @@ var bodyListener = function bodyListener(callback, options, e) {
 
   var isTargetBelongsToTooltip = id == null && forId == null || forId === id;
 
-  if (tip != null && (!respectEffect || this.getEffect(target) === "float") && isTargetBelongsToTooltip) {
+  if (tip != null && (!respectEffect || this.getEffect(target) === 'float') && isTargetBelongsToTooltip) {
     var proxy = makeProxy(e);
     proxy.currentTarget = target;
     callback(proxy);
@@ -2779,7 +2769,7 @@ var findCustomEvents = function findCustomEvents(targetArray, dataAttribute) {
   var events = {};
   targetArray.forEach(function (target) {
     var event = target.getAttribute(dataAttribute);
-    if (event) event.split(" ").forEach(function (event) {
+    if (event) event.split(' ').forEach(function (event) {
       return events[event] = true;
     });
   });
@@ -2787,7 +2777,7 @@ var findCustomEvents = function findCustomEvents(targetArray, dataAttribute) {
 };
 
 var getBody = function getBody() {
-  return document.getElementsByTagName("body")[0];
+  return document.getElementsByTagName('body')[0];
 };
 
 function bodyMode (target) {
@@ -2804,14 +2794,14 @@ function bodyMode (target) {
         possibleCustomEvents = _this$state.possibleCustomEvents,
         possibleCustomEventsOff = _this$state.possibleCustomEventsOff;
     var body = getBody();
-    var customEvents = findCustomEvents(targetArray, "data-event");
-    var customEventsOff = findCustomEvents(targetArray, "data-event-off");
+    var customEvents = findCustomEvents(targetArray, 'data-event');
+    var customEventsOff = findCustomEvents(targetArray, 'data-event-off');
     if (event != null) customEvents[event] = true;
     if (eventOff != null) customEventsOff[eventOff] = true;
-    possibleCustomEvents.split(" ").forEach(function (event) {
+    possibleCustomEvents.split(' ').forEach(function (event) {
       return customEvents[event] = true;
     });
-    possibleCustomEventsOff.split(" ").forEach(function (event) {
+    possibleCustomEventsOff.split(' ').forEach(function (event) {
       return customEventsOff[event] = true;
     });
     this.unbindBodyListener(body);
@@ -2827,7 +2817,7 @@ function bodyMode (target) {
 
     for (var _event in customEvents) {
       listeners[_event] = bodyListener.bind(this, function (e) {
-        var targetEventOff = e.currentTarget.getAttribute("data-event-off") || eventOff;
+        var targetEventOff = e.currentTarget.getAttribute('data-event-off') || eventOff;
         checkStatus.call(_this, targetEventOff, e);
       }, {
         customEvent: true
@@ -3006,7 +2996,7 @@ function getPosition (e, target, node, place, desiredPlace, effect, offset) {
     return !outside(p);
   };
 
-  var placesList = ["top", "bottom", "left", "right"];
+  var placesList = ['top', 'bottom', 'left', 'right'];
   var insideList = [];
 
   for (var i = 0; i < 4; i++) {
@@ -3068,7 +3058,7 @@ var getCurrentOffset = function getCurrentOffset(e, currentTarget, effect) {
       targetWidth = _getDimensions3.width,
       targetHeight = _getDimensions3.height;
 
-  if (effect === "float") {
+  if (effect === 'float') {
     return {
       mouseX: e.clientX,
       mouseY: e.clientY
@@ -3092,7 +3082,7 @@ var getDefaultPosition = function getDefaultPosition(effect, targetWidth, target
   var triangleHeight = 2;
   var cursorHeight = 12; // Optimize for float bottom only, cause the cursor will hide the tooltip
 
-  if (effect === "float") {
+  if (effect === 'float') {
     top = {
       l: -(tipWidth / 2),
       r: tipWidth / 2,
@@ -3117,7 +3107,7 @@ var getDefaultPosition = function getDefaultPosition(effect, targetWidth, target
       t: -(tipHeight / 2),
       b: tipHeight / 2
     };
-  } else if (effect === "solid") {
+  } else if (effect === 'solid') {
     top = {
       l: -(tipWidth / 2),
       r: tipWidth / 2,
@@ -3157,18 +3147,18 @@ var calculateOffset = function calculateOffset(offset) {
   var extraOffsetX = 0;
   var extraOffsetY = 0;
 
-  if (Object.prototype.toString.apply(offset) === "[object String]") {
+  if (Object.prototype.toString.apply(offset) === '[object String]') {
     offset = JSON.parse(offset.toString().replace(/'/g, '"'));
   }
 
   for (var key in offset) {
-    if (key === "top") {
+    if (key === 'top') {
       extraOffsetY -= parseInt(offset[key], 10);
-    } else if (key === "bottom") {
+    } else if (key === 'bottom') {
       extraOffsetY += parseInt(offset[key], 10);
-    } else if (key === "left") {
+    } else if (key === 'left') {
       extraOffsetX -= parseInt(offset[key], 10);
-    } else if (key === "right") {
+    } else if (key === 'right') {
       extraOffsetX += parseInt(offset[key], 10);
     }
   }
@@ -3184,7 +3174,10 @@ var getParent = function getParent(currentTarget) {
   var currentParent = currentTarget;
 
   while (currentParent) {
-    if (window.getComputedStyle(currentParent).getPropertyValue("transform") !== "none") break;
+    var computedStyle = window.getComputedStyle(currentParent); // transform and will-change: transform change the containing block
+    // https://developer.mozilla.org/en-US/docs/Web/CSS/Containing_Block
+
+    if (computedStyle.getPropertyValue('transform') !== 'none' || computedStyle.getPropertyValue('will-change') === 'transform') break;
     currentParent = currentParent.parentElement;
   }
 
@@ -3217,14 +3210,14 @@ function getTipContent (tip, children, getContent, multiline) {
 
   var regexp = /<br\s*\/?>/;
 
-  if (!multiline || multiline === "false" || !regexp.test(tip)) {
+  if (!multiline || multiline === 'false' || !regexp.test(tip)) {
     // No trim(), so that user can keep their input
     return tip;
   } // Multiline tooltip content
 
 
   return tip.split(regexp).map(function (d, i) {
-    return React__default.createElement("span", {
+    return React__default['default'].createElement("span", {
       key: i,
       className: "multi-line"
     }, d);
@@ -3266,50 +3259,50 @@ function nodeListToArray (nodeList) {
 }
 
 function generateUUID() {
-  return "t" + v4();
+  return 't' + v4();
 }
 
-___$insertStyle(".__react_component_tooltip {\n  border-radius: 3px;\n  display: inline-block;\n  font-size: 13px;\n  left: -999em;\n  opacity: 0;\n  padding: 8px 21px;\n  position: fixed;\n  pointer-events: none;\n  transition: opacity 0.3s ease-out;\n  top: -999em;\n  visibility: hidden;\n  z-index: 999;\n}\n.__react_component_tooltip.allow_hover, .__react_component_tooltip.allow_click {\n  pointer-events: auto;\n}\n.__react_component_tooltip::before, .__react_component_tooltip::after {\n  content: \"\";\n  width: 0;\n  height: 0;\n  position: absolute;\n}\n.__react_component_tooltip.show {\n  opacity: 0.9;\n  margin-top: 0;\n  margin-left: 0;\n  visibility: visible;\n}\n.__react_component_tooltip.place-top::before {\n  border-left: 10px solid transparent;\n  border-right: 10px solid transparent;\n  bottom: -8px;\n  left: 50%;\n  margin-left: -10px;\n}\n.__react_component_tooltip.place-bottom::before {\n  border-left: 10px solid transparent;\n  border-right: 10px solid transparent;\n  top: -8px;\n  left: 50%;\n  margin-left: -10px;\n}\n.__react_component_tooltip.place-left::before {\n  border-top: 6px solid transparent;\n  border-bottom: 6px solid transparent;\n  right: -8px;\n  top: 50%;\n  margin-top: -5px;\n}\n.__react_component_tooltip.place-right::before {\n  border-top: 6px solid transparent;\n  border-bottom: 6px solid transparent;\n  left: -8px;\n  top: 50%;\n  margin-top: -5px;\n}\n.__react_component_tooltip .multi-line {\n  display: block;\n  padding: 2px 0;\n  text-align: center;\n}");
+var baseCss = ".__react_component_tooltip {\n  border-radius: 3px;\n  display: inline-block;\n  font-size: 13px;\n  left: -999em;\n  opacity: 0;\n  padding: 8px 21px;\n  position: fixed;\n  pointer-events: none;\n  transition: opacity 0.3s ease-out;\n  top: -999em;\n  visibility: hidden;\n  z-index: 999;\n}\n.__react_component_tooltip.allow_hover, .__react_component_tooltip.allow_click {\n  pointer-events: auto;\n}\n.__react_component_tooltip::before, .__react_component_tooltip::after {\n  content: \"\";\n  width: 0;\n  height: 0;\n  position: absolute;\n}\n.__react_component_tooltip.show {\n  opacity: 0.9;\n  margin-top: 0;\n  margin-left: 0;\n  visibility: visible;\n}\n.__react_component_tooltip.place-top::before {\n  border-left: 10px solid transparent;\n  border-right: 10px solid transparent;\n  bottom: -8px;\n  left: 50%;\n  margin-left: -10px;\n}\n.__react_component_tooltip.place-bottom::before {\n  border-left: 10px solid transparent;\n  border-right: 10px solid transparent;\n  top: -8px;\n  left: 50%;\n  margin-left: -10px;\n}\n.__react_component_tooltip.place-left::before {\n  border-top: 6px solid transparent;\n  border-bottom: 6px solid transparent;\n  right: -8px;\n  top: 50%;\n  margin-top: -5px;\n}\n.__react_component_tooltip.place-right::before {\n  border-top: 6px solid transparent;\n  border-bottom: 6px solid transparent;\n  left: -8px;\n  top: 50%;\n  margin-top: -5px;\n}\n.__react_component_tooltip .multi-line {\n  display: block;\n  padding: 2px 0;\n  text-align: center;\n}";
 
 /**
  * Default pop-up style values (text color, background color).
  */
 var defaultColors = {
-  "dark": {
-    "text": "#fff",
-    "background": "#222",
-    "border": "transparent",
-    "arrow": "#222"
+  dark: {
+    text: '#fff',
+    background: '#222',
+    border: 'transparent',
+    arrow: '#222'
   },
-  "success": {
-    "text": "#fff",
-    "background": "#8DC572",
-    "border": "transparent",
-    "arrow": "#8DC572"
+  success: {
+    text: '#fff',
+    background: '#8DC572',
+    border: 'transparent',
+    arrow: '#8DC572'
   },
-  "warning": {
-    "text": "#fff",
-    "background": "#F0AD4E",
-    "border": "transparent",
-    "arrow": "#F0AD4E"
+  warning: {
+    text: '#fff',
+    background: '#F0AD4E',
+    border: 'transparent',
+    arrow: '#F0AD4E'
   },
-  "error": {
-    "text": "#fff",
-    "background": "#BE6464",
-    "border": "transparent",
-    "arrow": "#BE6464"
+  error: {
+    text: '#fff',
+    background: '#BE6464',
+    border: 'transparent',
+    arrow: '#BE6464'
   },
-  "info": {
-    "text": "#fff",
-    "background": "#337AB7",
-    "border": "transparent",
-    "arrow": "#337AB7"
+  info: {
+    text: '#fff',
+    background: '#337AB7',
+    border: 'transparent',
+    arrow: '#337AB7'
   },
-  "light": {
-    "text": "#222",
-    "background": "#fff",
-    "border": "transparent",
-    "arrow": "#fff"
+  light: {
+    text: '#222',
+    background: '#fff',
+    border: 'transparent',
+    arrow: '#fff'
   }
 };
 function getDefaultPopupColors(type) {
@@ -3317,8 +3310,8 @@ function getDefaultPopupColors(type) {
 }
 
 /**
-* Generates the specific tooltip style for use on render.
-*/
+ * Generates the specific tooltip style for use on render.
+ */
 
 function generateTooltipStyle(uuid, customColors, type, hasBorder) {
   return generateStyle(uuid, getPopupColors(customColors, type, hasBorder));
@@ -3354,7 +3347,7 @@ function getPopupColors(customColors, type, hasBorder) {
     if (borderColor) {
       colors.border = borderColor;
     } else {
-      colors.border = type === "light" ? "black" : "white";
+      colors.border = type === 'light' ? 'black' : 'white';
     }
   }
 
@@ -3424,18 +3417,18 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(ReactTooltip).call(this, props));
     _this.state = {
       uuid: props.uuid || generateUUID(),
-      place: props.place || "top",
+      place: props.place || 'top',
       // Direction of tooltip
-      desiredPlace: props.place || "top",
-      type: "dark",
+      desiredPlace: props.place || 'top',
+      type: 'dark',
       // Color theme of tooltip
-      effect: "float",
+      effect: 'float',
       // float or fixed
       show: false,
       border: false,
       customColors: {},
       offset: {},
-      extraClass: "",
+      extraClass: '',
       html: false,
       delayHide: 0,
       delayShow: 0,
@@ -3449,13 +3442,13 @@ function (_React$Component) {
       // aria- and role attributes
       isEmptyTip: false,
       disable: false,
-      possibleCustomEvents: props.possibleCustomEvents || "",
-      possibleCustomEventsOff: props.possibleCustomEventsOff || "",
+      possibleCustomEvents: props.possibleCustomEvents || '',
+      possibleCustomEventsOff: props.possibleCustomEventsOff || '',
       originTooltip: null,
       isMultiline: false
     };
 
-    _this.bind(["showTooltip", "updateTooltip", "hideTooltip", "hideTooltipOnScroll", "getTooltipContent", "globalRebuild", "globalShow", "globalHide", "onWindowResize", "mouseOnToolTip"]);
+    _this.bind(['showTooltip', 'updateTooltip', 'hideTooltip', 'hideTooltipOnScroll', 'getTooltipContent', 'globalRebuild', 'globalShow', 'globalHide', 'onWindowResize', 'mouseOnToolTip']);
 
     _this.mount = true;
     _this.delayShowLoop = null;
@@ -3481,12 +3474,14 @@ function (_React$Component) {
   }, {
     key: "componentDidMount",
     value: function componentDidMount() {
-      var _this$props = this.props,
-          insecure = _this$props.insecure,
-          resizeHide = _this$props.resizeHide;
+      var _this$props = this.props;
+          _this$props.insecure;
+          var resizeHide = _this$props.resizeHide;
       this.bindListener(); // Bind listener for tooltip
 
       this.bindWindowEvents(resizeHide); // Bind global event for static method
+
+      this.injectStyles(); // Inject styles for each DOM root having tooltip.
     }
   }, {
     key: "componentWillUnmount",
@@ -3496,6 +3491,45 @@ function (_React$Component) {
       this.unbindListener();
       this.removeScrollListener(this.state.currentTarget);
       this.unbindWindowEvents();
+    }
+    /* Look for the closest DOM root having tooltip and inject styles. */
+
+  }, {
+    key: "injectStyles",
+    value: function injectStyles() {
+      var tooltipRef = this.tooltipRef;
+
+      if (!tooltipRef) {
+        return;
+      }
+
+      var parentNode = tooltipRef.parentNode;
+
+      while (parentNode.parentNode) {
+        parentNode = parentNode.parentNode;
+      }
+
+      var domRoot;
+
+      switch (parentNode.constructor.name) {
+        case 'Document':
+        case 'HTMLDocument':
+          domRoot = parentNode.head;
+          break;
+
+        case 'ShadowRoot':
+        default:
+          domRoot = parentNode;
+          break;
+      } // Prevent styles duplication.
+
+
+      if (!domRoot.querySelector('style[data-react-tooltip]')) {
+        var style = document.createElement('style');
+        style.textContent = baseCss;
+        style.setAttribute('data-react-tooltip', 'true');
+        domRoot.appendChild(style);
+      }
     }
     /**
      * Return if the mouse is on the tooltip.
@@ -3519,7 +3553,7 @@ function (_React$Component) {
           }
         }
 
-        return this.tooltipRef.matches(":hover");
+        return this.tooltipRef.matches(':hover');
       }
 
       return false;
@@ -3535,14 +3569,14 @@ function (_React$Component) {
       var selector;
 
       if (!id) {
-        selector = "[data-tip]:not([data-for])";
+        selector = '[data-tip]:not([data-for])';
       } else {
-        var escaped = id.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
+        var escaped = id.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
         selector = "[data-tip][data-for=\"".concat(escaped, "\"]");
       } // Scan document for shadow DOM elements
 
 
-      nodeListToArray(document.getElementsByTagName("*")).filter(function (element) {
+      nodeListToArray(document.getElementsByTagName('*')).filter(function (element) {
         return element.shadowRoot;
       }).forEach(function (element) {
         targetArray = targetArray.concat(nodeListToArray(element.shadowRoot.querySelectorAll(selector)));
@@ -3565,8 +3599,8 @@ function (_React$Component) {
           isCapture = _this$props2.isCapture;
       var targetArray = this.getTargetArray(id);
       targetArray.forEach(function (target) {
-        if (target.getAttribute("currentItem") === null) {
-          target.setAttribute("currentItem", "false");
+        if (target.getAttribute('currentItem') === null) {
+          target.setAttribute('currentItem', 'false');
         }
 
         _this3.unbindBasicListener(target);
@@ -3590,13 +3624,13 @@ function (_React$Component) {
             return;
           }
 
-          target.addEventListener("mouseenter", _this3.showTooltip, isCaptureMode);
+          target.addEventListener('mouseenter', _this3.showTooltip, isCaptureMode);
 
-          if (effect === "float") {
-            target.addEventListener("mousemove", _this3.updateTooltip, isCaptureMode);
+          if (effect === 'float') {
+            target.addEventListener('mousemove', _this3.updateTooltip, isCaptureMode);
           }
 
-          target.addEventListener("mouseleave", _this3.hideTooltip, isCaptureMode);
+          target.addEventListener('mouseleave', _this3.hideTooltip, isCaptureMode);
         });
       } // Global event to hide tooltip
 
@@ -3646,9 +3680,9 @@ function (_React$Component) {
     key: "unbindBasicListener",
     value: function unbindBasicListener(target) {
       var isCaptureMode = this.isCapture(target);
-      target.removeEventListener("mouseenter", this.showTooltip, isCaptureMode);
-      target.removeEventListener("mousemove", this.updateTooltip, isCaptureMode);
-      target.removeEventListener("mouseleave", this.hideTooltip, isCaptureMode);
+      target.removeEventListener('mouseenter', this.showTooltip, isCaptureMode);
+      target.removeEventListener('mousemove', this.updateTooltip, isCaptureMode);
+      target.removeEventListener('mouseleave', this.hideTooltip, isCaptureMode);
     }
   }, {
     key: "getTooltipContent",
@@ -3672,7 +3706,7 @@ function (_React$Component) {
   }, {
     key: "isEmptyTip",
     value: function isEmptyTip(placeholder) {
-      return typeof placeholder === "string" && placeholder === "" || placeholder === null;
+      return typeof placeholder === 'string' && placeholder === '' || placeholder === null;
     }
     /**
      * When mouse enter, show the tooltip
@@ -3681,6 +3715,10 @@ function (_React$Component) {
   }, {
     key: "showTooltip",
     value: function showTooltip(e, isGlobalCall) {
+      if (!this.tooltipRef) {
+        return;
+      }
+
       if (isGlobalCall) {
         // Don't trigger other elements belongs to other ReactTooltip
         var targetArray = this.getTargetArray(this.props.id);
@@ -3695,23 +3733,23 @@ function (_React$Component) {
       var _this$props5 = this.props,
           multiline = _this$props5.multiline,
           getContent = _this$props5.getContent;
-      var originTooltip = e.currentTarget.getAttribute("data-tip");
-      var isMultiline = e.currentTarget.getAttribute("data-multiline") || multiline || false; // If it is focus event or called by ReactTooltip.show, switch to `solid` effect
+      var originTooltip = e.currentTarget.getAttribute('data-tip');
+      var isMultiline = e.currentTarget.getAttribute('data-multiline') || multiline || false; // If it is focus event or called by ReactTooltip.show, switch to `solid` effect
 
       var switchToSolid = e instanceof window.FocusEvent || isGlobalCall; // if it needs to skip adding hide listener to scroll
 
       var scrollHide = true;
 
-      if (e.currentTarget.getAttribute("data-scroll-hide")) {
-        scrollHide = e.currentTarget.getAttribute("data-scroll-hide") === "true";
+      if (e.currentTarget.getAttribute('data-scroll-hide')) {
+        scrollHide = e.currentTarget.getAttribute('data-scroll-hide') === 'true';
       } else if (this.props.scrollHide != null) {
         scrollHide = this.props.scrollHide;
       } // Make sure the correct place is set
 
 
-      var desiredPlace = e.currentTarget.getAttribute("data-place") || this.props.place || "top";
-      var effect = switchToSolid && "solid" || this.getEffect(e.currentTarget);
-      var offset = e.currentTarget.getAttribute("data-offset") || this.props.offset || {};
+      var desiredPlace = e.currentTarget.getAttribute('data-place') || this.props.place || 'top';
+      var effect = switchToSolid && 'solid' || this.getEffect(e.currentTarget);
+      var offset = e.currentTarget.getAttribute('data-offset') || this.props.offset || {};
       var result = getPosition(e, e.currentTarget, this.tooltipRef, desiredPlace, desiredPlace, effect, offset);
 
       if (result.position && this.props.overridePosition) {
@@ -3722,7 +3760,7 @@ function (_React$Component) {
 
       this.clearTimer();
       var target = e.currentTarget;
-      var reshowDelay = this.state.show ? target.getAttribute("data-delay-update") || this.props.delayUpdate : 0;
+      var reshowDelay = this.state.show ? target.getAttribute('data-delay-update') || this.props.delayUpdate : 0;
       var self = this;
 
       var updateState = function updateState() {
@@ -3731,22 +3769,22 @@ function (_React$Component) {
           isMultiline: isMultiline,
           desiredPlace: desiredPlace,
           place: place,
-          type: target.getAttribute("data-type") || self.props.type || "dark",
+          type: target.getAttribute('data-type') || self.props.type || 'dark',
           customColors: {
-            text: target.getAttribute("data-text-color") || self.props.textColor || null,
-            background: target.getAttribute("data-background-color") || self.props.backgroundColor || null,
-            border: target.getAttribute("data-border-color") || self.props.borderColor || null,
-            arrow: target.getAttribute("data-arrow-color") || self.props.arrowColor || null
+            text: target.getAttribute('data-text-color') || self.props.textColor || null,
+            background: target.getAttribute('data-background-color') || self.props.backgroundColor || null,
+            border: target.getAttribute('data-border-color') || self.props.borderColor || null,
+            arrow: target.getAttribute('data-arrow-color') || self.props.arrowColor || null
           },
           effect: effect,
           offset: offset,
-          html: (target.getAttribute("data-html") ? target.getAttribute("data-html") === "true" : self.props.html) || false,
-          delayShow: target.getAttribute("data-delay-show") || self.props.delayShow || 0,
-          delayHide: target.getAttribute("data-delay-hide") || self.props.delayHide || 0,
-          delayUpdate: target.getAttribute("data-delay-update") || self.props.delayUpdate || 0,
-          border: (target.getAttribute("data-border") ? target.getAttribute("data-border") === "true" : self.props.border) || false,
-          extraClass: target.getAttribute("data-class") || self.props["class"] || self.props.className || "",
-          disable: (target.getAttribute("data-tip-disable") ? target.getAttribute("data-tip-disable") === "true" : self.props.disable) || false,
+          html: (target.getAttribute('data-html') ? target.getAttribute('data-html') === 'true' : self.props.html) || false,
+          delayShow: target.getAttribute('data-delay-show') || self.props.delayShow || 0,
+          delayHide: target.getAttribute('data-delay-hide') || self.props.delayHide || 0,
+          delayUpdate: target.getAttribute('data-delay-update') || self.props.delayUpdate || 0,
+          border: (target.getAttribute('data-border') ? target.getAttribute('data-border') === 'true' : self.props.border) || false,
+          extraClass: target.getAttribute('data-class') || self.props["class"] || self.props.className || '',
+          disable: (target.getAttribute('data-tip-disable') ? target.getAttribute('data-tip-disable') === 'true' : self.props.disable) || false,
           currentTarget: target
         }, function () {
           if (scrollHide) {
@@ -3759,7 +3797,7 @@ function (_React$Component) {
             self.intervalUpdateContent = setInterval(function () {
               if (self.mount) {
                 var _getContent = self.props.getContent;
-                var placeholder = getTipContent(originTooltip, "", _getContent[0](), isMultiline);
+                var placeholder = getTipContent(originTooltip, '', _getContent[0](), isMultiline);
                 var isEmptyTip = self.isEmptyTip(placeholder);
                 self.setState({
                   isEmptyTip: isEmptyTip
@@ -3792,7 +3830,6 @@ function (_React$Component) {
           disable = _this$state.disable;
       var afterShow = this.props.afterShow;
       var placeholder = this.getTooltipContent();
-      var delayTime = parseInt(delayShow, 10);
       var eventTarget = e.currentTarget || e.target; // Check if the mouse is actually over the tooltip, if so don't hide the tooltip
 
       if (this.mouseOnToolTip()) {
@@ -3803,6 +3840,8 @@ function (_React$Component) {
       if (this.isEmptyTip(placeholder) || disable) {
         return;
       }
+
+      var delayTime = !this.state.show ? parseInt(delayShow, 10) : 0;
 
       var updateState = function updateState() {
         if (Array.isArray(placeholder) && placeholder.length > 0 || placeholder) {
@@ -3824,7 +3863,7 @@ function (_React$Component) {
 
       clearTimeout(this.delayShowLoop);
 
-      if (delayShow) {
+      if (delayTime) {
         this.delayShowLoop = setTimeout(updateState, delayTime);
       } else {
         updateState();
@@ -3840,7 +3879,7 @@ function (_React$Component) {
       var show = this.state.show;
 
       if (show && this.tooltipRef) {
-        this.tooltipRef.addEventListener("mouseleave", this.hideTooltip);
+        this.tooltipRef.addEventListener('mouseleave', this.hideTooltip);
       }
     }
   }, {
@@ -3849,7 +3888,7 @@ function (_React$Component) {
       var show = this.state.show;
 
       if (show && this.tooltipRef) {
-        this.tooltipRef.removeEventListener("mouseleave", this.hideTooltip);
+        this.tooltipRef.removeEventListener('mouseleave', this.hideTooltip);
       }
     }
     /**
@@ -3931,13 +3970,13 @@ function (_React$Component) {
     key: "addScrollListener",
     value: function addScrollListener(currentTarget) {
       var isCaptureMode = this.isCapture(currentTarget);
-      window.addEventListener("scroll", this.hideTooltipOnScroll, isCaptureMode);
+      window.addEventListener('scroll', this.hideTooltipOnScroll, isCaptureMode);
     }
   }, {
     key: "removeScrollListener",
     value: function removeScrollListener(currentTarget) {
       var isCaptureMode = this.isCapture(currentTarget);
-      window.removeEventListener("scroll", this.hideTooltipOnScroll, isCaptureMode);
+      window.removeEventListener('scroll', this.hideTooltipOnScroll, isCaptureMode);
     } // Calculation the position
 
   }, {
@@ -3967,8 +4006,8 @@ function (_React$Component) {
       } // Set tooltip position
 
 
-      node.style.left = result.position.left + "px";
-      node.style.top = result.position.top + "px";
+      node.style.left = result.position.left + 'px';
+      node.style.top = result.position.top + 'px';
     }
     /**
      * CLear all kinds of timeout of interval
@@ -3988,8 +4027,8 @@ function (_React$Component) {
       var _this8 = this;
 
       return Boolean(Object.keys(this.state.customColors).find(function (color) {
-        return color !== "border" && _this8.state.customColors[color];
-      }) || this.state.border && this.state.customColors["border"]);
+        return color !== 'border' && _this8.state.customColors[color];
+      }) || this.state.border && this.state.customColors['border']);
     }
   }, {
     key: "render",
@@ -4004,20 +4043,20 @@ function (_React$Component) {
       var content = this.getTooltipContent();
       var isEmptyTip = this.isEmptyTip(content);
       var style = generateTooltipStyle(this.state.uuid, this.state.customColors, this.state.type, this.state.border);
-      var tooltipClass = "__react_component_tooltip" + " ".concat(this.state.uuid) + (this.state.show && !disable && !isEmptyTip ? " show" : "") + (this.state.border ? " border" : "") + " place-".concat(this.state.place) + // top, bottom, left, right
-      " type-".concat(this.hasCustomColors() ? "custom" : this.state.type) + ( // dark, success, warning, error, info, light, custom
-      this.props.delayUpdate ? " allow_hover" : "") + (this.props.clickable ? " allow_click" : "");
+      var tooltipClass = '__react_component_tooltip' + " ".concat(this.state.uuid) + (this.state.show && !disable && !isEmptyTip ? ' show' : '') + (this.state.border ? ' border' : '') + " place-".concat(this.state.place) + // top, bottom, left, right
+      " type-".concat(this.hasCustomColors() ? 'custom' : this.state.type) + ( // dark, success, warning, error, info, light, custom
+      this.props.delayUpdate ? ' allow_hover' : '') + (this.props.clickable ? ' allow_click' : '');
       var Wrapper = this.props.wrapper;
 
       if (ReactTooltip.supportedWrappers.indexOf(Wrapper) < 0) {
         Wrapper = ReactTooltip.defaultProps.wrapper;
       }
 
-      var wrapperClassName = [tooltipClass, extraClass].filter(Boolean).join(" ");
+      var wrapperClassName = [tooltipClass, extraClass].filter(Boolean).join(' ');
 
       if (html) {
         var htmlContent = "".concat(content, "\n<style>").concat(style, "</style>");
-        return React__default.createElement(Wrapper, _extends({
+        return React__default['default'].createElement(Wrapper, _extends({
           className: "".concat(wrapperClassName),
           id: this.props.id,
           ref: function ref(_ref) {
@@ -4030,7 +4069,7 @@ function (_React$Component) {
           }
         }));
       } else {
-        return React__default.createElement(Wrapper, _extends({
+        return React__default['default'].createElement(Wrapper, _extends({
           className: "".concat(wrapperClassName),
           id: this.props.id
         }, ariaProps, {
@@ -4038,7 +4077,7 @@ function (_React$Component) {
             return _this9.tooltipRef = _ref2;
           },
           "data-id": "tooltip"
-        }), React__default.createElement("style", {
+        }), React__default['default'].createElement("style", {
           dangerouslySetInnerHTML: {
             __html: style
           }
@@ -4065,43 +4104,77 @@ function (_React$Component) {
   }]);
 
   return ReactTooltip;
-}(React__default.Component), _defineProperty(_class2, "defaultProps", {
+}(React__default['default'].Component), _defineProperty(_class2, "defaultProps", {
   insecure: true,
   resizeHide: true,
-  wrapper: "div",
+  wrapper: 'div',
   clickable: false
-}), _defineProperty(_class2, "supportedWrappers", ["div", "span"]), _defineProperty(_class2, "displayName", "ReactTooltip"), _temp)) || _class) || _class) || _class) || _class) || _class) || _class) || _class;
+}), _defineProperty(_class2, "supportedWrappers", ['div', 'span']), _defineProperty(_class2, "displayName", 'ReactTooltip'), _temp)) || _class) || _class) || _class) || _class) || _class) || _class) || _class;
 
 // https://github.com/wwayne/react-tooltip#readme
 // TODO: arrow 위치 변경되어야 함
 var Tooltip = function (_a) {
     var children = _a.children, id = _a.id, buttonType = _a.buttonType;
-    return (React__default.createElement(ReactTooltip, { className: "" + (buttonType ? 'btn-tooltip' : ''), id: id, uuid: id, effect: 'solid', arrowColor: '#323232', backgroundColor: '#323232' }, children));
+    return (React__default['default'].createElement(ReactTooltip, { className: "" + (buttonType ? 'btn-tooltip' : ''), id: id, uuid: id, effect: 'solid', arrowColor: '#323232', backgroundColor: '#323232' }, children));
 };
 
 var ViewMore = function (_a) {
     var nowShowingRow = _a.nowShowingRow, total = _a.total, onClickMoreButton = _a.onClickMoreButton;
     var moreButtonCountRef = React.useRef(1);
-    return (React__default.createElement("div", { className: 'view-more-wrap' },
-        React__default.createElement("span", { className: 'view-more-rowData' },
+    return (React__default['default'].createElement("div", { className: 'view-more-wrap' },
+        React__default['default'].createElement("span", { className: 'view-more-rowData' },
             nowShowingRow,
             " / ",
             total),
-        React__default.createElement(Button, { size: 'xs', type: 'text', onClick: function () { onClickMoreButton(moreButtonCountRef.current++); }, disabled: nowShowingRow === total }, "\uB354\uBCF4\uAE30")));
+        React__default['default'].createElement(Button, { size: 'xs', type: 'text', onClick: function () { onClickMoreButton(moreButtonCountRef.current++); }, disabled: nowShowingRow === total }, "\uB354\uBCF4\uAE30")));
 };
 
 var CombineInput = function (_a) {
     var children = _a.children, style = _a.style, title = _a.title;
-    return (React__default.createElement("div", { className: 'combine-input-container', style: __assign({}, style) },
-        React__default.createElement("span", null, title),
-        React__default.createElement("div", { className: 'combine-input-list', style: { gridTemplateColumns: "repeat(auto-fill, minmax(" + (1 / children.length) * 100 + "%, 1fr)" } }, children)));
+    return (React__default['default'].createElement("div", { className: 'combine-input-container', style: __assign({}, style) },
+        React__default['default'].createElement("span", null, title),
+        React__default['default'].createElement("div", { className: 'combine-input-list', style: { gridTemplateColumns: "repeat(auto-fill, minmax(" + (1 / children.length) * 100 + "%, 1fr)" } }, children)));
 };
 
 var isBuffer = function isBuffer(arg) {
   return arg instanceof Buffer;
 };
 
-var inherits = util$1.inherits;
+var inherits_browser = createCommonjsModule(function (module) {
+if (typeof Object.create === 'function') {
+  // implementation from standard node.js 'util' module
+  module.exports = function inherits(ctor, superCtor) {
+    ctor.super_ = superCtor;
+    ctor.prototype = Object.create(superCtor.prototype, {
+      constructor: {
+        value: ctor,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+  };
+} else {
+  // old school shim for old browsers
+  module.exports = function inherits(ctor, superCtor) {
+    ctor.super_ = superCtor;
+    var TempCtor = function () {};
+    TempCtor.prototype = superCtor.prototype;
+    ctor.prototype = new TempCtor();
+    ctor.prototype.constructor = ctor;
+  };
+}
+});
+
+var inherits = createCommonjsModule(function (module) {
+try {
+  var util = util__default['default'];
+  if (typeof util.inherits !== 'function') throw '';
+  module.exports = util.inherits;
+} catch (e) {
+  module.exports = inherits_browser;
+}
+});
 
 var util = createCommonjsModule(function (module, exports) {
 // Copyright Joyent, Inc. and other Node contributors.
@@ -4124,6 +4197,16 @@ var util = createCommonjsModule(function (module, exports) {
 // DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+var getOwnPropertyDescriptors = Object.getOwnPropertyDescriptors ||
+  function getOwnPropertyDescriptors(obj) {
+    var keys = Object.keys(obj);
+    var descriptors = {};
+    for (var i = 0; i < keys.length; i++) {
+      descriptors[keys[i]] = Object.getOwnPropertyDescriptor(obj, keys[i]);
+    }
+    return descriptors;
+  };
 
 var formatRegExp = /%[sdj%]/g;
 exports.format = function(f) {
@@ -4169,15 +4252,15 @@ exports.format = function(f) {
 // Returns a modified function which warns once by default.
 // If --no-deprecation is set, then it is a no-op.
 exports.deprecate = function(fn, msg) {
+  if (typeof process !== 'undefined' && process.noDeprecation === true) {
+    return fn;
+  }
+
   // Allow for deprecating things in the process of starting up.
-  if (isUndefined(commonjsGlobal.process)) {
+  if (typeof process === 'undefined') {
     return function() {
       return exports.deprecate(fn, msg).apply(this, arguments);
     };
-  }
-
-  if (process.noDeprecation === true) {
-    return fn;
   }
 
   var warned = false;
@@ -4688,57 +4771,166 @@ exports._extend = function(origin, add) {
 function hasOwnProperty(obj, prop) {
   return Object.prototype.hasOwnProperty.call(obj, prop);
 }
+
+var kCustomPromisifiedSymbol = typeof Symbol !== 'undefined' ? Symbol('util.promisify.custom') : undefined;
+
+exports.promisify = function promisify(original) {
+  if (typeof original !== 'function')
+    throw new TypeError('The "original" argument must be of type Function');
+
+  if (kCustomPromisifiedSymbol && original[kCustomPromisifiedSymbol]) {
+    var fn = original[kCustomPromisifiedSymbol];
+    if (typeof fn !== 'function') {
+      throw new TypeError('The "util.promisify.custom" argument must be of type Function');
+    }
+    Object.defineProperty(fn, kCustomPromisifiedSymbol, {
+      value: fn, enumerable: false, writable: false, configurable: true
+    });
+    return fn;
+  }
+
+  function fn() {
+    var promiseResolve, promiseReject;
+    var promise = new Promise(function (resolve, reject) {
+      promiseResolve = resolve;
+      promiseReject = reject;
+    });
+
+    var args = [];
+    for (var i = 0; i < arguments.length; i++) {
+      args.push(arguments[i]);
+    }
+    args.push(function (err, value) {
+      if (err) {
+        promiseReject(err);
+      } else {
+        promiseResolve(value);
+      }
+    });
+
+    try {
+      original.apply(this, args);
+    } catch (err) {
+      promiseReject(err);
+    }
+
+    return promise;
+  }
+
+  Object.setPrototypeOf(fn, Object.getPrototypeOf(original));
+
+  if (kCustomPromisifiedSymbol) Object.defineProperty(fn, kCustomPromisifiedSymbol, {
+    value: fn, enumerable: false, writable: false, configurable: true
+  });
+  return Object.defineProperties(
+    fn,
+    getOwnPropertyDescriptors(original)
+  );
+};
+
+exports.promisify.custom = kCustomPromisifiedSymbol;
+
+function callbackifyOnRejected(reason, cb) {
+  // `!reason` guard inspired by bluebird (Ref: https://goo.gl/t5IS6M).
+  // Because `null` is a special error value in callbacks which means "no error
+  // occurred", we error-wrap so the callback consumer can distinguish between
+  // "the promise rejected with null" or "the promise fulfilled with undefined".
+  if (!reason) {
+    var newReason = new Error('Promise was rejected with a falsy value');
+    newReason.reason = reason;
+    reason = newReason;
+  }
+  return cb(reason);
+}
+
+function callbackify(original) {
+  if (typeof original !== 'function') {
+    throw new TypeError('The "original" argument must be of type Function');
+  }
+
+  // We DO NOT return the promise as it gives the user a false sense that
+  // the promise is actually somehow related to the callback's execution
+  // and that the callback throwing will reject the promise.
+  function callbackified() {
+    var args = [];
+    for (var i = 0; i < arguments.length; i++) {
+      args.push(arguments[i]);
+    }
+
+    var maybeCb = args.pop();
+    if (typeof maybeCb !== 'function') {
+      throw new TypeError('The last argument must be of type Function');
+    }
+    var self = this;
+    var cb = function() {
+      return maybeCb.apply(self, arguments);
+    };
+    // In true node style we process the callback on `nextTick` with all the
+    // implications (stack, `uncaughtException`, `async_hooks`)
+    original.apply(this, args)
+      .then(function(ret) { process.nextTick(cb, null, ret); },
+            function(rej) { process.nextTick(callbackifyOnRejected, rej, cb); });
+  }
+
+  Object.setPrototypeOf(callbackified, Object.getPrototypeOf(original));
+  Object.defineProperties(callbackified,
+                          getOwnPropertyDescriptors(original));
+  return callbackified;
+}
+exports.callbackify = callbackify;
 });
-var util_1 = util.format;
-var util_2 = util.deprecate;
-var util_3 = util.debuglog;
-var util_4 = util.inspect;
+util.format;
+util.deprecate;
+util.debuglog;
+util.inspect;
 var util_5 = util.isArray;
-var util_6 = util.isBoolean;
-var util_7 = util.isNull;
-var util_8 = util.isNullOrUndefined;
-var util_9 = util.isNumber;
-var util_10 = util.isString;
-var util_11 = util.isSymbol;
-var util_12 = util.isUndefined;
-var util_13 = util.isRegExp;
-var util_14 = util.isObject;
-var util_15 = util.isDate;
-var util_16 = util.isError;
-var util_17 = util.isFunction;
-var util_18 = util.isPrimitive;
-var util_19 = util.isBuffer;
-var util_20 = util.log;
-var util_21 = util.inherits;
-var util_22 = util._extend;
+util.isBoolean;
+util.isNull;
+util.isNullOrUndefined;
+util.isNumber;
+util.isString;
+util.isSymbol;
+util.isUndefined;
+util.isRegExp;
+util.isObject;
+util.isDate;
+util.isError;
+util.isFunction;
+util.isPrimitive;
+util.isBuffer;
+util.log;
+util.inherits;
+util._extend;
+util.promisify;
+util.callbackify;
 
 var DefinitionTagContainer = function (_a) {
     var children = _a.children, style = _a.style;
-    return (React__default.createElement("div", { className: 'definition-tag-container', style: __assign(__assign({}, style), { gridTemplateColumns: "repeat(" + (util_5(children) ? children.length : 1) + ", 1fr)" }) }, children));
+    return (React__default['default'].createElement("div", { className: 'definition-tag-container', style: __assign(__assign({}, style), { gridTemplateColumns: "repeat(" + (util_5(children) ? children.length : 1) + ", 1fr)" }) }, children));
 };
 
 var InputContainer = function (_a) {
     var children = _a.children, title = _a.title, inputListStyle = _a.inputListStyle;
-    return (React__default.createElement("div", { className: 'input-container' },
-        React__default.createElement("span", null, title),
-        React__default.createElement("div", { className: 'input-list', style: inputListStyle }, children)));
+    return (React__default['default'].createElement("div", { className: 'input-container' },
+        React__default['default'].createElement("span", null, title),
+        React__default['default'].createElement("div", { className: 'input-list', style: inputListStyle }, children)));
 };
 
 var Modal = function (_a) {
     var children = _a.children, style = _a.style, _b = _a.title, title = _b === void 0 ? 'Modal title' : _b, subTitle = _a.subTitle, _c = _a.size, size = _c === void 0 ? 'small' : _c, _d = _a.noScroll, noScroll = _d === void 0 ? false : _d, _e = _a.onClickInBackground, onClickInBackground = _e === void 0 ? function () {
     } : _e, cancelButtonComponent = _a.cancelButtonComponent, actionButtonComponent = _a.actionButtonComponent, footerComponent = _a.footerComponent;
-    return (React__default.createElement("div", { className: 'modal-wrap' },
-        React__default.createElement("div", { className: 'overlay', onClick: onClickInBackground }),
-        React__default.createElement("div", { className: "modal modal-size-" + size + " " + (noScroll && 'no-scroll'), style: style },
-            React__default.createElement("header", null,
-                React__default.createElement("div", { className: 'header-top' },
-                    React__default.createElement("h1", null, title),
-                    React__default.createElement("div", { className: 'btn-area' },
+    return (React__default['default'].createElement("div", { className: 'modal-wrap' },
+        React__default['default'].createElement("div", { className: 'overlay', onClick: onClickInBackground }),
+        React__default['default'].createElement("div", { className: "modal modal-size-" + size + " " + (noScroll && 'no-scroll'), style: style },
+            React__default['default'].createElement("header", null,
+                React__default['default'].createElement("div", { className: 'header-top' },
+                    React__default['default'].createElement("h1", null, title),
+                    React__default['default'].createElement("div", { className: 'btn-area' },
                         cancelButtonComponent,
                         actionButtonComponent)),
-                React__default.createElement("div", { className: 'header-bottom' }, subTitle)),
-            React__default.createElement("div", { className: 'modal-contents' }, children),
-            footerComponent && React__default.createElement("footer", null, footerComponent))));
+                React__default['default'].createElement("div", { className: 'header-bottom' }, subTitle)),
+            React__default['default'].createElement("div", { className: 'modal-contents' }, children),
+            footerComponent && React__default['default'].createElement("footer", null, footerComponent))));
 };
 
 var Popup = /** @class */ (function (_super) {
@@ -4820,14 +5012,14 @@ var AlertPopup = /** @class */ (function (_super) {
     AlertPopup.prototype.render = function () {
         var _this = this;
         var _a = this.props, title = _a.title, message = _a.message, messageType = _a.messageType, button = _a.button;
-        return (React__default.createElement("div", { className: "popup-wrap " + messageType },
-            React__default.createElement("div", { className: 'overlay', onClick: this.clickOverlay.bind(this) }),
-            React__default.createElement("div", { className: 'popup' },
-                title && React__default.createElement("h1", null, title),
-                React__default.createElement("span", { className: 'circle' }),
-                React__default.createElement("p", { className: 'popup-content' }, message),
-                React__default.createElement("div", { className: 'popup-btns' },
-                    React__default.createElement(Button, { onClick: function () { return _this.clickButton(button); }, type: button.type, size: 'small', color: button.color, className: button.className }, button.label)))));
+        return (React__default['default'].createElement("div", { className: "popup-wrap " + messageType },
+            React__default['default'].createElement("div", { className: 'overlay', onClick: this.clickOverlay.bind(this) }),
+            React__default['default'].createElement("div", { className: 'popup' },
+                title && React__default['default'].createElement("h1", null, title),
+                React__default['default'].createElement("span", { className: 'circle' }),
+                React__default['default'].createElement("p", { className: 'popup-content' }, message),
+                React__default['default'].createElement("div", { className: 'popup-btns' },
+                    React__default['default'].createElement(Button, { onClick: function () { return _this.clickButton(button); }, type: button.type, size: 'small', color: button.color, className: button.className }, button.label)))));
     };
     return AlertPopup;
 }(Popup));
@@ -4839,13 +5031,13 @@ var ConfirmPopup = /** @class */ (function (_super) {
     ConfirmPopup.prototype.render = function () {
         var _this = this;
         var _a = this.props, title = _a.title, message = _a.message, messageType = _a.messageType, buttons = _a.buttons;
-        return (React__default.createElement("div", { className: "popup-wrap " + messageType },
-            React__default.createElement("div", { className: 'overlay', onClick: this.clickOverlay.bind(this) }),
-            React__default.createElement("div", { className: 'popup' },
-                title && React__default.createElement("h1", null, title),
-                React__default.createElement("span", { className: 'circle' }),
-                React__default.createElement("p", { className: 'popup-content' }, message),
-                React__default.createElement("div", { className: 'popup-btns' }, buttons === null || buttons === void 0 ? void 0 : buttons.map(function (button, i) { return (React__default.createElement(Button, { key: i, onClick: function () { return _this.clickButton(button); }, type: button.type, size: 'small', color: button.color, className: button.className }, button.label)); })))));
+        return (React__default['default'].createElement("div", { className: "popup-wrap " + messageType },
+            React__default['default'].createElement("div", { className: 'overlay', onClick: this.clickOverlay.bind(this) }),
+            React__default['default'].createElement("div", { className: 'popup' },
+                title && React__default['default'].createElement("h1", null, title),
+                React__default['default'].createElement("span", { className: 'circle' }),
+                React__default['default'].createElement("p", { className: 'popup-content' }, message),
+                React__default['default'].createElement("div", { className: 'popup-btns' }, buttons === null || buttons === void 0 ? void 0 : buttons.map(function (button, i) { return (React__default['default'].createElement(Button, { key: i, onClick: function () { return _this.clickButton(button); }, type: button.type, size: 'small', color: button.color, className: button.className }, button.label)); })))));
     };
     return ConfirmPopup;
 }(Popup));
@@ -4857,17 +5049,17 @@ function createPopupWrap(wrap) {
 function renderPopup(type, options, elWrap) {
     switch (type) {
         case 'alert':
-            reactDom.render(React__default.createElement(AlertPopup, __assign({}, options)), elWrap);
+            reactDom.render(React__default['default'].createElement(AlertPopup, __assign({}, options)), elWrap);
             break;
         case 'confirm':
-            reactDom.render(React__default.createElement(ConfirmPopup, __assign({}, options)), elWrap);
+            reactDom.render(React__default['default'].createElement(ConfirmPopup, __assign({}, options)), elWrap);
             break;
     }
 }
 function PopupArea(props) {
-    return (React__default.createElement("div", { style: { position: 'relative', height: '100%' } },
+    return (React__default['default'].createElement("div", { style: { position: 'relative', height: '100%' } },
         props.children,
-        React__default.createElement("div", { id: props.id })));
+        React__default['default'].createElement("div", { id: props.id })));
 }
 function createPopup(options) {
     var popupType = options.type;
@@ -4892,33 +5084,33 @@ function removePopup(_a) {
 
 var Divider = function (_a) {
     var style = _a.style;
-    return (React__default.createElement("div", { className: 'divider', style: __assign({}, style) }));
+    return (React__default['default'].createElement("div", { className: 'divider', style: __assign({}, style) }));
 };
 
 var SearchBox = function (_a) {
     var children = _a.children, style = _a.style, stage = _a.stage, buttonTitle = _a.buttonTitle, onClickSearchButton = _a.onClickSearchButton;
     var grid = "repeat(" + stage + ", 1fr)";
-    return (React__default.createElement("div", { className: 'search-box-wrapper' },
-        React__default.createElement("section", { className: "search-box stage-" + stage, style: __assign(__assign({}, style), { gridTemplateColumns: grid }) }, children),
-        React__default.createElement(Divider, { style: { backgroundColor: '#eef2fa', marginTop: '16px', marginBottom: '12px' } }),
-        React__default.createElement("div", { className: 'btn-area' },
-            React__default.createElement(Button, { size: 'small', onClick: onClickSearchButton }, buttonTitle))));
+    return (React__default['default'].createElement("div", { className: 'search-box-wrapper' },
+        React__default['default'].createElement("section", { className: "search-box stage-" + stage, style: __assign(__assign({}, style), { gridTemplateColumns: grid }) }, children),
+        React__default['default'].createElement(Divider, { style: { backgroundColor: '#eef2fa', marginTop: '16px', marginBottom: '12px' } }),
+        React__default['default'].createElement("div", { className: 'btn-area' },
+            React__default['default'].createElement(Button, { size: 'small', onClick: onClickSearchButton }, buttonTitle))));
 };
 
 var Section = function (_a) {
     var children = _a.children, style = _a.style, _b = _a.title, title = _b === void 0 ? 'Section title' : _b, subTitle = _a.subTitle, buttonComponent = _a.buttonComponent;
-    return (React__default.createElement("section", { className: 'section', style: style },
-        React__default.createElement("header", null,
-            React__default.createElement("div", { className: 'header-top' },
-                React__default.createElement("h1", null, title),
-                React__default.createElement("div", { className: 'section-btn-area' }, buttonComponent)),
-            React__default.createElement("div", { className: 'header-bottom' }, subTitle)),
+    return (React__default['default'].createElement("section", { className: 'section', style: style },
+        React__default['default'].createElement("header", null,
+            React__default['default'].createElement("div", { className: 'header-top' },
+                React__default['default'].createElement("h1", null, title),
+                React__default['default'].createElement("div", { className: 'section-btn-area' }, buttonComponent)),
+            React__default['default'].createElement("div", { className: 'header-bottom' }, subTitle)),
         children));
 };
 
 var ModalItem = function (_a) {
     var children = _a.children, className = _a.className, style = _a.style;
-    return (React__default.createElement("div", { className: "modal-item " + className, style: __assign({}, style) }, children));
+    return (React__default['default'].createElement("div", { className: "modal-item " + className, style: __assign({}, style) }, children));
 };
 
 var ImageSlider = function (_a) {
@@ -4945,23 +5137,23 @@ var ImageSlider = function (_a) {
     var onClickImageItem = function (url) {
         window.open(url, '_black');
     };
-    return (React__default.createElement("div", { className: 'image-slider-container', style: __assign({}, style) },
-        React__default.createElement("span", { className: "arrow", onClick: function () { return onClickSliderArrow('back'); } },
-            React__default.createElement(Icon, { name: 'arrow-ios-back-outline', fill: '#dedede', size: '35' })),
-        React__default.createElement("div", { className: 'image-outer-slider', ref: outerRef },
-            React__default.createElement("ul", { className: 'image-inner-slider', ref: innerRef }, imageUrlList.map(function (value, index) { return (React__default.createElement("li", { onClick: function () { return onClickImageItem(value.url); }, key: value.url + "-" + index },
-                isShowInformationIcon ? React__default.createElement("div", { style: { width: imageWidth + "px" }, className: 'tag-area' },
-                    value.isRepresentation ? React__default.createElement(Tag, { style: { position: 'absolute', left: '12px' }, color: 'green' }, "Representation") : React__default.createElement(React__default.Fragment, null),
-                    React__default.createElement(Tag, { style: { position: 'absolute', right: '12px' }, color: value.isShow ? 'green' : 'gray' }, value.isShow ? 'Show' : 'Hidden')) : React__default.createElement(React__default.Fragment, null),
-                (isShowInformationIcon && !value.isShow) ? React__default.createElement("div", { style: { width: imageWidth + "px", height: imageHeight + "px" }, className: 'dimmed' }) : React__default.createElement(React__default.Fragment, null),
-                React__default.createElement("img", { width: imageWidth, height: imageHeight, src: value.url }))); }))),
-        React__default.createElement("span", { className: "arrow", onClick: function () { return onClickSliderArrow('forward'); } },
-            React__default.createElement(Icon, { name: 'arrow-ios-forward-outline', fill: '#dedede', size: '35' }))));
+    return (React__default['default'].createElement("div", { className: 'image-slider-container', style: __assign({}, style) },
+        React__default['default'].createElement("span", { className: "arrow", onClick: function () { return onClickSliderArrow('back'); } },
+            React__default['default'].createElement(Icon, { name: 'arrow-ios-back-outline', fill: '#dedede', size: '35' })),
+        React__default['default'].createElement("div", { className: 'image-outer-slider', ref: outerRef },
+            React__default['default'].createElement("ul", { className: 'image-inner-slider', ref: innerRef }, imageUrlList.map(function (value, index) { return (React__default['default'].createElement("li", { onClick: function () { return onClickImageItem(value.url); }, key: value.url + "-" + index },
+                isShowInformationIcon ? React__default['default'].createElement("div", { style: { width: imageWidth + "px" }, className: 'tag-area' },
+                    value.isRepresentation ? React__default['default'].createElement(Tag, { style: { position: 'absolute', left: '12px' }, color: 'green' }, "Representation") : React__default['default'].createElement(React__default['default'].Fragment, null),
+                    React__default['default'].createElement(Tag, { style: { position: 'absolute', right: '12px' }, color: value.isShow ? 'green' : 'gray' }, value.isShow ? 'Show' : 'Hidden')) : React__default['default'].createElement(React__default['default'].Fragment, null),
+                (isShowInformationIcon && !value.isShow) ? React__default['default'].createElement("div", { style: { width: imageWidth + "px", height: imageHeight + "px" }, className: 'dimmed' }) : React__default['default'].createElement(React__default['default'].Fragment, null),
+                React__default['default'].createElement("img", { width: imageWidth, height: imageHeight, src: value.url }))); }))),
+        React__default['default'].createElement("span", { className: "arrow", onClick: function () { return onClickSliderArrow('forward'); } },
+            React__default['default'].createElement(Icon, { name: 'arrow-ios-forward-outline', fill: '#dedede', size: '35' }))));
 };
 
 var SectionContainer = function (_a) {
     var children = _a.children;
-    return (React__default.createElement("div", { className: 'section-container', style: {
+    return (React__default['default'].createElement("div", { className: 'section-container', style: {
             gridTemplateColumns: "repeat(" + (util_5(children) ? children.length : 1) + ", 1fr)",
         } }, children));
 };

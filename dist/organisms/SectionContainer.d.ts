@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import './SectionContainer.scss';
 declare type Props = {
     children: object;

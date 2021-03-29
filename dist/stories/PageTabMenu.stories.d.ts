@@ -1,4 +1,3 @@
-/// <reference types="react" />
 declare const _default: {
     title: string;
     component: ({ tabList, onSelectMenu, selectedMenu, type }: {
@@ -14,7 +13,7 @@ declare const _default: {
             name: string;
             value: any;
         };
-        type?: "section" | "list" | "page" | "modal" | undefined;
+        type?: "list" | "section" | "page" | "modal" | undefined;
     }) => JSX.Element;
     decorators: ((...args: any) => any)[];
 };

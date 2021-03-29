@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import './ViewMore.scss';
 declare type Props = {
     onClickMoreButton: (count: number) => void;

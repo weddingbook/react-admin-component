@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import './SwitchButton.scss';
 declare type Props = {
     toggleHeight?: number;

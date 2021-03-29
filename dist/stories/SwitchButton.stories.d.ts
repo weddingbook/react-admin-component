@@ -1,4 +1,3 @@
-/// <reference types="react" />
 declare const _default: {
     title: string;
     component: ({ toggleHeight, toggleType, onText, offText, toggleValue, onClick }: {

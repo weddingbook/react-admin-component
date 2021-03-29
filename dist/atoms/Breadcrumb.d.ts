@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import './Breadcrumb.scss';
 declare type Props = {
     breadcrumbs: MenuItem[];

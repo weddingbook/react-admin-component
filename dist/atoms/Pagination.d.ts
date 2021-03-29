@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import './Pagination.scss';
 declare type Props = {
     pageSize: number;

@@ -1,4 +1,3 @@
-/// <reference types="react" />
 declare const _default: {
     title: string;
     component: ({ nowShowingRow, total, onClickMoreButton }: {

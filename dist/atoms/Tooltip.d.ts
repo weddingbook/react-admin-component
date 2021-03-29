@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import './Tooltip.scss';
 declare type Props = {
     children: string | object;
