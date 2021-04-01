@@ -52,7 +52,7 @@ export const ButtonStoryDisabled = () => <Button
     }, 'blue')}
     disabled={true}
 />
-
+export const ButtonStoryText = () => <Button type="text" color="red" />
 export const ButtonStoryWithIcon = () =>
     <>
         <Button size='small' iconName='search-outline' type='line' ></Button>

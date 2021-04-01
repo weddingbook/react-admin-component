@@ -1,229 +1,194 @@
 @import "../assets/scss/color.scss";
 
+%btnBefore {
+	content: '';
+	display: block;
+	position: absolute;
+	left: -1px;
+	top: -1px;
+	right: -1px;
+	bottom: -1px;
+	border-radius: inherit;
+}
 button {
-  border-radius: 8px;
-  color: white;
-  font-weight: bold;
-  font-size: 15px;
-  &:disabled {
-    color: $gray30;
-    border: 1px solid $gray30;
-    background-color: $gray10;
-  }
+	border-radius: 8px;
+	color: white;
+	font-weight: bold;
+	font-size: 15px;
+	&:disabled {
+		color: $gray30;
+		border: 1px solid $gray30;
+		background-color: $gray10;
+	}
 
-  &.in-modal-item {
-    margin: 4px 0 0 8px;
-  }
+	&.in-modal-item {
+		margin: 4px 0 0 8px;
+	}
+	&:hover, &:active, &:focus {
+		position: relative;
+		&.btn-type-solid::before,
+		&.btn-type-line::before {
+			@extend %btnBefore;
+		}
+		&.btn-type-link > span::before,
+		&.btn-type-text > span::before {
+			@extend %btnBefore;
+		}
+	}
+	&:hover {
+		&.btn-type-solid::before,
+		&.btn-type-line::before {
+			background-color: rgba(255, 255, 255, .3);
+		}
+		&.btn-type-link > span::before,
+		&.btn-type-text > span::before {
+			background-color: rgba(255, 255, 255, .3);
+		}
+	}
+	&:active {
+		&.btn-type-solid::before,
+		&.btn-type-line::before {
+			background-color: rgba(0, 0, 0, .3);
+		}
+		&.btn-type-link > span::before,
+		&.btn-type-text > span::before {
+			background-color: rgba(0, 0, 0, .3);
+		}
+	}
 }
 
 @mixin buttonColor($color) {
-  background-color: $color;
-  border: 1px solid $color;
-  color: $color;
-  > i > svg {
-    fill: $color
-  }
+	background-color: $color;
+	border: 1px solid $color;
+	color: $color;
+	> i > svg {
+		fill: $color;
+	}
 }
 @mixin baseStyleLinkAndText() {
-  background-color: transparent;
-  border: none;
-  outline: none;
+	background-color: transparent;
+	border: none;
+	outline: none;
 }
 
 // button color
 .btn-color-blue {
-  @include buttonColor($blue60);
-  &:hover {
-    @include buttonColor($blue40);
-  }
-  &:active {
-    @include buttonColor($blue80);
-  }
+	@include buttonColor($blue60);
 }
 .btn-color-yellow {
-  @include buttonColor($yellow60);
-  &:hover {
-    @include buttonColor($yellow40);
-  }
-  &:active {
-    @include buttonColor($yellow80);
-  }
+	@include buttonColor($yellow60);
 }
 .btn-color-green {
-  @include buttonColor($green60);
-  &:hover {
-    @include buttonColor($green40);
-  }
-  &:active {
-    @include buttonColor($green80);
-  }
+	@include buttonColor($green60);
 }
 .btn-color-red {
-  @include buttonColor($red60);
-  &:hover {
-    @include buttonColor($red40);
-  }
-  &:active {
-    @include buttonColor($red80);
-  }
+	@include buttonColor($red60);
 }
 
 // button size
-
 .btn-size-large {
-  padding: 0 20px 2px;
-  height: 48px;
-  font-size: 15px;
-  &.btn-icon-text {
-    > i > svg {
-      width: 26px;
-      height: 26px;
-    }
-  }
+	padding: 0 16px 2px;
+	height: 48px;
+	font-size: 16px;
+	&.btn-icon-text {
+		> i > svg {
+			width: 26px;
+			height: 26px;
+		}
+	}
 }
 .btn-size-middle {
-  padding: 0 16px 2px;
-  height: 40px;
-  font-size: 14px;
-  &.btn-icon-text {
-    > i > svg {
-      width: 22px;
-      height: 22px;
-    }
-  }
+	padding: 0 12px 2px;
+	height: 40px;
+	font-size: 15px;
+	&.btn-icon-text {
+		> i > svg {
+			width: 22px;
+			height: 22px;
+		}
+	}
 }
 .btn-size-small {
-  padding: 0 12px 1px;
-  height: 32px;
-  font-size: 13px;
-  border-radius: 4px;
-  &.btn-icon-text {
-    > i > svg {
-      width: 18px;
-      height: 18px;
-    }
-  }
+	padding: 0 10px 1px;
+	height: 34px;
+	font-size: 14px;
+	border-radius: 4px;
+	&.btn-icon-text {
+		> i > svg {
+			width: 18px;
+			height: 18px;
+		}
+	}
 }
 .btn-size-xs {
-  padding: 0 8px 1px;
-  height: 24px;
-  font-size: 11px;
-  border-radius: 4px;
-  &.btn-icon-text {
-    > i > svg {
-      width: 14px;
-      height: 14px;
-    }
-  }
+	padding: 0 8px 1px;
+	height: 24px;
+	font-size: 11px;
+	border-radius: 4px;
+	&.btn-icon-text {
+		> i > svg {
+			width: 14px;
+			height: 14px;
+		}
+	}
 }
 
 // button type
 .btn-type-solid {
-  color: white;
-  > i > svg {
-    fill: white
-  }
-  &:hover {
-    color: white;
-    > i > svg {
-      fill: white
-    }
-  }
-  &:focus {
-    box-shadow: 0 1px 5px 0 transparentize($color: $blue80, $amount: 0.2);
-  }
-  &:active {
-    color: white;
-  }
-  &:disabled {
-    border: 1px solid $gray10;
-  }
+	color: white;
+	> i > svg {
+		fill: white;
+	}
+	&:disabled {
+		border: 1px solid $gray10;
+	}
 }
 .btn-type-line {
-  background-color: white;
-  &:hover {
-    background-color: white;
-  }
-  &:focus {
-    box-shadow: 0 1px 5px 0 transparentize($color: $blue80, $amount: 0.2);
-  }
-  &:active {
-    background-color: white;
-  }
-  &:disabled {
-    background-color: white;
-  }
+	background-color: white;
+	&:disabled {
+		background-color: white;
+	}
 }
 .btn-type-text {
-  @include baseStyleLinkAndText();
-  &:hover {
-    @include baseStyleLinkAndText();
-  }
-  &:disabled {
-    @include baseStyleLinkAndText();
-  }
-  &:focus {
-    > span {
-      background-color: $gray20;
-    }
-  }
-  &:active {
-    background-color: transparent;
-    border: none;
-    > span {
-      background-color: transparent;
-    }
-  }
+	@include baseStyleLinkAndText();
+	&:disabled {
+		@include baseStyleLinkAndText();
+	}
 }
 .btn-type-link {
-  @include baseStyleLinkAndText();
-  text-decoration: underline;
-  &:hover {
-    @include baseStyleLinkAndText();
-  }
-  &:disabled {
-    @include baseStyleLinkAndText();
-  }
-  &:focus {
-    > span {
-      background-color: $gray20;
-    }
-  }
-  &:active {
-    background-color: transparent;
-    border: none;
-    > span {
-      background-color: transparent;
-    }
-  }
+	@include baseStyleLinkAndText();
+	text-decoration: underline;
+	&:disabled {
+		@include baseStyleLinkAndText();
+	}
 }
 
 // icon 형식
 .btn-icon-text {
-  padding-top: 2px;
-  > span {
-    margin-left: 8px;
-  }
-  > i {
-    vertical-align: middle;
-  }
+	padding-top: 2px;
+	> span {
+		margin-left: 8px;
+	}
+	> i {
+		vertical-align: middle;
+	}
 }
 
 .btn-disabled {
-  &:hover {
-    cursor: not-allowed;
-    color: $gray30;
-    background-color: $gray10;
+	&:hover {
+		cursor: not-allowed;
+		color: $gray30;
+		background-color: $gray10;
 
-    &.btn-type-line {
-      border: 1px solid $gray30;
-      background-color: white;
-    }
-    &.btn-type-text {
-      background-color: transparent;
-    }
-    &.btn-type-link {
-      background-color: transparent;
-    }
-  }
+		&.btn-type-line {
+			border: 1px solid $gray30;
+			background-color: white;
+		}
+		&.btn-type-text {
+			background-color: transparent;
+		}
+		&.btn-type-link {
+			background-color: transparent;
+		}
+	}
 }
