@@ -11,7 +11,7 @@
     "build-storybook": "build-storybook",
     "storybook-docs": "start-storybook --docs --no-manager-cache",
     "build-storybook-docs": "build-storybook --docs",
-    "chromatic": "yarn chromatic --project-token d4ce429b54f4"
+    "chromatic": "npx chromatic --project-token d4ce429b54f4"
   },
   "repository": {
     "type": "git",
