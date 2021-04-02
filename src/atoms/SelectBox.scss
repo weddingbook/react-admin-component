@@ -11,7 +11,7 @@ $selectArrowSvg: "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><g
     border-radius: 4px;
     border: 1px solid $gray20;
     padding: 6px 12px 7px;
-    font-size: 13px;
+    font-size: 14px;
     color: $gray100;
     cursor: pointer;
     &:focus {
@@ -21,7 +21,7 @@ $selectArrowSvg: "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><g
     }
     .selected-item {
         position: relative;
-        font-size: 13px;
+        font-size: 14px;
         color: $gray100;
         text-overflow: ellipsis;
         white-space: nowrap;

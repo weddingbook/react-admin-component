@@ -14,7 +14,7 @@
             color: $gray40;
 
             &.on {
-                font-size: 13px;
+                font-size: 14px;
                 font-weight: 700;
                 color: $gray80;
             }
@@ -46,7 +46,7 @@
             &.modal-tab-item {
                 &.on {
                     color: $gray100;
-                    font-size: 13px;
+                    font-size: 14px;
                     font-weight: 700;
                     border-bottom: 2px solid $gray90;
                 }
@@ -77,7 +77,7 @@
                     color: $blue60;
                 }
             }
-            
+
         }
     }
 }

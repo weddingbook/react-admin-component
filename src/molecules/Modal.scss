@@ -1,5 +1,9 @@
 @import "../assets/scss/color.scss";
 
+$modal-size-small : 384px;
+$modal-size-medium: 768px;
+$modal-size-large: 1152px;
+
 .modal-wrap {
     display: flex;
     justify-content: center;
@@ -45,10 +49,10 @@
                 display: flex;
                 justify-content: space-between;
                 h1 {
-                    font-size: 15px;
+                    font-size: 18px;
                     font-weight: bold;
                     color: $gray100;
-                    line-height: 1.5;
+                    line-height: 48px;
                 }
                 .btn-area {
                     button + button {
@@ -119,44 +123,44 @@
 }
 
 .modal-size-small {
-    width: 384px;
+    width: $modal-size-small;
     > .modal-contents {
         .modal-item {
-            grid-template-columns: 96px 1fr;
+            grid-template-columns: ($modal-size-small - 40) * 0.25 1fr;
         }
         .combine-input-container {
-            grid-template-columns: 96px 1fr;
+            grid-template-columns: ($modal-size-small - 40) * 0.25 1fr;
         }
         .definition-tag-row {
-            grid-template-columns: 96px 1fr;
+            grid-template-columns: ($modal-size-small - 40) * 0.25 1fr;
         }
     }
 }
 .modal-size-medium {
-    width: 768px;
+    width: $modal-size-medium;
     > .modal-contents {
         .modal-item {
-            grid-template-columns: 192px 1fr;
+            grid-template-columns: ($modal-size-medium - 40) * 0.25 1fr;
         }
         .combine-input-container {
-            grid-template-columns: 192px 1fr;
+            grid-template-columns: ($modal-size-medium - 40) * 0.25 1fr;
         }
         .definition-tag-row {
-            grid-template-columns: 192px 1fr;
+            grid-template-columns: ($modal-size-medium - 40) * 0.25 1fr;
         }
     }
 }
 .modal-size-large {
-    width: 1152px;
+    width: $modal-size-large;
     > .modal-contents {
         .modal-item {
-            grid-template-columns: 288px 1fr;
+            grid-template-columns: ($modal-size-large - 40) * 0.25 1fr;
         }
         .combine-input-container {
-            grid-template-columns: 288px 1fr;
+            grid-template-columns: ($modal-size-large - 40) * 0.25 1fr;
         }
         .definition-tag-row {
-            grid-template-columns: 288px 1fr;
+            grid-template-columns: ($modal-size-large - 40) * 0.25 1fr;
         }
     }
 }

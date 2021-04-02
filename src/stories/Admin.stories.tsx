@@ -243,8 +243,8 @@ export const AdminModal = () => {
     return (
         <>
             <Modal size='medium' title='Create Member'
-                cancelButtonComponent={<Button size='small' type='line' onClick={onCloseModal}>Close</Button>}
-                actionButtonComponent={<Button size='small' onClick={onCreateMember}>Create</Button>}>
+                cancelButtonComponent={<Button size='large' type='line' onClick={onCloseModal}>Close</Button>}
+                actionButtonComponent={<Button size='large' onClick={onCreateMember}>Create</Button>}>
                 <Spin spinning={isLoading} >
                     <form>
                         <ModalItem>

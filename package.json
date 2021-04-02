@@ -8,7 +8,9 @@
   "scripts": {
     "storybook": "start-storybook -p 6006",
     "build": "rm -rf ./dist && rollup -c",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "storybook-docs": "start-storybook --docs --no-manager-cache",
+    "build-storybook-docs": "build-storybook --docs"
   },
   "repository": {
     "type": "git",
@@ -17,7 +19,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@storybook/addon-docs": "^6.1.21",
+    "@storybook/addon-docs": "^6.2.1",
     "@storybook/preset-create-react-app": "^3.1.7",
     "@types/react-router-dom": "^5.1.5",
     "@types/react-tooltip": "^4.2.4",
@@ -33,15 +35,15 @@
   },
   "devDependencies": {
     "@babel/core": "^7.10.2",
-    "@storybook/addon-actions": "^6.1.21",
-    "@storybook/addon-knobs": "^6.1.21",
-    "@storybook/addon-links": "^6.1.21",
-    "@storybook/addons": "^6.1.21",
+    "@storybook/addon-actions": "^6.2.1",
+    "@storybook/addon-knobs": "^6.2.1",
+    "@storybook/addon-links": "^6.2.1",
+    "@storybook/addons": "^6.2.1",
     "@storybook/preset-scss": "^1.0.3",
-    "@storybook/react": "^6.1.21",
+    "@storybook/react": "^6.2.1",
     "@types/react": "^16.9.41",
     "@types/react-dom": "^16.9.8",
-    "babel-loader": "^8.1.0",
+    "babel-loader": "^8.2.2",
     "react-scripts-ts": "^3.1.0",
     "rollup": "^2.21.0",
     "rollup-plugin-commonjs": "^10.1.0",

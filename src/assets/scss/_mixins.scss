@@ -2,13 +2,21 @@
 	line-height: 27px;
 	font-size: 18px;
 }
+@mixin font16 {
+	line-height: 24px;
+	font-size: 16px;
+}
 @mixin font15 {
 	line-height: 22px;
 	font-size: 15px;
 }
-@mixin font13 {
-	line-height: 19px;
-	font-size: 13px;
+@mixin font14 {
+	line-height: 21px;
+	font-size: 14px;
+}
+@mixin font12 {
+	line-height: 18px;
+	font-size: 12px;
 }
 @mixin font11 {
 	line-height: 17px;
@@ -57,8 +65,8 @@
 
 @mixin retina2xMobile {
 	@media only screen and (max-width: 1023px) and (-o-min-device-pixel-ratio: 5/4),
-			only screen and (max-width: 1023px) and (-webkit-min-device-pixel-ratio: 1.25), 
-			only screen and (max-width: 1023px) and (min-device-pixel-ratio: 1.25), 
+			only screen and (max-width: 1023px) and (-webkit-min-device-pixel-ratio: 1.25),
+			only screen and (max-width: 1023px) and (min-device-pixel-ratio: 1.25),
 			only screen and (max-width: 1023px) and (min-resolution: 1.25dppx) {
 		@content;
 	}
@@ -67,7 +75,7 @@
 @mixin retina3xMobile {
 	@media only screen and (max-width: 1023px) and (-o-min-device-pixel-ratio: 9/4),
 			only screen and (max-width: 1023px) and (-webkit-min-device-pixel-ratio: 2.25),
-			 only screen and (max-width: 1023px) and (min-device-pixel-ratio: 2.25), 
+			 only screen and (max-width: 1023px) and (min-device-pixel-ratio: 2.25),
 			 only screen and (max-width: 1023px) and (min-resolution: 2.25dppx) {
 		@content;
 	}

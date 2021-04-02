@@ -1,16 +1,16 @@
 import React from 'react';
-import { Button } from '../index'
-import { withKnobs, text, select } from '@storybook/addon-knobs'
+import {Button} from '../index'
+import {withKnobs, text, select} from '@storybook/addon-knobs'
 
 
 export default {
-    title: '버튼',
+    title: 'Button',
     component: Button,
-    decorators: [withKnobs]
+    decorators: [withKnobs],
 };
 
 export const ButtonStory = () => <Button
-    children={text('버튼내용', '버튼')}
+    children={text('버튼내용', 'Button')}
     type={select('버튼타입', {
         solid: 'solid',
         line: 'line',
@@ -37,7 +37,7 @@ export const ButtonStory = () => <Button
     }, '')}
 />
 
-export const ButtonStoryDisabled = () => <Button
+export const DisabledButton = () => <Button
     type={select('버튼타입', {
         solid: 'solid',
         line: 'line',
@@ -52,19 +52,27 @@ export const ButtonStoryDisabled = () => <Button
     }, 'blue')}
     disabled={true}
 />
-export const ButtonStoryText = () => <Button type="text" color="red" />
+export const ButtonStoryText = () => <Button type="text" color="red"/>
+
 export const ButtonStoryWithIcon = () =>
     <>
-        <Button size='small' iconName='search-outline' type='line' ></Button>
-        <Button size='small' iconName='search-outline' type='line' >아이콘</Button>
+        <Button size='small' iconName='search-outline' type='line'/>
+        <Button size='small' iconName='search-outline' type='line'>아이콘</Button>
         <Button type='line' size='small'>수정</Button>
-        <Button size='xs' iconName='search-outline' type='line' ></Button>
-        <Button size='xs' iconName='search-outline' type='line' >아이콘</Button>
+        <Button size='xs' iconName='search-outline' type='line'/>
+        <Button size='xs' iconName='search-outline' type='line'>아이콘</Button>
         <Button type='line' size='xs'>수정</Button>
-        <Button size='large' iconName='search-outline' type='line' ></Button>
-        <Button size='large' iconName='search-outline' type='line' >아이콘</Button>
+        <Button size='large' iconName='search-outline' type='line'/>
+        <Button size='large' iconName='search-outline' type='line'>아이콘</Button>
         <Button type='line' size='large'>수정</Button>
-        <Button iconName='search-outline' type='line' ></Button>
-        <Button iconName='search-outline' type='line' >아이콘</Button>
-        <Button type='line' >수정</Button>
+        <Button iconName='search-outline' type='line'/>
+        <Button iconName='search-outline' type='line'>아이콘</Button>
+        <Button type='line'>수정</Button>
     </>
+
+export const KKK = () =>
+    <Button iconName='search-outline' type='line'>아이콘</Button>
+
+KKK.parameters = {
+    docs: { source: { code: '<Button iconName=\'search-outline\' type=\'line\'>아이콘</Button>' } },
+}

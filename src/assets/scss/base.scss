@@ -5,7 +5,7 @@ $selectArrowSvg: "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><g
 
 body {
     background-color: $blue8;
-    font-size: 13px;
+    font-size: 14px;
 }
 * {
     font-family: "Spoqa Han Sans", "Sans-serif";
@@ -51,7 +51,7 @@ body {
         vertical-align: middle;
         text-align: center;
         font-weight: normal;
-        font-size: 13px;
+        font-size: 14px;
         color: $gray80;
         background-color: white;
         border-bottom: 1px solid $gray10;
@@ -174,7 +174,7 @@ select {
     border-radius: 4px;
     border: 1px solid $gray20;
     padding: 6px 12px;
-    font-size: 13px;
+    font-size: 14px;
     color: $gray100;
     -moz-appearance: none; /* Firefox */
     -webkit-appearance: none; /* Safari and Chrome */
@@ -342,7 +342,7 @@ label {
         }
         & + label {
             display: inline-block;
-            font-size: 13px;
+            font-size: 14px;
             line-height: 18px;
             color: $gray50;
             // vertical-align: top;

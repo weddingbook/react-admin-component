@@ -9,7 +9,7 @@ type Props = {
 
 const Tag = ({ children, color, style }: Props) => {
     return (
-        <div className={`tag ${color}-tag`} style={{ ...style }}>
+        <div className={`tag-item ${color}-tag`} style={{ ...style }}>
             {children}
         </div>
     )
