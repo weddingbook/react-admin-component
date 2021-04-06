@@ -2003,7 +2003,15 @@ var Breadcrumb = function (_a) {
         }))));
 };
 
-// iconName은 여기서 검색한다 https://akveo.github.io/eva-icons/#/
+/**
+ * Priority : solid > line > text
+ *
+ * Solid type은 최고 우선순위, 주요 기능, 행동 유도를 해야하는 버튼에만 사용
+ *
+ * Link type은 새탭, 새창 등 페이지를 벗어나는 경우에만 사용
+ *
+ * iconName은 여기서 검색한다 https://akveo.github.io/eva-icons/#/
+ */
 var Button = function (_a) {
     var _b = _a.children, children = _b === void 0 ? '버튼' : _b, _c = _a.type, type = _c === void 0 ? 'solid' : _c, _d = _a.color, color = _d === void 0 ? 'blue' : _d, _e = _a.size, size = _e === void 0 ? 'middle' : _e, _f = _a.iconName, iconName = _f === void 0 ? '' : _f, _g = _a.iconSize, iconSize = _g === void 0 ? '18' : _g, onClick = _a.onClick, _h = _a.disabled, disabled = _h === void 0 ? false : _h, style = _a.style, dataTip = _a.dataTip, dataFor = _a.dataFor, className = _a.className;
     var iconButton = React__default['default'].createElement("button", { style: style, onClick: onClick, className: "btn-type-" + type + " btn-color-" + color + " btn-size-" + size + " " + (disabled ? 'btn-disabled' : '') + " btn-icon-text " + className, "data-tip": dataTip, "data-for": dataFor },
@@ -2286,7 +2294,7 @@ var SwitchButton = function (_a) {
 
 var Tag = function (_a) {
     var children = _a.children, color = _a.color, style = _a.style;
-    return (React__default['default'].createElement("div", { className: "tag " + color + "-tag", style: __assign({}, style) }, children));
+    return (React__default['default'].createElement("div", { className: "tag-item " + color + "-tag", style: __assign({}, style) }, children));
 };
 
 var TabMenu = function (_a) {
