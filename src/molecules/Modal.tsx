@@ -11,15 +11,17 @@ type Props = {
     cancelButtonComponent?: object,
     actionButtonComponent?: object,
     footerComponent?: object,
+	withSection?: boolean,
     noScroll?: boolean,
 }
 
 const Modal = ({
-                   children, style, title = 'Modal title', subTitle, size = 'small',
-                   noScroll = false,
-                   onClickInBackground = () => {
-                   }, cancelButtonComponent, actionButtonComponent, footerComponent
-               }: Props) => {
+		children, style, title = 'Modal title', subTitle, size = 'small',
+		withSection = false,
+		noScroll = false,
+		onClickInBackground = () => {
+		}, cancelButtonComponent, actionButtonComponent, footerComponent
+	}: Props) => {
     return (
         <div className='modal-wrap'>
             <div className='overlay' onClick={onClickInBackground}/>
@@ -34,7 +36,7 @@ const Modal = ({
                     </div>
                     <div className='header-bottom'>{subTitle}</div>
                 </header>
-                <div className='modal-contents'>{children}</div>
+                <div className={`modal-contents ${withSection ? 'with-section' : ''}`}>{children}</div>
                 {footerComponent && <footer>{footerComponent}</footer>}
             </div>
         </div>

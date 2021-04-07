@@ -4915,8 +4915,8 @@ var InputContainer = function (_a) {
 };
 
 var Modal = function (_a) {
-    var children = _a.children, style = _a.style, _b = _a.title, title = _b === void 0 ? 'Modal title' : _b, subTitle = _a.subTitle, _c = _a.size, size = _c === void 0 ? 'small' : _c, _d = _a.noScroll, noScroll = _d === void 0 ? false : _d, _e = _a.onClickInBackground, onClickInBackground = _e === void 0 ? function () {
-    } : _e, cancelButtonComponent = _a.cancelButtonComponent, actionButtonComponent = _a.actionButtonComponent, footerComponent = _a.footerComponent;
+    var children = _a.children, style = _a.style, _b = _a.title, title = _b === void 0 ? 'Modal title' : _b, subTitle = _a.subTitle, _c = _a.size, size = _c === void 0 ? 'small' : _c, _d = _a.withSection, withSection = _d === void 0 ? false : _d, _e = _a.noScroll, noScroll = _e === void 0 ? false : _e, _f = _a.onClickInBackground, onClickInBackground = _f === void 0 ? function () {
+    } : _f, cancelButtonComponent = _a.cancelButtonComponent, actionButtonComponent = _a.actionButtonComponent, footerComponent = _a.footerComponent;
     return (React.createElement("div", { className: 'modal-wrap' },
         React.createElement("div", { className: 'overlay', onClick: onClickInBackground }),
         React.createElement("div", { className: "modal modal-size-" + size + " " + (noScroll && 'no-scroll'), style: style },
@@ -4927,7 +4927,7 @@ var Modal = function (_a) {
                         cancelButtonComponent,
                         actionButtonComponent)),
                 React.createElement("div", { className: 'header-bottom' }, subTitle)),
-            React.createElement("div", { className: 'modal-contents' }, children),
+            React.createElement("div", { className: "modal-contents " + (withSection ? 'with-section' : '') }, children),
             footerComponent && React.createElement("footer", null, footerComponent))));
 };
 
