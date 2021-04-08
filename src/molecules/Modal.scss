@@ -67,6 +67,9 @@ $modal-size-large: 1152px;
         }
         > .modal-contents {
             padding: 20px 20px 24px;
+			&.with-section {
+				background-color: #f7f7f7;
+			}
             .modal-item {
                 display: grid;
 

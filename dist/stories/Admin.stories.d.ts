@@ -2,7 +2,7 @@ declare const _default: {
     title: string;
     component: ({ children, direction }: {
         children: object;
-        direction: "column" | "row";
+        direction: "row" | "column";
     }) => JSX.Element;
     decorators: ((...args: any) => any)[];
 };

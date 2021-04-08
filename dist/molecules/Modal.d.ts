@@ -10,7 +10,8 @@ declare type Props = {
     cancelButtonComponent?: object;
     actionButtonComponent?: object;
     footerComponent?: object;
+    withSection?: boolean;
     noScroll?: boolean;
 };
-declare const Modal: ({ children, style, title, subTitle, size, noScroll, onClickInBackground, cancelButtonComponent, actionButtonComponent, footerComponent }: Props) => JSX.Element;
+declare const Modal: ({ children, style, title, subTitle, size, withSection, noScroll, onClickInBackground, cancelButtonComponent, actionButtonComponent, footerComponent }: Props) => JSX.Element;
 export default Modal;
