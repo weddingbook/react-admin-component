@@ -1,6 +1,5 @@
 import React from 'react';
 import './SectionContainer.scss';
-import { isArray } from 'util';
 
 type Props = {
     children: object;
@@ -12,7 +11,7 @@ const SectionContainer = ({ children, direction = 'row' }: Props) => {
         switch (direction) {
             case 'row':
                 return {
-                    gridTemplateColumns: `repeat(${isArray(children) ? children.length : 1}, 1fr)`,
+                    gridTemplateColumns: `repeat(${Array.isArray(children) ? children.length : 1}, 1fr)`,
                 }
             case 'column':
                 return {}
