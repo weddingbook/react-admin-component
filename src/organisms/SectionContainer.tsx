@@ -4,10 +4,10 @@ import { isArray } from 'util';
 
 type Props = {
     children: object;
-    direction: 'row' | 'column';
+    direction?: 'row' | 'column';
 }
 
-const SectionContainer = ({ children, direction }: Props) => {
+const SectionContainer = ({ children, direction = 'row' }: Props) => {
     const containerStyles = (() => {
         switch (direction) {
             case 'row':
