@@ -1,21 +1,27 @@
 .section-container {
     display: grid;
     &.row-container {
-        .section + .section {
-            margin-left: 20px;
+        > .section + .section {
+            margin: 0 0 0 20px;
         }
     }
     &.column-container {
-        .section + .section {
-            margin-top: 20px;
+        > .section + .section {
+            margin: 20px 0 0 0;
         }
     }
 }
-
 .section + .section-container {
     margin-top: 20px;
 }
-
-.section-container + .section-container {
-    margin-top: 20px;
+.column-container {
+    > .section-container + .section-container {
+        margin-top: 20px;
+    }
 }
+.row-container {
+    > .section-container + .section-container {
+        margin-left: 20px;
+    }
+}
+
