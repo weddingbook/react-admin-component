@@ -1,8 +1,14 @@
 .section-container {
     display: grid;
-    
-    .section + .section {
-        margin-left: 20px;
+    &.row-container {
+        .section + .section {
+            margin-left: 20px;
+        }
+    }
+    &.column-container {
+        .section + .section {
+            margin-top: 20px;
+        }
     }
 }
 

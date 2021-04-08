@@ -3,14 +3,23 @@ import './SectionContainer.scss';
 import { isArray } from 'util';
 
 type Props = {
-    children: object,
+    children: object;
+    direction: 'row' | 'column';
 }
 
-const SectionContainer = ({ children }: Props) => {
+const SectionContainer = ({ children, direction }: Props) => {
+    const containerStyles = (() => {
+        switch (direction) {
+            case 'row':
+                return {
+                    gridTemplateColumns: `repeat(${isArray(children) ? children.length : 1}, 1fr)`,
+                }
+            case 'column':
+                return {}
+        }
+    })();
     return (
-        <div className='section-container' style={{
-            gridTemplateColumns: `repeat(${isArray(children) ? children.length : 1}, 1fr)`,
-        }}>
+        <div className={`section-container ${direction}-container`} style={containerStyles}>
             {children}
         </div>
     )

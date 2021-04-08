@@ -1,7 +1,8 @@
 declare const _default: {
     title: string;
-    component: ({ children }: {
+    component: ({ children, direction }: {
         children: object;
+        direction: "column" | "row";
     }) => JSX.Element;
     decorators: ((...args: any) => any)[];
 };
