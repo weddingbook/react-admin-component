@@ -26,8 +26,8 @@
     "@types/react-tooltip": "^4.2.4",
     "antd": "^4.4.2",
     "react": "16.13.1",
-    "react-dom": "16.13.1",
     "react-docgen-typescript-loader": "^3.7.2",
+    "react-dom": "16.13.1",
     "react-eva-icons": "git+https://github.com/weddingbook/react-eva-icons.git",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^3.4.1",
@@ -37,6 +37,7 @@
   "devDependencies": {
     "@babel/core": "^7.10.2",
     "@storybook/addon-actions": "^6.2.1",
+    "@storybook/addon-backgrounds": "^6.2.7",
     "@storybook/addon-knobs": "^6.2.1",
     "@storybook/addon-links": "^6.2.1",
     "@storybook/addons": "^6.2.1",

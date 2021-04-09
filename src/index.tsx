@@ -24,6 +24,7 @@ export { default as Section } from './molecules/Section';
 export { default as Divider } from './atoms/Divider';
 export { default as ModalItem } from './molecules/ModalItem';
 export { default as ImageSlider } from './molecules/ImageSlider';
+export { default as Counter } from './molecules/Counter';
 
 // organisms
 export { default as SectionContainer } from './organisms/SectionContainer';

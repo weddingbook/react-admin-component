@@ -64,6 +64,11 @@ button {
 	> i > svg {
 		fill: $color;
 	}
+	&:disabled {
+		> i > svg {
+			fill: $gray30;
+		}
+	}
 }
 @mixin baseStyleLinkAndText() {
 	background-color: transparent;
@@ -143,6 +148,13 @@ button {
 		border: 1px solid $gray10;
 	}
 }
+.btn-type-lightsolid {
+	background-color: $blue8;
+	border-color: $blue8;
+	&:disabled {
+		border: none;
+	}
+}
 .btn-type-line {
 	background-color: white;
 	&:disabled {
@@ -171,6 +183,21 @@ button {
 	}
 	> i {
 		vertical-align: middle;
+	}
+}
+.btn-only-icon {
+	padding: 0;
+	&.btn-size-xs {
+		width: 24px;
+	}
+	&.btn-size-small {
+		width: 34px;
+	}
+	&.btn-size-middle {
+		width: 40px;
+	}
+	&.btn-size-large {
+		width: 48px;
 	}
 }
 

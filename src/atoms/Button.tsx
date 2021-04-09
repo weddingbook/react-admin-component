@@ -11,7 +11,7 @@ export interface Props {
      *
      * 'link' type = new tap or new window
      */
-    type?: 'solid' | 'line' | 'text' | 'link';
+    type?: 'solid' | 'lightsolid' | 'line' | 'text' | 'link';
     color?: 'blue' | 'yellow' | 'green' | 'red';
     size?: 'xs' | 'small' | 'middle' | 'large';
     /**
@@ -19,6 +19,7 @@ export interface Props {
      */
     iconName?: string;
     iconSize?: string | number;
+    iconFill?: string;
     onClick?: any
     disabled?: boolean
     style?: CSSProperties;
@@ -44,30 +45,33 @@ export interface Props {
  * iconName은 여기서 검색한다 https://akveo.github.io/eva-icons/#/
  */
 const Button = ({
-                    children = '버튼',
-                    type = 'solid',
-                    color = 'blue',
-                    size = 'middle',
-                    iconName = '',
-                    iconSize = '18',
-                    onClick,
-                    disabled = false,
-                    style,
-                    dataTip,
-                    dataFor,
-                    className
-                }: Props) => {
+        children = '버튼',
+        type = 'solid',
+        color = 'blue',
+        size = 'middle',
+        iconName = '',
+        iconSize = '18',
+        iconFill = '#296DF1',
+        onClick,
+        disabled = false,
+        style,
+        dataTip,
+        dataFor,
+        className
+    }: Props) => {
     const iconButton =
         <button
             style={style}
             onClick={onClick}
-            className={`btn-type-${type} btn-color-${color} btn-size-${size} ${disabled ? 'btn-disabled' : ''} btn-icon-text ${className}`}
+            className={`btn-type-${type} btn-color-${color} btn-size-${size} ${disabled ? 'btn-disabled' : ''} ${(iconName && children !== '버튼') ? ' btn-icon-text' : 'btn-only-icon'} ${className}`}
+            disabled={disabled}
             data-tip={dataTip}
             data-for={dataFor}
         >
             <Icon
                 name={iconName}
                 size={iconSize}
+                fill={iconFill}
             />
             {(iconName && children !== '버튼') && <span>{children}</span>}
         </button>
