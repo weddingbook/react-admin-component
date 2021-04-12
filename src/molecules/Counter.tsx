@@ -1,26 +1,33 @@
 import './Counter.scss';
 import React, { useState, useEffect, CSSProperties } from 'react';
 import Button from '../atoms/Button';
-interface Props {
+export interface Props {
     style?: CSSProperties;
 	defaultValue?: number;
 	min?: number;
 	max?: number;
 }
 const Counter = ({ style, defaultValue = 0, min = 0, max }: Props) => {
-	const [value, setValue] = useState(defaultValue);
+	if (min < 0) {
+		console.warn('props min must be greater than 0');
+		min = 0;
+	}
+	if (defaultValue < min) {
+		defaultValue = min;
+	}
+	const [value, setValue] = useState<number|''>(defaultValue);
 	const [buttonState, setButtonState] = useState({
 		minus: true,
 		plus: true
 	});
-	useEffect(() => {
+	const validateCheck = (eventType = 'change') => {
 		if (min !== undefined) {
 			if (value <= min) {
 				setButtonState({
 					...buttonState,
 					minus: false
 				});
-				setValue(min);
+				if (min === 0 || eventType === 'blur') setValue(min);
 			} else if (!buttonState.minus) {
 				setButtonState({
 					...buttonState,
@@ -42,6 +49,11 @@ const Counter = ({ style, defaultValue = 0, min = 0, max }: Props) => {
 				});
 			}
 		}
+	}
+	useEffect(() => {
+		if (value === '') return;
+		console.log(value);
+		validateCheck();
 	}, [value]);
 	return (
 		<div className="counter-wrap" style={{...style}}>
@@ -51,7 +63,10 @@ const Counter = ({ style, defaultValue = 0, min = 0, max }: Props) => {
 				iconName='minus-outline'
 				iconSize="8"
 				type='lightsolid'
-				onClick={() => setValue(value -1)}
+				onClick={() => {
+					setValue(+value -1);
+					// validateCheck();
+				}}
 			/>
 			: <Button 
 				size="xs"
@@ -67,8 +82,13 @@ const Counter = ({ style, defaultValue = 0, min = 0, max }: Props) => {
 				type="text"
 				value={value}
 				onChange={e => {
-					setValue(+e.target.value.replace(/[^0-9]/gi, ''))
+					if (e.target.value === '') {
+						setValue('');
+					} else {
+						setValue(+e.target.value.replace(/[^0-9]/gi, ''))
+					}
 				}}
+				onBlur={() => validateCheck('blur')}
 			/>
 			{buttonState.plus
 			? <Button 
@@ -76,7 +96,11 @@ const Counter = ({ style, defaultValue = 0, min = 0, max }: Props) => {
 				iconName='plus-outline'
 				iconSize="9"
 				type='lightsolid'
-				onClick={() => setValue(value + 1)}
+				onClick={() => {
+					console.log(value)
+					setValue(+value + 1);
+					// validateCheck();
+				}}
 			/>
 			: <Button 
 				size="xs"

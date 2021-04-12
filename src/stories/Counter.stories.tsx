@@ -1,10 +1,11 @@
 import React from 'react';
 import { Counter } from '../index'
-import {withKnobs, text, select} from '@storybook/addon-knobs'
+import {withKnobs, number, text, select} from '@storybook/addon-knobs'
 
 
 export default {
     title: 'Counter',
+	component: Counter,
     decorators: [withKnobs],
 	parameters: {
 		backgrounds: {
@@ -14,11 +15,11 @@ export default {
 };
 export const CounterStory = () => {
 	return (
-		<Counter />
+		<Counter defaultValue={number('defaultValue', 2)} max={number('max', 20)} />
 	)
 }
-export const CounterMaxStory = () => {
+export const CounterHasMinStory = () => {
 	return (
-		<Counter max={10} />
+		<Counter min={number('min', 5)} />
 	)
 }
