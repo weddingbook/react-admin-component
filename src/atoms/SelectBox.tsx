@@ -25,6 +25,7 @@ const SelectBox = ({ options, selectedOption, style, onSelectOptionSet, disabled
     const selectListRef = useRef<HTMLUListElement>(null)
     const [isShowList, setShowList] = useState<boolean>(false)
     const [listPosition, setListPosition] = useState<'top'|'bottom'>('bottom');
+	const additionalHtml = selectedOption.additionalHtml;
 
     let selectItem = selectedRef.current
     let listHeight;
@@ -94,14 +95,16 @@ const SelectBox = ({ options, selectedOption, style, onSelectOptionSet, disabled
                     ref={selectedRef}
                     className='selected-item'
                 >
-					{selectedOption.additionalHtml
+					{additionalHtml
 						? <>
-							{selectedOption.additionalHtml.position === 'before' && 
-								selectedOption.additionalHtml.html
+							{additionalHtml.position === 'before' && 
+								additionalHtml.html
 							}
-							<span style={{verticalAlign: 'middle'}}>{selectedOption.name}</span>
-							{selectedOption.additionalHtml.position === 'after' && 
-								selectedOption.additionalHtml.html
+							<span style={{margin: additionalHtml.position === 'before' ? '0 0 0 8px' : '0 8px 0 0'}}>
+								{selectedOption.name} 12
+							</span>
+							{additionalHtml.position === 'after' && 
+								additionalHtml.html
 							}
 						</>
 						: selectedOption.name
@@ -120,20 +123,27 @@ const SelectBox = ({ options, selectedOption, style, onSelectOptionSet, disabled
                         <li
                             key={option.name}
                             onClick={() => { onClickOption(option) }}
+                            className={`${selectedOption.value === option.value ? 'selected' : ''}`}
                         >
 							{option.additionalHtml
 								? <>
 									{option.additionalHtml.position === 'before' && 
 										option.additionalHtml.html
 									}
-									<span style={{verticalAlign: 'middle'}}>{option.name}</span>
+									<span style={{margin: option.additionalHtml.position === 'before' ? '0 0 0 8px' : '0 8px 0 0'}}>
+										{option.name}
+									</span>
 									{option.additionalHtml.position === 'after' && 
 										option.additionalHtml.html
 									}
 								</>
 								: option.name
 							}
-                            
+                            {selectedOption.value === option.value &&
+                                <span style={{marginLeft: 8}}>
+                                    <Icon name="checkmark-outline" size="9" fill="#296df1" />
+                                </span>
+                            }
                         </li>
                     ))}
                 </ul>}

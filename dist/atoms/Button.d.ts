@@ -9,7 +9,7 @@ export interface Props {
      *
      * 'link' type = new tap or new window
      */
-    type?: 'solid' | 'line' | 'text' | 'link';
+    type?: 'solid' | 'lightsolid' | 'line' | 'text' | 'link';
     color?: 'blue' | 'yellow' | 'green' | 'red';
     size?: 'xs' | 'small' | 'middle' | 'large';
     /**
@@ -17,6 +17,7 @@ export interface Props {
      */
     iconName?: string;
     iconSize?: string | number;
+    iconFill?: string;
     onClick?: any;
     disabled?: boolean;
     style?: CSSProperties;
@@ -39,5 +40,5 @@ export interface Props {
  *
  * iconName은 여기서 검색한다 https://akveo.github.io/eva-icons/#/
  */
-declare const Button: ({ children, type, color, size, iconName, iconSize, onClick, disabled, style, dataTip, dataFor, className }: Props) => JSX.Element;
+declare const Button: ({ children, type, color, size, iconName, iconSize, iconFill, onClick, disabled, style, dataTip, dataFor, className }: Props) => JSX.Element;
 export default Button;

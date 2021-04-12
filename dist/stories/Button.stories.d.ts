@@ -1,6 +1,6 @@
 declare const _default: {
     title: string;
-    component: ({ children, type, color, size, iconName, iconSize, onClick, disabled, style, dataTip, dataFor, className }: import("../atoms/Button").Props) => JSX.Element;
+    component: ({ children, type, color, size, iconName, iconSize, iconFill, onClick, disabled, style, dataTip, dataFor, className }: import("../atoms/Button").Props) => JSX.Element;
     decorators: ((...args: any) => any)[];
 };
 export default _default;

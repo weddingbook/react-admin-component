@@ -2003,9 +2003,9 @@ var Breadcrumb = function (_a) {
  * iconName은 여기서 검색한다 https://akveo.github.io/eva-icons/#/
  */
 var Button = function (_a) {
-    var _b = _a.children, children = _b === void 0 ? '버튼' : _b, _c = _a.type, type = _c === void 0 ? 'solid' : _c, _d = _a.color, color = _d === void 0 ? 'blue' : _d, _e = _a.size, size = _e === void 0 ? 'middle' : _e, _f = _a.iconName, iconName = _f === void 0 ? '' : _f, _g = _a.iconSize, iconSize = _g === void 0 ? '18' : _g, onClick = _a.onClick, _h = _a.disabled, disabled = _h === void 0 ? false : _h, style = _a.style, dataTip = _a.dataTip, dataFor = _a.dataFor, className = _a.className;
-    var iconButton = React.createElement("button", { style: style, onClick: onClick, className: "btn-type-" + type + " btn-color-" + color + " btn-size-" + size + " " + (disabled ? 'btn-disabled' : '') + " btn-icon-text " + className, "data-tip": dataTip, "data-for": dataFor },
-        React.createElement(Icon, { name: iconName, size: iconSize }),
+    var _b = _a.children, children = _b === void 0 ? '버튼' : _b, _c = _a.type, type = _c === void 0 ? 'solid' : _c, _d = _a.color, color = _d === void 0 ? 'blue' : _d, _e = _a.size, size = _e === void 0 ? 'middle' : _e, _f = _a.iconName, iconName = _f === void 0 ? '' : _f, _g = _a.iconSize, iconSize = _g === void 0 ? '18' : _g, _h = _a.iconFill, iconFill = _h === void 0 ? '#296DF1' : _h, onClick = _a.onClick, _j = _a.disabled, disabled = _j === void 0 ? false : _j, style = _a.style, dataTip = _a.dataTip, dataFor = _a.dataFor, className = _a.className;
+    var iconButton = React.createElement("button", { style: style, onClick: onClick, className: "btn-type-" + type + " btn-color-" + color + " btn-size-" + size + " " + (disabled ? 'btn-disabled' : '') + " " + ((iconName && children !== '버튼') ? ' btn-icon-text' : 'btn-only-icon') + " " + className, disabled: disabled, "data-tip": dataTip, "data-for": dataFor },
+        React.createElement(Icon, { name: iconName, size: iconSize, fill: iconFill }),
         (iconName && children !== '버튼') && React.createElement("span", null, children));
     var normalButton = React.createElement("button", { style: style, disabled: disabled, onClick: onClick, className: "btn-type-" + type + " btn-color-" + color + " btn-size-" + size + " " + (disabled ? 'btn-disabled' : '') + " " + className, "data-tip": dataTip, "data-for": dataFor },
         React.createElement("span", null, children));
@@ -2146,6 +2146,8 @@ var SelectBox = function (_a) {
     var selectBoxRef = useRef(null);
     var selectListRef = useRef(null);
     var _b = useState(false), isShowList = _b[0], setShowList = _b[1];
+    var _c = useState('bottom'), listPosition = _c[0], setListPosition = _c[1];
+    var additionalHtml = selectedOption.additionalHtml;
     var selectItem = selectedRef.current;
     var listHeight;
     var handleEventListener = function (e) {
@@ -2175,9 +2177,16 @@ var SelectBox = function (_a) {
             }
             var maxStretchSize = 50; //
             var liHeight = 36;
-            var originListHeight = liHeight;
+            var originListHeight = liHeight * options.length;
             if (originListHeight > 268) {
                 originListHeight = 268;
+            }
+            if (wh - originListHeight < selectedRef.current.getBoundingClientRect().y) {
+                // 화면 하단에 위치해서 li가 안보여질 수 있음
+                setListPosition('top');
+            }
+            else {
+                setListPosition('bottom');
             }
             if (originListHeight > listMaxHeight) {
                 var bottomSpace = void 0;
@@ -2202,23 +2211,29 @@ var SelectBox = function (_a) {
         return disabled
             ? React.createElement(Input, { disabled: true })
             : React.createElement("div", { tabIndex: 0, ref: selectBoxRef, className: 'select-box', onClick: onToggleSelectBox, style: __assign({}, style) },
-                React.createElement("div", { ref: selectedRef, className: 'selected-item' }, selectedOption.additionalHtml
+                React.createElement("div", { ref: selectedRef, className: 'selected-item' }, additionalHtml
                     ? React.createElement(React.Fragment, null,
-                        selectedOption.additionalHtml.position === 'before' &&
-                            selectedOption.additionalHtml.html,
-                        React.createElement("span", { style: { verticalAlign: 'middle' } }, selectedOption.name),
-                        selectedOption.additionalHtml.position === 'after' &&
-                            selectedOption.additionalHtml.html)
+                        additionalHtml.position === 'before' &&
+                            additionalHtml.html,
+                        React.createElement("span", { style: { margin: additionalHtml.position === 'before' ? '0 0 0 8px' : '0 8px 0 0' } },
+                            selectedOption.name,
+                            " 12"),
+                        additionalHtml.position === 'after' &&
+                            additionalHtml.html)
                     : selectedOption.name),
                 React.createElement(Icon, { name: 'arrow-ios-downward-outline', size: '18' }),
-                isShowList && React.createElement("ul", { ref: selectListRef, className: 'list', style: { height: "" + (listHeight + 'px') } }, options.map(function (option) { return (React.createElement("li", { key: option.name, onClick: function () { onClickOption(option); } }, option.additionalHtml
-                    ? React.createElement(React.Fragment, null,
-                        option.additionalHtml.position === 'before' &&
-                            option.additionalHtml.html,
-                        React.createElement("span", { style: { verticalAlign: 'middle' } }, option.name),
-                        option.additionalHtml.position === 'after' &&
-                            option.additionalHtml.html)
-                    : option.name)); })));
+                isShowList && React.createElement("ul", { ref: selectListRef, className: "list list-" + listPosition, style: { height: "" + (listHeight + 'px') } }, options.map(function (option) { return (React.createElement("li", { key: option.name, onClick: function () { onClickOption(option); }, className: "" + (selectedOption.value === option.value ? 'selected' : '') },
+                    option.additionalHtml
+                        ? React.createElement(React.Fragment, null,
+                            option.additionalHtml.position === 'before' &&
+                                option.additionalHtml.html,
+                            React.createElement("span", { style: { margin: option.additionalHtml.position === 'before' ? '0 0 0 8px' : '0 8px 0 0' } }, option.name),
+                            option.additionalHtml.position === 'after' &&
+                                option.additionalHtml.html)
+                        : option.name,
+                    selectedOption.value === option.value &&
+                        React.createElement("span", { style: { marginLeft: 8 } },
+                            React.createElement(Icon, { name: "checkmark-outline", size: "9", fill: "#296df1" })))); })));
     }
 };
 
@@ -5149,6 +5164,72 @@ var ImageSlider = function (_a) {
             React.createElement(Icon, { name: 'arrow-ios-forward-outline', fill: '#dedede', size: '35' }))));
 };
 
+var Counter = function (_a) {
+    var style = _a.style, _b = _a.defaultValue, defaultValue = _b === void 0 ? 0 : _b, _c = _a.min, min = _c === void 0 ? 0 : _c, max = _a.max;
+    if (min < 0) {
+        console.warn('props min must be greater than 0');
+        min = 0;
+    }
+    if (defaultValue < min) {
+        defaultValue = min;
+    }
+    var _d = useState(defaultValue), value = _d[0], setValue = _d[1];
+    var _e = useState({
+        minus: true,
+        plus: true
+    }), buttonState = _e[0], setButtonState = _e[1];
+    var validateCheck = function (eventType) {
+        if (eventType === void 0) { eventType = 'change'; }
+        if (min !== undefined) {
+            if (value <= min) {
+                setButtonState(__assign(__assign({}, buttonState), { minus: false }));
+                if (min === 0 || eventType === 'blur')
+                    setValue(min);
+            }
+            else if (!buttonState.minus) {
+                setButtonState(__assign(__assign({}, buttonState), { minus: true }));
+            }
+        }
+        if (max !== undefined) {
+            if (value >= max) {
+                setButtonState(__assign(__assign({}, buttonState), { plus: false }));
+                setValue(max);
+            }
+            else if (!buttonState.plus) {
+                setButtonState(__assign(__assign({}, buttonState), { plus: true }));
+            }
+        }
+    };
+    useEffect(function () {
+        if (value === '')
+            return;
+        console.log(value);
+        validateCheck();
+    }, [value]);
+    return (React.createElement("div", { className: "counter-wrap", style: __assign({}, style) },
+        buttonState.minus
+            ? React.createElement(Button, { size: "xs", iconName: 'minus-outline', iconSize: "8", type: 'lightsolid', onClick: function () {
+                    setValue(+value - 1);
+                    // validateCheck();
+                } })
+            : React.createElement(Button, { size: "xs", iconName: 'minus-outline', iconSize: "8", iconFill: "red", type: 'lightsolid', disabled: true }),
+        React.createElement("input", { style: { width: value.toString().length * 9 + 22 }, type: "text", value: value, onChange: function (e) {
+                if (e.target.value === '') {
+                    setValue('');
+                }
+                else {
+                    setValue(+e.target.value.replace(/[^0-9]/gi, ''));
+                }
+            }, onBlur: function () { return validateCheck('blur'); } }),
+        buttonState.plus
+            ? React.createElement(Button, { size: 'xs', iconName: 'plus-outline', iconSize: "9", type: 'lightsolid', onClick: function () {
+                    console.log(value);
+                    setValue(+value + 1);
+                    // validateCheck();
+                } })
+            : React.createElement(Button, { size: "xs", iconName: 'plus-outline', iconSize: "9", iconFill: "red", type: 'lightsolid', disabled: true })));
+};
+
 var SectionContainer = function (_a) {
     var children = _a.children, _b = _a.direction, direction = _b === void 0 ? 'row' : _b;
     var containerStyles = (function () {
@@ -5203,5 +5284,5 @@ function useRadioBox(defaultList) {
     };
 }
 
-export { Breadcrumb, Button, ButtonTypeInput, CombineInput, DefinitionTag, DefinitionTagContainer, Divider, ImageSlider, Input, InputContainer, InputRecommend, Modal, ModalItem, Pagination, PopupArea, SearchBox, Section, SectionContainer, SelectBox, SwitchButton, TabMenu, Tag, Tooltip, ViewMore, createPopup, removePopup, useCheckBox, useModal, useRadioBox };
+export { Breadcrumb, Button, ButtonTypeInput, CombineInput, Counter, DefinitionTag, DefinitionTagContainer, Divider, ImageSlider, Input, InputContainer, InputRecommend, Modal, ModalItem, Pagination, PopupArea, SearchBox, Section, SectionContainer, SelectBox, SwitchButton, TabMenu, Tag, Tooltip, ViewMore, createPopup, removePopup, useCheckBox, useModal, useRadioBox };
 //# sourceMappingURL=index.es.js.map

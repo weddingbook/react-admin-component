@@ -13,3 +13,5 @@ declare const _default: {
 export default _default;
 export declare const SelectBoxStory: () => JSX.Element;
 export declare const SelectBoxStoryWithDisabled: () => JSX.Element;
+export declare const selectBoxAdditionalHtml: () => JSX.Element;
+export declare const SelectBoxPositionBottom: () => JSX.Element;
