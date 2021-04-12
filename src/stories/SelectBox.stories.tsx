@@ -34,3 +34,16 @@ export const SelectBoxStoryWithDisabled = () => {
         <SelectBox disabled={true} style={{ width: '300px' }} selectedOption={selectedOption} options={optionList2} onSelectOptionSet={onSet} />
     )
 }
+
+export const SelectBoxPositionBottom = () => {
+    const [selectedOption, onSelectedOptionSet] = useState({ name: '안녕', value: '안녕' });
+
+    const onSet = (option: any) => {
+        onSelectedOptionSet(option)
+    }
+    return (
+        <div style={{position: 'absolute', bottom: 0, left: 0}}>
+            <SelectBox style={{ width: '300px' }} selectedOption={selectedOption} options={optionList2} onSelectOptionSet={onSet} />
+        </div>
+    )
+}

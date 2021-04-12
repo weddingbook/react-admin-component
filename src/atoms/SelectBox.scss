@@ -33,10 +33,8 @@ $selectArrowSvg: "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><g
     .list {
         overflow: auto;
         position: absolute;
-        top: 100%;
         left: 0;
         right: 0;
-        margin-top: 1px;
         padding-bottom: env(safe-area-inset-bottom);
         width: 100%;
         height: auto;
@@ -45,6 +43,14 @@ $selectArrowSvg: "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><g
         box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.5);
         background-color: white;
         z-index: 90;
+        &.list-top {
+            margin-bottom: 1px;
+            bottom: 100%;
+        }
+        &.list-bottom {
+            margin-top: 1px;
+            top: 100%;
+        }
         li {
             padding: 8px 12px;
             cursor: pointer;

@@ -23,8 +23,8 @@ const SelectBox = ({ options, selectedOption, style, onSelectOptionSet, disabled
     const selectedRef = useRef<HTMLDivElement>(null)
     const selectBoxRef = useRef<HTMLDivElement>(null)
     const selectListRef = useRef<HTMLUListElement>(null)
-
     const [isShowList, setShowList] = useState<boolean>(false)
+    const [listPosition, setListPosition] = useState<'top'|'bottom'>('bottom');
 
     let selectItem = selectedRef.current
     let listHeight;
@@ -59,9 +59,15 @@ const SelectBox = ({ options, selectedOption, style, onSelectOptionSet, disabled
             let maxStretchSize = 50; //
             let liHeight = 36;
 
-            let originListHeight = liHeight
+            let originListHeight = liHeight * options.length;
             if (originListHeight > 268) {
                 originListHeight = 268;
+            }
+            if (wh - originListHeight < selectedRef.current!.getBoundingClientRect().y) {
+                // 화면 하단에 위치해서 li가 안보여질 수 있음
+                setListPosition('top');
+            } else {
+                setListPosition('bottom');
             }
 
             if (originListHeight > listMaxHeight) {
@@ -107,7 +113,7 @@ const SelectBox = ({ options, selectedOption, style, onSelectOptionSet, disabled
                 />
                 {isShowList && <ul
                     ref={selectListRef}
-                    className='list'
+                    className={`list list-${listPosition}`}
                     style={{ height: `${listHeight + 'px'}` }}
                 >
                     {options.map(option => (
