@@ -85,6 +85,9 @@ $modal-size-large: 1152px;
                     &.checkbox-radio {
                         top: 0;
                     }
+                    & + *:not(.input-container) {
+                        margin-left: 8px;
+                    }
                 }
 
                 button {

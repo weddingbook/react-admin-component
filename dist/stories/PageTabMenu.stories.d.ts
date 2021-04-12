@@ -13,7 +13,7 @@ declare const _default: {
             name: string;
             value: any;
         };
-        type?: "list" | "section" | "page" | "modal" | undefined;
+        type?: "section" | "list" | "page" | "modal" | undefined;
     }) => JSX.Element;
     decorators: ((...args: any) => any)[];
 };
