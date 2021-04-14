@@ -25,6 +25,8 @@ export { default as Divider } from './atoms/Divider';
 export { default as ModalItem } from './molecules/ModalItem';
 export { default as ImageSlider } from './molecules/ImageSlider';
 export { default as Counter } from './molecules/Counter';
+export { default as DatePicker } from './molecules/DatePicker';
+export { default as RangePicker } from './molecules/RangePicker';
 
 // organisms
 export { default as SectionContainer } from './organisms/SectionContainer';

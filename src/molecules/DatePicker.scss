@@ -1,0 +1,9 @@
+.ant-picker.wb-datepicker {
+	.ant-picker-input {
+		display: flex;
+		flex-direction: row-reverse;
+	}
+	.ant-picker-suffix {
+		margin: 0 12px 0 0;
+	}
+}

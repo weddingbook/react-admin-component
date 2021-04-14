@@ -1,0 +1,16 @@
+.ant-picker.wb-rangepicker {
+	padding-left: 37px;
+	padding-right: 40px;
+	.ant-picker-input > input {
+		width: 80px;
+	}
+	.ant-picker-suffix {
+		position: absolute;
+		left: 12px;
+		top: 50%;
+		transform: translateY(-50%);
+	}
+	.ant-picker-active-bar {
+		margin-left: 37px;
+	}
+}
