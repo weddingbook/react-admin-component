@@ -588,14 +588,12 @@ export const ModalStoryWithIndent = () => {
     </Modal>
 }
 export const ModalWithSection = () => {
-	return <Modal title="modal with section" withSection={true}>
-		<SectionContainer>
+	return <Modal title="modal with section" withSection={true} noScroll>
+		<SectionContainer direction="column">
 			<Section title="section 1">
 				<p>section contents 1</p>
 			</Section>
-		</SectionContainer>
-		<SectionContainer>
-			<Section title="section 2">
+            <Section title="section 2">
 				<p>section contents 2</p>
 			</Section>
 		</SectionContainer>

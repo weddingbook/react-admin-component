@@ -36,8 +36,8 @@ $modal-size-large: 1152px;
         overflow-y: scroll;
         overflow-x: scroll;
         &.no-scroll {
-            overflow-y: inherit;
-            overflow-x: inherit;
+            overflow-y: hidden;
+            overflow-x: hidden;
         }
         > header {
             display: flex;
@@ -69,10 +69,12 @@ $modal-size-large: 1152px;
             padding: 20px 20px 24px;
 			&.with-section {
 				background-color: #f7f7f7;
+                .section {
+                    box-shadow: none;
+                }
 			}
             .modal-item {
                 display: grid;
-
                 &.checkbox-radio {
                     align-items: center;
                 }

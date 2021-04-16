@@ -12,7 +12,7 @@ type Props = {
 const Section = ({ children, style, title = 'Section title', subTitle, buttonComponent }: Props) => {
     return (
         <section className='section' style={style}>
-            <header>
+            <header className="section-header">
                 <div className='header-top'>
                     <h1>{title}</h1>
                     <div className='section-btn-area'>
