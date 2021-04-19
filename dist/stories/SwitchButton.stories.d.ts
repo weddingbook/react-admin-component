@@ -2,7 +2,7 @@ declare const _default: {
     title: string;
     component: ({ toggleHeight, toggleType, onText, offText, toggleValue, onClick }: {
         toggleHeight?: number | undefined;
-        toggleType?: "normal" | "text" | undefined;
+        toggleType?: "text" | "normal" | undefined;
         toggleValue: boolean;
         onClick: Function;
         onText?: string | undefined;
