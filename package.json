@@ -24,10 +24,10 @@
     "@storybook/preset-create-react-app": "^3.1.7",
     "@types/react-router-dom": "^5.1.5",
     "@types/react-tooltip": "^4.2.4",
-    "antd": "^4.4.2",
-    "react": "16.13.1",
+    "antd": "^4.3.5",
+    "react": "^16.13.1",
     "react-docgen-typescript-loader": "^3.7.2",
-    "react-dom": "16.13.1",
+    "react-dom": "^16.13.1",
     "react-eva-icons": "git+https://github.com/weddingbook/react-eva-icons.git",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^3.4.1",
@@ -59,7 +59,7 @@
   },
   "peerDependencies": {
     "node-sass": "^4.14.1",
-    "react": "16.13.1",
-    "react-dom": "16.13.1"
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   }
 }
