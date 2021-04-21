@@ -26,18 +26,18 @@ const Modal = ({
         <div className='modal-wrap'>
             <div className='overlay' onClick={onClickInBackground}/>
             <div className={`modal modal-size-${size} ${noScroll && 'no-scroll'}`} style={style}>
-                <header>
-                    <div className='header-top'>
-                        <h1>{title}</h1>
-                        <div className='btn-area'>
-                            {cancelButtonComponent}
-                            {actionButtonComponent}
-                        </div>
-                    </div>
-                    <div className='header-bottom'>{subTitle}</div>
-                </header>
-                <div className={`modal-contents ${withSection ? 'with-section' : ''}`}>{children}</div>
-                {footerComponent && <footer>{footerComponent}</footer>}
+				<header>
+					<div className='header-top'>
+						<h1>{title}</h1>
+						<div className='btn-area'>
+							{cancelButtonComponent}
+							{actionButtonComponent}
+						</div>
+					</div>
+					<div className='header-bottom'>{subTitle}</div>
+				</header>
+				<div className={`modal-contents ${withSection ? 'with-section' : ''}`}>{children}</div>
+				{footerComponent && <footer>{footerComponent}</footer>}
             </div>
         </div>
     )
