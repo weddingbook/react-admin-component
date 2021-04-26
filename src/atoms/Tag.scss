@@ -9,21 +9,27 @@
     padding: 2px 8px;
     font-size: 10px;
     border-radius: 12px;
-}
-
-.green-tag {
-    background-color: $green10;
-    color: $green60;
-}
-.yellow-tag {
-    background-color: $yellow10;
-    color: $yellow60;
-}
-.red-tag {
-    background-color: $red10;
-    color: $red60;
-}
-.gray-tag {
-    background-color: $gray10;
-    color: $gray60;
+	&.type-block {
+		display: block;
+	}
+	&.green-tag {
+		background-color: $green10;
+		color: $green60;
+	}
+	&.yellow-tag {
+		background-color: $yellow10;
+		color: $yellow60;
+	}
+	&.red-tag {
+		background-color: $red10;
+		color: $red60;
+	}
+	&.gray-tag {
+		background-color: $gray10;
+		color: $gray60;
+	}
+	&.purple-tag {
+		background-color: #f1ecff;
+		color: #743bff;
+	}
 }

@@ -1,0 +1,18 @@
+.tag-container {
+	&.row {
+		.tag-item {
+			margin-left: 8px;
+			&:first-child {
+				margin-left: 0;
+			}
+		}
+	}
+	&.column {
+		.tag-item {
+			margin-top: 8px;
+			&:first-child {
+				margin-top: 0;
+			}
+		}
+	}
+}
