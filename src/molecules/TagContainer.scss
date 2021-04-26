@@ -8,6 +8,8 @@
 		}
 	}
 	&.column {
+		display: inline-flex;
+		flex-direction: column;
 		.tag-item {
 			margin-top: 8px;
 			&:first-child {
