@@ -1993,7 +1993,7 @@ Icon.propTypes = {
 	animation: _propTypes2.default.object,
 	fill: _propTypes2.default.string,
 	name: _propTypes2.default.string,
-	size: _propTypes2.default.string
+	size: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.number])
 };
 
 Icon.defaultProps = {
@@ -16299,8 +16299,8 @@ var PopupInner = /*#__PURE__*/React__namespace.forwardRef(function (props, ref) 
       className: mergedClassName,
       onMouseEnter: onMouseEnter,
       onMouseLeave: onMouseLeave,
-      onMouseDown: onMouseDown,
-      onTouchStart: onTouchStart,
+      onMouseDownCapture: onMouseDown,
+      onTouchStartCapture: onTouchStart,
       style: _objectSpread2$1(_objectSpread2$1({}, motionStyle), mergedStyle)
     }, childNode));
   });
@@ -17319,7 +17319,7 @@ var Wave = /*#__PURE__*/function (_React$Component) {
     _this.destroyed = false;
 
     _this.onClick = function (node, waveColor) {
-      var _a;
+      var _a, _b;
 
       if (!node || isHidden(node) || node.className.indexOf('-leave') >= 0) {
         return;
@@ -17342,7 +17342,7 @@ var Wave = /*#__PURE__*/function (_React$Component) {
       waveColor !== 'transparent') {
         extraNode.style.borderColor = waveColor;
         var nodeRoot = ((_a = node.getRootNode) === null || _a === void 0 ? void 0 : _a.call(node)) || node.ownerDocument;
-        var nodeBody = nodeRoot instanceof Document ? nodeRoot.body : nodeRoot;
+        var nodeBody = nodeRoot instanceof Document ? nodeRoot.body : (_b = nodeRoot.firstChild) !== null && _b !== void 0 ? _b : nodeRoot;
         styleForPseudo = updateCSS("\n      [".concat(getPrefixCls(''), "-click-animating-without-extra-node='true']::after, .").concat(getPrefixCls(''), "-click-animating-node {\n        --antd-wave-shadow-color: ").concat(waveColor, ";\n      }"), 'antd-wave', {
           csp: _this.csp,
           attachTo: nodeBody
@@ -17747,7 +17747,7 @@ var InternalButton = function InternalButton(props, ref) {
   }
 
   var iconType = innerLoading ? 'loading' : icon;
-  var classes = classnames(prefixCls, (_classNames = {}, _defineProperty$1(_classNames, "".concat(prefixCls, "-").concat(type), type), _defineProperty$1(_classNames, "".concat(prefixCls, "-").concat(shape), shape), _defineProperty$1(_classNames, "".concat(prefixCls, "-").concat(sizeCls), sizeCls), _defineProperty$1(_classNames, "".concat(prefixCls, "-icon-only"), !children && children !== 0 && iconType), _defineProperty$1(_classNames, "".concat(prefixCls, "-background-ghost"), ghost && !isUnborderedButtonType(type)), _defineProperty$1(_classNames, "".concat(prefixCls, "-loading"), innerLoading), _defineProperty$1(_classNames, "".concat(prefixCls, "-two-chinese-chars"), hasTwoCNChar && autoInsertSpace), _defineProperty$1(_classNames, "".concat(prefixCls, "-block"), block), _defineProperty$1(_classNames, "".concat(prefixCls, "-dangerous"), !!danger), _defineProperty$1(_classNames, "".concat(prefixCls, "-rtl"), direction === 'rtl'), _classNames), className);
+  var classes = classnames(prefixCls, (_classNames = {}, _defineProperty$1(_classNames, "".concat(prefixCls, "-").concat(type), type), _defineProperty$1(_classNames, "".concat(prefixCls, "-").concat(shape), shape), _defineProperty$1(_classNames, "".concat(prefixCls, "-").concat(sizeCls), sizeCls), _defineProperty$1(_classNames, "".concat(prefixCls, "-icon-only"), !children && children !== 0 && !!iconType), _defineProperty$1(_classNames, "".concat(prefixCls, "-background-ghost"), ghost && !isUnborderedButtonType(type)), _defineProperty$1(_classNames, "".concat(prefixCls, "-loading"), innerLoading), _defineProperty$1(_classNames, "".concat(prefixCls, "-two-chinese-chars"), hasTwoCNChar && autoInsertSpace), _defineProperty$1(_classNames, "".concat(prefixCls, "-block"), block), _defineProperty$1(_classNames, "".concat(prefixCls, "-dangerous"), !!danger), _defineProperty$1(_classNames, "".concat(prefixCls, "-rtl"), direction === 'rtl'), _classNames), className);
   var iconNode = icon && !innerLoading ? icon : /*#__PURE__*/React__namespace.createElement(LoadingIcon, {
     existIcon: !!icon,
     prefixCls: prefixCls,

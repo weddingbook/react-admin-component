@@ -1,4 +1,5 @@
 import { CSSProperties } from 'react';
+import './TagContainer.scss';
 declare type Props = {
     children: JSX.Element;
     style?: CSSProperties;
