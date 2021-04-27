@@ -3,6 +3,7 @@ import { withKnobs } from '@storybook/addon-knobs'
 import { Section, CombineInput, Input } from '../index'
 import { TimePicker, DatePicker } from 'antd';
 import Button from '../atoms/Button';
+import { IRecommendOption } from './../atoms/Input';
 
 export default {
     title: 'Input',
@@ -102,6 +103,32 @@ export const InputStoryWithAutoComplete = () => {
                 </>}
                 recommendOptions={options}
                 onSelectRecommendOptionSet={onSetInputValue}
+                onChange={(e) => { onSetInputValue({ name: e.target.value, value: e.target.value }) }}
+                />
+        </Section>
+    )
+}
+
+export const InputStoryWithThumbAutoComplete = () => {
+    const options = useState([
+        {name: 'title', subName: 'UPGRADE', value: 'title', thumbnail: 'http://placehold.it/400x400'},
+        {name: 'title2', subName: 'BITE', value: 'title2', thumbnail: 'http://placehold.it/200x200'}
+    ])[0];
+    const [inputValue, defaultInputValue] = useState({ name: '', value: '' })
+    const onSetInputValue = (value: IRecommendOption) => {
+        defaultInputValue(value)
+    }
+    const onClickRecommend = (value: IRecommendOption) => {
+        defaultInputValue({name: '', value: ''});
+        alert('click ' + value.name);
+    }
+    return (
+        <Section title='Input Story'>
+            <Input
+                value={inputValue.name}
+                recommendType="thumbnail"
+                recommendOptions={options}
+                onSelectRecommendOptionSet={onClickRecommend}
                 onChange={(e) => { onSetInputValue({ name: e.target.value, value: e.target.value }) }}
                 />
         </Section>

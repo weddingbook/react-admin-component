@@ -1,16 +1,17 @@
 import React, { useState, useRef, useEffect, CSSProperties, ReactComponentElement } from 'react';
 import './InputRecommend.scss';
-
+import { IRecommendOption } from './Input';
 type Props = {
-    options: Array<{name: string, value: any}>
-    style?: CSSProperties
+    options: IRecommendOption[];
+    style?: CSSProperties;
+    recommendType?: 'normal' | 'thumbnail';
     recommendListButton?: ReactComponentElement<'button'>
-    onSelectOptionSet: (option: any) => void
+    onSelectOptionSet: (option: IRecommendOption) => void
     invalid: boolean
     informationMessage: string
 }
 
-const InputRecommend = ({ options, style, recommendListButton, onSelectOptionSet, invalid, informationMessage }: Props) => {
+const InputRecommend = ({ options, style, recommendType = 'normal', recommendListButton, onSelectOptionSet, invalid, informationMessage }: Props) => {
     const [isShowList, setShowList] = useState<boolean>(true)
     const [marginTop, setMarginTop] = useState<string>('0');
 
@@ -37,7 +38,7 @@ const InputRecommend = ({ options, style, recommendListButton, onSelectOptionSet
         setShowList(true)
     }, [options]);
 
-    const onClickOption = (option: {name: string, value: any}) => {
+    const onClickOption = (option: IRecommendOption) => {
         onSelectOptionSet!(option);
     }
     return (
@@ -52,12 +53,25 @@ const InputRecommend = ({ options, style, recommendListButton, onSelectOptionSet
                         key={option.value}
                         onClick={() => { onClickOption(option) }}
                     >
-                        {option.name}
+                        {recommendType === 'normal' &&
+                        <>{option.name}</>
+                        }
+                        {recommendType === 'thumbnail' &&
+                        <div className="input-recommend-thumb-wrap">
+                            <div className="input-recommend-thumb" style={{backgroundImage: `url(${option.thumbnail})`}} />
+                            <div className="input-recommend-thumb-info">
+                                <em>{option.name}</em>
+                                <span>{option.subName}</span>
+                            </div>
+                        </div>
+                        }
                     </li>
                 ))}
+                {recommendListButton &&
                 <div className='button-area'>
                     {recommendListButton}
                 </div>
+                }
             </ul>}
         </>
     )
