@@ -1,5 +1,5 @@
 @import "../assets/scss/color.scss";
-
+@import '../assets/scss/mixins';
 .input-component {
     position: relative;
     display: inline-flex;
@@ -21,6 +21,9 @@
             outline: none;
             border: 1px solid $blue60;
             box-shadow: 0 1px 5px 0 rgba(28, 71, 154, 0.3);
+        }
+        &.disabled {
+            @include inputDisabled;
         }
         &.error {
             border: 1px solid $red60;

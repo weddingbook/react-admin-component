@@ -26,7 +26,7 @@ const Input = ({ style, inputStyle, iconName, afterString, recommendListButton, 
     return (
         <>
             <div className={`input-component ${(required || informationMessage) ? 'message' : ''}`} style={style}>
-                <div className={`default-input-wrapper ${iconName ? 'after-string' : ''} ${required ? 'error' : ''}`} style={inputStyle}>
+                <div className={`default-input-wrapper ${iconName ? 'after-string' : ''} ${required ? 'error' : ''} ${rest.disabled ? 'disabled' : ''}`} style={inputStyle}>
                     {iconName && <Icon
                         name={iconName}
                         size='18'

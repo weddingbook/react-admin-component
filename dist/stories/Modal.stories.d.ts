@@ -6,7 +6,7 @@ declare const _default: {
         style?: React.CSSProperties | undefined;
         title?: string | undefined;
         subTitle?: string | undefined;
-        size?: "small" | "medium" | "large" | undefined;
+        size?: "small" | "large" | "medium" | undefined;
         onClickInBackground?: (() => void) | undefined;
         cancelButtonComponent?: object | undefined;
         actionButtonComponent?: object | undefined;

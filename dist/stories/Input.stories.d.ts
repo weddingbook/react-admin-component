@@ -13,3 +13,4 @@ declare const _default: {
 export default _default;
 export declare const InputStory: () => JSX.Element;
 export declare const InputStoryWithAutoComplete: () => JSX.Element;
+export declare const InputStoryWithThumbAutoComplete: () => JSX.Element;

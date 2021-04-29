@@ -2101,9 +2101,9 @@ var DefinitionTag = function (_a) {
 };
 
 var InputRecommend = function (_a) {
-    var options = _a.options, style = _a.style, recommendListButton = _a.recommendListButton, onSelectOptionSet = _a.onSelectOptionSet, invalid = _a.invalid, informationMessage = _a.informationMessage;
-    var _b = useState(true), isShowList = _b[0], setShowList = _b[1];
-    var _c = useState('0'), marginTop = _c[0], setMarginTop = _c[1];
+    var options = _a.options, style = _a.style, _b = _a.recommendType, recommendType = _b === void 0 ? 'normal' : _b, recommendListButton = _a.recommendListButton, onSelectOptionSet = _a.onSelectOptionSet, invalid = _a.invalid, informationMessage = _a.informationMessage;
+    var _c = useState(true), isShowList = _c[0], setShowList = _c[1];
+    var _d = useState('0'), marginTop = _d[0], setMarginTop = _d[1];
     var selectListRef = useRef(null);
     var handleEventListener = function (e) {
         if (isShowList && (e.target !== selectListRef.current)) {
@@ -2130,19 +2130,28 @@ var InputRecommend = function (_a) {
         onSelectOptionSet(option);
     };
     return (React__default.createElement(React__default.Fragment, null, isShowList && React__default.createElement("ul", { ref: selectListRef, className: 'input-recommend', style: __assign(__assign({}, style), { marginTop: marginTop }) },
-        options.map(function (option) { return (React__default.createElement("li", { key: option.value, onClick: function () { onClickOption(option); } }, option.name)); }),
-        React__default.createElement("div", { className: 'button-area' }, recommendListButton))));
+        options.map(function (option) { return (React__default.createElement("li", { key: option.value, onClick: function () { onClickOption(option); } },
+            recommendType === 'normal' &&
+                React__default.createElement(React__default.Fragment, null, option.name),
+            recommendType === 'thumbnail' &&
+                React__default.createElement("div", { className: "input-recommend-thumb-wrap" },
+                    React__default.createElement("div", { className: "input-recommend-thumb", style: { backgroundImage: "url(" + option.thumbnail + ")" } }),
+                    React__default.createElement("div", { className: "input-recommend-thumb-info" },
+                        React__default.createElement("em", null, option.name),
+                        React__default.createElement("span", null, option.subName))))); }),
+        recommendListButton &&
+            React__default.createElement("div", { className: 'button-area' }, recommendListButton))));
 };
 
 var Input = function (_a) {
-    var style = _a.style, inputStyle = _a.inputStyle, iconName = _a.iconName, afterString = _a.afterString, recommendListButton = _a.recommendListButton, recommendOptions = _a.recommendOptions, onSelectRecommendOptionSet = _a.onSelectRecommendOptionSet, _b = _a.errorMessage, errorMessage = _b === void 0 ? 'Error message' : _b, _c = _a.informationMessage, informationMessage = _c === void 0 ? '' : _c, _d = _a.required, required = _d === void 0 ? false : _d, rest = __rest$7(_a, ["style", "inputStyle", "iconName", "afterString", "recommendListButton", "recommendOptions", "onSelectRecommendOptionSet", "errorMessage", "informationMessage", "required"]);
+    var style = _a.style, inputStyle = _a.inputStyle, iconName = _a.iconName, afterString = _a.afterString, recommendListButton = _a.recommendListButton, recommendOptions = _a.recommendOptions, recommendType = _a.recommendType, onSelectRecommendOptionSet = _a.onSelectRecommendOptionSet, _b = _a.errorMessage, errorMessage = _b === void 0 ? 'Error message' : _b, _c = _a.informationMessage, informationMessage = _c === void 0 ? '' : _c, _d = _a.required, required = _d === void 0 ? false : _d, rest = __rest$7(_a, ["style", "inputStyle", "iconName", "afterString", "recommendListButton", "recommendOptions", "recommendType", "onSelectRecommendOptionSet", "errorMessage", "informationMessage", "required"]);
     return (React__default.createElement(React__default.Fragment, null,
         React__default.createElement("div", { className: "input-component " + ((required || informationMessage) ? 'message' : ''), style: style },
-            React__default.createElement("div", { className: "default-input-wrapper " + (iconName ? 'after-string' : '') + " " + (required ? 'error' : ''), style: inputStyle },
+            React__default.createElement("div", { className: "default-input-wrapper " + (iconName ? 'after-string' : '') + " " + (required ? 'error' : '') + " " + (rest.disabled ? 'disabled' : ''), style: inputStyle },
                 iconName && React__default.createElement(Icon$1, { name: iconName, size: '18' }),
                 React__default.createElement("input", __assign({}, rest, { className: "" + (afterString ? 'after-string' : ''), required: required })),
                 afterString && React__default.createElement("span", { className: 'unit' }, afterString)),
-            (recommendOptions && onSelectRecommendOptionSet) && React__default.createElement(InputRecommend, { invalid: required, informationMessage: informationMessage, recommendListButton: recommendListButton, options: recommendOptions, onSelectOptionSet: onSelectRecommendOptionSet }),
+            (recommendOptions && onSelectRecommendOptionSet) && React__default.createElement(InputRecommend, { invalid: required, informationMessage: informationMessage, recommendListButton: recommendListButton, options: recommendOptions, onSelectOptionSet: onSelectRecommendOptionSet, recommendType: recommendType }),
             informationMessage && React__default.createElement("span", { className: 'input-message' }, informationMessage),
             (required && errorMessage) && React__default.createElement("span", { className: 'input-message error' }, errorMessage))));
 };

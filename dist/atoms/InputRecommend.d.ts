@@ -1,15 +1,14 @@
 import { CSSProperties, ReactComponentElement } from 'react';
 import './InputRecommend.scss';
+import { IRecommendOption } from './Input';
 declare type Props = {
-    options: Array<{
-        name: string;
-        value: any;
-    }>;
+    options: IRecommendOption[];
     style?: CSSProperties;
+    recommendType?: 'normal' | 'thumbnail';
     recommendListButton?: ReactComponentElement<'button'>;
-    onSelectOptionSet: (option: any) => void;
+    onSelectOptionSet: (option: IRecommendOption) => void;
     invalid: boolean;
     informationMessage: string;
 };
-declare const InputRecommend: ({ options, style, recommendListButton, onSelectOptionSet, invalid, informationMessage }: Props) => JSX.Element;
+declare const InputRecommend: ({ options, style, recommendType, recommendListButton, onSelectOptionSet, invalid, informationMessage }: Props) => JSX.Element;
 export default InputRecommend;

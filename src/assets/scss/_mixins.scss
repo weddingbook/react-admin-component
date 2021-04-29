@@ -26,6 +26,11 @@
 	line-height: 15px;
 	font-size: 10px;
 }
+@mixin inputDisabled {
+	color: $gray30;
+	background-color: $gray10;
+	cursor: not-allowed;
+}
 
 @mixin mediaPc {
 	@media only screen and (min-width: 1024px) {
