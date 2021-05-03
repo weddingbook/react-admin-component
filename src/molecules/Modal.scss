@@ -37,7 +37,7 @@ $modal-size-large: 1152px;
         &.no-scroll {
             overflow-y: inherit;
         }
-        header {
+        .modal-header {
             display: flex;
             flex-direction: column;
             padding: 20px;
