@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { withKnobs } from '@storybook/addon-knobs'
-import { SelectBox } from '../index';
-import { ISelectBoxOption } from './../../dist/atoms/SelectBox.d';
+import { SelectBox, MultiSelectBox, ISelectBoxOption } from '../index';
 
 export default {
     title: 'SelectBox',
@@ -76,4 +75,24 @@ export const SelectBoxPositionBottom = () => {
             <SelectBox style={{ width: '300px' }} selectedOption={selectedOption} options={optionList2} onSelectOptionSet={onSet} />
         </div>
     )
+}
+
+export const MultiSelectBoxStory = () => {
+	const [data, setData] = useState<ISelectBoxOption[]>([{name: 'hi1', value: 'hi1'}, {name: 'hi2', value: 'hi2'}, {name: 'hi3', value: 'hi3'}]);
+	const [selectedOptions, setSelectedOptions] = useState<ISelectBoxOption[]>([]);
+	return (
+		<MultiSelectBox 
+			style={{minWidth: '200px'}}
+			options={data}
+			selectedOptions={selectedOptions}
+			selectPrefix="@"
+			clickOption={item => {
+				if (selectedOptions.filter(option => option.value === item.value).length) {
+					setSelectedOptions(selectedOptions.filter(option => option.value !== item.value));	
+				} else {
+					setSelectedOptions([...selectedOptions, item]);
+				}
+			}}
+		/>
+	)
 }
