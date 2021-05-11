@@ -9,9 +9,10 @@ interface Props extends InputProps {
 	selectPrefix?: string;
 	options: ISelectBoxOption[];
 	selectedOptions: ISelectBoxOption[];
+	setSelectedOptions: React.Dispatch<React.SetStateAction<ISelectBoxOption[]>>;
 	clickOption?: (item: ISelectBoxOption) => void;
 }
-const MultiSelectBox = ({selectPrefix = '', multiSelect = false, options, selectedOptions, clickOption, ...rest}: Props) => {
+const MultiSelectBox = ({selectPrefix = '', multiSelect = false, options, selectedOptions, setSelectedOptions, clickOption, ...rest}: Props) => {
 	const [inputValue, setInputValue] = useState('');
 	const [showOptions, setShowOptions] = useState(false);
 	const optionRef = useRef<HTMLUListElement|null>(null);
@@ -21,6 +22,7 @@ const MultiSelectBox = ({selectPrefix = '', multiSelect = false, options, select
 	const onClickList = (item: ISelectBoxOption) => {
 		if (typeof clickOption === 'function') {
 			clickOption(item);
+			setInputValue('');
 			setShowOptions(false);
 		}
 	}
@@ -35,7 +37,7 @@ const MultiSelectBox = ({selectPrefix = '', multiSelect = false, options, select
 		setFiltered(
 			options.filter(option => option.name.indexOf(inputValue) !== -1)
 		);
-	}, [inputValue]);
+	}, [inputValue, selectedOptions]);
 	useEffect(() => {
 		const hideOptions = (e: MouseEvent) => {
 			if (optionRef.current!.contains(e.target as Node) || inputRef.current?.contains(e.target as Node)) {
@@ -63,6 +65,11 @@ const MultiSelectBox = ({selectPrefix = '', multiSelect = false, options, select
 					inputStyle={{...rest.inputStyle, paddingLeft: selectedOptions.length > 0 ? selectedRef.current?.clientWidth! - 12 : 0 }} 
 					onFocus={onFocusInput}
 					onChange={e => setInputValue(e.target.value)}
+					onKeyDown={e => {
+						if (e.keyCode === 8 && inputValue === '' && selectedOptions.length > 0) {
+							setSelectedOptions(selectedOptions.slice(0, selectedOptions.length -1));
+						}
+					}}
 				/>
 			</div>
 			<ul 
@@ -77,9 +84,9 @@ const MultiSelectBox = ({selectPrefix = '', multiSelect = false, options, select
 						key={`multi-select-option-${item.value}`}
 					>
 						<span style={{marginRight: 6}}>{item.name}</span>
-						{isSelected(item) &&
-						<Icon name="checkmark-outline" size="14" fill="#296df1" />
-						}
+						<span style={{display: isSelected(item) ? 'inline-block' : 'none'}}>
+							<Icon name="checkmark-outline" size="14" fill="#296df1" />
+						</span>
 					</li>
 				))}
 			</ul>

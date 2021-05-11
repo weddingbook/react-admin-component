@@ -85,6 +85,7 @@ export const MultiSelectBoxStory = () => {
 			style={{minWidth: '200px'}}
 			options={data}
 			selectedOptions={selectedOptions}
+			setSelectedOptions={setSelectedOptions}
 			selectPrefix="@"
 			clickOption={item => {
 				if (selectedOptions.filter(option => option.value === item.value).length) {
