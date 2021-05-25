@@ -2327,6 +2327,63 @@ var Pagination = function (_a) {
                 React__default['default'].createElement(Icon$1, { name: 'arrow-ios-forward-outline', size: '18' })))));
 };
 
+var MultiSelectBox = function (_a) {
+    var _b;
+    var _c = _a.selectPrefix, selectPrefix = _c === void 0 ? '' : _c; _a.multiSelect; var options = _a.options, selectedOptions = _a.selectedOptions, setSelectedOptions = _a.setSelectedOptions, clickOption = _a.clickOption, rest = __rest$7(_a, ["selectPrefix", "multiSelect", "options", "selectedOptions", "setSelectedOptions", "clickOption"]);
+    var _e = React.useState(''), inputValue = _e[0], setInputValue = _e[1];
+    var _f = React.useState(false), showOptions = _f[0], setShowOptions = _f[1];
+    var optionRef = React.useRef(null);
+    var inputRef = React.useRef(null);
+    var selectedRef = React.useRef(null);
+    var _g = React.useState(options.filter(function (option) { return option.name.indexOf(inputValue) !== -1; })), filtered = _g[0], setFiltered = _g[1];
+    var onClickList = function (item) {
+        if (typeof clickOption === 'function') {
+            clickOption(item);
+            setInputValue('');
+            setShowOptions(false);
+        }
+    };
+    var onFocusInput = function () {
+        setShowOptions(true);
+    };
+    var isSelected = function (item) {
+        if (!selectedOptions.length)
+            return false;
+        return selectedOptions.filter(function (option) { return option.value === item.value; }).length > 0;
+    };
+    React.useEffect(function () {
+        setFiltered(options.filter(function (option) { return option.name.indexOf(inputValue) !== -1; }));
+    }, [inputValue, selectedOptions]);
+    React.useEffect(function () {
+        var hideOptions = function (e) {
+            var _a;
+            if (optionRef.current.contains(e.target) || ((_a = inputRef.current) === null || _a === void 0 ? void 0 : _a.contains(e.target))) ;
+            else {
+                setShowOptions(false);
+            }
+        };
+        window.addEventListener('click', hideOptions);
+        return function () {
+            window.removeEventListener('click', hideOptions);
+        };
+    }, []);
+    return (React__default['default'].createElement("div", { className: "auto-complete-wrap" },
+        React__default['default'].createElement("div", { ref: inputRef },
+            selectedOptions.length > 0 &&
+                React__default['default'].createElement("div", { className: "selected-option-wrap", ref: selectedRef }, selectedOptions.map(function (option) { return React__default['default'].createElement("span", { className: "selected-option-name", key: "multi-select-selected-" + option.value },
+                    selectPrefix,
+                    option.name); })),
+            React__default['default'].createElement(Input, __assign({}, rest, { value: inputValue, inputStyle: __assign(__assign({}, rest.inputStyle), { paddingLeft: selectedOptions.length > 0 ? ((_b = selectedRef.current) === null || _b === void 0 ? void 0 : _b.clientWidth) - 12 : 0 }), onFocus: onFocusInput, onChange: function (e) { return setInputValue(e.target.value); }, onKeyDown: function (e) {
+                    if (e.keyCode === 8 && inputValue === '' && selectedOptions.length > 0) {
+                        setSelectedOptions(selectedOptions.slice(0, selectedOptions.length - 1));
+                    }
+                } }))),
+        React__default['default'].createElement("ul", { className: "auto-complete-list", style: { display: showOptions ? 'block' : 'none' }, ref: optionRef }, filtered.map(function (item) { return (React__default['default'].createElement("li", { className: isSelected(item) ? 'selected' : '', onClick: function () { return onClickList(item); }, key: "multi-select-option-" + item.value },
+            React__default['default'].createElement("span", { style: { marginRight: 6 } }, item.name),
+            React__default['default'].createElement("span", { style: { display: isSelected(item) ? 'inline-block' : 'none' } },
+                React__default['default'].createElement(Icon$1, { name: "checkmark-outline", size: "14", fill: "#296df1" })))); }))));
+};
+
 var SwitchButton = function (_a) {
     var _b = _a.toggleHeight, toggleHeight = _b === void 0 ? 24 : _b, _c = _a.toggleType, toggleType = _c === void 0 ? 'normal' : _c, onText = _a.onText, offText = _a.offText, toggleValue = _a.toggleValue, onClick = _a.onClick;
     var toggleButtonHeight = toggleHeight * 5 / 6;
@@ -4987,7 +5044,7 @@ var Modal = function (_a) {
     return (React__default['default'].createElement("div", { className: 'modal-wrap' },
         React__default['default'].createElement("div", { className: 'overlay', onClick: onClickInBackground }),
         React__default['default'].createElement("div", { className: "modal modal-size-" + size + " " + (noScroll && 'no-scroll'), style: style },
-            React__default['default'].createElement("header", null,
+            React__default['default'].createElement("header", { className: "modal-header" },
                 React__default['default'].createElement("div", { className: 'header-top' },
                     React__default['default'].createElement("h1", null, title),
                     React__default['default'].createElement("div", { className: 'btn-area' },
@@ -28880,6 +28937,7 @@ exports.InputContainer = InputContainer;
 exports.InputRecommend = InputRecommend;
 exports.Modal = Modal;
 exports.ModalItem = ModalItem;
+exports.MultiSelectBox = MultiSelectBox;
 exports.Pagination = Pagination;
 exports.PopupArea = PopupArea;
 exports.RangePicker = RangePicker;

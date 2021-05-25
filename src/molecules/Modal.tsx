@@ -26,7 +26,7 @@ const Modal = ({
         <div className='modal-wrap'>
             <div className='overlay' onClick={onClickInBackground}/>
             <div className={`modal modal-size-${size} ${noScroll && 'no-scroll'}`} style={style}>
-				<header>
+				<header className="modal-header">
 					<div className='header-top'>
 						<h1>{title}</h1>
 						<div className='btn-area'>
