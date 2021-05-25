@@ -6,6 +6,7 @@ export { default as DefinitionTag } from './atoms/DefinitionTag';
 export { default as InputRecommend } from './atoms/InputRecommend';
 export { default as Pagination } from './atoms/Pagination';
 export { default as SelectBox, ISelectBoxOption } from './atoms/SelectBox';
+export { default as MultiSelectBox } from './atoms/MultiSelectBox';
 export { default as Input } from './atoms/Input';
 export { default as SwitchButton } from './atoms/SwitchButton';
 export { default as Tag } from './atoms/Tag';
