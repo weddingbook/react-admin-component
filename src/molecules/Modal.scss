@@ -78,7 +78,8 @@ $modal-size-large: 1152px;
                 }
 
                 > label {
-                    align-self: center;
+                    padding-top: 7px;
+                    align-self: top;
                     justify-self: end;
                     text-align: right;
 
@@ -89,7 +90,14 @@ $modal-size-large: 1152px;
                         margin-left: 8px;
                     }
                 }
-
+                .modal-item-text {
+                    font-size: 14px;
+                    color: $gray100;
+                }
+                .modal-item-additional-info {
+                    font-size: 10px;
+                    color: $gray60;
+                }
                 button {
                     justify-self: start;
                 }
