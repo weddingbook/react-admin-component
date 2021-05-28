@@ -10,6 +10,7 @@ export interface Props extends InputHTMLAttributes<HTMLInputElement> {
     style?: CSSProperties;
     inputStyle?: CSSProperties;
     iconName?: string;
+    iconSize?: number;
     afterString?: string;
     recommendListButton?: ReactComponentElement<'button'>;
     recommendOptions?: IRecommendOption[];
@@ -18,5 +19,5 @@ export interface Props extends InputHTMLAttributes<HTMLInputElement> {
     errorMessage?: string;
     informationMessage?: string;
 }
-declare const Input: ({ style, inputStyle, iconName, afterString, recommendListButton, recommendOptions, recommendType, onSelectRecommendOptionSet, errorMessage, informationMessage, required, ...rest }: Props) => JSX.Element;
+declare const Input: ({ style, inputStyle, iconName, iconSize, afterString, recommendListButton, recommendOptions, recommendType, onSelectRecommendOptionSet, errorMessage, informationMessage, required, ...rest }: Props) => JSX.Element;
 export default Input;
