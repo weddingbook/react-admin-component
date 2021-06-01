@@ -20,7 +20,8 @@
             }
             
             > label {
-                justify-self: end;
+                //justify-self: end;
+                text-align: end;
             }
         }
         &.stage-1 {
@@ -36,7 +37,8 @@
             margin-top: 16px;
 
             > span {
-                justify-self: end;
+                //justify-self: end;
+                text-align: end;
             }
             > .input-list {
                 display: flex;
@@ -50,7 +52,8 @@
             margin-top: 16px;
 
             > span {
-                justify-self: end;
+                //justify-self: end;
+                text-align: end;
             }
             > .combine-input-list {
                 display: grid;
