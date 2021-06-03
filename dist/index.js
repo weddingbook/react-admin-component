@@ -4255,9 +4255,7 @@ var CombineInput = function (_a) {
     var children = _a.children, style = _a.style, title = _a.title;
     return (React__default['default'].createElement("div", { className: 'combine-input-container', style: __assign({}, style) },
         React__default['default'].createElement("span", null, title),
-        React__default['default'].createElement("div", { className: 'combine-input-list', style: { gridTemplateColumns: "repeat(auto-fill, minmax(" + (1 / children.length) * 100 + "%, 1fr)" } },
-            children,
-            ".search-box-wrapper")));
+        React__default['default'].createElement("div", { className: 'combine-input-list', style: { gridTemplateColumns: "repeat(auto-fill, minmax(" + (1 / children.length) * 100 + "%, 1fr)" } }, children)));
 };
 
 var isBuffer = function isBuffer(arg) {
