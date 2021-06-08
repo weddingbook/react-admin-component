@@ -2298,13 +2298,13 @@ var Pagination = function (_a) {
 
 var MultiSelectBox = function (_a) {
     var _b;
-    var _c = _a.selectPrefix, selectPrefix = _c === void 0 ? '' : _c; _a.multiSelect; var options = _a.options, selectedOptions = _a.selectedOptions, setSelectedOptions = _a.setSelectedOptions, clickOption = _a.clickOption, rest = __rest$7(_a, ["selectPrefix", "multiSelect", "options", "selectedOptions", "setSelectedOptions", "clickOption"]);
-    var _e = useState(''), inputValue = _e[0], setInputValue = _e[1];
-    var _f = useState(false), showOptions = _f[0], setShowOptions = _f[1];
+    var _c = _a.styleSelectBox, styleSelectBox = _c === void 0 ? { width: 100 } : _c, _d = _a.selectPrefix, selectPrefix = _d === void 0 ? '' : _d; _a.multiSelect; var options = _a.options, selectedOptions = _a.selectedOptions, setSelectedOptions = _a.setSelectedOptions, clickOption = _a.clickOption, rest = __rest$7(_a, ["styleSelectBox", "selectPrefix", "multiSelect", "options", "selectedOptions", "setSelectedOptions", "clickOption"]);
+    var _f = useState(''), inputValue = _f[0], setInputValue = _f[1];
+    var _g = useState(false), showOptions = _g[0], setShowOptions = _g[1];
     var optionRef = useRef(null);
     var inputRef = useRef(null);
     var selectedRef = useRef(null);
-    var _g = useState(options.filter(function (option) { return option.name.indexOf(inputValue) !== -1; })), filtered = _g[0], setFiltered = _g[1];
+    var _h = useState(options.filter(function (option) { return option.name.indexOf(inputValue) !== -1; })), filtered = _h[0], setFiltered = _h[1];
     var onClickList = function (item) {
         if (typeof clickOption === 'function') {
             clickOption(item);
@@ -2336,13 +2336,13 @@ var MultiSelectBox = function (_a) {
             window.removeEventListener('click', hideOptions);
         };
     }, []);
-    return (React__default.createElement("div", { className: "auto-complete-wrap" },
+    return (React__default.createElement("div", { className: "auto-complete-wrap", style: styleSelectBox },
         React__default.createElement("div", { ref: inputRef },
             selectedOptions.length > 0 &&
                 React__default.createElement("div", { className: "selected-option-wrap", ref: selectedRef }, selectedOptions.map(function (option) { return React__default.createElement("span", { className: "selected-option-name", key: "multi-select-selected-" + option.value },
                     selectPrefix,
                     option.name); })),
-            React__default.createElement(Input, __assign({}, rest, { value: inputValue, inputStyle: __assign(__assign({}, rest.inputStyle), { paddingLeft: selectedOptions.length > 0 ? ((_b = selectedRef.current) === null || _b === void 0 ? void 0 : _b.clientWidth) - 12 : 0 }), onFocus: onFocusInput, onChange: function (e) { return setInputValue(e.target.value); }, onKeyDown: function (e) {
+            React__default.createElement(Input, __assign({}, rest, { style: { width: '100%' }, className: "auto-complete-input", value: inputValue, inputStyle: __assign(__assign({}, rest.inputStyle), { paddingLeft: selectedOptions.length > 0 ? ((_b = selectedRef.current) === null || _b === void 0 ? void 0 : _b.clientWidth) - 12 : 0 }), onFocus: onFocusInput, onChange: function (e) { return setInputValue(e.target.value); }, onKeyDown: function (e) {
                     if (e.keyCode === 8 && inputValue === '' && selectedOptions.length > 0) {
                         setSelectedOptions(selectedOptions.slice(0, selectedOptions.length - 1));
                     }

@@ -2,6 +2,9 @@
 .auto-complete-wrap {
 	position: relative;
 	display: inline-block;
+    .auto-complete-input{
+        width: fit-content;
+    }
 	.selected-option-wrap {
 		position: absolute;
 		padding: 0 8px 0 12px;
@@ -17,6 +20,8 @@
 		}
 	}
 	.auto-complete-list {
+        overflow: auto;
+        height: 200px;
         z-index: 99;
 		display: none;
 		position: absolute;
