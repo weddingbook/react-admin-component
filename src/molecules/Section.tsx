@@ -7,9 +7,10 @@ type Props = {
     title?: string,
     subTitle?: string,
     buttonComponent?: object,
+    footerComponent?: object
 }
 
-const Section = ({ children, style, title = 'Section title', subTitle, buttonComponent }: Props) => {
+const Section = ({ children, style, title = 'Section title', subTitle, buttonComponent, footerComponent }: Props) => {
     return (
         <section className='section' style={style}>
             <header className="section-header">
@@ -22,6 +23,7 @@ const Section = ({ children, style, title = 'Section title', subTitle, buttonCom
                 <div className='header-bottom'>{subTitle}</div>
             </header>
             {children}
+            {footerComponent && <footer>{footerComponent}</footer>}
         </section>
     )
 }

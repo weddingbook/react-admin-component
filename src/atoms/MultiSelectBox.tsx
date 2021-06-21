@@ -6,7 +6,7 @@ import { ISelectBoxOption } from './SelectBox';
 
 interface Props extends InputProps {
     multiSelect?: boolean;
-    styleSelectBox: any;
+    styleSelectBox?: any;
     selectPrefix?: string;
     options: ISelectBoxOption[];
     selectedOptions: ISelectBoxOption[];
