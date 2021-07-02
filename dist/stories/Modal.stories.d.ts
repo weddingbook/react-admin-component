@@ -1,9 +1,12 @@
 import React from 'react';
 declare const _default: {
     title: string;
-    component: ({ children, style, title, subTitle, size, withSection, noScroll, onClickInBackground, cancelButtonComponent, actionButtonComponent, footerComponent }: {
+    component: ({ children, style, title, subTitle, size, styleHeader, styleBody, styleFooter, withSection, noScroll, onClickInBackground, cancelButtonComponent, actionButtonComponent, footerComponent }: {
         children?: object | undefined;
         style?: React.CSSProperties | undefined;
+        styleHeader?: React.CSSProperties | undefined;
+        styleBody?: React.CSSProperties | undefined;
+        styleFooter?: React.CSSProperties | undefined;
         title?: string | undefined;
         subTitle?: string | undefined;
         size?: "small" | "medium" | "large" | undefined;

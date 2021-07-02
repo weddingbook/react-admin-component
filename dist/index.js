@@ -5039,20 +5039,20 @@ var InputContainer = function (_a) {
 };
 
 var Modal = function (_a) {
-    var children = _a.children, style = _a.style, _b = _a.title, title = _b === void 0 ? 'Modal title' : _b, subTitle = _a.subTitle, _c = _a.size, size = _c === void 0 ? 'small' : _c, _d = _a.withSection, withSection = _d === void 0 ? false : _d, _e = _a.noScroll, noScroll = _e === void 0 ? false : _e, _f = _a.onClickInBackground, onClickInBackground = _f === void 0 ? function () {
-    } : _f, cancelButtonComponent = _a.cancelButtonComponent, actionButtonComponent = _a.actionButtonComponent, footerComponent = _a.footerComponent;
+    var children = _a.children, style = _a.style, _b = _a.title, title = _b === void 0 ? 'Modal title' : _b, subTitle = _a.subTitle, _c = _a.size, size = _c === void 0 ? 'small' : _c, _d = _a.styleHeader, styleHeader = _d === void 0 ? {} : _d, _e = _a.styleBody, styleBody = _e === void 0 ? {} : _e, _f = _a.styleFooter, styleFooter = _f === void 0 ? {} : _f, _g = _a.withSection, withSection = _g === void 0 ? false : _g, _h = _a.noScroll, noScroll = _h === void 0 ? false : _h, _j = _a.onClickInBackground, onClickInBackground = _j === void 0 ? function () {
+    } : _j, cancelButtonComponent = _a.cancelButtonComponent, actionButtonComponent = _a.actionButtonComponent, footerComponent = _a.footerComponent;
     return (React__default['default'].createElement("div", { className: 'modal-wrap' },
         React__default['default'].createElement("div", { className: 'overlay', onClick: onClickInBackground }),
         React__default['default'].createElement("div", { className: "modal modal-size-" + size + " " + (noScroll && 'no-scroll'), style: style },
-            React__default['default'].createElement("header", { className: "modal-header" },
+            React__default['default'].createElement("header", { className: "modal-header", style: styleHeader },
                 React__default['default'].createElement("div", { className: 'header-top' },
                     React__default['default'].createElement("h1", null, title),
                     React__default['default'].createElement("div", { className: 'btn-area' },
                         cancelButtonComponent,
                         actionButtonComponent)),
                 React__default['default'].createElement("div", { className: 'header-bottom' }, subTitle)),
-            React__default['default'].createElement("div", { className: "modal-contents " + (withSection ? 'with-section' : '') }, children),
-            footerComponent && React__default['default'].createElement("footer", null, footerComponent))));
+            React__default['default'].createElement("div", { style: styleBody, className: "modal-contents " + (withSection ? 'with-section' : '') }, children),
+            footerComponent && React__default['default'].createElement("footer", { style: styleFooter }, footerComponent))));
 };
 
 var Popup$1 = /** @class */ (function (_super) {

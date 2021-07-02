@@ -3,6 +3,9 @@ import './Modal.scss';
 declare type Props = {
     children?: object;
     style?: CSSProperties;
+    styleHeader?: CSSProperties;
+    styleBody?: CSSProperties;
+    styleFooter?: CSSProperties;
     title?: string;
     subTitle?: string;
     size?: 'small' | 'medium' | 'large';
@@ -13,5 +16,5 @@ declare type Props = {
     withSection?: boolean;
     noScroll?: boolean;
 };
-declare const Modal: ({ children, style, title, subTitle, size, withSection, noScroll, onClickInBackground, cancelButtonComponent, actionButtonComponent, footerComponent }: Props) => JSX.Element;
+declare const Modal: ({ children, style, title, subTitle, size, styleHeader, styleBody, styleFooter, withSection, noScroll, onClickInBackground, cancelButtonComponent, actionButtonComponent, footerComponent }: Props) => JSX.Element;
 export default Modal;
