@@ -7,7 +7,7 @@ type Props = {
     title?: string,
     subTitle?: string,
     buttonComponent?: object,
-    footerComponent?: object
+    footerComponent?: object | null
 }
 
 const Section = ({ children, style, title = 'Section title', subTitle, buttonComponent, footerComponent }: Props) => {
