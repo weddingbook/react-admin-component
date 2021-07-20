@@ -12,7 +12,7 @@ declare type Props = {
     onClickInBackground?: () => void;
     cancelButtonComponent?: object;
     actionButtonComponent?: object;
-    footerComponent?: object | null;
+    footerComponent?: object;
     withSection?: boolean;
     noScroll?: boolean;
 };

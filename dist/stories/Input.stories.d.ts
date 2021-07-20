@@ -7,7 +7,7 @@ declare const _default: {
         title?: string | undefined;
         subTitle?: string | undefined;
         buttonComponent?: object | undefined;
-        footerComponent?: object | undefined;
+        footerComponent?: object | null | undefined;
     }) => JSX.Element;
     decorators: ((...args: any) => any)[];
 };
