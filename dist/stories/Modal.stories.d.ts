@@ -13,7 +13,7 @@ declare const _default: {
         onClickInBackground?: (() => void) | undefined;
         cancelButtonComponent?: object | undefined;
         actionButtonComponent?: object | undefined;
-        footerComponent?: object | undefined;
+        footerComponent?: object | null | undefined;
         withSection?: boolean | undefined;
         noScroll?: boolean | undefined;
     }) => JSX.Element;
