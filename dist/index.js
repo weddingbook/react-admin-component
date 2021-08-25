@@ -2328,14 +2328,14 @@ var Pagination = function (_a) {
 };
 
 var MultiSelectBox = function (_a) {
-    var _b;
-    var _c = _a.styleSelectBox, styleSelectBox = _c === void 0 ? { width: 100 } : _c, _d = _a.selectPrefix, selectPrefix = _d === void 0 ? '' : _d; _a.multiSelect; var options = _a.options, selectedOptions = _a.selectedOptions, setSelectedOptions = _a.setSelectedOptions, clickOption = _a.clickOption, rest = __rest$7(_a, ["styleSelectBox", "selectPrefix", "multiSelect", "options", "selectedOptions", "setSelectedOptions", "clickOption"]);
-    var _f = React.useState(''), inputValue = _f[0], setInputValue = _f[1];
-    var _g = React.useState(false), showOptions = _g[0], setShowOptions = _g[1];
+    var _b, _c, _d;
+    var _e = _a.styleSelectBox, styleSelectBox = _e === void 0 ? { width: 100 } : _e, _f = _a.selectPrefix, selectPrefix = _f === void 0 ? '' : _f; _a.multiSelect; var options = _a.options, selectedOptions = _a.selectedOptions, setSelectedOptions = _a.setSelectedOptions, clickOption = _a.clickOption, rest = __rest$7(_a, ["styleSelectBox", "selectPrefix", "multiSelect", "options", "selectedOptions", "setSelectedOptions", "clickOption"]);
+    var _h = React.useState(''), inputValue = _h[0], setInputValue = _h[1];
+    var _j = React.useState(false), showOptions = _j[0], setShowOptions = _j[1];
     var optionRef = React.useRef(null);
     var inputRef = React.useRef(null);
     var selectedRef = React.useRef(null);
-    var _h = React.useState(options.filter(function (option) { return option.name.indexOf(inputValue) !== -1; })), filtered = _h[0], setFiltered = _h[1];
+    var _k = React.useState(options.filter(function (option) { return option.name.indexOf(inputValue) !== -1; })), filtered = _k[0], setFiltered = _k[1];
     var onClickList = function (item) {
         if (typeof clickOption === 'function') {
             clickOption(item);
@@ -2349,7 +2349,10 @@ var MultiSelectBox = function (_a) {
     var isSelected = function (item) {
         if (!selectedOptions.length)
             return false;
-        return selectedOptions.filter(function (option) { return option.value === item.value; }).length > 0;
+        return (selectedOptions.filter(function (option) { return option.value === item.value; }).length > 0);
+    };
+    var changePadding = function (num) {
+        return num ? num + 18 : 32;
     };
     React.useEffect(function () {
         setFiltered(options.filter(function (option) { return option.name.indexOf(inputValue) !== -1; }));
@@ -2367,21 +2370,25 @@ var MultiSelectBox = function (_a) {
             window.removeEventListener('click', hideOptions);
         };
     }, []);
-    return (React__default['default'].createElement("div", { className: "auto-complete-wrap", style: styleSelectBox },
+    console.log('object', (_b = selectedRef.current) === null || _b === void 0 ? void 0 : _b.offsetHeight);
+    return (React__default['default'].createElement("div", { className: 'auto-complete-wrap', style: styleSelectBox },
         React__default['default'].createElement("div", { ref: inputRef },
-            selectedOptions.length > 0 &&
-                React__default['default'].createElement("div", { className: "selected-option-wrap", ref: selectedRef }, selectedOptions.map(function (option) { return React__default['default'].createElement("span", { className: "selected-option-name", key: "multi-select-selected-" + option.value },
-                    selectPrefix,
-                    option.name); })),
-            React__default['default'].createElement(Input, __assign({}, rest, { style: { width: '100%' }, className: "auto-complete-input", value: inputValue, inputStyle: __assign(__assign({}, rest.inputStyle), { paddingLeft: selectedOptions.length > 0 ? ((_b = selectedRef.current) === null || _b === void 0 ? void 0 : _b.clientWidth) - 12 : 0 }), onFocus: onFocusInput, onChange: function (e) { return setInputValue(e.target.value); }, onKeyDown: function (e) {
-                    if (e.keyCode === 8 && inputValue === '' && selectedOptions.length > 0) {
+            selectedOptions.length > 0 && (React__default['default'].createElement("div", { className: 'selected-option-wrap', ref: selectedRef }, selectedOptions.map(function (option) { return (React__default['default'].createElement("span", { className: 'selected-option-name', key: "multi-select-selected-" + option.value },
+                selectPrefix,
+                option.name)); }))),
+            React__default['default'].createElement(Input, __assign({}, rest, { style: { width: '100%' }, className: 'auto-complete-input', value: inputValue, inputStyle: __assign(__assign({}, rest.inputStyle), { height: changePadding((_c = selectedRef.current) === null || _c === void 0 ? void 0 : _c.offsetHeight), paddingLeft: selectedOptions.length > 0
+                        ? ((_d = selectedRef.current) === null || _d === void 0 ? void 0 : _d.clientWidth) - 12
+                        : 0 }), onFocus: onFocusInput, onChange: function (e) { return setInputValue(e.target.value); }, onKeyDown: function (e) {
+                    if (e.keyCode === 8 &&
+                        inputValue === '' &&
+                        selectedOptions.length > 0) {
                         setSelectedOptions(selectedOptions.slice(0, selectedOptions.length - 1));
                     }
                 } }))),
-        React__default['default'].createElement("ul", { className: "auto-complete-list", style: { display: showOptions ? 'block' : 'none' }, ref: optionRef }, filtered.map(function (item) { return (React__default['default'].createElement("li", { className: isSelected(item) ? 'selected' : '', onClick: function () { return onClickList(item); }, key: "multi-select-option-" + item.value },
+        React__default['default'].createElement("ul", { className: 'auto-complete-list', style: { display: showOptions ? 'block' : 'none' }, ref: optionRef }, filtered.map(function (item) { return (React__default['default'].createElement("li", { className: isSelected(item) ? 'selected' : '', onClick: function () { return onClickList(item); }, key: "multi-select-option-" + item.value },
             React__default['default'].createElement("span", { style: { marginRight: 6 } }, item.name),
             React__default['default'].createElement("span", { style: { display: isSelected(item) ? 'inline-block' : 'none' } },
-                React__default['default'].createElement(Icon$1, { name: "checkmark-outline", size: "14", fill: "#296df1" })))); }))));
+                React__default['default'].createElement(Icon$1, { name: 'checkmark-outline', size: '14', fill: '#296df1' })))); }))));
 };
 
 var SwitchButton = function (_a) {
