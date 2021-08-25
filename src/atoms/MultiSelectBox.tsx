@@ -6,14 +6,14 @@ import { ISelectBoxOption } from './SelectBox';
 
 interface Props extends InputProps {
     multiSelect?: boolean;
-    styleSelectBox?: any;
     selectPrefix?: string;
+    width: string;
     options: ISelectBoxOption[];
     selectedOptions: ISelectBoxOption[];
     setSelectedOptions: React.Dispatch<React.SetStateAction<ISelectBoxOption[]>>;
     clickOption?: (item: ISelectBoxOption) => void;
 }
-const MultiSelectBox = ({ styleSelectBox = { width: 100 }, selectPrefix = '', multiSelect = false, options, selectedOptions, setSelectedOptions, clickOption, ...rest }: Props) => {
+const MultiSelectBox = ({ width, selectPrefix = '', multiSelect = false, options, selectedOptions, setSelectedOptions, clickOption, ...rest }: Props) => {
     const [inputValue, setInputValue] = useState('');
     const [showOptions, setShowOptions] = useState(false);
     const optionRef = useRef<HTMLUListElement | null>(null);
@@ -34,6 +34,14 @@ const MultiSelectBox = ({ styleSelectBox = { width: 100 }, selectPrefix = '', mu
         if (!selectedOptions.length) return false;
         return selectedOptions.filter(option => option.value === item.value).length > 0;
     }
+    const setFocusInput = () => {
+        // if (showOptions) return;
+        inputRef.current?.childNodes.forEach((node: HTMLElement) => {
+            if (node.className.indexOf('input-component') !== -1) {
+                node.getElementsByTagName('input')[0].focus();
+            }
+        })
+    }
     useEffect(() => {
         setFiltered(
             options.filter(option => option.name.indexOf(inputValue) !== -1)
@@ -53,46 +61,48 @@ const MultiSelectBox = ({ styleSelectBox = { width: 100 }, selectPrefix = '', mu
         }
     }, []);
     return (
-        <div className="auto-complete-wrap" style={styleSelectBox}>
-            <div ref={inputRef}>
-                {selectedOptions.length > 0 &&
-                    <div className="selected-option-wrap" ref={selectedRef}>
-                        {selectedOptions.map(option => <span className="selected-option-name" key={`multi-select-selected-${option.value}`}>{selectPrefix}{option.name}</span>)}
-                    </div>
-                }
-                <Input
-                    {...rest}
-                    style={{ width: '100%' }}
-                    className="auto-complete-input"
-                    value={inputValue}
-                    inputStyle={{ ...rest.inputStyle, paddingLeft: selectedOptions.length > 0 ? selectedRef.current?.clientWidth! - 12 : 0 }}
-                    onFocus={onFocusInput}
-                    onChange={e => setInputValue(e.target.value)}
-                    onKeyDown={e => {
-                        if (e.keyCode === 8 && inputValue === '' && selectedOptions.length > 0) {
-                            setSelectedOptions(selectedOptions.slice(0, selectedOptions.length - 1));
-                        }
-                    }}
-                />
+        <div className="auto-complete-wrap input-component" style={{minWidth: width}} onClick={() => setFocusInput()}>
+            <div className="default-input-wrapper">
+                <div ref={inputRef} style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+                    {selectedOptions.length > 0 &&
+                        <div className="selected-option-wrap" ref={selectedRef}>
+                            {selectedOptions.map(option => <span className="selected-option-name" key={`multi-select-selected-${option.value}`}>{selectPrefix}{option.name}</span>)}
+                        </div>
+                    }
+                    <Input
+                        {...rest}
+                        style={{ width: '100%' }}
+                        themeClass="transparent"
+                        value={inputValue}
+                        inputStyle={{width: '120px', height: '28px'}}
+                        onFocus={onFocusInput}
+                        onChange={e => setInputValue(e.target.value)}
+                        onKeyDown={e => {
+                            if (e.keyCode === 8 && inputValue === '' && selectedOptions.length > 0) {
+                                setSelectedOptions(selectedOptions.slice(0, selectedOptions.length - 1));
+                            }
+                        }}
+                    />
+                </div>
+                <ul
+                    className="auto-complete-list"
+                    style={{ display: showOptions ? 'block' : 'none' }}
+                    ref={optionRef}
+                >
+                    {filtered.map(item => (
+                        <li
+                            className={isSelected(item) ? 'selected' : ''}
+                            onClick={() => onClickList(item)}
+                            key={`multi-select-option-${item.value}`}
+                        >
+                            <span style={{ marginRight: 6 }}>{item.name}</span>
+                            <span style={{ display: isSelected(item) ? 'inline-block' : 'none' }}>
+                                <Icon name="checkmark-outline" size="14" fill="#296df1" />
+                            </span>
+                        </li>
+                    ))}
+                </ul>
             </div>
-            <ul
-                className="auto-complete-list"
-                style={{ display: showOptions ? 'block' : 'none' }}
-                ref={optionRef}
-            >
-                {filtered.map(item => (
-                    <li
-                        className={isSelected(item) ? 'selected' : ''}
-                        onClick={() => onClickList(item)}
-                        key={`multi-select-option-${item.value}`}
-                    >
-                        <span style={{ marginRight: 6 }}>{item.name}</span>
-                        <span style={{ display: isSelected(item) ? 'inline-block' : 'none' }}>
-                            <Icon name="checkmark-outline" size="14" fill="#296df1" />
-                        </span>
-                    </li>
-                ))}
-            </ul>
         </div>
     )
 }

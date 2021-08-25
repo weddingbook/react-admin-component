@@ -14,6 +14,7 @@ export interface Props extends InputHTMLAttributes<HTMLInputElement> {
     inputStyle?: CSSProperties
     iconName?: string,
     iconSize?: number;
+    themeClass?: string;
     afterString?: string
     recommendListButton?: ReactComponentElement<'button'>
     recommendOptions?: IRecommendOption[];
@@ -23,11 +24,11 @@ export interface Props extends InputHTMLAttributes<HTMLInputElement> {
     informationMessage?: string
 }
 
-const Input = ({ style, inputStyle, iconName, iconSize = 18, afterString, recommendListButton, recommendOptions, recommendType, onSelectRecommendOptionSet, errorMessage = 'Error message', informationMessage = '', required = false, ...rest }: Props) => {
+const Input = ({ style, inputStyle, iconName, iconSize = 18, themeClass, afterString, recommendListButton, recommendOptions, recommendType, onSelectRecommendOptionSet, errorMessage = 'Error message', informationMessage = '', required = false, ...rest }: Props) => {
     return (
         <>
             <div className={`input-component ${(required || informationMessage) ? 'message' : ''}`} style={style}>
-                <div className={`default-input-wrapper ${iconName ? 'after-string' : ''} ${required ? 'error' : ''} ${rest.disabled ? 'disabled' : ''}`} style={inputStyle}>
+                <div className={`default-input-wrapper ${iconName ? 'after-string' : ''} ${themeClass ? themeClass : ''} ${required ? 'error' : ''} ${rest.disabled ? 'disabled' : ''}`} style={inputStyle}>
                     {iconName && <Icon
                         name={iconName}
                         size={iconSize}

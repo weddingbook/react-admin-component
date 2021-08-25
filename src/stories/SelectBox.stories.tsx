@@ -78,11 +78,11 @@ export const SelectBoxPositionBottom = () => {
 }
 
 export const MultiSelectBoxStory = () => {
-    const [data, setData] = useState<ISelectBoxOption[]>([{ name: 'hi1', value: 'hi1' }, { name: 'hi2', value: 'hi2' }, { name: 'hi3', value: 'hi3' }]);
+    const [data, setData] = useState<ISelectBoxOption[]>([{ name: 'hi1', value: 'hi1' }, { name: 'hi2', value: 'hi2' }, { name: 'hi3', value: 'hi3' }, { name: 'hi4', value: 'hi4' }, { name: 'hi5', value: 'hi5' }, { name: 'hi6', value: 'hi6' }]);
     const [selectedOptions, setSelectedOptions] = useState<ISelectBoxOption[]>([]);
     return (
         <MultiSelectBox
-            style={{ minWidth: '200px' }}
+            width="120px"
             options={data}
             selectedOptions={selectedOptions}
             setSelectedOptions={setSelectedOptions}
