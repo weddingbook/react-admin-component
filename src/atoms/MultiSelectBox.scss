@@ -2,10 +2,14 @@
 .auto-complete-wrap {
 	position: relative;
 	display: inline-block;
-    .auto-complete-input{
+		.auto-complete-input{
+        width: -webkit-fit-content;
+        width: -moz-fit-content;
         width: fit-content;
     }
 	.selected-option-wrap {
+		display:flex;
+		flex-wrap: wrap;
 		position: absolute;
 		padding: 0 8px 0 12px;
 		top: 50%;
