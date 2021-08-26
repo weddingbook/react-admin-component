@@ -6,6 +6,7 @@ import { ISelectBoxOption } from './SelectBox';
 
 interface Props extends InputProps {
 	multiSelect?: boolean;
+    width?: string;
 	styleSelectBox?: any;
 	selectPrefix?: string;
 	options: ISelectBoxOption[];
@@ -14,7 +15,7 @@ interface Props extends InputProps {
 	clickOption?: (item: ISelectBoxOption) => void;
 }
 const MultiSelectBox = ({
-	styleSelectBox = { width: 100 },
+    width,
 	selectPrefix = '',
 	multiSelect = false,
 	options,
@@ -41,6 +42,21 @@ const MultiSelectBox = ({
 	const onFocusInput = () => {
 		setShowOptions(true);
 	};
+    const setFocusInput = () => {
+        inputRef.current?.childNodes.forEach((node: HTMLElement) => {
+            if (node.className.indexOf('input-component') !== -1) {
+                node.getElementsByTagName('input')[0].focus();
+            }
+        })
+    }
+	const setInputOffset = (x: number, y: number) => {
+		inputRef.current?.childNodes.forEach((node: HTMLElement) => {
+            if (node.className.indexOf('input-component') !== -1) {
+                node.style.top = y + 'px';
+				node.style.left = x + 'px';
+            }
+        })
+	}
 	const isSelected = (item: ISelectBoxOption) => {
 		if (!selectedOptions.length) return false;
 		return (
@@ -55,6 +71,17 @@ const MultiSelectBox = ({
 		setFiltered(
 			options.filter((option) => option.name.indexOf(inputValue) !== -1)
 		);
+		if (selectedOptions.length > 0) {
+			const child = selectedRef.current?.children!;
+			const last = child[child?.length - 1];
+			const rect = last.getBoundingClientRect();
+			const parentRect = inputRef.current!.getBoundingClientRect(); // offset x, offset y, width, height 
+			setInputOffset(rect.x - parentRect.x + rect.width + 6, rect.y - parentRect.y - 6);
+			
+			if (selectedRef.current) {
+				document.getElementsByClassName('auto-complete-wrap')[0].style.height = selectedRef.current?.clientHeight + 18 + 'px'
+			}
+		}
 	}, [inputValue, selectedOptions]);
 	useEffect(() => {
 		const hideOptions = (e: MouseEvent) => {
@@ -72,9 +99,8 @@ const MultiSelectBox = ({
 		};
 	}, []);
 
-	console.log('object', selectedRef.current?.offsetHeight);
 	return (
-		<div className='auto-complete-wrap' style={styleSelectBox}>
+		<div className='auto-complete-wrap' style={{width: width}} onClick={setFocusInput}>
 			<div ref={inputRef}>
 				{selectedOptions.length > 0 && (
 					<div className='selected-option-wrap' ref={selectedRef}>
@@ -95,11 +121,11 @@ const MultiSelectBox = ({
 					value={inputValue}
 					inputStyle={{
 						...rest.inputStyle,
-						height: changePadding(selectedRef.current?.offsetHeight!),
-						paddingLeft:
-							selectedOptions.length > 0
-								? selectedRef.current?.clientWidth! - 12
-								: 0,
+						height: changePadding(selectedRef.current?.offsetHeight!) - 4,
+						// paddingLeft:
+						// 	selectedOptions.length > 0
+						// 		? selectedRef.current?.clientWidth! - 6
+						// 		: 0,
 					}}
 					onFocus={onFocusInput}
 					onChange={(e) => setInputValue(e.target.value)}

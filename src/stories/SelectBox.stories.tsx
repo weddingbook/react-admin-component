@@ -123,12 +123,17 @@ export const MultiSelectBoxStory = () => {
 		{ name: 'hi3', value: 'hi3' },
 		{ name: 'hi4', value: 'hi4' },
 		{ name: 'hi5', value: 'hi5' },
+		{ name: 'hi6', value: 'hi6' },
+		{ name: 'hi7', value: 'hi7' },
+		{ name: 'hi8', value: 'hi8' },
+		{ name: 'hi9', value: 'hi9' },
 	]);
 	const [selectedOptions, setSelectedOptions] = useState<ISelectBoxOption[]>(
 		[]
 	);
 	return (
 		<MultiSelectBox
+            width="200px"
 			style={{ minWidth: '200px' }}
 			options={data}
 			selectedOptions={selectedOptions}

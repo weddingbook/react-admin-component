@@ -2,7 +2,11 @@
 .auto-complete-wrap {
 	position: relative;
 	display: inline-block;
-		.auto-complete-input{
+	min-height: 32px;
+    border-radius: 4px;
+    border: 1px solid #EAEAEA;
+    background-color: #fff;
+	.auto-complete-input{
         width: -webkit-fit-content;
         width: -moz-fit-content;
         width: fit-content;
@@ -21,6 +25,23 @@
 			&:first-child {
 				margin-left: 0;
 			}
+		}
+	}
+	.input-component {
+		position: absolute;
+		left: 8px;
+		top: 0;
+	}
+	.default-input-wrapper {
+		height: 18px;
+		background-color: transparent;
+		border: none !important;
+		outline: none !important;
+		box-shadow: none !important;
+		input {
+			padding-left: 0;
+			padding-right: 0;
+			background-color: transparent;
 		}
 	}
 	.auto-complete-list {
