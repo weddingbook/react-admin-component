@@ -7,6 +7,7 @@ import { ISelectBoxOption } from './SelectBox';
 interface Props extends InputProps {
 	multiSelect?: boolean;
     width?: string;
+	height?: string;
 	styleSelectBox?: any;
 	selectPrefix?: string;
 	options: ISelectBoxOption[];
@@ -16,6 +17,7 @@ interface Props extends InputProps {
 }
 const MultiSelectBox = ({
     width,
+	height,
 	selectPrefix = '',
 	multiSelect = false,
 	options,
@@ -64,25 +66,25 @@ const MultiSelectBox = ({
 		);
 	};
 
-	const changePadding = (num: number) => {
-		return num ? num + 18 : 32;
-	};
 	useEffect(() => {
 		setFiltered(
 			options.filter((option) => option.name.indexOf(inputValue) !== -1)
 		);
+	}, [inputValue]);
+	useEffect(() => {
+		if (selectedRef.current) {
+			document.getElementsByClassName('auto-complete-wrap')[0].style.height = selectedRef.current?.clientHeight + 18 + 'px'
+		}
 		if (selectedOptions.length > 0) {
 			const child = selectedRef.current?.children!;
 			const last = child[child?.length - 1];
 			const rect = last.getBoundingClientRect();
 			const parentRect = inputRef.current!.getBoundingClientRect(); // offset x, offset y, width, height 
 			setInputOffset(rect.x - parentRect.x + rect.width + 6, rect.y - parentRect.y - 6);
-			
-			if (selectedRef.current) {
-				document.getElementsByClassName('auto-complete-wrap')[0].style.height = selectedRef.current?.clientHeight + 18 + 'px'
-			}
+		} else {
+			setInputOffset(8, 0);
 		}
-	}, [inputValue, selectedOptions]);
+	}, [selectedOptions]);
 	useEffect(() => {
 		const hideOptions = (e: MouseEvent) => {
 			if (
@@ -100,7 +102,7 @@ const MultiSelectBox = ({
 	}, []);
 
 	return (
-		<div className='auto-complete-wrap' style={{width: width}} onClick={setFocusInput}>
+		<div className='auto-complete-wrap' style={{width: width, height: height}} onClick={setFocusInput}>
 			<div ref={inputRef}>
 				{selectedOptions.length > 0 && (
 					<div className='selected-option-wrap' ref={selectedRef}>
@@ -121,7 +123,8 @@ const MultiSelectBox = ({
 					value={inputValue}
 					inputStyle={{
 						...rest.inputStyle,
-						height: changePadding(selectedRef.current?.offsetHeight!) - 4,
+						height: '100%'
+						// height: changePadding(selectedRef.current?.offsetHeight!) - 4,
 						// paddingLeft:
 						// 	selectedOptions.length > 0
 						// 		? selectedRef.current?.clientWidth! - 6

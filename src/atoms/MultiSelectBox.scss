@@ -6,6 +6,10 @@
     border-radius: 4px;
     border: 1px solid #EAEAEA;
     background-color: #fff;
+	> div {
+		height: 100%;
+		overflow: hidden;
+	}
 	.auto-complete-input{
         width: -webkit-fit-content;
         width: -moz-fit-content;
@@ -20,10 +24,10 @@
 		transform: translateY(-50%);
 		z-index: 10;
 		> span {
-			margin-left: 8px;
+			margin-right: 8px;
 			color: $blue60;
-			&:first-child {
-				margin-left: 0;
+			&:last-child {
+				margin-right: 0;
 			}
 		}
 	}
