@@ -86,7 +86,7 @@ const MultiSelectBox = ({
 			const parentRect = inputRef.current!.getBoundingClientRect(); // offset x, offset y, width, height
 			setInputOffset(
 				rect.x - parentRect.x + rect.width + 6,
-				rect.y - parentRect.y - 4
+				rect.y - parentRect.y - 2
 			);
 		} else {
 			setInputOffset(8, 0);
@@ -134,11 +134,6 @@ const MultiSelectBox = ({
 					inputStyle={{
 						...rest.inputStyle,
 						height: '100%',
-						// height: changePadding(selectedRef.current?.offsetHeight!) - 4,
-						// paddingLeft:
-						// 	selectedOptions.length > 0
-						// 		? selectedRef.current?.clientWidth! - 6
-						// 		: 0,
 					}}
 					onFocus={onFocusInput}
 					onChange={(e) => setInputValue(e.target.value)}

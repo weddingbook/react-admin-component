@@ -2382,7 +2382,7 @@ var MultiSelectBox = function (_a) {
             var last = child[(child === null || child === void 0 ? void 0 : child.length) - 1];
             var rect = last.getBoundingClientRect();
             var parentRect = inputRef.current.getBoundingClientRect(); // offset x, offset y, width, height
-            setInputOffset(rect.x - parentRect.x + rect.width + 6, rect.y - parentRect.y - 4);
+            setInputOffset(rect.x - parentRect.x + rect.width + 6, rect.y - parentRect.y - 2);
         }
         else {
             setInputOffset(8, 0);
