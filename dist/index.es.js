@@ -2297,14 +2297,13 @@ var Pagination = function (_a) {
 };
 
 var MultiSelectBox = function (_a) {
-    var _b, _c, _d;
-    var _e = _a.styleSelectBox, styleSelectBox = _e === void 0 ? { width: 100 } : _e, _f = _a.selectPrefix, selectPrefix = _f === void 0 ? '' : _f; _a.multiSelect; var options = _a.options, selectedOptions = _a.selectedOptions, setSelectedOptions = _a.setSelectedOptions, clickOption = _a.clickOption, rest = __rest$7(_a, ["styleSelectBox", "selectPrefix", "multiSelect", "options", "selectedOptions", "setSelectedOptions", "clickOption"]);
-    var _h = useState(''), inputValue = _h[0], setInputValue = _h[1];
-    var _j = useState(false), showOptions = _j[0], setShowOptions = _j[1];
+    var width = _a.width, height = _a.height, _b = _a.selectPrefix, selectPrefix = _b === void 0 ? '' : _b; _a.multiSelect; var options = _a.options, selectedOptions = _a.selectedOptions, setSelectedOptions = _a.setSelectedOptions, clickOption = _a.clickOption, rest = __rest$7(_a, ["width", "height", "selectPrefix", "multiSelect", "options", "selectedOptions", "setSelectedOptions", "clickOption"]);
+    var _d = useState(''), inputValue = _d[0], setInputValue = _d[1];
+    var _e = useState(false), showOptions = _e[0], setShowOptions = _e[1];
     var optionRef = useRef(null);
     var inputRef = useRef(null);
     var selectedRef = useRef(null);
-    var _k = useState(options.filter(function (option) { return option.name.indexOf(inputValue) !== -1; })), filtered = _k[0], setFiltered = _k[1];
+    var _f = useState(options.filter(function (option) { return option.name.indexOf(inputValue) !== -1; })), filtered = _f[0], setFiltered = _f[1];
     var onClickList = function (item) {
         if (typeof clickOption === 'function') {
             clickOption(item);
@@ -2315,17 +2314,49 @@ var MultiSelectBox = function (_a) {
     var onFocusInput = function () {
         setShowOptions(true);
     };
+    var setFocusInput = function () {
+        var _a;
+        (_a = inputRef.current) === null || _a === void 0 ? void 0 : _a.childNodes.forEach(function (node) {
+            if (node.className.indexOf('input-component') !== -1) {
+                node.getElementsByTagName('input')[0].focus();
+            }
+        });
+    };
+    var setInputOffset = function (x, y) {
+        var _a;
+        (_a = inputRef.current) === null || _a === void 0 ? void 0 : _a.childNodes.forEach(function (node) {
+            if (node.className.indexOf('input-component') !== -1) {
+                node.style.top = y + 'px';
+                node.style.left = x + 'px';
+            }
+        });
+    };
     var isSelected = function (item) {
         if (!selectedOptions.length)
             return false;
         return (selectedOptions.filter(function (option) { return option.value === item.value; }).length > 0);
     };
-    var changePadding = function (num) {
-        return num ? num + 18 : 32;
-    };
     useEffect(function () {
         setFiltered(options.filter(function (option) { return option.name.indexOf(inputValue) !== -1; }));
-    }, [inputValue, selectedOptions]);
+    }, [inputValue]);
+    useEffect(function () {
+        var _a, _b;
+        var autoElements = document.getElementsByClassName('auto-complete-wrap');
+        if (selectedRef.current) {
+            autoElements[0].style.height =
+                ((_a = selectedRef.current) === null || _a === void 0 ? void 0 : _a.clientHeight) + 18 + 'px';
+        }
+        if (selectedOptions.length > 0) {
+            var child = (_b = selectedRef.current) === null || _b === void 0 ? void 0 : _b.children;
+            var last = child[(child === null || child === void 0 ? void 0 : child.length) - 1];
+            var rect = last.getBoundingClientRect();
+            var parentRect = inputRef.current.getBoundingClientRect(); // offset x, offset y, width, height
+            setInputOffset(rect.x - parentRect.x + rect.width + 6, rect.y - parentRect.y - 4);
+        }
+        else {
+            setInputOffset(8, 0);
+        }
+    }, [selectedOptions]);
     useEffect(function () {
         var hideOptions = function (e) {
             var _a;
@@ -2339,15 +2370,12 @@ var MultiSelectBox = function (_a) {
             window.removeEventListener('click', hideOptions);
         };
     }, []);
-    console.log('object', (_b = selectedRef.current) === null || _b === void 0 ? void 0 : _b.offsetHeight);
-    return (React__default.createElement("div", { className: 'auto-complete-wrap', style: styleSelectBox },
+    return (React__default.createElement("div", { className: 'auto-complete-wrap', style: { width: width, height: height }, onClick: setFocusInput },
         React__default.createElement("div", { ref: inputRef },
             selectedOptions.length > 0 && (React__default.createElement("div", { className: 'selected-option-wrap', ref: selectedRef }, selectedOptions.map(function (option) { return (React__default.createElement("span", { className: 'selected-option-name', key: "multi-select-selected-" + option.value },
                 selectPrefix,
                 option.name)); }))),
-            React__default.createElement(Input, __assign({}, rest, { style: { width: '100%' }, className: 'auto-complete-input', value: inputValue, inputStyle: __assign(__assign({}, rest.inputStyle), { height: changePadding((_c = selectedRef.current) === null || _c === void 0 ? void 0 : _c.offsetHeight), paddingLeft: selectedOptions.length > 0
-                        ? ((_d = selectedRef.current) === null || _d === void 0 ? void 0 : _d.clientWidth) - 12
-                        : 0 }), onFocus: onFocusInput, onChange: function (e) { return setInputValue(e.target.value); }, onKeyDown: function (e) {
+            React__default.createElement(Input, __assign({}, rest, { style: { width: '100%' }, className: 'auto-complete-input', value: inputValue, inputStyle: __assign(__assign({}, rest.inputStyle), { height: '100%' }), onFocus: onFocusInput, onChange: function (e) { return setInputValue(e.target.value); }, onKeyDown: function (e) {
                     if (e.keyCode === 8 &&
                         inputValue === '' &&
                         selectedOptions.length > 0) {

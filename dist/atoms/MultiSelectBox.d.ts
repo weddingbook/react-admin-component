@@ -4,6 +4,8 @@ import { Props as InputProps } from './Input';
 import { ISelectBoxOption } from './SelectBox';
 interface Props extends InputProps {
     multiSelect?: boolean;
+    width?: string;
+    height?: string;
     styleSelectBox?: any;
     selectPrefix?: string;
     options: ISelectBoxOption[];
@@ -11,5 +13,5 @@ interface Props extends InputProps {
     setSelectedOptions: React.Dispatch<React.SetStateAction<ISelectBoxOption[]>>;
     clickOption?: (item: ISelectBoxOption) => void;
 }
-declare const MultiSelectBox: ({ styleSelectBox, selectPrefix, multiSelect, options, selectedOptions, setSelectedOptions, clickOption, ...rest }: Props) => JSX.Element;
+declare const MultiSelectBox: ({ width, height, selectPrefix, multiSelect, options, selectedOptions, setSelectedOptions, clickOption, ...rest }: Props) => JSX.Element;
 export default MultiSelectBox;
