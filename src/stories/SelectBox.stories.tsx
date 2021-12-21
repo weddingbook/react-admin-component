@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import { withKnobs } from '@storybook/addon-knobs';
-import { SelectBox, MultiSelectBox, ISelectBoxOption } from '../index';
+import {
+	SelectBox,
+	MultiSelectBox,
+	ISelectBoxOption,
+	GroupSelectBox,
+} from '../index';
 
 export default {
 	title: 'SelectBox',
@@ -34,6 +39,49 @@ const optionList3: ISelectBoxOption[] = [
 			position: 'after',
 			html: <span style={{ color: 'blue' }}>additional html after</span>,
 		},
+	},
+];
+
+const options = [
+	{
+		value: 'G1-1',
+		name: 'One',
+		optgroup: 'Group 1',
+	},
+	{
+		value: 'G1-2',
+		name: 'Two',
+		optgroup: 'Group 1',
+	},
+	{
+		value: 'G1-3',
+		name: 'Three',
+		optgroup: 'Group 1',
+	},
+	{
+		value: 'G1-4',
+		name: 'Four',
+		optgroup: 'Group 1',
+	},
+	{
+		value: 'G2-1',
+		name: 'One',
+		optgroup: 'Group 2',
+	},
+	{
+		value: 'G2-2',
+		name: 'Two',
+		optgroup: 'Group 2',
+	},
+	{
+		value: 'G2-3',
+		name: 'Three',
+		optgroup: 'Group 3',
+	},
+	{
+		value: 'G2-4',
+		name: 'Four',
+		optgroup: 'Group 4',
 	},
 ];
 
@@ -133,7 +181,7 @@ export const MultiSelectBoxStory = () => {
 	);
 	return (
 		<MultiSelectBox
-            width="200px"
+			width='200px'
 			style={{ minWidth: '200px' }}
 			options={data}
 			selectedOptions={selectedOptions}
@@ -150,6 +198,27 @@ export const MultiSelectBoxStory = () => {
 					setSelectedOptions([...selectedOptions, item]);
 				}
 			}}
+		/>
+	);
+};
+
+export const GroupSelectBoxStoryBox = () => {
+	const [selectedOption, onSelectedOptionSet] = useState({
+		name: 'G2-4',
+		value: 'Four',
+		optgroup: 'Group 4',
+	});
+
+	const onSet = (option: any, group: any) => {
+		console.log('object', option, group);
+		onSelectedOptionSet(option);
+	};
+	return (
+		<GroupSelectBox
+			style={{ width: '300px' }}
+			selectedOption={selectedOption}
+			options={options}
+			onSelectOptionSet={onSet}
 		/>
 	);
 };
