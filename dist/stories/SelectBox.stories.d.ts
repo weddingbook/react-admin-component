@@ -17,3 +17,4 @@ export declare const SelectBoxStoryWithDisabled: () => JSX.Element;
 export declare const selectBoxAdditionalHtml: () => JSX.Element;
 export declare const SelectBoxPositionBottom: () => JSX.Element;
 export declare const MultiSelectBoxStory: () => JSX.Element;
+export declare const GroupSelectBoxStoryBox: () => JSX.Element;

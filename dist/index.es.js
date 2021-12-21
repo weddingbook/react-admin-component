@@ -2296,6 +2296,102 @@ var Pagination = function (_a) {
                 React__default.createElement(Icon$1, { name: 'arrow-ios-forward-outline', size: '18' })))));
 };
 
+var GroupSelectBox = function (_a) {
+    var options = _a.options, selectedOption = _a.selectedOption, style = _a.style, onSelectOptionSet = _a.onSelectOptionSet, disabled = _a.disabled;
+    var selectedRef = useRef(null);
+    var selectBoxRef = useRef(null);
+    var selectListRef = useRef(null);
+    var _b = useState(false), isShowList = _b[0], setShowList = _b[1];
+    var _c = useState('bottom'), listPosition = _c[0], setListPosition = _c[1];
+    // const additionalHtml = selectedOption.additionalHtml;
+    var groupedOptions = {};
+    options.forEach(function (option) {
+        if (!groupedOptions[option.optgroup])
+            groupedOptions[option.optgroup] = [];
+        groupedOptions[option.optgroup].push({
+            value: option.value,
+            name: option.name,
+        });
+    });
+    var selectItem = selectedRef.current;
+    var listHeight;
+    var handleEventListener = function (e) {
+        if (isShowList &&
+            (e.target !== selectBoxRef.current ||
+                e.target !== selectedRef.current ||
+                e.target !== selectListRef.current)) {
+            setShowList(!isShowList);
+        }
+    };
+    useEffect(function () {
+        document.addEventListener('click', handleEventListener);
+        return function cleanup() {
+            document.removeEventListener('click', handleEventListener);
+        };
+    }, [isShowList]);
+    var onClickOption = function (option, group) {
+        onSelectOptionSet(option, group);
+        selectItem && (selectItem.style.marginBottom = '0');
+        setShowList(false);
+    };
+    var onToggleSelectBox = function () {
+        if (!isShowList) {
+            // 리스트가 열린다면?
+            var wh = window.innerHeight;
+            var magicNumber = 3; // selectItem의 위 아래 border(2) + list의 하단 border(1)
+            var listMaxHeight = 0;
+            if (selectItem) {
+                listMaxHeight =
+                    wh -
+                        (selectItem.getBoundingClientRect().top + selectItem.clientHeight) -
+                        magicNumber;
+            }
+            var maxStretchSize = 50; //
+            var liHeight = 36;
+            var originListHeight = liHeight * options.length;
+            if (originListHeight > 268) {
+                originListHeight = 268;
+            }
+            if (wh - originListHeight <
+                selectedRef.current.getBoundingClientRect().y) {
+                // 화면 하단에 위치해서 li가 안보여질 수 있음
+                setListPosition('top');
+            }
+            else {
+                setListPosition('bottom');
+            }
+            if (originListHeight > listMaxHeight) {
+                var bottomSpace = void 0;
+                if (originListHeight - listMaxHeight > maxStretchSize) {
+                    bottomSpace = originListHeight - listMaxHeight - maxStretchSize;
+                }
+                else {
+                    bottomSpace = originListHeight - listMaxHeight;
+                }
+                listHeight = listMaxHeight + bottomSpace;
+            }
+            else {
+                listHeight = originListHeight;
+            }
+        }
+        else {
+            selectItem && (selectItem.style.marginBottom = '0');
+        }
+        setShowList(!isShowList);
+    };
+    // console.log('object', groupedOptions, selectedOption);
+    return disabled ? (React__default.createElement(Input, { disabled: true })) : (React__default.createElement("div", { tabIndex: 0, ref: selectBoxRef, className: 'select-box', onClick: onToggleSelectBox, style: __assign({}, style) },
+        React__default.createElement("div", { ref: selectedRef, className: 'selected-item' }, selectedOption.name),
+        React__default.createElement(Icon$1, { name: 'arrow-ios-downward-outline', size: '18' }),
+        isShowList && (React__default.createElement("ul", { ref: selectListRef, className: "list list-" + listPosition, style: { height: "" + (listHeight + 'px') } }, Object.keys(groupedOptions).map(function (group, index) {
+            return (React__default.createElement("optgroup", { className: 'option', key: index, label: group }, groupedOptions[group].map(function (option) {
+                return (React__default.createElement("option", { className: "option-item " + (selectedOption.value === option.value ? 'selected' : ''), key: option.name, onClick: function () {
+                        onClickOption(option, group);
+                    } }, option.name));
+            })));
+        })))));
+};
+
 var MultiSelectBox = function (_a) {
     var width = _a.width, height = _a.height, _b = _a.selectPrefix, selectPrefix = _b === void 0 ? '' : _b; _a.multiSelect; var options = _a.options, selectedOptions = _a.selectedOptions, setSelectedOptions = _a.setSelectedOptions, clickOption = _a.clickOption, rest = __rest$7(_a, ["width", "height", "selectPrefix", "multiSelect", "options", "selectedOptions", "setSelectedOptions", "clickOption"]);
     var _d = useState(''), inputValue = _d[0], setInputValue = _d[1];
@@ -29115,5 +29211,5 @@ function useRadioBox(defaultList) {
     };
 }
 
-export { Breadcrumb, Button$1 as Button, ButtonTypeInput, CombineInput, Counter, DatePicker, DefinitionTag, DefinitionTagContainer, Divider, ImageSlider, Input, InputContainer, InputRecommend, Modal, ModalItem, MultiSelectBox, Pagination, PopupArea, RangePicker, SearchBox, Section, SectionContainer, SelectBox, SwitchButton, TabMenu, Tag$1 as Tag, TagContainer, Tooltip, ViewMore, createPopup, removePopup, useCheckBox, useModal, useRadioBox };
+export { Breadcrumb, Button$1 as Button, ButtonTypeInput, CombineInput, Counter, DatePicker, DefinitionTag, DefinitionTagContainer, Divider, GroupSelectBox, ImageSlider, Input, InputContainer, InputRecommend, Modal, ModalItem, MultiSelectBox, Pagination, PopupArea, RangePicker, SearchBox, Section, SectionContainer, SelectBox, SwitchButton, TabMenu, Tag$1 as Tag, TagContainer, Tooltip, ViewMore, createPopup, removePopup, useCheckBox, useModal, useRadioBox };
 //# sourceMappingURL=index.es.js.map
