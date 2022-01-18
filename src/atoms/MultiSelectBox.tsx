@@ -68,9 +68,14 @@ const MultiSelectBox = ({
 
 	useEffect(() => {
 		setFiltered(
-			options.filter((option) => option.name.indexOf(inputValue) !== -1)
+			options.filter(
+				(option) =>
+					option.name.toLocaleLowerCase().indexOf(inputValue.toLowerCase()) !==
+					-1
+			)
 		);
 	}, [inputValue]);
+
 	useEffect(() => {
 		let autoElements = document.getElementsByClassName(
 			'auto-complete-wrap'
@@ -92,6 +97,7 @@ const MultiSelectBox = ({
 			setInputOffset(8, 0);
 		}
 	}, [selectedOptions]);
+
 	useEffect(() => {
 		const hideOptions = (e: MouseEvent) => {
 			if (
@@ -154,18 +160,22 @@ const MultiSelectBox = ({
 				className='auto-complete-list'
 				style={{ display: showOptions ? 'block' : 'none' }}
 				ref={optionRef}>
-				{filtered.map((item) => (
-					<li
-						className={isSelected(item) ? 'selected' : ''}
-						onClick={() => onClickList(item)}
-						key={`multi-select-option-${item.value}`}>
-						<span style={{ marginRight: 6 }}>{item.name}</span>
-						<span
-							style={{ display: isSelected(item) ? 'inline-block' : 'none' }}>
-							<Icon name='checkmark-outline' size='14' fill='#296df1' />
-						</span>
-					</li>
-				))}
+				{filtered.length > 0 ? (
+					filtered.map((item) => (
+						<li
+							className={isSelected(item) ? 'selected' : ''}
+							onClick={() => onClickList(item)}
+							key={`multi-select-option-${item.value}`}>
+							<span style={{ marginRight: 6 }}>{item.name}</span>
+							<span
+								style={{ display: isSelected(item) ? 'inline-block' : 'none' }}>
+								<Icon name='checkmark-outline' size='14' fill='#296df1' />
+							</span>
+						</li>
+					))
+				) : (
+					<li>No result found</li>
+				)}
 			</ul>
 		</div>
 	);

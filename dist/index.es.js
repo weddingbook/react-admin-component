@@ -2433,7 +2433,10 @@ var MultiSelectBox = function (_a) {
         return (selectedOptions.filter(function (option) { return option.value === item.value; }).length > 0);
     };
     useEffect(function () {
-        setFiltered(options.filter(function (option) { return option.name.indexOf(inputValue) !== -1; }));
+        setFiltered(options.filter(function (option) {
+            return option.name.toLocaleLowerCase().indexOf(inputValue.toLowerCase()) !==
+                -1;
+        }));
     }, [inputValue]);
     useEffect(function () {
         var _a, _b;
@@ -2478,10 +2481,10 @@ var MultiSelectBox = function (_a) {
                         setSelectedOptions(selectedOptions.slice(0, selectedOptions.length - 1));
                     }
                 } }))),
-        React__default.createElement("ul", { className: 'auto-complete-list', style: { display: showOptions ? 'block' : 'none' }, ref: optionRef }, filtered.map(function (item) { return (React__default.createElement("li", { className: isSelected(item) ? 'selected' : '', onClick: function () { return onClickList(item); }, key: "multi-select-option-" + item.value },
+        React__default.createElement("ul", { className: 'auto-complete-list', style: { display: showOptions ? 'block' : 'none' }, ref: optionRef }, filtered.length > 0 ? (filtered.map(function (item) { return (React__default.createElement("li", { className: isSelected(item) ? 'selected' : '', onClick: function () { return onClickList(item); }, key: "multi-select-option-" + item.value },
             React__default.createElement("span", { style: { marginRight: 6 } }, item.name),
             React__default.createElement("span", { style: { display: isSelected(item) ? 'inline-block' : 'none' } },
-                React__default.createElement(Icon$1, { name: 'checkmark-outline', size: '14', fill: '#296df1' })))); }))));
+                React__default.createElement(Icon$1, { name: 'checkmark-outline', size: '14', fill: '#296df1' })))); })) : (React__default.createElement("li", null, "No result found")))));
 };
 
 var SwitchButton = function (_a) {
