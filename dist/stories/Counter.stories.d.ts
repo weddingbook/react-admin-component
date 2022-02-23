@@ -1,6 +1,6 @@
 declare const _default: {
     title: string;
-    component: ({ style, defaultValue, min, max }: import("../molecules/Counter").Props) => JSX.Element;
+    component: ({ style, defaultValue, min, max, onChange }: import("../molecules/Counter").Props) => JSX.Element;
     decorators: ((...args: any) => any)[];
     parameters: {
         backgrounds: {

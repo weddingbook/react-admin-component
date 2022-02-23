@@ -5409,7 +5409,7 @@ var ImageSlider = function (_a) {
 };
 
 var Counter = function (_a) {
-    var style = _a.style, _b = _a.defaultValue, defaultValue = _b === void 0 ? 0 : _b, _c = _a.min, min = _c === void 0 ? 0 : _c, max = _a.max;
+    var style = _a.style, _b = _a.defaultValue, defaultValue = _b === void 0 ? 0 : _b, _c = _a.min, min = _c === void 0 ? 0 : _c, max = _a.max, onChange = _a.onChange;
     if (min < 0) {
         console.warn('props min must be greater than 0');
         min = 0;
@@ -5449,6 +5449,9 @@ var Counter = function (_a) {
             return;
         console.log(value);
         validateCheck();
+        if (typeof onChange === 'function') {
+            onChange(value);
+        }
     }, [value]);
     return (React__default['default'].createElement("div", { className: "counter-wrap", style: __assign({}, style) },
         buttonState.minus
@@ -5786,8 +5789,8 @@ function toArray$3(children) {
 }
 
 /* eslint-disable no-console */
-var warned$1 = {};
-function warning$3(valid, message) {
+var warned = {};
+function warning$2(valid, message) {
   // Support uglify
   if (process.env.NODE_ENV !== 'production' && !valid && console !== undefined) {
     console.error("Warning: ".concat(message));
@@ -5799,21 +5802,21 @@ function note(valid, message) {
     console.warn("Note: ".concat(message));
   }
 }
-function call$1(method, valid, message) {
-  if (!valid && !warned$1[message]) {
+function call(method, valid, message) {
+  if (!valid && !warned[message]) {
     method(false, message);
-    warned$1[message] = true;
+    warned[message] = true;
   }
 }
-function warningOnce$1(valid, message) {
-  call$1(warning$3, valid, message);
+function warningOnce(valid, message) {
+  call(warning$2, valid, message);
 }
 function noteOnce(valid, message) {
-  call$1(note, valid, message);
+  call(note, valid, message);
 }
 /* eslint-enable */
 
-function fillRef$1(ref, node) {
+function fillRef(ref, node) {
   if (typeof ref === 'function') {
     ref(node);
   } else if (_typeof$1(ref) === 'object' && ref && 'current' in ref) {
@@ -5824,18 +5827,18 @@ function fillRef$1(ref, node) {
  * Merge refs into one ref function to support ref passing.
  */
 
-function composeRef$1() {
+function composeRef() {
   for (var _len = arguments.length, refs = new Array(_len), _key = 0; _key < _len; _key++) {
     refs[_key] = arguments[_key];
   }
 
   return function (node) {
     refs.forEach(function (ref) {
-      fillRef$1(ref, node);
+      fillRef(ref, node);
     });
   };
 }
-function supportRef$1(nodeOrComponent) {
+function supportRef(nodeOrComponent) {
   var _type$prototype, _nodeOrComponent$prot;
 
   var type = reactIs_2(nodeOrComponent) ? nodeOrComponent.type.type : nodeOrComponent.type; // Function component node
@@ -6854,7 +6857,7 @@ function _toConsumableArray(arr) {
 var HOOK_MARK = 'RC_FORM_INTERNAL_HOOKS'; // eslint-disable-next-line @typescript-eslint/no-explicit-any
 
 var warningFunc = function warningFunc() {
-  warningOnce$1(false, 'Can not find FormContext. Please make sure you wrap Field under Form.');
+  warningOnce(false, 'Can not find FormContext. Please make sure you wrap Field under Form.');
 };
 
 var Context = /*#__PURE__*/React__namespace.createContext({
@@ -7793,10 +7796,10 @@ function _wrapNativeSuper(Class) {
 
 /* eslint no-console:0 */
 var formatRegExp = /%[sdj%]/g;
-var warning$2 = function warning() {}; // don't print warning message when in production env or node runtime
+var warning$1 = function warning() {}; // don't print warning message when in production env or node runtime
 
 if (typeof process !== 'undefined' && process.env && process.env.NODE_ENV !== 'production' && typeof window !== 'undefined' && typeof document !== 'undefined') {
-  warning$2 = function warning(type, errors) {
+  warning$1 = function warning(type, errors) {
     if (typeof console !== 'undefined' && console.warn) {
       if (errors.every(function (e) {
         return typeof e === 'string';
@@ -9117,7 +9120,7 @@ Schema.register = function register(type, validator) {
   validators[type] = validator;
 };
 
-Schema.warning = warning$2;
+Schema.warning = warning$1;
 Schema.messages = messages;
 Schema.validators = validators;
 
@@ -9550,7 +9553,7 @@ function validateRules(namePath, value, rules, options, validateFirst, messageVa
 
           // Wait a tick to make sure return type is a promise
           Promise.resolve().then(function () {
-            warningOnce$1(!hasPromise, 'Your validator function has already return a promise. `callback` will be ignored.');
+            warningOnce(!hasPromise, 'Your validator function has already return a promise. `callback` will be ignored.');
 
             if (!hasPromise) {
               callback.apply(void 0, args);
@@ -9566,7 +9569,7 @@ function validateRules(namePath, value, rules, options, validateFirst, messageVa
          * 2. If promise not exist, use callback with warning instead
          */
 
-        warningOnce$1(hasPromise, '`callback` is deprecated. Please return a promise instead.');
+        warningOnce(hasPromise, '`callback` is deprecated. Please return a promise instead.');
 
         if (hasPromise) {
           promise.then(function () {
@@ -10226,7 +10229,7 @@ var Field = /*#__PURE__*/function (_React$Component) {
       } else if ( /*#__PURE__*/React__namespace.isValidElement(child)) {
         returnChildNode = /*#__PURE__*/React__namespace.cloneElement(child, this.getControlled(child.props));
       } else {
-        warningOnce$1(!child, '`children` of Field is not validate ReactElement.');
+        warningOnce(!child, '`children` of Field is not validate ReactElement.');
         returnChildNode = child;
       }
 
@@ -10260,7 +10263,7 @@ function WrapperField(_ref4) {
 
 
   if (process.env.NODE_ENV !== 'production' && restProps.preserve === false && restProps.isListField && namePath.length <= 1) {
-    warningOnce$1(false, '`preserve` should not apply on Form.List fields.');
+    warningOnce(false, '`preserve` should not apply on Form.List fields.');
   }
 
   return /*#__PURE__*/React__namespace.createElement(Field, _extends$1({
@@ -10285,7 +10288,7 @@ var List = function List(_ref) {
   var keyManager = keyRef.current; // User should not pass `children` as other type.
 
   if (typeof children !== 'function') {
-    warningOnce$1(false, 'Form.List only accepts function as children.');
+    warningOnce(false, 'Form.List only accepts function as children.');
     return null;
   }
 
@@ -10338,7 +10341,7 @@ var List = function List(_ref) {
           onChange([].concat(_toConsumableArray(newValue.slice(0, index)), [defaultValue], _toConsumableArray(newValue.slice(index))));
         } else {
           if (process.env.NODE_ENV !== 'production' && (index < 0 || index > newValue.length)) {
-            warningOnce$1(false, 'The second parameter of the add function should be a valid positive number.');
+            warningOnce(false, 'The second parameter of the add function should be a valid positive number.');
           }
 
           keyManager.keys = [].concat(_toConsumableArray(keyManager.keys), [keyManager.id]);
@@ -10385,7 +10388,7 @@ var List = function List(_ref) {
       listValue = [];
 
       if (process.env.NODE_ENV !== 'production') {
-        warningOnce$1(false, "Current value of '".concat(prefixName.join(' > '), "' is not an array type."));
+        warningOnce(false, "Current value of '".concat(prefixName.join(' > '), "' is not an array type."));
       }
     }
 
@@ -10611,7 +10614,7 @@ var FormStore = function FormStore(forceRootUpdate) {
       };
     }
 
-    warningOnce$1(false, '`getInternalHooks` is internal usage. Should not call directly.');
+    warningOnce(false, '`getInternalHooks` is internal usage. Should not call directly.');
     return null;
   };
 
@@ -10656,7 +10659,7 @@ var FormStore = function FormStore(forceRootUpdate) {
         _this.timeoutId = null;
 
         if (!_this.formHooked) {
-          warningOnce$1(false, 'Instance created by `useForm` is not connected to any Form element. Forget to pass `form` prop?');
+          warningOnce(false, 'Instance created by `useForm` is not connected to any Form element. Forget to pass `form` prop?');
         }
       });
     }
@@ -10912,13 +10915,13 @@ var FormStore = function FormStore(forceRootUpdate) {
 
           if (formInitialValue !== undefined) {
             // Warning if conflict with form initialValues and do not modify value
-            warningOnce$1(false, "Form already set 'initialValues' with path '".concat(namePath.join('.'), "'. Field can not overwrite it."));
+            warningOnce(false, "Form already set 'initialValues' with path '".concat(namePath.join('.'), "'. Field can not overwrite it."));
           } else {
             var records = cache.get(namePath);
 
             if (records && records.size > 1) {
               // Warning if multiple field set `initialValue`and do not modify value
-              warningOnce$1(false, "Multiple Field with path '".concat(namePath.join('.'), "' set 'initialValue'. Can not decide which one to pick."));
+              warningOnce(false, "Multiple Field with path '".concat(namePath.join('.'), "' set 'initialValue'. Can not decide which one to pick."));
             } else if (records) {
               var originValue = _this.getFieldValue(namePath); // Set `initialValue`
 
@@ -11594,24 +11597,16 @@ RefForm.Field = WrapperField;
 RefForm.List = List;
 RefForm.useForm = useForm;
 
-/* eslint-disable no-console */
-var warned = {};
-function warning$1(valid, message) {
-  // Support uglify
-  if (process.env.NODE_ENV !== 'production' && !valid && console !== undefined) {
-    console.error("Warning: ".concat(message));
+function useMemo(getValue, condition, shouldUpdate) {
+  var cacheRef = React__namespace.useRef({});
+
+  if (!('value' in cacheRef.current) || shouldUpdate(cacheRef.current.condition, condition)) {
+    cacheRef.current.value = getValue();
+    cacheRef.current.condition = condition;
   }
+
+  return cacheRef.current.value;
 }
-function call(method, valid, message) {
-  if (!valid && !warned[message]) {
-    method(false, message);
-    warned[message] = true;
-  }
-}
-function warningOnce(valid, message) {
-  call(warning$1, valid, message);
-}
-/* eslint-enable */
 
 var devWarning = (function (valid, component, message) {
   warningOnce(valid, "[antd: ".concat(component, "] ").concat(message));
@@ -12047,7 +12042,7 @@ var ConfigConsumer = ConfigContext.Consumer;
 
 var SizeContext = /*#__PURE__*/React__namespace.createContext(undefined);
 
-function canUseDom$1() {
+function canUseDom() {
   return !!(typeof window !== 'undefined' && window.document && window.document.createElement);
 }
 
@@ -12081,10 +12076,10 @@ function getVendorPrefixes(domSupport, win) {
 
   return prefixes;
 }
-var vendorPrefixes = getVendorPrefixes(canUseDom$1(), typeof window !== 'undefined' ? window : {});
+var vendorPrefixes = getVendorPrefixes(canUseDom(), typeof window !== 'undefined' ? window : {});
 var style = {};
 
-if (canUseDom$1()) {
+if (canUseDom()) {
   var _document$createEleme = document.createElement('div');
 
   style = _document$createEleme.style;
@@ -12164,42 +12159,42 @@ function useMountStatus(defaultValue) {
   return [val, setValue];
 }
 
-var useIsomorphicLayoutEffect = canUseDom$1() ? React.useLayoutEffect : React.useEffect;
+var useIsomorphicLayoutEffect = canUseDom() ? React.useLayoutEffect : React.useEffect;
 
-var raf$1 = function raf(callback) {
+var raf = function raf(callback) {
   return +setTimeout(callback, 16);
 };
 
-var caf$1 = function caf(num) {
+var caf = function caf(num) {
   return clearTimeout(num);
 };
 
 if (typeof window !== 'undefined' && 'requestAnimationFrame' in window) {
-  raf$1 = function raf(callback) {
+  raf = function raf(callback) {
     return window.requestAnimationFrame(callback);
   };
 
-  caf$1 = function caf(handle) {
+  caf = function caf(handle) {
     return window.cancelAnimationFrame(handle);
   };
 }
 
-function wrapperRaf$2(callback) {
-  return raf$1(callback);
+function wrapperRaf$1(callback) {
+  return raf(callback);
 }
-wrapperRaf$2.cancel = caf$1;
+wrapperRaf$1.cancel = caf;
 
 var useNextFrame = (function () {
   var nextFrameRef = React__namespace.useRef(null);
 
   function cancelNextFrame() {
-    wrapperRaf$2.cancel(nextFrameRef.current);
+    wrapperRaf$1.cancel(nextFrameRef.current);
   }
 
   function nextFrame(callback) {
     var delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2;
     cancelNextFrame();
-    var nextFrameId = wrapperRaf$2(function () {
+    var nextFrameId = wrapperRaf$1(function () {
       if (delay <= 1) {
         callback({
           isCanceled: function isCanceled() {
@@ -12607,7 +12602,7 @@ function genCSSMotion(config) {
     originRef.current = ref;
     var setNodeRef = React__namespace.useCallback(function (node) {
       nodeRef.current = node;
-      fillRef$1(originRef.current, node);
+      fillRef(originRef.current, node);
     }, []); // ===================== Render =====================
 
     var motionChildren;
@@ -13445,9 +13440,9 @@ Object.keys(presetPrimaryColors).forEach(function (key) {
   presetDarkPalettes[key].primary = presetDarkPalettes[key][5];
 });
 
-var MARK_KEY$1 = "rc-util-key";
+var MARK_KEY = "rc-util-key";
 
-function getContainer$1(option) {
+function getContainer(option) {
   if (option.attachTo) {
     return option.attachTo;
   }
@@ -13456,12 +13451,12 @@ function getContainer$1(option) {
   return head || document.body;
 }
 
-function injectCSS$1(css) {
+function injectCSS(css) {
   var _option$csp;
 
   var option = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
-  if (!canUseDom$1()) {
+  if (!canUseDom()) {
     return null;
   }
 
@@ -13474,7 +13469,7 @@ function injectCSS$1(css) {
   }
 
   styleNode.innerHTML = css;
-  var container = getContainer$1(option);
+  var container = getContainer(option);
   var firstChild = container.firstChild;
 
   if (option.prepend && firstChild) {
@@ -13485,20 +13480,20 @@ function injectCSS$1(css) {
 
   return styleNode;
 }
-var containerCache$1 = new Map();
-function updateCSS$1(css, key) {
+var containerCache = new Map();
+function updateCSS(css, key) {
   var option = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-  var container = getContainer$1(option); // Get real parent
+  var container = getContainer(option); // Get real parent
 
-  if (!containerCache$1.has(container)) {
-    var placeholderStyle = injectCSS$1('', option);
+  if (!containerCache.has(container)) {
+    var placeholderStyle = injectCSS('', option);
     var parentElement = placeholderStyle.parentElement;
-    containerCache$1.set(container, parentElement);
+    containerCache.set(container, parentElement);
     parentElement.removeChild(placeholderStyle);
   }
 
-  var existNode = _toConsumableArray(containerCache$1.get(container).children).find(function (node) {
-    return node.tagName === 'STYLE' && node[MARK_KEY$1] === key;
+  var existNode = _toConsumableArray(containerCache.get(container).children).find(function (node) {
+    return node.tagName === 'STYLE' && node[MARK_KEY] === key;
   });
 
   if (existNode) {
@@ -13517,13 +13512,13 @@ function updateCSS$1(css, key) {
     return existNode;
   }
 
-  var newNode = injectCSS$1(css, option);
-  newNode[MARK_KEY$1] = key;
+  var newNode = injectCSS(css, option);
+  newNode[MARK_KEY] = key;
   return newNode;
 }
 
 function warning(valid, message) {
-  warningOnce$1(valid, "[@ant-design/icons] ".concat(message));
+  warningOnce(valid, "[@ant-design/icons] ".concat(message));
 }
 function isIconDefinition(target) {
   return _typeof$1(target) === 'object' && typeof target.name === 'string' && typeof target.theme === 'string' && (_typeof$1(target.icon) === 'object' || typeof target.icon === 'function');
@@ -13580,7 +13575,7 @@ var useInsertStyles = function useInsertStyles() {
       csp = _useContext.csp;
 
   React.useEffect(function () {
-    updateCSS$1(styleStr, '@ant-design-icons', {
+    updateCSS(styleStr, '@ant-design-icons', {
       prepend: true,
       csp: csp
     });
@@ -13772,61 +13767,24 @@ var CloseOutlined = function CloseOutlined(props, ref) {
 CloseOutlined.displayName = 'CloseOutlined';
 var CloseOutlined$1 = /*#__PURE__*/React__namespace.forwardRef(CloseOutlined);
 
-var raf = function raf(callback) {
-  return +setTimeout(callback, 16);
-};
+function addEventListenerWrap(target, eventType, cb, option) {
+  /* eslint camelcase: 2 */
+  var callback = ReactDOM__default['default'].unstable_batchedUpdates ? function run(e) {
+    ReactDOM__default['default'].unstable_batchedUpdates(cb, e);
+  } : cb;
 
-var caf = function caf(num) {
-  return clearTimeout(num);
-};
-
-if (typeof window !== 'undefined' && 'requestAnimationFrame' in window) {
-  raf = function raf(callback) {
-    return window.requestAnimationFrame(callback);
-  };
-
-  caf = function caf(handle) {
-    return window.cancelAnimationFrame(handle);
-  };
-}
-
-var rafUUID = 0;
-var rafIds = new Map();
-
-function cleanup(id) {
-  rafIds.delete(id);
-}
-
-function wrapperRaf$1(callback) {
-  var times = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
-  rafUUID += 1;
-  var id = rafUUID;
-
-  function callRef(leftTimes) {
-    if (leftTimes === 0) {
-      // Clean up
-      cleanup(id); // Trigger
-
-      callback();
-    } else {
-      // Next raf
-      var realId = raf(function () {
-        callRef(leftTimes - 1);
-      }); // Bind real raf id
-
-      rafIds.set(id, realId);
-    }
+  if (target.addEventListener) {
+    target.addEventListener(eventType, callback, option);
   }
 
-  callRef(times);
-  return id;
+  return {
+    remove: function remove() {
+      if (target.removeEventListener) {
+        target.removeEventListener(eventType, callback);
+      }
+    }
+  };
 }
-
-wrapperRaf$1.cancel = function (id) {
-  var realId = rafIds.get(id);
-  cleanup(realId);
-  return caf(realId);
-};
 
 /**
  * @ignore
@@ -14451,17 +14409,6 @@ var KeyCode = {
   }
 };
 
-function useMemo(getValue, condition, shouldUpdate) {
-  var cacheRef = React__namespace.useRef({});
-
-  if (!('value' in cacheRef.current) || shouldUpdate(cacheRef.current.condition, condition)) {
-    cacheRef.current.value = getValue();
-    cacheRef.current.condition = condition;
-  }
-
-  return cacheRef.current.value;
-}
-
 var isMobile = (function () {
   if (typeof navigator === 'undefined' || typeof window === 'undefined') {
     return false;
@@ -14535,25 +14482,6 @@ function contains(root, n) {
   return root.contains(n);
 }
 
-function addEventListenerWrap(target, eventType, cb, option) {
-  /* eslint camelcase: 2 */
-  var callback = ReactDOM__default['default'].unstable_batchedUpdates ? function run(e) {
-    ReactDOM__default['default'].unstable_batchedUpdates(cb, e);
-  } : cb;
-
-  if (target.addEventListener) {
-    target.addEventListener(eventType, callback, option);
-  }
-
-  return {
-    remove: function remove() {
-      if (target.removeEventListener) {
-        target.removeEventListener(eventType, callback);
-      }
-    }
-  };
-}
-
 var Portal = React.forwardRef(function (props, ref) {
   var didUpdate = props.didUpdate,
       getContainer = props.getContainer,
@@ -14566,7 +14494,7 @@ var Portal = React.forwardRef(function (props, ref) {
 
   var initRef = React.useRef(false);
 
-  if (!initRef.current && canUseDom$1()) {
+  if (!initRef.current && canUseDom()) {
     containerRef.current = getContainer();
     initRef.current = true;
   } // [Legacy] Used by `rc-trigger`
@@ -16276,7 +16204,7 @@ var Align = function Align(_ref, ref) {
 
   if (React__default['default'].isValidElement(childNode)) {
     childNode = React__default['default'].cloneElement(childNode, {
-      ref: composeRef$1(childNode.ref, nodeRef)
+      ref: composeRef(childNode.ref, nodeRef)
     });
   }
 
@@ -16303,12 +16231,12 @@ var useVisibleStatus = (function (visible, doMeasure) {
   }
 
   function cancelRaf() {
-    wrapperRaf$2.cancel(rafRef.current);
+    wrapperRaf$1.cancel(rafRef.current);
   }
 
   function goNextStatus(callback) {
     cancelRaf();
-    rafRef.current = wrapperRaf$2(function () {
+    rafRef.current = wrapperRaf$1(function () {
       // Only align should be manually trigger
       setStatus(function (prev) {
         switch (status) {
@@ -16338,7 +16266,7 @@ var useVisibleStatus = (function (visible, doMeasure) {
     }
 
     if (status) {
-      rafRef.current = wrapperRaf$2( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee() {
+      rafRef.current = wrapperRaf$1( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee() {
         var index, nextStatus;
         return regenerator.wrap(function _callee$(_context) {
           while (1) {
@@ -16971,7 +16899,7 @@ function generateTrigger(PortalComponent) {
       };
 
       _this.attachParent = function (popupContainer) {
-        wrapperRaf$2.cancel(_this.attachId);
+        wrapperRaf$1.cancel(_this.attachId);
         var _this$props3 = _this.props,
             getPopupContainer = _this$props3.getPopupContainer,
             getDocument = _this$props3.getDocument;
@@ -16993,7 +16921,7 @@ function generateTrigger(PortalComponent) {
           mountNode.appendChild(popupContainer);
         } else {
           // Retry after frame render in case parent not ready
-          _this.attachId = wrapperRaf$2(function () {
+          _this.attachId = wrapperRaf$1(function () {
             _this.attachParent(popupContainer);
           });
         }
@@ -17102,7 +17030,7 @@ function generateTrigger(PortalComponent) {
         this.clearDelayTimer();
         this.clearOutsideHandler();
         clearTimeout(this.mouseDownTimeout);
-        wrapperRaf$2.cancel(this.attachId);
+        wrapperRaf$1.cancel(this.attachId);
       }
     }, {
       key: "getPopupDomNode",
@@ -17373,8 +17301,8 @@ function generateTrigger(PortalComponent) {
 
         var cloneProps = _objectSpread2$1({}, newChildProps);
 
-        if (supportRef$1(child)) {
-          cloneProps.ref = composeRef$1(this.triggerRef, child.ref);
+        if (supportRef(child)) {
+          cloneProps.ref = composeRef(this.triggerRef, child.ref);
         }
 
         var trigger = /*#__PURE__*/React__namespace.cloneElement(child, cloneProps);
@@ -17453,46 +17381,6 @@ function cloneElement(element, props) {
   return replaceElement(element, element, props);
 }
 
-function fillRef(ref, node) {
-  if (typeof ref === 'function') {
-    ref(node);
-  } else if (_typeof$1(ref) === 'object' && ref && 'current' in ref) {
-    ref.current = node;
-  }
-}
-/**
- * Merge refs into one ref function to support ref passing.
- */
-
-function composeRef() {
-  for (var _len = arguments.length, refs = new Array(_len), _key = 0; _key < _len; _key++) {
-    refs[_key] = arguments[_key];
-  }
-
-  return function (node) {
-    refs.forEach(function (ref) {
-      fillRef(ref, node);
-    });
-  };
-}
-function supportRef(nodeOrComponent) {
-  var _type$prototype, _nodeOrComponent$prot;
-
-  var type = reactIs_2(nodeOrComponent) ? nodeOrComponent.type.type : nodeOrComponent.type; // Function component node
-
-  if (typeof type === 'function' && !((_type$prototype = type.prototype) === null || _type$prototype === void 0 ? void 0 : _type$prototype.render)) {
-    return false;
-  } // Class component
-
-
-  if (typeof nodeOrComponent === 'function' && !((_nodeOrComponent$prot = nodeOrComponent.prototype) === null || _nodeOrComponent$prot === void 0 ? void 0 : _nodeOrComponent$prot.render)) {
-    return false;
-  }
-
-  return true;
-}
-/* eslint-enable */
-
 // https://stackoverflow.com/questions/46176165/ways-to-get-string-literal-type-of-array-values-without-enum-overhead
 var tuple$1 = function tuple() {
   for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
@@ -17566,91 +17454,6 @@ var ButtonGroup = function ButtonGroup(props) {
     }));
   });
 };
-
-function canUseDom() {
-  return !!(typeof window !== 'undefined' && window.document && window.document.createElement);
-}
-
-var MARK_KEY = "rc-util-key";
-
-function getContainer(option) {
-  if (option.attachTo) {
-    return option.attachTo;
-  }
-
-  var head = document.querySelector('head');
-  return head || document.body;
-}
-
-function injectCSS(css) {
-  var _option$csp;
-
-  var option = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-
-  if (!canUseDom()) {
-    return null;
-  }
-
-  var styleNode = document.createElement('style');
-
-  if ((_option$csp = option.csp) === null || _option$csp === void 0 ? void 0 : _option$csp.nonce) {
-    var _option$csp2;
-
-    styleNode.nonce = (_option$csp2 = option.csp) === null || _option$csp2 === void 0 ? void 0 : _option$csp2.nonce;
-  }
-
-  styleNode.innerHTML = css;
-  var container = getContainer(option);
-  var firstChild = container.firstChild;
-
-  if (option.prepend && container.prepend) {
-    // Use `prepend` first
-    container.prepend(styleNode);
-  } else if (option.prepend && firstChild) {
-    // Fallback to `insertBefore` like IE not support `prepend`
-    container.insertBefore(styleNode, firstChild);
-  } else {
-    container.appendChild(styleNode);
-  }
-
-  return styleNode;
-}
-var containerCache = new Map();
-function updateCSS(css, key) {
-  var option = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-  var container = getContainer(option); // Get real parent
-
-  if (!containerCache.has(container)) {
-    var placeholderStyle = injectCSS('', option);
-    var parentNode = placeholderStyle.parentNode;
-    containerCache.set(container, parentNode);
-    parentNode.removeChild(placeholderStyle);
-  }
-
-  var existNode = Array.from(containerCache.get(container).children).find(function (node) {
-    return node.tagName === 'STYLE' && node[MARK_KEY] === key;
-  });
-
-  if (existNode) {
-    var _option$csp3, _option$csp4;
-
-    if (((_option$csp3 = option.csp) === null || _option$csp3 === void 0 ? void 0 : _option$csp3.nonce) && existNode.nonce !== ((_option$csp4 = option.csp) === null || _option$csp4 === void 0 ? void 0 : _option$csp4.nonce)) {
-      var _option$csp5;
-
-      existNode.nonce = (_option$csp5 = option.csp) === null || _option$csp5 === void 0 ? void 0 : _option$csp5.nonce;
-    }
-
-    if (existNode.innerHTML !== css) {
-      existNode.innerHTML = css;
-    }
-
-    return existNode;
-  }
-
-  var newNode = injectCSS(css, option);
-  newNode[MARK_KEY] = key;
-  return newNode;
-}
 
 var id = 0;
 var ids = {}; // Support call raf with delay specified frame
@@ -18120,11 +17923,9 @@ var InternalButton = function InternalButton(props, ref) {
   var handleClick = function handleClick(e) {
     var _a;
 
-    var onClick = props.onClick,
-        disabled = props.disabled; // https://github.com/ant-design/ant-design/issues/30207
+    var onClick = props.onClick;
 
-    if (innerLoading || disabled) {
-      e.preventDefault();
+    if (innerLoading) {
       return;
     }
 
@@ -24312,7 +24113,7 @@ function waitElementReady(element, callback) {
     if (isVisible(element)) {
       callback();
     } else {
-      id = wrapperRaf$2(function () {
+      id = wrapperRaf$1(function () {
         tryOrNextFrame();
       });
     }
@@ -24320,7 +24121,7 @@ function waitElementReady(element, callback) {
 
   tryOrNextFrame();
   return function () {
-    wrapperRaf$2.cancel(id);
+    wrapperRaf$1.cancel(id);
   };
 }
 /* eslint-disable no-param-reassign */
@@ -26229,11 +26030,11 @@ function PickerPanel(props) {
   var isSecondStepValid = 60 % secondStep === 0;
 
   if (process.env.NODE_ENV !== 'production') {
-    warningOnce$1(!value || generateConfig.isValidate(value), 'Invalidate date pass to `value`.');
-    warningOnce$1(!value || generateConfig.isValidate(value), 'Invalidate date pass to `defaultValue`.');
-    warningOnce$1(isHourStepValid, "`hourStep` ".concat(hourStep, " is invalid. It should be a factor of 24."));
-    warningOnce$1(isMinuteStepValid, "`minuteStep` ".concat(minuteStep, " is invalid. It should be a factor of 60."));
-    warningOnce$1(isSecondStepValid, "`secondStep` ".concat(secondStep, " is invalid. It should be a factor of 60."));
+    warningOnce(!value || generateConfig.isValidate(value), 'Invalidate date pass to `value`.');
+    warningOnce(!value || generateConfig.isValidate(value), 'Invalidate date pass to `defaultValue`.');
+    warningOnce(isHourStepValid, "`hourStep` ".concat(hourStep, " is invalid. It should be a factor of 24."));
+    warningOnce(isMinuteStepValid, "`minuteStep` ".concat(minuteStep, " is invalid. It should be a factor of 60."));
+    warningOnce(isSecondStepValid, "`secondStep` ".concat(secondStep, " is invalid. It should be a factor of 60."));
   } // ============================ State =============================
 
 
@@ -26385,7 +26186,7 @@ function PickerPanel(props) {
 
 
     {
-      warningOnce$1(false, 'Panel not correct handle keyDown event. Please help to fire issue about this.');
+      warningOnce(false, 'Panel not correct handle keyDown event. Please help to fire issue about this.');
       return false;
     }
     /* eslint-enable no-lone-blocks */
@@ -27097,7 +26898,7 @@ function InnerPicker(props) {
 
 
     {
-      warningOnce$1(false, 'Picker not correct forward KeyDown operation. Please help to fire issue about this.');
+      warningOnce(false, 'Picker not correct forward KeyDown operation. Please help to fire issue about this.');
       return false;
     }
   };
@@ -27267,7 +27068,7 @@ function InnerPicker(props) {
 
 
   if (process.env.NODE_ENV !== 'production') {
-    warningOnce$1(!defaultOpenValue, '`defaultOpenValue` may confuse user for the current value status. Please use `defaultValue` instead.');
+    warningOnce(!defaultOpenValue, '`defaultOpenValue` may confuse user for the current value status. Please use `defaultValue` instead.');
   } // ============================ Return =============================
 
 
@@ -27928,7 +27729,7 @@ function InnerRangePicker(props) {
 
 
     {
-      warningOnce$1(false, 'Picker not correct forward KeyDown operation. Please help to fire issue about this.');
+      warningOnce(false, 'Picker not correct forward KeyDown operation. Please help to fire issue about this.');
       return false;
     }
   }; // ============================= Text ==============================
@@ -28151,7 +27952,7 @@ function InnerRangePicker(props) {
 
   if (process.env.NODE_ENV !== 'production') {
     if (value && Array.isArray(disabled) && (getValue(disabled, 0) && !getValue(value, 0) || getValue(disabled, 1) && !getValue(value, 1))) {
-      warningOnce$1(false, '`disabled` should not set with empty `value`. You should set `allowEmpty` or `value` instead.');
+      warningOnce(false, '`disabled` should not set with empty `value`. You should set `allowEmpty` or `value` instead.');
     }
   } // ============================ Private ============================
 
@@ -28839,9 +28640,16 @@ function generatePicker$1(generateConfig) {
           }
         };
 
-        _this.renderPicker = function (contextLocale) {
-          var locale = _extends$1(_extends$1({}, contextLocale), _this.props.locale);
+        _this.getDefaultLocale = function () {
+          var locale$1 = _this.props.locale;
 
+          var result = _extends$1(_extends$1({}, locale), locale$1);
+
+          result.lang = _extends$1(_extends$1({}, result.lang), (locale$1 || {}).lang);
+          return result;
+        };
+
+        _this.renderPicker = function (locale) {
           var _this$context = _this.context,
               getPrefixCls = _this$context.getPrefixCls,
               direction = _this$context.direction,
@@ -28924,7 +28732,7 @@ function generatePicker$1(generateConfig) {
         value: function render() {
           return /*#__PURE__*/React__namespace.createElement(LocaleReceiver, {
             componentName: "DatePicker",
-            defaultLocale: locale
+            defaultLocale: this.getDefaultLocale
           }, this.renderPicker);
         }
       }]);
@@ -29010,9 +28818,16 @@ function generateRangePicker(generateConfig) {
         }
       };
 
-      _this.renderPicker = function (contextLocale) {
-        var locale = _extends$1(_extends$1({}, contextLocale), _this.props.locale);
+      _this.getDefaultLocale = function () {
+        var locale$1 = _this.props.locale;
 
+        var result = _extends$1(_extends$1({}, locale), locale$1);
+
+        result.lang = _extends$1(_extends$1({}, result.lang), (locale$1 || {}).lang);
+        return result;
+      };
+
+      _this.renderPicker = function (locale) {
         var _this$context = _this.context,
             getPrefixCls = _this$context.getPrefixCls,
             direction = _this$context.direction,
@@ -29090,7 +28905,7 @@ function generateRangePicker(generateConfig) {
       value: function render() {
         return /*#__PURE__*/React__namespace.createElement(LocaleReceiver, {
           componentName: "DatePicker",
-          defaultLocale: locale
+          defaultLocale: this.getDefaultLocale
         }, this.renderPicker);
       }
     }]);

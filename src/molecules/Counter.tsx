@@ -6,8 +6,9 @@ export interface Props {
 	defaultValue?: number;
 	min?: number;
 	max?: number;
+	onChange?: (n:number) => void;
 }
-const Counter = ({ style, defaultValue = 0, min = 0, max }: Props) => {
+const Counter = ({ style, defaultValue = 0, min = 0, max, onChange }: Props) => {
 	if (min < 0) {
 		console.warn('props min must be greater than 0');
 		min = 0;
@@ -54,6 +55,9 @@ const Counter = ({ style, defaultValue = 0, min = 0, max }: Props) => {
 		if (value === '') return;
 		console.log(value);
 		validateCheck();
+		if (typeof onChange === 'function') {
+			onChange(value);
+		}
 	}, [value]);
 	return (
 		<div className="counter-wrap" style={{...style}}>

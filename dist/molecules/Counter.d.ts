@@ -5,6 +5,7 @@ export interface Props {
     defaultValue?: number;
     min?: number;
     max?: number;
+    onChange?: (n: number) => void;
 }
-declare const Counter: ({ style, defaultValue, min, max }: Props) => JSX.Element;
+declare const Counter: ({ style, defaultValue, min, max, onChange }: Props) => JSX.Element;
 export default Counter;
