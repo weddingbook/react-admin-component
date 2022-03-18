@@ -103,8 +103,8 @@
                 border: 1px solid $blue60;
                 box-shadow: 0 1px 5px 0 rgba(28, 71, 154, 0.3);
             }
-            &:has() {
-            }
+            //&:has() {
+            //}
             // invalid 어캐함
             // https://github.com/w3c/csswg-drafts/issues/3072
         }
@@ -199,8 +199,8 @@
                     border: 1px solid $blue60;
                     box-shadow: 0 1px 5px 0 rgba(28, 71, 154, 0.3);
                 }
-                &:has() {
-                }
+                //&:has() {
+                //}
             }
             // invalid 어캐함
             // https://github.com/w3c/csswg-drafts/issues/3072

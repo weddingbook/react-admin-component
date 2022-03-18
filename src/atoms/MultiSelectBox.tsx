@@ -166,7 +166,9 @@ const MultiSelectBox = ({
 							className={isSelected(item) ? 'selected' : ''}
 							onClick={() => onClickList(item)}
 							key={`multi-select-option-${item.value}`}>
+							{item.additionalHtml?.position === 'before' && item.additionalHtml.html}
 							<span style={{ marginRight: 6 }}>{item.name}</span>
+							{item.additionalHtml?.position === 'after' && item.additionalHtml.html}
 							<span
 								style={{ display: isSelected(item) ? 'inline-block' : 'none' }}>
 								<Icon name='checkmark-outline' size='14' fill='#296df1' />
