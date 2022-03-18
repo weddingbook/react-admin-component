@@ -1,10 +1,6 @@
 import { CSSProperties } from 'react';
 import './GroupSelectBox.scss';
-export interface ISelectBoxOption {
-    value: any;
-    name: string;
-    optgroup: string;
-}
+import { ISelectBoxOption } from './SelectBox';
 declare type Props = {
     options: ISelectBoxOption[];
     selectedOption: ISelectBoxOption;

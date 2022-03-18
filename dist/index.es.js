@@ -2306,6 +2306,8 @@ var GroupSelectBox = function (_a) {
     // const additionalHtml = selectedOption.additionalHtml;
     var groupedOptions = {};
     options.forEach(function (option) {
+        if (!option.optgroup)
+            return;
         if (!groupedOptions[option.optgroup])
             groupedOptions[option.optgroup] = [];
         groupedOptions[option.optgroup].push({
@@ -2628,7 +2630,7 @@ function _extends$2() {
   return _extends$2.apply(this, arguments);
 }
 
-function ownKeys$3(object, enumerableOnly) {
+function ownKeys$4(object, enumerableOnly) {
   var keys = Object.keys(object);
 
   if (Object.getOwnPropertySymbols) {
@@ -2647,13 +2649,13 @@ function _objectSpread2$2(target) {
     var source = arguments[i] != null ? arguments[i] : {};
 
     if (i % 2) {
-      ownKeys$3(Object(source), true).forEach(function (key) {
+      ownKeys$4(Object(source), true).forEach(function (key) {
         _defineProperty$2(target, key, source[key]);
       });
     } else if (Object.getOwnPropertyDescriptors) {
       Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
     } else {
-      ownKeys$3(Object(source)).forEach(function (key) {
+      ownKeys$4(Object(source)).forEach(function (key) {
         Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
       });
     }
@@ -5681,6 +5683,22 @@ var classnames = createCommonjsModule(function (module) {
 }());
 });
 
+function ownKeys$3(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$3(Object(source), true).forEach(function (key) { _defineProperty$1(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$3(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function omit(obj, fields) {
+  var clone = _objectSpread$1({}, obj);
+
+  if (Array.isArray(fields)) {
+    fields.forEach(function (key) {
+      delete clone[key];
+    });
+  }
+
+  return clone;
+}
+
 function ownKeys$2(object, enumerableOnly) {
   var keys = Object.keys(object);
 
@@ -5715,38 +5733,66 @@ function _objectSpread2$1(target) {
   return target;
 }
 
-function omit(obj, fields) {
-  var clone = _objectSpread2$1({}, obj);
+/**
+ * Return if a node is a DOM node. Else will return by `findDOMNode`
+ */
 
-  if (Array.isArray(fields)) {
-    fields.forEach(function (key) {
-      delete clone[key];
-    });
+function findDOMNode(node) {
+  if (node instanceof HTMLElement) {
+    return node;
   }
 
-  return clone;
+  return ReactDOM.findDOMNode(node);
+}
+
+function toArray$3(children) {
+  var option = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  var ret = [];
+  React__default.Children.forEach(children, function (child) {
+    if ((child === undefined || child === null) && !option.keepEmpty) {
+      return;
+    }
+
+    if (Array.isArray(child)) {
+      ret = ret.concat(toArray$3(child));
+    } else if (reactIs_1(child) && child.props) {
+      ret = ret.concat(toArray$3(child.props.children, option));
+    } else {
+      ret.push(child);
+    }
+  });
+  return ret;
 }
 
 /* eslint-disable no-console */
-var warned$1 = {};
-function warning$3(valid, message) {
+var warned = {};
+function warning$2(valid, message) {
   // Support uglify
   if (process.env.NODE_ENV !== 'production' && !valid && console !== undefined) {
     console.error("Warning: ".concat(message));
   }
 }
-function call$1(method, valid, message) {
-  if (!valid && !warned$1[message]) {
-    method(false, message);
-    warned$1[message] = true;
+function note(valid, message) {
+  // Support uglify
+  if (process.env.NODE_ENV !== 'production' && !valid && console !== undefined) {
+    console.warn("Note: ".concat(message));
   }
 }
-function warningOnce$1(valid, message) {
-  call$1(warning$3, valid, message);
+function call(method, valid, message) {
+  if (!valid && !warned[message]) {
+    method(false, message);
+    warned[message] = true;
+  }
+}
+function warningOnce(valid, message) {
+  call(warning$2, valid, message);
+}
+function noteOnce(valid, message) {
+  call(note, valid, message);
 }
 /* eslint-enable */
 
-function fillRef$1(ref, node) {
+function fillRef(ref, node) {
   if (typeof ref === 'function') {
     ref(node);
   } else if (_typeof$1(ref) === 'object' && ref && 'current' in ref) {
@@ -5757,26 +5803,18 @@ function fillRef$1(ref, node) {
  * Merge refs into one ref function to support ref passing.
  */
 
-function composeRef$1() {
+function composeRef() {
   for (var _len = arguments.length, refs = new Array(_len), _key = 0; _key < _len; _key++) {
     refs[_key] = arguments[_key];
   }
 
-  var refList = refs.filter(function (ref) {
-    return ref;
-  });
-
-  if (refList.length <= 1) {
-    return refList[0];
-  }
-
   return function (node) {
     refs.forEach(function (ref) {
-      fillRef$1(ref, node);
+      fillRef(ref, node);
     });
   };
 }
-function supportRef$1(nodeOrComponent) {
+function supportRef(nodeOrComponent) {
   var _type$prototype, _nodeOrComponent$prot;
 
   var type = reactIs_2(nodeOrComponent) ? nodeOrComponent.type.type : nodeOrComponent.type; // Function component node
@@ -5793,18 +5831,6 @@ function supportRef$1(nodeOrComponent) {
   return true;
 }
 /* eslint-enable */
-
-/**
- * Return if a node is a DOM node. Else will return by `findDOMNode`
- */
-
-function findDOMNode$1(node) {
-  if (node instanceof HTMLElement) {
-    return node;
-  }
-
-  return ReactDOM.findDOMNode(node);
-}
 
 /**
  * A collection of shims that provide minimal functionality of the ES6 collections.
@@ -6804,53 +6830,6 @@ function _toConsumableArray(arr) {
   return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
 }
 
-function toArray$3(children) {
-  var option = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-  var ret = [];
-  React__default.Children.forEach(children, function (child) {
-    if ((child === undefined || child === null) && !option.keepEmpty) {
-      return;
-    }
-
-    if (Array.isArray(child)) {
-      ret = ret.concat(toArray$3(child));
-    } else if (reactIs_1(child) && child.props) {
-      ret = ret.concat(toArray$3(child.props.children, option));
-    } else {
-      ret.push(child);
-    }
-  });
-  return ret;
-}
-
-/* eslint-disable no-console */
-var warned = {};
-function warning$2(valid, message) {
-  // Support uglify
-  if (process.env.NODE_ENV !== 'production' && !valid && console !== undefined) {
-    console.error("Warning: ".concat(message));
-  }
-}
-function note(valid, message) {
-  // Support uglify
-  if (process.env.NODE_ENV !== 'production' && !valid && console !== undefined) {
-    console.warn("Note: ".concat(message));
-  }
-}
-function call(method, valid, message) {
-  if (!valid && !warned[message]) {
-    method(false, message);
-    warned[message] = true;
-  }
-}
-function warningOnce(valid, message) {
-  call(warning$2, valid, message);
-}
-function noteOnce(valid, message) {
-  call(note, valid, message);
-}
-/* eslint-enable */
-
 var HOOK_MARK = 'RC_FORM_INTERNAL_HOOKS'; // eslint-disable-next-line @typescript-eslint/no-explicit-any
 
 var warningFunc = function warningFunc() {
@@ -6861,7 +6840,6 @@ var Context = /*#__PURE__*/React.createContext({
   getFieldValue: warningFunc,
   getFieldsValue: warningFunc,
   getFieldError: warningFunc,
-  getFieldWarning: warningFunc,
   getFieldsError: warningFunc,
   isFieldsTouched: warningFunc,
   isFieldTouched: warningFunc,
@@ -6883,8 +6861,7 @@ var Context = /*#__PURE__*/React.createContext({
       setCallbacks: warningFunc,
       getFields: warningFunc,
       setValidateMessages: warningFunc,
-      setPreserve: warningFunc,
-      getInitialValue: warningFunc
+      setPreserve: warningFunc
     };
   }
 });
@@ -7706,8 +7683,7 @@ function _extends() {
 function _inheritsLoose(subClass, superClass) {
   subClass.prototype = Object.create(superClass.prototype);
   subClass.prototype.constructor = subClass;
-
-  _setPrototypeOf(subClass, superClass);
+  subClass.__proto__ = superClass;
 }
 
 function _getPrototypeOf(o) {
@@ -7732,7 +7708,7 @@ function _isNativeReflectConstruct() {
   if (typeof Proxy === "function") return true;
 
   try {
-    Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {}));
+    Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
     return true;
   } catch (e) {
     return false;
@@ -7800,7 +7776,7 @@ var warning$1 = function warning() {}; // don't print warning message when in pr
 
 if (typeof process !== 'undefined' && process.env && process.env.NODE_ENV !== 'production' && typeof window !== 'undefined' && typeof document !== 'undefined') {
   warning$1 = function warning(type, errors) {
-    if (typeof console !== 'undefined' && console.warn && typeof ASYNC_VALIDATOR_NO_WARNING === 'undefined') {
+    if (typeof console !== 'undefined' && console.warn) {
       if (errors.every(function (e) {
         return typeof e === 'string';
       })) {
@@ -7820,20 +7796,21 @@ function convertFieldsError(errors) {
   });
   return fields;
 }
-function format(template) {
-  for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-    args[_key - 1] = arguments[_key];
+function format() {
+  for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+    args[_key] = arguments[_key];
   }
 
-  var i = 0;
+  var i = 1;
+  var f = args[0];
   var len = args.length;
 
-  if (typeof template === 'function') {
-    return template.apply(null, args);
+  if (typeof f === 'function') {
+    return f.apply(null, args.slice(1));
   }
 
-  if (typeof template === 'string') {
-    var str = template.replace(formatRegExp, function (x) {
+  if (typeof f === 'string') {
+    var str = String(f).replace(formatRegExp, function (x) {
       if (x === '%%') {
         return '%';
       }
@@ -7865,7 +7842,7 @@ function format(template) {
     return str;
   }
 
-  return template;
+  return f;
 }
 
 function isNativeStringType(type) {
@@ -7894,7 +7871,7 @@ function asyncParallelArray(arr, func, callback) {
   var arrLength = arr.length;
 
   function count(errors) {
-    results.push.apply(results, errors || []);
+    results.push.apply(results, errors);
     total++;
 
     if (total === arrLength) {
@@ -7933,7 +7910,7 @@ function asyncSerialArray(arr, func, callback) {
 function flattenObjArr(objArr) {
   var ret = [];
   Object.keys(objArr).forEach(function (k) {
-    ret.push.apply(ret, objArr[k] || []);
+    ret.push.apply(ret, objArr[k]);
   });
   return ret;
 }
@@ -7952,12 +7929,12 @@ var AsyncValidationError = /*#__PURE__*/function (_Error) {
 
   return AsyncValidationError;
 }( /*#__PURE__*/_wrapNativeSuper(Error));
-function asyncMap(objArr, option, func, callback, source) {
+function asyncMap(objArr, option, func, callback) {
   if (option.first) {
     var _pending = new Promise(function (resolve, reject) {
       var next = function next(errors) {
         callback(errors);
-        return errors.length ? reject(new AsyncValidationError(errors, convertFieldsError(errors))) : resolve(source);
+        return errors.length ? reject(new AsyncValidationError(errors, convertFieldsError(errors))) : resolve();
       };
 
       var flattenArr = flattenObjArr(objArr);
@@ -7971,7 +7948,12 @@ function asyncMap(objArr, option, func, callback, source) {
     return _pending;
   }
 
-  var firstFields = option.firstFields === true ? Object.keys(objArr) : option.firstFields || [];
+  var firstFields = option.firstFields || [];
+
+  if (firstFields === true) {
+    firstFields = Object.keys(objArr);
+  }
+
   var objArrKeys = Object.keys(objArr);
   var objArrLength = objArrKeys.length;
   var total = 0;
@@ -7983,13 +7965,13 @@ function asyncMap(objArr, option, func, callback, source) {
 
       if (total === objArrLength) {
         callback(results);
-        return results.length ? reject(new AsyncValidationError(results, convertFieldsError(results))) : resolve(source);
+        return results.length ? reject(new AsyncValidationError(results, convertFieldsError(results))) : resolve();
       }
     };
 
     if (!objArrKeys.length) {
       callback(results);
-      resolve(source);
+      resolve();
     }
 
     objArrKeys.forEach(function (key) {
@@ -8007,44 +7989,15 @@ function asyncMap(objArr, option, func, callback, source) {
   });
   return pending;
 }
-
-function isErrorObj(obj) {
-  return !!(obj && obj.message !== undefined);
-}
-
-function getValue$3(value, path) {
-  var v = value;
-
-  for (var i = 0; i < path.length; i++) {
-    if (v == undefined) {
-      return v;
-    }
-
-    v = v[path[i]];
-  }
-
-  return v;
-}
-
-function complementError(rule, source) {
+function complementError(rule) {
   return function (oe) {
-    var fieldValue;
-
-    if (rule.fullFields) {
-      fieldValue = getValue$3(source, rule.fullFields);
-    } else {
-      fieldValue = source[oe.field || rule.fullField];
-    }
-
-    if (isErrorObj(oe)) {
+    if (oe && oe.message) {
       oe.field = oe.field || rule.fullField;
-      oe.fieldValue = fieldValue;
       return oe;
     }
 
     return {
       message: typeof oe === 'function' ? oe() : oe,
-      fieldValue: fieldValue,
       field: oe.field || rule.fullField
     };
   };
@@ -8056,7 +8009,7 @@ function deepMerge(target, source) {
         var value = source[s];
 
         if (typeof value === 'object' && typeof target[s] === 'object') {
-          target[s] = _extends({}, target[s], value);
+          target[s] = _extends(_extends({}, target[s]), value);
         } else {
           target[s] = value;
         }
@@ -8067,11 +8020,23 @@ function deepMerge(target, source) {
   return target;
 }
 
-var required$1 = function required(rule, value, source, errors, options, type) {
+/**
+ *  Rule for validating required fields.
+ *
+ *  @param rule The validation rule.
+ *  @param value The value of the field on the source object.
+ *  @param source The source object being validated.
+ *  @param errors An array of errors that this rule may add
+ *  validation errors to.
+ *  @param options The validation options.
+ *  @param options.messages The validation messages.
+ */
+
+function required(rule, value, source, errors, options, type) {
   if (rule.required && (!source.hasOwnProperty(rule.field) || isEmptyValue(value, type || rule.type))) {
     errors.push(format(options.messages.required, rule.fullField));
   }
-};
+}
 
 /**
  *  Rule for validating whitespace.
@@ -8085,17 +8050,17 @@ var required$1 = function required(rule, value, source, errors, options, type) {
  *  @param options.messages The validation messages.
  */
 
-var whitespace = function whitespace(rule, value, source, errors, options) {
+function whitespace(rule, value, source, errors, options) {
   if (/^\s+$/.test(value) || value === '') {
     errors.push(format(options.messages.whitespace, rule.fullField));
   }
-};
+}
 
 /* eslint max-len:0 */
 
-var pattern$2 = {
+var pattern = {
   // http://emailregex.com/
-  email: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+\.)+[a-zA-Z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]{2,}))$/,
+  email: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
   url: new RegExp("^(?!mailto:)(?:(?:http|https|ftp)://|//)(?:\\S+(?::\\S*)?@)?(?:(?:(?:[1-9]\\d?|1\\d\\d|2[01]\\d|22[0-3])(?:\\.(?:1?\\d{1,2}|2[0-4]\\d|25[0-5])){2}(?:\\.(?:[0-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))|(?:(?:[a-z\\u00a1-\\uffff0-9]+-*)*[a-z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-z\\u00a1-\\uffff0-9]+-*)*[a-z\\u00a1-\\uffff0-9]+)*(?:\\.(?:[a-z\\u00a1-\\uffff]{2,})))|localhost)(?::\\d{2,5})?(?:(/|\\?|#)[^\\s]*)?$", 'i'),
   hex: /^#?([a-f0-9]{6}|[a-f0-9]{3})$/i
 };
@@ -8137,19 +8102,30 @@ var types = {
     return typeof value === 'function';
   },
   email: function email(value) {
-    return typeof value === 'string' && value.length <= 320 && !!value.match(pattern$2.email);
+    return typeof value === 'string' && !!value.match(pattern.email) && value.length < 255;
   },
   url: function url(value) {
-    return typeof value === 'string' && value.length <= 2048 && !!value.match(pattern$2.url);
+    return typeof value === 'string' && !!value.match(pattern.url);
   },
   hex: function hex(value) {
-    return typeof value === 'string' && !!value.match(pattern$2.hex);
+    return typeof value === 'string' && !!value.match(pattern.hex);
   }
 };
+/**
+ *  Rule for validating the type of a value.
+ *
+ *  @param rule The validation rule.
+ *  @param value The value of the field on the source object.
+ *  @param source The source object being validated.
+ *  @param errors An array of errors that this rule may add
+ *  validation errors to.
+ *  @param options The validation options.
+ *  @param options.messages The validation messages.
+ */
 
-var type$1 = function type(rule, value, source, errors, options) {
+function type(rule, value, source, errors, options) {
   if (rule.required && value === undefined) {
-    required$1(rule, value, source, errors, options);
+    required(rule, value, source, errors, options);
     return;
   }
 
@@ -8164,9 +8140,21 @@ var type$1 = function type(rule, value, source, errors, options) {
   } else if (ruleType && typeof value !== rule.type) {
     errors.push(format(options.messages.types[ruleType], rule.fullField, rule.type));
   }
-};
+}
 
-var range = function range(rule, value, source, errors, options) {
+/**
+ *  Rule for validating minimum and maximum allowed values.
+ *
+ *  @param rule The validation rule.
+ *  @param value The value of the field on the source object.
+ *  @param source The source object being validated.
+ *  @param errors An array of errors that this rule may add
+ *  validation errors to.
+ *  @param options The validation options.
+ *  @param options.messages The validation messages.
+ */
+
+function range(rule, value, source, errors, options) {
   var len = typeof rule.len === 'number';
   var min = typeof rule.min === 'number';
   var max = typeof rule.max === 'number'; // 正则匹配码点范围从U+010000一直到U+10FFFF的文字（补充平面Supplementary Plane）
@@ -8213,19 +8201,42 @@ var range = function range(rule, value, source, errors, options) {
   } else if (min && max && (val < rule.min || val > rule.max)) {
     errors.push(format(options.messages[key].range, rule.fullField, rule.min, rule.max));
   }
-};
+}
 
-var ENUM$1 = 'enum';
+var ENUM = 'enum';
+/**
+ *  Rule for validating a value exists in an enumerable list.
+ *
+ *  @param rule The validation rule.
+ *  @param value The value of the field on the source object.
+ *  @param source The source object being validated.
+ *  @param errors An array of errors that this rule may add
+ *  validation errors to.
+ *  @param options The validation options.
+ *  @param options.messages The validation messages.
+ */
 
-var enumerable$1 = function enumerable(rule, value, source, errors, options) {
-  rule[ENUM$1] = Array.isArray(rule[ENUM$1]) ? rule[ENUM$1] : [];
+function enumerable(rule, value, source, errors, options) {
+  rule[ENUM] = Array.isArray(rule[ENUM]) ? rule[ENUM] : [];
 
-  if (rule[ENUM$1].indexOf(value) === -1) {
-    errors.push(format(options.messages[ENUM$1], rule.fullField, rule[ENUM$1].join(', ')));
+  if (rule[ENUM].indexOf(value) === -1) {
+    errors.push(format(options.messages[ENUM], rule.fullField, rule[ENUM].join(', ')));
   }
-};
+}
 
-var pattern$1 = function pattern(rule, value, source, errors, options) {
+/**
+ *  Rule for validating a regular expression pattern.
+ *
+ *  @param rule The validation rule.
+ *  @param value The value of the field on the source object.
+ *  @param source The source object being validated.
+ *  @param errors An array of errors that this rule may add
+ *  validation errors to.
+ *  @param options The validation options.
+ *  @param options.messages The validation messages.
+ */
+
+function pattern$1(rule, value, source, errors, options) {
   if (rule.pattern) {
     if (rule.pattern instanceof RegExp) {
       // if a RegExp instance is passed, reset `lastIndex` in case its `global`
@@ -8244,18 +8255,29 @@ var pattern$1 = function pattern(rule, value, source, errors, options) {
       }
     }
   }
-};
+}
 
 var rules = {
-  required: required$1,
+  required: required,
   whitespace: whitespace,
-  type: type$1,
+  type: type,
   range: range,
-  "enum": enumerable$1,
+  "enum": enumerable,
   pattern: pattern$1
 };
 
-var string = function string(rule, value, callback, source, options) {
+/**
+ *  Performs validation for string types.
+ *
+ *  @param rule The validation rule.
+ *  @param value The value of the field on the source object.
+ *  @param callback The callback function.
+ *  @param source The source object being validated.
+ *  @param options The validation options.
+ *  @param options.messages The validation messages.
+ */
+
+function string(rule, value, callback, source, options) {
   var errors = [];
   var validate = rule.required || !rule.required && source.hasOwnProperty(rule.field);
 
@@ -8278,9 +8300,20 @@ var string = function string(rule, value, callback, source, options) {
   }
 
   callback(errors);
-};
+}
 
-var method = function method(rule, value, callback, source, options) {
+/**
+ *  Validates a function.
+ *
+ *  @param rule The validation rule.
+ *  @param value The value of the field on the source object.
+ *  @param callback The callback function.
+ *  @param source The source object being validated.
+ *  @param options The validation options.
+ *  @param options.messages The validation messages.
+ */
+
+function method(rule, value, callback, source, options) {
   var errors = [];
   var validate = rule.required || !rule.required && source.hasOwnProperty(rule.field);
 
@@ -8297,9 +8330,20 @@ var method = function method(rule, value, callback, source, options) {
   }
 
   callback(errors);
-};
+}
 
-var number = function number(rule, value, callback, source, options) {
+/**
+ *  Validates a number.
+ *
+ *  @param rule The validation rule.
+ *  @param value The value of the field on the source object.
+ *  @param callback The callback function.
+ *  @param source The source object being validated.
+ *  @param options The validation options.
+ *  @param options.messages The validation messages.
+ */
+
+function number(rule, value, callback, source, options) {
   var errors = [];
   var validate = rule.required || !rule.required && source.hasOwnProperty(rule.field);
 
@@ -8321,9 +8365,20 @@ var number = function number(rule, value, callback, source, options) {
   }
 
   callback(errors);
-};
+}
 
-var _boolean = function _boolean(rule, value, callback, source, options) {
+/**
+ *  Validates a boolean.
+ *
+ *  @param rule The validation rule.
+ *  @param value The value of the field on the source object.
+ *  @param callback The callback function.
+ *  @param source The source object being validated.
+ *  @param options The validation options.
+ *  @param options.messages The validation messages.
+ */
+
+function _boolean(rule, value, callback, source, options) {
   var errors = [];
   var validate = rule.required || !rule.required && source.hasOwnProperty(rule.field);
 
@@ -8340,9 +8395,20 @@ var _boolean = function _boolean(rule, value, callback, source, options) {
   }
 
   callback(errors);
-};
+}
 
-var regexp = function regexp(rule, value, callback, source, options) {
+/**
+ *  Validates the regular expression type.
+ *
+ *  @param rule The validation rule.
+ *  @param value The value of the field on the source object.
+ *  @param callback The callback function.
+ *  @param source The source object being validated.
+ *  @param options The validation options.
+ *  @param options.messages The validation messages.
+ */
+
+function regexp(rule, value, callback, source, options) {
   var errors = [];
   var validate = rule.required || !rule.required && source.hasOwnProperty(rule.field);
 
@@ -8359,9 +8425,20 @@ var regexp = function regexp(rule, value, callback, source, options) {
   }
 
   callback(errors);
-};
+}
 
-var integer = function integer(rule, value, callback, source, options) {
+/**
+ *  Validates a number is an integer.
+ *
+ *  @param rule The validation rule.
+ *  @param value The value of the field on the source object.
+ *  @param callback The callback function.
+ *  @param source The source object being validated.
+ *  @param options The validation options.
+ *  @param options.messages The validation messages.
+ */
+
+function integer(rule, value, callback, source, options) {
   var errors = [];
   var validate = rule.required || !rule.required && source.hasOwnProperty(rule.field);
 
@@ -8379,9 +8456,20 @@ var integer = function integer(rule, value, callback, source, options) {
   }
 
   callback(errors);
-};
+}
 
-var floatFn = function floatFn(rule, value, callback, source, options) {
+/**
+ *  Validates a number is a floating point number.
+ *
+ *  @param rule The validation rule.
+ *  @param value The value of the field on the source object.
+ *  @param callback The callback function.
+ *  @param source The source object being validated.
+ *  @param options The validation options.
+ *  @param options.messages The validation messages.
+ */
+
+function floatFn(rule, value, callback, source, options) {
   var errors = [];
   var validate = rule.required || !rule.required && source.hasOwnProperty(rule.field);
 
@@ -8399,9 +8487,20 @@ var floatFn = function floatFn(rule, value, callback, source, options) {
   }
 
   callback(errors);
-};
+}
 
-var array = function array(rule, value, callback, source, options) {
+/**
+ *  Validates an array.
+ *
+ *  @param rule The validation rule.
+ *  @param value The value of the field on the source object.
+ *  @param callback The callback function.
+ *  @param source The source object being validated.
+ *  @param options The validation options.
+ *  @param options.messages The validation messages.
+ */
+
+function array(rule, value, callback, source, options) {
   var errors = [];
   var validate = rule.required || !rule.required && source.hasOwnProperty(rule.field);
 
@@ -8419,9 +8518,20 @@ var array = function array(rule, value, callback, source, options) {
   }
 
   callback(errors);
-};
+}
 
-var object = function object(rule, value, callback, source, options) {
+/**
+ *  Validates an object.
+ *
+ *  @param rule The validation rule.
+ *  @param value The value of the field on the source object.
+ *  @param callback The callback function.
+ *  @param source The source object being validated.
+ *  @param options The validation options.
+ *  @param options.messages The validation messages.
+ */
+
+function object(rule, value, callback, source, options) {
   var errors = [];
   var validate = rule.required || !rule.required && source.hasOwnProperty(rule.field);
 
@@ -8438,11 +8548,21 @@ var object = function object(rule, value, callback, source, options) {
   }
 
   callback(errors);
-};
+}
 
-var ENUM = 'enum';
+var ENUM$1 = 'enum';
+/**
+ *  Validates an enumerable list.
+ *
+ *  @param rule The validation rule.
+ *  @param value The value of the field on the source object.
+ *  @param callback The callback function.
+ *  @param source The source object being validated.
+ *  @param options The validation options.
+ *  @param options.messages The validation messages.
+ */
 
-var enumerable = function enumerable(rule, value, callback, source, options) {
+function enumerable$1(rule, value, callback, source, options) {
   var errors = [];
   var validate = rule.required || !rule.required && source.hasOwnProperty(rule.field);
 
@@ -8454,14 +8574,28 @@ var enumerable = function enumerable(rule, value, callback, source, options) {
     rules.required(rule, value, source, errors, options);
 
     if (value !== undefined) {
-      rules[ENUM](rule, value, source, errors, options);
+      rules[ENUM$1](rule, value, source, errors, options);
     }
   }
 
   callback(errors);
-};
+}
 
-var pattern = function pattern(rule, value, callback, source, options) {
+/**
+ *  Validates a regular expression pattern.
+ *
+ *  Performs validation when a rule only contains
+ *  a pattern property but is not declared as a string type.
+ *
+ *  @param rule The validation rule.
+ *  @param value The value of the field on the source object.
+ *  @param callback The callback function.
+ *  @param source The source object being validated.
+ *  @param options The validation options.
+ *  @param options.messages The validation messages.
+ */
+
+function pattern$2(rule, value, callback, source, options) {
   var errors = [];
   var validate = rule.required || !rule.required && source.hasOwnProperty(rule.field);
 
@@ -8478,9 +8612,9 @@ var pattern = function pattern(rule, value, callback, source, options) {
   }
 
   callback(errors);
-};
+}
 
-var date = function date(rule, value, callback, source, options) {
+function date(rule, value, callback, source, options) {
   // console.log('integer rule called %j', rule);
   var errors = [];
   var validate = rule.required || !rule.required && source.hasOwnProperty(rule.field); // console.log('validate on %s value', value);
@@ -8510,16 +8644,16 @@ var date = function date(rule, value, callback, source, options) {
   }
 
   callback(errors);
-};
+}
 
-var required = function required(rule, value, callback, source, options) {
+function required$1(rule, value, callback, source, options) {
   var errors = [];
   var type = Array.isArray(value) ? 'array' : typeof value;
   rules.required(rule, value, source, errors, options, type);
   callback(errors);
-};
+}
 
-var type = function type(rule, value, callback, source, options) {
+function type$1(rule, value, callback, source, options) {
   var ruleType = rule.type;
   var errors = [];
   var validate = rule.required || !rule.required && source.hasOwnProperty(rule.field);
@@ -8537,9 +8671,20 @@ var type = function type(rule, value, callback, source, options) {
   }
 
   callback(errors);
-};
+}
 
-var any = function any(rule, value, callback, source, options) {
+/**
+ *  Performs validation for any type.
+ *
+ *  @param rule The validation rule.
+ *  @param value The value of the field on the source object.
+ *  @param callback The callback function.
+ *  @param source The source object being validated.
+ *  @param options The validation options.
+ *  @param options.messages The validation messages.
+ */
+
+function any(rule, value, callback, source, options) {
   var errors = [];
   var validate = rule.required || !rule.required && source.hasOwnProperty(rule.field);
 
@@ -8552,7 +8697,7 @@ var any = function any(rule, value, callback, source, options) {
   }
 
   callback(errors);
-};
+}
 
 var validators = {
   string: string,
@@ -8564,13 +8709,13 @@ var validators = {
   "float": floatFn,
   array: array,
   object: object,
-  "enum": enumerable,
-  pattern: pattern,
+  "enum": enumerable$1,
+  pattern: pattern$2,
   date: date,
-  url: type,
-  hex: type,
-  email: type,
-  required: required,
+  url: type$1,
+  hex: type$1,
+  email: type$1,
+  required: required$1,
   any: any
 };
 
@@ -8637,20 +8782,21 @@ var messages = newMessages();
  *  for this schema.
  */
 
-var Schema = /*#__PURE__*/function () {
-  // ========================= Static =========================
-  // ======================== Instance ========================
-  function Schema(descriptor) {
-    this.rules = null;
-    this._messages = messages;
-    this.define(descriptor);
-  }
+function Schema(descriptor) {
+  this.rules = null;
+  this._messages = messages;
+  this.define(descriptor);
+}
 
-  var _proto = Schema.prototype;
+Schema.prototype = {
+  messages: function messages(_messages) {
+    if (_messages) {
+      this._messages = deepMerge(newMessages(), _messages);
+    }
 
-  _proto.define = function define(rules) {
-    var _this = this;
-
+    return this._messages;
+  },
+  define: function define(rules) {
     if (!rules) {
       throw new Error('Cannot configure a schema with no rules');
     }
@@ -8660,22 +8806,18 @@ var Schema = /*#__PURE__*/function () {
     }
 
     this.rules = {};
-    Object.keys(rules).forEach(function (name) {
-      var item = rules[name];
-      _this.rules[name] = Array.isArray(item) ? item : [item];
-    });
-  };
+    var z;
+    var item;
 
-  _proto.messages = function messages(_messages) {
-    if (_messages) {
-      this._messages = deepMerge(newMessages(), _messages);
+    for (z in rules) {
+      if (rules.hasOwnProperty(z)) {
+        item = rules[z];
+        this.rules[z] = Array.isArray(item) ? item : [item];
+      }
     }
-
-    return this._messages;
-  };
-
-  _proto.validate = function validate(source_, o, oc) {
-    var _this2 = this;
+  },
+  validate: function validate(source_, o, oc) {
+    var _this = this;
 
     if (o === void 0) {
       o = {};
@@ -8696,13 +8838,14 @@ var Schema = /*#__PURE__*/function () {
 
     if (!this.rules || Object.keys(this.rules).length === 0) {
       if (callback) {
-        callback(null, source);
+        callback();
       }
 
-      return Promise.resolve(source);
+      return Promise.resolve();
     }
 
     function complete(results) {
+      var i;
       var errors = [];
       var fields = {};
 
@@ -8716,16 +8859,18 @@ var Schema = /*#__PURE__*/function () {
         }
       }
 
-      for (var i = 0; i < results.length; i++) {
+      for (i = 0; i < results.length; i++) {
         add(results[i]);
       }
 
       if (!errors.length) {
-        callback(null, source);
+        errors = null;
+        fields = null;
       } else {
         fields = convertFieldsError(errors);
-        callback(errors, fields);
       }
+
+      callback(errors, fields);
     }
 
     if (options.messages) {
@@ -8741,11 +8886,13 @@ var Schema = /*#__PURE__*/function () {
       options.messages = this.messages();
     }
 
+    var arr;
+    var value;
     var series = {};
     var keys = options.keys || Object.keys(this.rules);
     keys.forEach(function (z) {
-      var arr = _this2.rules[z];
-      var value = source[z];
+      arr = _this.rules[z];
+      value = source[z];
       arr.forEach(function (r) {
         var rule = r;
 
@@ -8763,18 +8910,17 @@ var Schema = /*#__PURE__*/function () {
           };
         } else {
           rule = _extends({}, rule);
-        } // Fill validator. Skip if nothing need to validate
+        }
 
-
-        rule.validator = _this2.getValidationMethod(rule);
+        rule.validator = _this.getValidationMethod(rule);
+        rule.field = z;
+        rule.fullField = rule.fullField || z;
+        rule.type = _this.getType(rule);
 
         if (!rule.validator) {
           return;
         }
 
-        rule.field = z;
-        rule.fullField = rule.fullField || z;
-        rule.type = _this2.getType(rule);
         series[z] = series[z] || [];
         series[z].push({
           rule: rule,
@@ -8791,10 +8937,9 @@ var Schema = /*#__PURE__*/function () {
       deep = deep && (rule.required || !rule.required && data.value);
       rule.field = data.field;
 
-      function addFullField(key, schema) {
-        return _extends({}, schema, {
-          fullField: rule.fullField + "." + key,
-          fullFields: rule.fullFields ? [].concat(rule.fullFields, [key]) : [key]
+      function addFullfield(key, schema) {
+        return _extends(_extends({}, schema), {}, {
+          fullField: rule.fullField + "." + key
         });
       }
 
@@ -8803,56 +8948,63 @@ var Schema = /*#__PURE__*/function () {
           e = [];
         }
 
-        var errorList = Array.isArray(e) ? e : [e];
+        var errors = e;
 
-        if (!options.suppressWarning && errorList.length) {
-          Schema.warning('async-validator:', errorList);
+        if (!Array.isArray(errors)) {
+          errors = [errors];
         }
 
-        if (errorList.length && rule.message !== undefined) {
-          errorList = [].concat(rule.message);
-        } // Fill error info
+        if (!options.suppressWarning && errors.length) {
+          Schema.warning('async-validator:', errors);
+        }
 
+        if (errors.length && rule.message !== undefined) {
+          errors = [].concat(rule.message);
+        }
 
-        var filledErrors = errorList.map(complementError(rule, source));
+        errors = errors.map(complementError(rule));
 
-        if (options.first && filledErrors.length) {
+        if (options.first && errors.length) {
           errorFields[rule.field] = 1;
-          return doIt(filledErrors);
+          return doIt(errors);
         }
 
         if (!deep) {
-          doIt(filledErrors);
+          doIt(errors);
         } else {
           // if rule is required but the target object
           // does not exist fail at the rule level and don't
           // go deeper
           if (rule.required && !data.value) {
             if (rule.message !== undefined) {
-              filledErrors = [].concat(rule.message).map(complementError(rule, source));
+              errors = [].concat(rule.message).map(complementError(rule));
             } else if (options.error) {
-              filledErrors = [options.error(rule, format(options.messages.required, rule.field))];
+              errors = [options.error(rule, format(options.messages.required, rule.field))];
             }
 
-            return doIt(filledErrors);
+            return doIt(errors);
           }
 
           var fieldsSchema = {};
 
           if (rule.defaultField) {
-            Object.keys(data.value).map(function (key) {
-              fieldsSchema[key] = rule.defaultField;
-            });
+            for (var k in data.value) {
+              if (data.value.hasOwnProperty(k)) {
+                fieldsSchema[k] = rule.defaultField;
+              }
+            }
           }
 
-          fieldsSchema = _extends({}, fieldsSchema, data.rule.fields);
-          var paredFieldsSchema = {};
-          Object.keys(fieldsSchema).forEach(function (field) {
-            var fieldSchema = fieldsSchema[field];
-            var fieldSchemaList = Array.isArray(fieldSchema) ? fieldSchema : [fieldSchema];
-            paredFieldsSchema[field] = fieldSchemaList.map(addFullField.bind(null, field));
-          });
-          var schema = new Schema(paredFieldsSchema);
+          fieldsSchema = _extends(_extends({}, fieldsSchema), data.rule.fields);
+
+          for (var f in fieldsSchema) {
+            if (fieldsSchema.hasOwnProperty(f)) {
+              var fieldSchema = Array.isArray(fieldsSchema[f]) ? fieldsSchema[f] : [fieldsSchema[f]];
+              fieldsSchema[f] = fieldSchema.map(addFullfield.bind(null, f));
+            }
+          }
+
+          var schema = new Schema(fieldsSchema);
           schema.messages(options.messages);
 
           if (data.rule.options) {
@@ -8863,8 +9015,8 @@ var Schema = /*#__PURE__*/function () {
           schema.validate(data.value, data.rule.options || options, function (errs) {
             var finalErrors = [];
 
-            if (filledErrors && filledErrors.length) {
-              finalErrors.push.apply(finalErrors, filledErrors);
+            if (errors && errors.length) {
+              finalErrors.push.apply(finalErrors, errors);
             }
 
             if (errs && errs.length) {
@@ -8886,7 +9038,7 @@ var Schema = /*#__PURE__*/function () {
         if (res === true) {
           cb();
         } else if (res === false) {
-          cb(typeof rule.message === 'function' ? rule.message(rule.fullField || rule.field) : rule.message || (rule.fullField || rule.field) + " fails");
+          cb(rule.message || rule.field + " fails");
         } else if (res instanceof Array) {
           cb(res);
         } else if (res instanceof Error) {
@@ -8903,10 +9055,9 @@ var Schema = /*#__PURE__*/function () {
       }
     }, function (results) {
       complete(results);
-    }, source);
-  };
-
-  _proto.getType = function getType(rule) {
+    });
+  },
+  getType: function getType(rule) {
     if (rule.type === undefined && rule.pattern instanceof RegExp) {
       rule.type = 'pattern';
     }
@@ -8916,9 +9067,8 @@ var Schema = /*#__PURE__*/function () {
     }
 
     return rule.type || 'string';
-  };
-
-  _proto.getValidationMethod = function getValidationMethod(rule) {
+  },
+  getValidationMethod: function getValidationMethod(rule) {
     if (typeof rule.validator === 'function') {
       return rule.validator;
     }
@@ -8934,11 +9084,9 @@ var Schema = /*#__PURE__*/function () {
       return validators.required;
     }
 
-    return validators[this.getType(rule)] || undefined;
-  };
-
-  return Schema;
-}();
+    return validators[this.getType(rule)] || false;
+  }
+};
 
 Schema.register = function register(type, validator) {
   if (typeof validator !== 'function') {
@@ -8951,55 +9099,6 @@ Schema.register = function register(type, validator) {
 Schema.warning = warning$1;
 Schema.messages = messages;
 Schema.validators = validators;
-
-var typeTemplate$1 = "'${name}' is not a valid ${type}";
-var defaultValidateMessages = {
-  default: "Validation error on field '${name}'",
-  required: "'${name}' is required",
-  enum: "'${name}' must be one of [${enum}]",
-  whitespace: "'${name}' cannot be empty",
-  date: {
-    format: "'${name}' is invalid for format date",
-    parse: "'${name}' could not be parsed as date",
-    invalid: "'${name}' is invalid date"
-  },
-  types: {
-    string: typeTemplate$1,
-    method: typeTemplate$1,
-    array: typeTemplate$1,
-    object: typeTemplate$1,
-    number: typeTemplate$1,
-    date: typeTemplate$1,
-    boolean: typeTemplate$1,
-    integer: typeTemplate$1,
-    float: typeTemplate$1,
-    regexp: typeTemplate$1,
-    email: typeTemplate$1,
-    url: typeTemplate$1,
-    hex: typeTemplate$1
-  },
-  string: {
-    len: "'${name}' must be exactly ${len} characters",
-    min: "'${name}' must be at least ${min} characters",
-    max: "'${name}' cannot be longer than ${max} characters",
-    range: "'${name}' must be between ${min} and ${max} characters"
-  },
-  number: {
-    len: "'${name}' must equal ${len}",
-    min: "'${name}' cannot be less than ${min}",
-    max: "'${name}' cannot be greater than ${max}",
-    range: "'${name}' must be between ${min} and ${max}"
-  },
-  array: {
-    len: "'${name}' must be exactly ${len} in length",
-    min: "'${name}' cannot be less than ${min} in length",
-    max: "'${name}' cannot be greater than ${max} in length",
-    range: "'${name}' must be between ${min} and ${max} in length"
-  },
-  pattern: {
-    mismatch: "'${name}' does not match pattern ${pattern}"
-  }
-};
 
 function get(entity, path) {
   var current = entity;
@@ -9179,7 +9278,7 @@ function isSimilar(source, target) {
 function defaultGetValueFromEvent(valuePropName) {
   var event = arguments.length <= 1 ? undefined : arguments[1];
 
-  if (event && event.target && _typeof$1(event.target) === 'object' && valuePropName in event.target) {
+  if (event && event.target && valuePropName in event.target) {
     return event.target[valuePropName];
   }
 
@@ -9219,6 +9318,55 @@ function move(array, moveIndex, toIndex) {
   return array;
 }
 
+var typeTemplate$1 = "'${name}' is not a valid ${type}";
+var defaultValidateMessages = {
+  default: "Validation error on field '${name}'",
+  required: "'${name}' is required",
+  enum: "'${name}' must be one of [${enum}]",
+  whitespace: "'${name}' cannot be empty",
+  date: {
+    format: "'${name}' is invalid for format date",
+    parse: "'${name}' could not be parsed as date",
+    invalid: "'${name}' is invalid date"
+  },
+  types: {
+    string: typeTemplate$1,
+    method: typeTemplate$1,
+    array: typeTemplate$1,
+    object: typeTemplate$1,
+    number: typeTemplate$1,
+    date: typeTemplate$1,
+    boolean: typeTemplate$1,
+    integer: typeTemplate$1,
+    float: typeTemplate$1,
+    regexp: typeTemplate$1,
+    email: typeTemplate$1,
+    url: typeTemplate$1,
+    hex: typeTemplate$1
+  },
+  string: {
+    len: "'${name}' must be exactly ${len} characters",
+    min: "'${name}' must be at least ${min} characters",
+    max: "'${name}' cannot be longer than ${max} characters",
+    range: "'${name}' must be between ${min} and ${max} characters"
+  },
+  number: {
+    len: "'${name}' must equal ${len}",
+    min: "'${name}' cannot be less than ${min}",
+    max: "'${name}' cannot be greater than ${max}",
+    range: "'${name}' must be between ${min} and ${max}"
+  },
+  array: {
+    len: "'${name}' must be exactly ${len} in length",
+    min: "'${name}' cannot be less than ${min} in length",
+    max: "'${name}' cannot be greater than ${max} in length",
+    range: "'${name}' must be between ${min} and ${max} in length"
+  },
+  pattern: {
+    mismatch: "'${name}' does not match pattern ${pattern}"
+  }
+};
+
 var AsyncValidator = Schema;
 /**
  * Replace with template.
@@ -9230,6 +9378,47 @@ function replaceMessage(template, kv) {
     var key = str.slice(2, -1);
     return kv[key];
   });
+}
+/**
+ * We use `async-validator` to validate rules. So have to hot replace the message with validator.
+ * { required: '${name} is required' } => { required: () => 'field is required' }
+ */
+
+
+function convertMessages(messages, name, rule, messageVariables) {
+  var kv = _objectSpread2$1(_objectSpread2$1({}, rule), {}, {
+    name: name,
+    enum: (rule.enum || []).join(', ')
+  });
+
+  var replaceFunc = function replaceFunc(template, additionalKV) {
+    return function () {
+      return replaceMessage(template, _objectSpread2$1(_objectSpread2$1({}, kv), additionalKV));
+    };
+  };
+  /* eslint-disable no-param-reassign */
+
+
+  function fillTemplate(source) {
+    var target = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    Object.keys(source).forEach(function (ruleName) {
+      var value = source[ruleName];
+
+      if (typeof value === 'string') {
+        target[ruleName] = replaceFunc(value, messageVariables);
+      } else if (value && _typeof$1(value) === 'object') {
+        target[ruleName] = {};
+        fillTemplate(value, target[ruleName]);
+      } else {
+        target[ruleName] = value;
+      }
+    });
+    return target;
+  }
+  /* eslint-enable */
+
+
+  return fillTemplate(setValues({}, defaultValidateMessages, messages));
 }
 
 function validateRule(_x, _x2, _x3, _x4, _x5) {
@@ -9243,16 +9432,12 @@ function validateRule(_x, _x2, _x3, _x4, _x5) {
 
 function _validateRule() {
   _validateRule = _asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee2(name, value, rule, options, messageVariables) {
-    var cloneRule, subRuleField, validator, messages, result, subResults, kv, fillVariableResult;
+    var cloneRule, subRuleField, validator, messages, result, subResults;
     return regenerator.wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
-            cloneRule = _objectSpread2$1({}, rule); // Bug of `async-validator`
-            // https://github.com/react-component/field-form/issues/316
-            // https://github.com/react-component/field-form/issues/313
-
-            delete cloneRule.ruleIndex; // We should special handle array validate
+            cloneRule = _objectSpread2$1({}, rule); // We should special handle array validate
 
             subRuleField = null;
 
@@ -9262,24 +9447,24 @@ function _validateRule() {
             }
 
             validator = new AsyncValidator(_defineProperty$1({}, name, [cloneRule]));
-            messages = setValues({}, defaultValidateMessages, options.validateMessages);
+            messages = convertMessages(options.validateMessages, name, cloneRule, messageVariables);
             validator.messages(messages);
             result = [];
-            _context2.prev = 8;
-            _context2.next = 11;
+            _context2.prev = 7;
+            _context2.next = 10;
             return Promise.resolve(validator.validate(_defineProperty$1({}, name, value), _objectSpread2$1({}, options)));
 
-          case 11:
-            _context2.next = 16;
+          case 10:
+            _context2.next = 15;
             break;
 
-          case 13:
-            _context2.prev = 13;
-            _context2.t0 = _context2["catch"](8);
+          case 12:
+            _context2.prev = 12;
+            _context2.t0 = _context2["catch"](7);
 
             if (_context2.t0.errors) {
-              result = _context2.t0.errors.map(function (_ref4, index) {
-                var message = _ref4.message;
+              result = _context2.t0.errors.map(function (_ref2, index) {
+                var message = _ref2.message;
                 return (// Wrap ReactNode with `key`
 
                   /*#__PURE__*/
@@ -9290,47 +9475,35 @@ function _validateRule() {
               });
             } else {
               console.error(_context2.t0);
-              result = [messages.default];
+              result = [messages.default()];
             }
 
-          case 16:
+          case 15:
             if (!(!result.length && subRuleField)) {
-              _context2.next = 21;
+              _context2.next = 20;
               break;
             }
 
-            _context2.next = 19;
+            _context2.next = 18;
             return Promise.all(value.map(function (subValue, i) {
               return validateRule("".concat(name, ".").concat(i), subValue, subRuleField, options, messageVariables);
             }));
 
-          case 19:
+          case 18:
             subResults = _context2.sent;
             return _context2.abrupt("return", subResults.reduce(function (prev, errors) {
               return [].concat(_toConsumableArray(prev), _toConsumableArray(errors));
             }, []));
 
+          case 20:
+            return _context2.abrupt("return", result);
+
           case 21:
-            // Replace message with variables
-            kv = _objectSpread2$1(_objectSpread2$1({}, rule), {}, {
-              name: name,
-              enum: (rule.enum || []).join(', ')
-            }, messageVariables);
-            fillVariableResult = result.map(function (error) {
-              if (typeof error === 'string') {
-                return replaceMessage(error, kv);
-              }
-
-              return error;
-            });
-            return _context2.abrupt("return", fillVariableResult);
-
-          case 24:
           case "end":
             return _context2.stop();
         }
       }
-    }, _callee2, null, [[8, 13]]);
+    }, _callee2, null, [[7, 12]]);
   }));
   return _validateRule.apply(this, arguments);
 }
@@ -9338,16 +9511,15 @@ function _validateRule() {
 function validateRules(namePath, value, rules, options, validateFirst, messageVariables) {
   var name = namePath.join('.'); // Fill rule with context
 
-  var filledRules = rules.map(function (currentRule, ruleIndex) {
+  var filledRules = rules.map(function (currentRule) {
     var originValidatorFunc = currentRule.validator;
 
-    var cloneRule = _objectSpread2$1(_objectSpread2$1({}, currentRule), {}, {
-      ruleIndex: ruleIndex
-    }); // Replace validator if needed
+    if (!originValidatorFunc) {
+      return currentRule;
+    }
 
-
-    if (originValidatorFunc) {
-      cloneRule.validator = function (rule, val, callback) {
+    return _objectSpread2$1(_objectSpread2$1({}, currentRule), {}, {
+      validator: function validator(rule, val, callback) {
         var hasPromise = false; // Wrap callback only accept when promise not provided
 
         var wrappedCallback = function wrappedCallback() {
@@ -9382,35 +9554,16 @@ function validateRules(namePath, value, rules, options, validateFirst, messageVa
             callback(err || ' ');
           });
         }
-      };
-    }
-
-    return cloneRule;
-  }).sort(function (_ref, _ref2) {
-    var w1 = _ref.warningOnly,
-        i1 = _ref.ruleIndex;
-    var w2 = _ref2.warningOnly,
-        i2 = _ref2.ruleIndex;
-
-    if (!!w1 === !!w2) {
-      // Let keep origin order
-      return i1 - i2;
-    }
-
-    if (w1) {
-      return 1;
-    }
-
-    return -1;
-  }); // Do validate rules
-
+      }
+    });
+  });
   var summaryPromise;
 
   if (validateFirst === true) {
     // >>>>> Validate by serialization
     summaryPromise = new Promise( /*#__PURE__*/function () {
-      var _ref3 = _asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee(resolve, reject) {
-        var i, rule, errors;
+      var _ref = _asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee(resolve, reject) {
+        var i, errors;
         return regenerator.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -9419,38 +9572,34 @@ function validateRules(namePath, value, rules, options, validateFirst, messageVa
 
               case 1:
                 if (!(i < filledRules.length)) {
-                  _context.next = 12;
+                  _context.next = 11;
                   break;
                 }
 
-                rule = filledRules[i];
-                _context.next = 5;
-                return validateRule(name, value, rule, options, messageVariables);
+                _context.next = 4;
+                return validateRule(name, value, filledRules[i], options, messageVariables);
 
-              case 5:
+              case 4:
                 errors = _context.sent;
 
                 if (!errors.length) {
-                  _context.next = 9;
+                  _context.next = 8;
                   break;
                 }
 
-                reject([{
-                  errors: errors,
-                  rule: rule
-                }]);
+                reject(errors);
                 return _context.abrupt("return");
 
-              case 9:
+              case 8:
                 i += 1;
                 _context.next = 1;
                 break;
 
-              case 12:
+              case 11:
                 /* eslint-enable */
                 resolve([]);
 
-              case 13:
+              case 12:
               case "end":
                 return _context.stop();
             }
@@ -9459,21 +9608,19 @@ function validateRules(namePath, value, rules, options, validateFirst, messageVa
       }));
 
       return function (_x6, _x7) {
-        return _ref3.apply(this, arguments);
+        return _ref.apply(this, arguments);
       };
     }());
   } else {
     // >>>>> Validate by parallel
     var rulePromises = filledRules.map(function (rule) {
-      return validateRule(name, value, rule, options, messageVariables).then(function (errors) {
-        return {
-          errors: errors,
-          rule: rule
-        };
-      });
+      return validateRule(name, value, rule, options, messageVariables);
     });
     summaryPromise = (validateFirst ? finishOnFirstFailed(rulePromises) : finishOnAllFailed(rulePromises)).then(function (errors) {
-      // Always change to rejection for Field to catch
+      if (!errors.length) {
+        return [];
+      }
+
       return Promise.reject(errors);
     });
   } // Internal catch error to avoid console error log.
@@ -9496,9 +9643,9 @@ function _finishOnAllFailed() {
         switch (_context3.prev = _context3.next) {
           case 0:
             return _context3.abrupt("return", Promise.all(rulePromises).then(function (errorsList) {
-              var _ref5;
+              var _ref3;
 
-              var errors = (_ref5 = []).concat.apply(_ref5, _toConsumableArray(errorsList));
+              var errors = (_ref3 = []).concat.apply(_ref3, _toConsumableArray(errorsList));
 
               return errors;
             }));
@@ -9527,9 +9674,9 @@ function _finishOnFirstFailed() {
             count = 0;
             return _context4.abrupt("return", new Promise(function (resolve) {
               rulePromises.forEach(function (promise) {
-                promise.then(function (ruleError) {
-                  if (ruleError.errors.length) {
-                    resolve([ruleError]);
+                promise.then(function (errors) {
+                  if (errors.length) {
+                    resolve(errors);
                   }
 
                   count += 1;
@@ -9551,9 +9698,6 @@ function _finishOnFirstFailed() {
   return _finishOnFirstFailed.apply(this, arguments);
 }
 
-var _excluded$4 = ["name"];
-var EMPTY_ERRORS = [];
-
 function requireUpdate(shouldUpdate, prev, next, prevValue, nextValue, info) {
   if (typeof shouldUpdate === 'function') {
     return shouldUpdate(prev, next, 'source' in info ? {
@@ -9570,35 +9714,29 @@ var Field = /*#__PURE__*/function (_React$Component) {
 
   var _super = _createSuper(Field);
 
-  /**
-   * Follow state should not management in State since it will async update by React.
-   * This makes first render of form can not get correct state value.
-   */
-
-  /**
-   * Mark when touched & validated. Currently only used for `dependencies`.
-   * Note that we do not think field with `initialValue` is dirty
-   * but this will be by `isFieldDirty` func.
-   */
   // ============================== Subscriptions ==============================
   function Field(props) {
     var _this;
 
     _classCallCheck(this, Field);
 
-    _this = _super.call(this, props); // Register on init
-
+    _this = _super.call(this, props);
     _this.state = {
       resetCount: 0
     };
     _this.cancelRegisterFunc = null;
     _this.mounted = false;
+    /**
+     * Follow state should not management in State since it will async update by React.
+     * This makes first render of form can not get correct state value.
+     */
+
     _this.touched = false;
+    /** Mark when touched & validated. Currently only used for `dependencies` */
+
     _this.dirty = false;
     _this.validatePromise = null;
-    _this.prevValidating = void 0;
-    _this.errors = EMPTY_ERRORS;
-    _this.warnings = EMPTY_ERRORS;
+    _this.errors = [];
 
     _this.cancelRegister = function () {
       var _this$props = _this.props,
@@ -9611,7 +9749,8 @@ var Field = /*#__PURE__*/function (_React$Component) {
       }
 
       _this.cancelRegisterFunc = null;
-    };
+    }; // ================================== Utils ==================================
+
 
     _this.getNamePath = function () {
       var _this$props2 = _this.props,
@@ -9648,14 +9787,9 @@ var Field = /*#__PURE__*/function (_React$Component) {
           resetCount: resetCount + 1
         };
       });
-    };
+    }; // ========================= Field Entity Interfaces =========================
+    // Trigger by store update. Check if need update the component
 
-    _this.triggerMetaEvent = function (destroy) {
-      var onMetaChange = _this.props.onMetaChange;
-      onMetaChange === null || onMetaChange === void 0 ? void 0 : onMetaChange(_objectSpread2$1(_objectSpread2$1({}, _this.getMeta()), {}, {
-        destroy: destroy
-      }));
-    };
 
     _this.onStoreChange = function (prevStore, namePathList, info) {
       var _this$props4 = _this.props,
@@ -9677,10 +9811,7 @@ var Field = /*#__PURE__*/function (_React$Component) {
         _this.touched = true;
         _this.dirty = true;
         _this.validatePromise = null;
-        _this.errors = EMPTY_ERRORS;
-        _this.warnings = EMPTY_ERRORS;
-
-        _this.triggerMetaEvent();
+        _this.errors = [];
       }
 
       switch (info.type) {
@@ -9690,12 +9821,11 @@ var Field = /*#__PURE__*/function (_React$Component) {
             _this.touched = false;
             _this.dirty = false;
             _this.validatePromise = null;
-            _this.errors = EMPTY_ERRORS;
-            _this.warnings = EMPTY_ERRORS;
+            _this.errors = [];
 
-            _this.triggerMetaEvent();
-
-            onReset === null || onReset === void 0 ? void 0 : onReset();
+            if (onReset) {
+              onReset();
+            }
 
             _this.refresh();
 
@@ -9703,24 +9833,6 @@ var Field = /*#__PURE__*/function (_React$Component) {
           }
 
           break;
-
-        /**
-         * In case field with `preserve = false` nest deps like:
-         * - A = 1 => show B
-         * - B = 1 => show C
-         * - Reset A, need clean B, C
-         */
-
-        case 'remove':
-          {
-            if (shouldUpdate) {
-              _this.reRender();
-
-              return;
-            }
-
-            break;
-          }
 
         case 'setField':
           {
@@ -9736,16 +9848,10 @@ var Field = /*#__PURE__*/function (_React$Component) {
               }
 
               if ('errors' in data) {
-                _this.errors = data.errors || EMPTY_ERRORS;
-              }
-
-              if ('warnings' in data) {
-                _this.warnings = data.warnings || EMPTY_ERRORS;
+                _this.errors = data.errors || [];
               }
 
               _this.dirty = true;
-
-              _this.triggerMetaEvent();
 
               _this.reRender();
 
@@ -9846,28 +9952,11 @@ var Field = /*#__PURE__*/function (_React$Component) {
         promise.catch(function (e) {
           return e;
         }).then(function () {
-          var ruleErrors = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : EMPTY_ERRORS;
+          var errors = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
 
           if (_this.validatePromise === rootPromise) {
-            _this.validatePromise = null; // Get errors & warnings
-
-            var nextErrors = [];
-            var nextWarnings = [];
-            ruleErrors.forEach(function (_ref3) {
-              var warningOnly = _ref3.rule.warningOnly,
-                  _ref3$errors = _ref3.errors,
-                  errors = _ref3$errors === void 0 ? EMPTY_ERRORS : _ref3$errors;
-
-              if (warningOnly) {
-                nextWarnings.push.apply(nextWarnings, _toConsumableArray(errors));
-              } else {
-                nextErrors.push.apply(nextErrors, _toConsumableArray(errors));
-              }
-            });
-            _this.errors = nextErrors;
-            _this.warnings = nextWarnings;
-
-            _this.triggerMetaEvent();
+            _this.validatePromise = null;
+            _this.errors = errors;
 
             _this.reRender();
           }
@@ -9876,11 +9965,7 @@ var Field = /*#__PURE__*/function (_React$Component) {
       });
       _this.validatePromise = rootPromise;
       _this.dirty = true;
-      _this.errors = EMPTY_ERRORS;
-      _this.warnings = EMPTY_ERRORS;
-
-      _this.triggerMetaEvent(); // Force trigger re-render since we need sync renderProps with new meta
-
+      _this.errors = []; // Force trigger re-render since we need sync renderProps with new meta
 
       _this.reRender();
 
@@ -9896,30 +9981,11 @@ var Field = /*#__PURE__*/function (_React$Component) {
     };
 
     _this.isFieldDirty = function () {
-      // Touched or validate or has initialValue
-      if (_this.dirty || _this.props.initialValue !== undefined) {
-        return true;
-      } // Form set initialValue
-
-
-      var fieldContext = _this.props.fieldContext;
-
-      var _fieldContext$getInte = fieldContext.getInternalHooks(HOOK_MARK),
-          getInitialValue = _fieldContext$getInte.getInitialValue;
-
-      if (getInitialValue(_this.getNamePath()) !== undefined) {
-        return true;
-      }
-
-      return false;
+      return _this.dirty;
     };
 
     _this.getErrors = function () {
       return _this.errors;
-    };
-
-    _this.getWarnings = function () {
-      return _this.warnings;
     };
 
     _this.isListField = function () {
@@ -9932,7 +9998,8 @@ var Field = /*#__PURE__*/function (_React$Component) {
 
     _this.isPreserve = function () {
       return _this.props.preserve;
-    };
+    }; // ============================= Child Component =============================
+
 
     _this.getMeta = function () {
       // Make error & validating in cache to save perf
@@ -9941,11 +10008,11 @@ var Field = /*#__PURE__*/function (_React$Component) {
         touched: _this.isFieldTouched(),
         validating: _this.prevValidating,
         errors: _this.errors,
-        warnings: _this.warnings,
         name: _this.getNamePath()
       };
       return meta;
-    };
+    }; // Only return validate child node. If invalidate, will do nothing about field.
+
 
     _this.getOnlyChild = function (children) {
       // Support render props
@@ -9971,7 +10038,8 @@ var Field = /*#__PURE__*/function (_React$Component) {
         child: childList[0],
         isFunction: false
       };
-    };
+    }; // ============================== Field Control ==============================
+
 
     _this.getValue = function (store) {
       var getFieldsValue = _this.props.fieldContext.getFieldsValue;
@@ -10017,9 +10085,6 @@ var Field = /*#__PURE__*/function (_React$Component) {
         // Mark as touched
         _this.touched = true;
         _this.dirty = true;
-
-        _this.triggerMetaEvent();
-
         var newValue;
 
         for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
@@ -10073,7 +10138,8 @@ var Field = /*#__PURE__*/function (_React$Component) {
         };
       });
       return control;
-    };
+    }; // Register on init
+
 
     if (props.fieldContext) {
       var getInternalHooks = props.fieldContext.getInternalHooks;
@@ -10113,7 +10179,6 @@ var Field = /*#__PURE__*/function (_React$Component) {
     key: "componentWillUnmount",
     value: function componentWillUnmount() {
       this.cancelRegister();
-      this.triggerMetaEvent(true);
       this.mounted = false;
     }
   }, {
@@ -10159,9 +10224,9 @@ Field.defaultProps = {
   valuePropName: 'value'
 };
 
-function WrapperField(_ref5) {
-  var name = _ref5.name,
-      restProps = _objectWithoutProperties(_ref5, _excluded$4);
+function WrapperField(_ref4) {
+  var name = _ref4.name,
+      restProps = _objectWithoutProperties(_ref4, ["name"]);
 
   var fieldContext = React.useContext(Context);
   var namePath = name !== undefined ? getNamePath(name) : undefined;
@@ -10185,8 +10250,6 @@ function WrapperField(_ref5) {
   }));
 }
 
-var ListContext = /*#__PURE__*/React.createContext(null);
-
 var List = function List(_ref) {
   var name = _ref.name,
       initialValue = _ref.initialValue,
@@ -10198,31 +10261,15 @@ var List = function List(_ref) {
     keys: [],
     id: 0
   });
-  var keyManager = keyRef.current;
-  var prefixName = React.useMemo(function () {
-    var parentPrefixName = getNamePath(context.prefixName) || [];
-    return [].concat(_toConsumableArray(parentPrefixName), _toConsumableArray(getNamePath(name)));
-  }, [context.prefixName, name]);
-  var fieldContext = React.useMemo(function () {
-    return _objectSpread2$1(_objectSpread2$1({}, context), {}, {
-      prefixName: prefixName
-    });
-  }, [context, prefixName]); // List context
-
-  var listContext = React.useMemo(function () {
-    return {
-      getKey: function getKey(namePath) {
-        var len = prefixName.length;
-        var pathName = namePath[len];
-        return [keyManager.keys[pathName], namePath.slice(len + 1)];
-      }
-    };
-  }, [prefixName]); // User should not pass `children` as other type.
+  var keyManager = keyRef.current; // User should not pass `children` as other type.
 
   if (typeof children !== 'function') {
     warningOnce(false, 'Form.List only accepts function as children.');
     return null;
   }
+
+  var parentPrefixName = getNamePath(context.prefixName) || [];
+  var prefixName = [].concat(_toConsumableArray(parentPrefixName), _toConsumableArray(getNamePath(name)));
 
   var shouldUpdate = function shouldUpdate(prevValue, nextValue, _ref2) {
     var source = _ref2.source;
@@ -10234,10 +10281,10 @@ var List = function List(_ref) {
     return prevValue !== nextValue;
   };
 
-  return /*#__PURE__*/React.createElement(ListContext.Provider, {
-    value: listContext
-  }, /*#__PURE__*/React.createElement(Context.Provider, {
-    value: fieldContext
+  return /*#__PURE__*/React.createElement(Context.Provider, {
+    value: _objectSpread2$1(_objectSpread2$1({}, context), {}, {
+      prefixName: prefixName
+    })
   }, /*#__PURE__*/React.createElement(WrapperField, {
     name: [],
     shouldUpdate: shouldUpdate,
@@ -10336,7 +10383,7 @@ var List = function List(_ref) {
         isListField: true
       };
     }), operations, meta);
-  })));
+  }));
 };
 
 function _iterableToArrayLimit(arr, i) {
@@ -10492,14 +10539,12 @@ var NameMap = /*#__PURE__*/function () {
   return NameMap;
 }();
 
-var _excluded$3 = ["name", "errors"];
-var FormStore = /*#__PURE__*/_createClass(function FormStore(forceRootUpdate) {
+var FormStore = function FormStore(forceRootUpdate) {
   var _this = this;
 
   _classCallCheck(this, FormStore);
 
   this.formHooked = false;
-  this.forceRootUpdate = void 0;
   this.subscribable = true;
   this.store = {};
   this.fieldEntities = [];
@@ -10514,7 +10559,6 @@ var FormStore = /*#__PURE__*/_createClass(function FormStore(forceRootUpdate) {
       getFieldValue: _this.getFieldValue,
       getFieldsValue: _this.getFieldsValue,
       getFieldError: _this.getFieldError,
-      getFieldWarning: _this.getFieldWarning,
       getFieldsError: _this.getFieldsError,
       isFieldsTouched: _this.isFieldsTouched,
       isFieldTouched: _this.isFieldTouched,
@@ -10527,7 +10571,8 @@ var FormStore = /*#__PURE__*/_createClass(function FormStore(forceRootUpdate) {
       submit: _this.submit,
       getInternalHooks: _this.getInternalHooks
     };
-  };
+  }; // ======================== Internal Hooks ========================
+
 
   this.getInternalHooks = function (key) {
     if (key === HOOK_MARK) {
@@ -10541,8 +10586,7 @@ var FormStore = /*#__PURE__*/_createClass(function FormStore(forceRootUpdate) {
         setCallbacks: _this.setCallbacks,
         setValidateMessages: _this.setValidateMessages,
         getFields: _this.getFields,
-        setPreserve: _this.setPreserve,
-        getInitialValue: _this.getInitialValue
+        setPreserve: _this.setPreserve
       };
     }
 
@@ -10553,6 +10597,10 @@ var FormStore = /*#__PURE__*/_createClass(function FormStore(forceRootUpdate) {
   this.useSubscribe = function (subscribable) {
     _this.subscribable = subscribable;
   };
+  /**
+   * First time `setInitialValues` should update store with initial value
+   */
+
 
   this.setInitialValues = function (initialValues, init) {
     _this.initialValues = initialValues || {};
@@ -10576,13 +10624,14 @@ var FormStore = /*#__PURE__*/_createClass(function FormStore(forceRootUpdate) {
 
   this.setPreserve = function (preserve) {
     _this.preserve = preserve;
-  };
+  }; // ========================== Dev Warning =========================
+
 
   this.timeoutId = null;
 
   this.warningUnhooked = function () {
     if (process.env.NODE_ENV !== 'production' && !_this.timeoutId && typeof window !== 'undefined') {
-      _this.timeoutId = setTimeout(function () {
+      _this.timeoutId = window.setTimeout(function () {
         _this.timeoutId = null;
 
         if (!_this.formHooked) {
@@ -10590,7 +10639,13 @@ var FormStore = /*#__PURE__*/_createClass(function FormStore(forceRootUpdate) {
         }
       });
     }
-  };
+  }; // ============================ Fields ============================
+
+  /**
+   * Get registered field entities.
+   * @param pure Only return field which has a `name`. Default: false
+   */
+
 
   this.getFieldEntities = function () {
     var pure = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
@@ -10680,15 +10735,13 @@ var FormStore = /*#__PURE__*/_createClass(function FormStore(forceRootUpdate) {
       if (entity && !('INVALIDATE_NAME_PATH' in entity)) {
         return {
           name: entity.getNamePath(),
-          errors: entity.getErrors(),
-          warnings: entity.getWarnings()
+          errors: entity.getErrors()
         };
       }
 
       return {
         name: getNamePath(nameList[index]),
-        errors: [],
-        warnings: []
+        errors: []
       };
     });
   };
@@ -10701,16 +10754,6 @@ var FormStore = /*#__PURE__*/_createClass(function FormStore(forceRootUpdate) {
     var fieldError = _this.getFieldsError([namePath])[0];
 
     return fieldError.errors;
-  };
-
-  this.getFieldWarning = function (name) {
-    _this.warningUnhooked();
-
-    var namePath = getNamePath(name);
-
-    var fieldError = _this.getFieldsError([namePath])[0];
-
-    return fieldError.warnings;
   };
 
   this.isFieldsTouched = function () {
@@ -10810,6 +10853,11 @@ var FormStore = /*#__PURE__*/_createClass(function FormStore(forceRootUpdate) {
 
     return _this.isFieldsValidating([name]);
   };
+  /**
+   * Reset Field with field `initialValue` prop.
+   * Can pass `entities` or `namePathList` or just nothing.
+   */
+
 
   this.resetWithFieldInitialValue = function () {
     var info = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -10928,7 +10976,7 @@ var FormStore = /*#__PURE__*/_createClass(function FormStore(forceRootUpdate) {
     fields.forEach(function (fieldData) {
       var name = fieldData.name;
           fieldData.errors;
-          var data = _objectWithoutProperties(fieldData, _excluded$3);
+          var data = _objectWithoutProperties(fieldData, ["name", "errors"]);
 
       var namePath = getNamePath(name); // Value
 
@@ -10961,7 +11009,12 @@ var FormStore = /*#__PURE__*/_createClass(function FormStore(forceRootUpdate) {
       return fieldData;
     });
     return fields;
-  };
+  }; // =========================== Observer ===========================
+
+  /**
+   * This only trigger when a field is on constructor to avoid we get initialValue too late
+   */
+
 
   this.initEntityValue = function (entity) {
     var initialValue = entity.props.initialValue;
@@ -11012,15 +11065,7 @@ var FormStore = /*#__PURE__*/_createClass(function FormStore(forceRootUpdate) {
             !matchNamePath(field.getNamePath(), namePath)
           );
         })) {
-          var _prevStore = _this.store;
-          _this.store = setValue(_prevStore, namePath, defaultValue, true); // Notify that field is unmount
-
-          _this.notifyObservers(_prevStore, [namePath], {
-            type: 'remove'
-          }); // Dependencies update
-
-
-          _this.triggerDependenciesUpdate(_prevStore, namePath);
+          _this.store = setValue(_this.store, namePath, defaultValue, true);
         }
       }
     };
@@ -11068,7 +11113,18 @@ var FormStore = /*#__PURE__*/_createClass(function FormStore(forceRootUpdate) {
     }
   };
 
-  this.triggerDependenciesUpdate = function (prevStore, namePath) {
+  this.updateValue = function (name, value) {
+    var namePath = getNamePath(name);
+    var prevStore = _this.store;
+    _this.store = setValue(_this.store, namePath, value);
+
+    _this.notifyObservers(prevStore, [namePath], {
+      type: 'valueUpdate',
+      source: 'internal'
+    }); // Notify dependencies children with parent update
+    // We need delay to trigger validate in case Field is under render props
+
+
     var childrenFields = _this.getDependencyChildrenFields(namePath);
 
     if (childrenFields.length) {
@@ -11078,23 +11134,7 @@ var FormStore = /*#__PURE__*/_createClass(function FormStore(forceRootUpdate) {
     _this.notifyObservers(prevStore, childrenFields, {
       type: 'dependenciesUpdate',
       relatedFields: [namePath].concat(_toConsumableArray(childrenFields))
-    });
-
-    return childrenFields;
-  };
-
-  this.updateValue = function (name, value) {
-    var namePath = getNamePath(name);
-    var prevStore = _this.store;
-    _this.store = setValue(_this.store, namePath, value);
-
-    _this.notifyObservers(prevStore, [namePath], {
-      type: 'valueUpdate',
-      source: 'internal'
-    }); // Dependencies update
-
-
-    var childrenFields = _this.triggerDependenciesUpdate(prevStore, namePath); // trigger callback function
+    }); // trigger callback function
 
 
     var onValuesChange = _this.callbacks.onValuesChange;
@@ -11105,7 +11145,8 @@ var FormStore = /*#__PURE__*/_createClass(function FormStore(forceRootUpdate) {
     }
 
     _this.triggerOnFieldsChange([namePath].concat(_toConsumableArray(childrenFields)));
-  };
+  }; // Let all child Field get update.
+
 
   this.setFieldsValue = function (store) {
     _this.warningUnhooked();
@@ -11191,7 +11232,8 @@ var FormStore = /*#__PURE__*/_createClass(function FormStore(forceRootUpdate) {
       });
       onFieldsChange(changedFields, fields);
     }
-  };
+  }; // =========================== Validate ===========================
+
 
   this.validateFields = function (nameList, options) {
     _this.warningUnhooked();
@@ -11239,36 +11281,13 @@ var FormStore = /*#__PURE__*/_createClass(function FormStore(forceRootUpdate) {
         promiseList.push(promise.then(function () {
           return {
             name: fieldNamePath,
-            errors: [],
-            warnings: []
+            errors: []
           };
-        }).catch(function (ruleErrors) {
-          var mergedErrors = [];
-          var mergedWarnings = [];
-          ruleErrors.forEach(function (_ref5) {
-            var warningOnly = _ref5.rule.warningOnly,
-                errors = _ref5.errors;
-
-            if (warningOnly) {
-              mergedWarnings.push.apply(mergedWarnings, _toConsumableArray(errors));
-            } else {
-              mergedErrors.push.apply(mergedErrors, _toConsumableArray(errors));
-            }
-          });
-
-          if (mergedErrors.length) {
-            return Promise.reject({
-              name: fieldNamePath,
-              errors: mergedErrors,
-              warnings: mergedWarnings
-            });
-          }
-
-          return {
+        }).catch(function (errors) {
+          return Promise.reject({
             name: fieldNamePath,
-            errors: mergedErrors,
-            warnings: mergedWarnings
-          };
+            errors: errors
+          });
         }));
       }
     });
@@ -11279,8 +11298,8 @@ var FormStore = /*#__PURE__*/_createClass(function FormStore(forceRootUpdate) {
     summaryPromise.catch(function (results) {
       return results;
     }).then(function (results) {
-      var resultNamePathList = results.map(function (_ref6) {
-        var name = _ref6.name;
+      var resultNamePathList = results.map(function (_ref5) {
+        var name = _ref5.name;
         return name;
       });
 
@@ -11311,7 +11330,8 @@ var FormStore = /*#__PURE__*/_createClass(function FormStore(forceRootUpdate) {
       return e;
     });
     return returnPromise;
-  };
+  }; // ============================ Submit ============================
+
 
   this.submit = function () {
     _this.warningUnhooked();
@@ -11337,7 +11357,7 @@ var FormStore = /*#__PURE__*/_createClass(function FormStore(forceRootUpdate) {
   };
 
   this.forceRootUpdate = forceRootUpdate;
-});
+};
 
 function useForm(form) {
   var formRef = React.useRef();
@@ -11421,8 +11441,6 @@ var FormProvider = function FormProvider(_ref) {
   }, children);
 };
 
-var _excluded$2 = ["name", "initialValues", "fields", "form", "preserve", "children", "component", "validateMessages", "validateTrigger", "onValuesChange", "onFieldsChange", "onFinish", "onFinishFailed"];
-
 var Form = function Form(_ref, ref) {
   var name = _ref.name,
       initialValues = _ref.initialValues,
@@ -11439,7 +11457,7 @@ var Form = function Form(_ref, ref) {
       _onFieldsChange = _ref.onFieldsChange,
       _onFinish = _ref.onFinish,
       onFinishFailed = _ref.onFinishFailed,
-      restProps = _objectWithoutProperties(_ref, _excluded$2);
+      restProps = _objectWithoutProperties(_ref, ["name", "initialValues", "fields", "form", "preserve", "children", "component", "validateMessages", "validateTrigger", "onValuesChange", "onFieldsChange", "onFinish", "onFinishFailed"]);
 
   var formContext = React.useContext(FormContext); // We customize handle event since Context will makes all the consumer re-render:
   // https://reactjs.org/docs/context.html#contextprovider
@@ -11555,8 +11573,19 @@ RefForm.Field = WrapperField;
 RefForm.List = List;
 RefForm.useForm = useForm;
 
+function useMemo(getValue, condition, shouldUpdate) {
+  var cacheRef = React.useRef({});
+
+  if (!('value' in cacheRef.current) || shouldUpdate(cacheRef.current.condition, condition)) {
+    cacheRef.current.value = getValue();
+    cacheRef.current.condition = condition;
+  }
+
+  return cacheRef.current.value;
+}
+
 var devWarning = (function (valid, component, message) {
-  warningOnce$1(valid, "[antd: ".concat(component, "] ").concat(message));
+  warningOnce(valid, "[antd: ".concat(component, "] ").concat(message));
 });
 
 var enUS = {
@@ -11564,15 +11593,14 @@ var enUS = {
   items_per_page: '/ page',
   jump_to: 'Go to',
   jump_to_confirm: 'confirm',
-  page: 'Page',
+  page: '',
   // Pagination.jsx
   prev_page: 'Previous Page',
   next_page: 'Next Page',
   prev_5: 'Previous 5 Pages',
   next_5: 'Next 5 Pages',
   prev_3: 'Previous 3 Pages',
-  next_3: 'Next 3 Pages',
-  page_size: 'Page Size'
+  next_3: 'Next 3 Pages'
 };
 
 var locale$2 = {
@@ -11641,8 +11669,6 @@ var localeValues = {
     filterConfirm: 'OK',
     filterReset: 'Reset',
     filterEmptyText: 'No filters',
-    filterCheckall: 'Select all items',
-    filterSearchPlaceholder: 'Search in filters',
     emptyText: 'No data',
     selectAll: 'Select current page',
     selectInvert: 'Invert current page',
@@ -11772,10 +11798,10 @@ var LocaleReceiver = /*#__PURE__*/function (_React$Component) {
       var _this$props = this.props,
           componentName = _this$props.componentName,
           defaultLocale = _this$props.defaultLocale;
-      var locale = defaultLocale || localeValues[componentName !== null && componentName !== void 0 ? componentName : 'global'];
+      var locale = defaultLocale || localeValues[componentName || 'global'];
       var antLocale = this.context;
       var localeFromContext = componentName && antLocale ? antLocale[componentName] : {};
-      return _extends$1(_extends$1({}, locale instanceof Function ? locale() : locale), localeFromContext || {});
+      return _extends$1(_extends$1({}, typeof locale === 'function' ? locale() : locale), localeFromContext || {});
     }
   }, {
     key: "getLocaleCode",
@@ -11992,65 +12018,13 @@ var ConfigConsumer = ConfigContext.Consumer;
 
 var SizeContext = /*#__PURE__*/React.createContext(undefined);
 
-/**
- * Return if a node is a DOM node. Else will return by `findDOMNode`
- */
-
-function findDOMNode(node) {
-  if (node instanceof HTMLElement) {
-    return node;
-  }
-
-  return ReactDOM.findDOMNode(node);
-}
-
-function fillRef(ref, node) {
-  if (typeof ref === 'function') {
-    ref(node);
-  } else if (_typeof$1(ref) === 'object' && ref && 'current' in ref) {
-    ref.current = node;
-  }
-}
-/**
- * Merge refs into one ref function to support ref passing.
- */
-
-function composeRef() {
-  for (var _len = arguments.length, refs = new Array(_len), _key = 0; _key < _len; _key++) {
-    refs[_key] = arguments[_key];
-  }
-
-  return function (node) {
-    refs.forEach(function (ref) {
-      fillRef(ref, node);
-    });
-  };
-}
-function supportRef(nodeOrComponent) {
-  var _type$prototype, _nodeOrComponent$prot;
-
-  var type = reactIs_2(nodeOrComponent) ? nodeOrComponent.type.type : nodeOrComponent.type; // Function component node
-
-  if (typeof type === 'function' && !((_type$prototype = type.prototype) === null || _type$prototype === void 0 ? void 0 : _type$prototype.render)) {
-    return false;
-  } // Class component
-
-
-  if (typeof nodeOrComponent === 'function' && !((_nodeOrComponent$prot = nodeOrComponent.prototype) === null || _nodeOrComponent$prot === void 0 ? void 0 : _nodeOrComponent$prot.render)) {
-    return false;
-  }
-
-  return true;
-}
-/* eslint-enable */
-
-function canUseDom$1() {
+function canUseDom() {
   return !!(typeof window !== 'undefined' && window.document && window.document.createElement);
 }
 
 // Event wrapper. Copy from react source code
 
-function makePrefixMap$1(styleProp, eventName) {
+function makePrefixMap(styleProp, eventName) {
   var prefixes = {};
   prefixes[styleProp.toLowerCase()] = eventName.toLowerCase();
   prefixes["Webkit".concat(styleProp)] = "webkit".concat(eventName);
@@ -12060,10 +12034,10 @@ function makePrefixMap$1(styleProp, eventName) {
   return prefixes;
 }
 
-function getVendorPrefixes$1(domSupport, win) {
+function getVendorPrefixes(domSupport, win) {
   var prefixes = {
-    animationend: makePrefixMap$1('Animation', 'AnimationEnd'),
-    transitionend: makePrefixMap$1('Transition', 'TransitionEnd')
+    animationend: makePrefixMap('Animation', 'AnimationEnd'),
+    transitionend: makePrefixMap('Transition', 'TransitionEnd')
   };
 
   if (domSupport) {
@@ -12078,22 +12052,22 @@ function getVendorPrefixes$1(domSupport, win) {
 
   return prefixes;
 }
-var vendorPrefixes$1 = getVendorPrefixes$1(canUseDom$1(), typeof window !== 'undefined' ? window : {});
-var style$1 = {};
+var vendorPrefixes = getVendorPrefixes(canUseDom(), typeof window !== 'undefined' ? window : {});
+var style = {};
 
-if (canUseDom$1()) {
-  var _document$createEleme$1 = document.createElement('div');
+if (canUseDom()) {
+  var _document$createEleme = document.createElement('div');
 
-  style$1 = _document$createEleme$1.style;
+  style = _document$createEleme.style;
 }
 
-var prefixedEventNames$1 = {};
-function getVendorPrefixedEventName$1(eventName) {
-  if (prefixedEventNames$1[eventName]) {
-    return prefixedEventNames$1[eventName];
+var prefixedEventNames = {};
+function getVendorPrefixedEventName(eventName) {
+  if (prefixedEventNames[eventName]) {
+    return prefixedEventNames[eventName];
   }
 
-  var prefixMap = vendorPrefixes$1[eventName];
+  var prefixMap = vendorPrefixes[eventName];
 
   if (prefixMap) {
     var stylePropList = Object.keys(prefixMap);
@@ -12102,21 +12076,21 @@ function getVendorPrefixedEventName$1(eventName) {
     for (var i = 0; i < len; i += 1) {
       var styleProp = stylePropList[i];
 
-      if (Object.prototype.hasOwnProperty.call(prefixMap, styleProp) && styleProp in style$1) {
-        prefixedEventNames$1[eventName] = prefixMap[styleProp];
-        return prefixedEventNames$1[eventName];
+      if (Object.prototype.hasOwnProperty.call(prefixMap, styleProp) && styleProp in style) {
+        prefixedEventNames[eventName] = prefixMap[styleProp];
+        return prefixedEventNames[eventName];
       }
     }
   }
 
   return '';
 }
-var internalAnimationEndName$1 = getVendorPrefixedEventName$1('animationend');
-var internalTransitionEndName$1 = getVendorPrefixedEventName$1('transitionend');
-var supportTransition$1 = !!(internalAnimationEndName$1 && internalTransitionEndName$1);
-var animationEndName$1 = internalAnimationEndName$1 || 'animationend';
-var transitionEndName$1 = internalTransitionEndName$1 || 'transitionend';
-function getTransitionName$2(transitionName, transitionType) {
+var internalAnimationEndName = getVendorPrefixedEventName('animationend');
+var internalTransitionEndName = getVendorPrefixedEventName('transitionend');
+var supportTransition = !!(internalAnimationEndName && internalTransitionEndName);
+var animationEndName = internalAnimationEndName || 'animationend';
+var transitionEndName = internalTransitionEndName || 'transitionend';
+function getTransitionName$1(transitionName, transitionType) {
   if (!transitionName) return null;
 
   if (_typeof$1(transitionName) === 'object') {
@@ -12129,17 +12103,17 @@ function getTransitionName$2(transitionName, transitionType) {
   return "".concat(transitionName, "-").concat(transitionType);
 }
 
-var STATUS_NONE$1 = 'none';
-var STATUS_APPEAR$1 = 'appear';
-var STATUS_ENTER$1 = 'enter';
-var STATUS_LEAVE$1 = 'leave';
-var STEP_NONE$1 = 'none';
-var STEP_PREPARE$1 = 'prepare';
-var STEP_START$1 = 'start';
-var STEP_ACTIVE$1 = 'active';
-var STEP_ACTIVATED$1 = 'end';
+var STATUS_NONE = 'none';
+var STATUS_APPEAR = 'appear';
+var STATUS_ENTER = 'enter';
+var STATUS_LEAVE = 'leave';
+var STEP_NONE = 'none';
+var STEP_PREPARE = 'prepare';
+var STEP_START = 'start';
+var STEP_ACTIVE = 'active';
+var STEP_ACTIVATED = 'end';
 
-function useMountStatus$1(defaultValue) {
+function useMountStatus(defaultValue) {
   var destroyRef = useRef(false);
 
   var _useState = useState(defaultValue),
@@ -12161,42 +12135,42 @@ function useMountStatus$1(defaultValue) {
   return [val, setValue];
 }
 
-var useIsomorphicLayoutEffect$1 = canUseDom$1() ? useLayoutEffect : useEffect;
+var useIsomorphicLayoutEffect = canUseDom() ? useLayoutEffect : useEffect;
 
-var raf$1 = function raf(callback) {
+var raf = function raf(callback) {
   return +setTimeout(callback, 16);
 };
 
-var caf$1 = function caf(num) {
+var caf = function caf(num) {
   return clearTimeout(num);
 };
 
 if (typeof window !== 'undefined' && 'requestAnimationFrame' in window) {
-  raf$1 = function raf(callback) {
+  raf = function raf(callback) {
     return window.requestAnimationFrame(callback);
   };
 
-  caf$1 = function caf(handle) {
+  caf = function caf(handle) {
     return window.cancelAnimationFrame(handle);
   };
 }
 
-function wrapperRaf$2(callback) {
-  return raf$1(callback);
+function wrapperRaf$1(callback) {
+  return raf(callback);
 }
-wrapperRaf$2.cancel = caf$1;
+wrapperRaf$1.cancel = caf;
 
-var useNextFrame$1 = (function () {
+var useNextFrame = (function () {
   var nextFrameRef = React.useRef(null);
 
   function cancelNextFrame() {
-    wrapperRaf$2.cancel(nextFrameRef.current);
+    wrapperRaf$1.cancel(nextFrameRef.current);
   }
 
   function nextFrame(callback) {
     var delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2;
     cancelNextFrame();
-    var nextFrameId = wrapperRaf$2(function () {
+    var nextFrameId = wrapperRaf$1(function () {
       if (delay <= 1) {
         callback({
           isCanceled: function isCanceled() {
@@ -12218,38 +12192,38 @@ var useNextFrame$1 = (function () {
   return [nextFrame, cancelNextFrame];
 });
 
-var STEP_QUEUE$1 = [STEP_PREPARE$1, STEP_START$1, STEP_ACTIVE$1, STEP_ACTIVATED$1];
+var STEP_QUEUE = [STEP_PREPARE, STEP_START, STEP_ACTIVE, STEP_ACTIVATED];
 /** Skip current step */
 
-var SkipStep$1 = false;
+var SkipStep = false;
 /** Current step should be update in */
 
-var DoStep$1 = true;
-function isActive$1(step) {
-  return step === STEP_ACTIVE$1 || step === STEP_ACTIVATED$1;
+var DoStep = true;
+function isActive(step) {
+  return step === STEP_ACTIVE || step === STEP_ACTIVATED;
 }
-var useStepQueue$1 = (function (status, callback) {
-  var _React$useState = React.useState(STEP_NONE$1),
+var useStepQueue = (function (status, callback) {
+  var _React$useState = React.useState(STEP_NONE),
       _React$useState2 = _slicedToArray(_React$useState, 2),
       step = _React$useState2[0],
       setStep = _React$useState2[1];
 
-  var _useNextFrame = useNextFrame$1(),
+  var _useNextFrame = useNextFrame(),
       _useNextFrame2 = _slicedToArray(_useNextFrame, 2),
       nextFrame = _useNextFrame2[0],
       cancelNextFrame = _useNextFrame2[1];
 
   function startQueue() {
-    setStep(STEP_PREPARE$1);
+    setStep(STEP_PREPARE);
   }
 
-  useIsomorphicLayoutEffect$1(function () {
-    if (step !== STEP_NONE$1 && step !== STEP_ACTIVATED$1) {
-      var index = STEP_QUEUE$1.indexOf(step);
-      var nextStep = STEP_QUEUE$1[index + 1];
+  useIsomorphicLayoutEffect(function () {
+    if (step !== STEP_NONE && step !== STEP_ACTIVATED) {
+      var index = STEP_QUEUE.indexOf(step);
+      var nextStep = STEP_QUEUE[index + 1];
       var result = callback(step);
 
-      if (result === SkipStep$1) {
+      if (result === SkipStep) {
         // Skip when no needed
         setStep(nextStep);
       } else {
@@ -12279,7 +12253,7 @@ var useStepQueue$1 = (function (status, callback) {
   return [startQueue, step];
 });
 
-var useDomMotionEvents$1 = (function (callback) {
+var useDomMotionEvents = (function (callback) {
   var cacheElementRef = useRef(); // Cache callback
 
   var callbackRef = useRef(callback);
@@ -12291,8 +12265,8 @@ var useDomMotionEvents$1 = (function (callback) {
 
   function removeMotionEvents(element) {
     if (element) {
-      element.removeEventListener(transitionEndName$1, onInternalMotionEnd);
-      element.removeEventListener(animationEndName$1, onInternalMotionEnd);
+      element.removeEventListener(transitionEndName, onInternalMotionEnd);
+      element.removeEventListener(animationEndName, onInternalMotionEnd);
     }
   } // Patch events
 
@@ -12303,8 +12277,8 @@ var useDomMotionEvents$1 = (function (callback) {
     }
 
     if (element && element !== cacheElementRef.current) {
-      element.addEventListener(transitionEndName$1, onInternalMotionEnd);
-      element.addEventListener(animationEndName$1, onInternalMotionEnd); // Save as cache in case dom removed trigger by `motionDeadline`
+      element.addEventListener(transitionEndName, onInternalMotionEnd);
+      element.addEventListener(animationEndName, onInternalMotionEnd); // Save as cache in case dom removed trigger by `motionDeadline`
 
       cacheElementRef.current = element;
     }
@@ -12319,7 +12293,7 @@ var useDomMotionEvents$1 = (function (callback) {
   return [patchMotionEvents, removeMotionEvents];
 });
 
-function useStatus$1(supportMotion, visible, getElement, _ref) {
+function useStatus(supportMotion, visible, getElement, _ref) {
   var _ref$motionEnter = _ref.motionEnter,
       motionEnter = _ref$motionEnter === void 0 ? true : _ref$motionEnter,
       _ref$motionAppear = _ref.motionAppear,
@@ -12343,17 +12317,17 @@ function useStatus$1(supportMotion, visible, getElement, _ref) {
       onVisibleChanged = _ref.onVisibleChanged;
 
   // Used for outer render usage to avoid `visible: false & status: none` to render nothing
-  var _useState = useMountStatus$1(),
+  var _useState = useMountStatus(),
       _useState2 = _slicedToArray(_useState, 2),
       asyncVisible = _useState2[0],
       setAsyncVisible = _useState2[1];
 
-  var _useState3 = useMountStatus$1(STATUS_NONE$1),
+  var _useState3 = useMountStatus(STATUS_NONE),
       _useState4 = _slicedToArray(_useState3, 2),
       status = _useState4[0],
       setStatus = _useState4[1];
 
-  var _useState5 = useMountStatus$1(null),
+  var _useState5 = useMountStatus(null),
       _useState6 = _slicedToArray(_useState5, 2),
       style = _useState6[0],
       setStyle = _useState6[1];
@@ -12384,22 +12358,22 @@ function useStatus$1(supportMotion, visible, getElement, _ref) {
 
     var canEnd;
 
-    if (status === STATUS_APPEAR$1 && activeRef.current) {
+    if (status === STATUS_APPEAR && activeRef.current) {
       canEnd = onAppearEnd === null || onAppearEnd === void 0 ? void 0 : onAppearEnd(element, event);
-    } else if (status === STATUS_ENTER$1 && activeRef.current) {
+    } else if (status === STATUS_ENTER && activeRef.current) {
       canEnd = onEnterEnd === null || onEnterEnd === void 0 ? void 0 : onEnterEnd(element, event);
-    } else if (status === STATUS_LEAVE$1 && activeRef.current) {
+    } else if (status === STATUS_LEAVE && activeRef.current) {
       canEnd = onLeaveEnd === null || onLeaveEnd === void 0 ? void 0 : onLeaveEnd(element, event);
     } // Only update status when `canEnd` and not destroyed
 
 
     if (canEnd !== false && !destroyedRef.current) {
-      setStatus(STATUS_NONE$1);
+      setStatus(STATUS_NONE);
       setStyle(null);
     }
   }
 
-  var _useDomMotionEvents = useDomMotionEvents$1(onInternalMotionEnd),
+  var _useDomMotionEvents = useDomMotionEvents(onInternalMotionEnd),
       _useDomMotionEvents2 = _slicedToArray(_useDomMotionEvents, 1),
       patchMotionEvents = _useDomMotionEvents2[0]; // ============================= Step =============================
 
@@ -12409,26 +12383,26 @@ function useStatus$1(supportMotion, visible, getElement, _ref) {
 
     switch (status) {
       case 'appear':
-        return _ref2 = {}, _defineProperty$1(_ref2, STEP_PREPARE$1, onAppearPrepare), _defineProperty$1(_ref2, STEP_START$1, onAppearStart), _defineProperty$1(_ref2, STEP_ACTIVE$1, onAppearActive), _ref2;
+        return _ref2 = {}, _defineProperty$1(_ref2, STEP_PREPARE, onAppearPrepare), _defineProperty$1(_ref2, STEP_START, onAppearStart), _defineProperty$1(_ref2, STEP_ACTIVE, onAppearActive), _ref2;
 
       case 'enter':
-        return _ref3 = {}, _defineProperty$1(_ref3, STEP_PREPARE$1, onEnterPrepare), _defineProperty$1(_ref3, STEP_START$1, onEnterStart), _defineProperty$1(_ref3, STEP_ACTIVE$1, onEnterActive), _ref3;
+        return _ref3 = {}, _defineProperty$1(_ref3, STEP_PREPARE, onEnterPrepare), _defineProperty$1(_ref3, STEP_START, onEnterStart), _defineProperty$1(_ref3, STEP_ACTIVE, onEnterActive), _ref3;
 
       case 'leave':
-        return _ref4 = {}, _defineProperty$1(_ref4, STEP_PREPARE$1, onLeavePrepare), _defineProperty$1(_ref4, STEP_START$1, onLeaveStart), _defineProperty$1(_ref4, STEP_ACTIVE$1, onLeaveActive), _ref4;
+        return _ref4 = {}, _defineProperty$1(_ref4, STEP_PREPARE, onLeavePrepare), _defineProperty$1(_ref4, STEP_START, onLeaveStart), _defineProperty$1(_ref4, STEP_ACTIVE, onLeaveActive), _ref4;
 
       default:
         return {};
     }
   }, [status]);
 
-  var _useStepQueue = useStepQueue$1(status, function (newStep) {
+  var _useStepQueue = useStepQueue(status, function (newStep) {
     // Only prepare step can be skip
-    if (newStep === STEP_PREPARE$1) {
-      var onPrepare = eventHandlers[STEP_PREPARE$1];
+    if (newStep === STEP_PREPARE) {
+      var onPrepare = eventHandlers[STEP_PREPARE];
 
       if (!onPrepare) {
-        return SkipStep$1;
+        return SkipStep;
       }
 
       return onPrepare(getDomElement());
@@ -12441,7 +12415,7 @@ function useStatus$1(supportMotion, visible, getElement, _ref) {
       setStyle(((_eventHandlers$step = eventHandlers[step]) === null || _eventHandlers$step === void 0 ? void 0 : _eventHandlers$step.call(eventHandlers, getDomElement(), null)) || null);
     }
 
-    if (step === STEP_ACTIVE$1) {
+    if (step === STEP_ACTIVE) {
       // Patch events when motion needed
       patchMotionEvents(getDomElement());
 
@@ -12455,17 +12429,17 @@ function useStatus$1(supportMotion, visible, getElement, _ref) {
       }
     }
 
-    return DoStep$1;
+    return DoStep;
   }),
       _useStepQueue2 = _slicedToArray(_useStepQueue, 2),
       startStep = _useStepQueue2[0],
       step = _useStepQueue2[1];
 
-  var active = isActive$1(step);
+  var active = isActive(step);
   activeRef.current = active; // ============================ Status ============================
   // Update with new status
 
-  useIsomorphicLayoutEffect$1(function () {
+  useIsomorphicLayoutEffect(function () {
     setAsyncVisible(visible);
 
     if (!supportMotion) {
@@ -12477,17 +12451,17 @@ function useStatus$1(supportMotion, visible, getElement, _ref) {
     var nextStatus; // Appear
 
     if (!isMounted && visible && motionAppear) {
-      nextStatus = STATUS_APPEAR$1;
+      nextStatus = STATUS_APPEAR;
     } // Enter
 
 
     if (isMounted && visible && motionEnter) {
-      nextStatus = STATUS_ENTER$1;
+      nextStatus = STATUS_ENTER;
     } // Leave
 
 
     if (isMounted && !visible && motionLeave || !isMounted && motionLeaveImmediately && !visible && motionLeave) {
-      nextStatus = STATUS_LEAVE$1;
+      nextStatus = STATUS_LEAVE;
     } // Update to next status
 
 
@@ -12500,10 +12474,10 @@ function useStatus$1(supportMotion, visible, getElement, _ref) {
 
   useEffect(function () {
     if ( // Cancel appear
-    status === STATUS_APPEAR$1 && !motionAppear || // Cancel enter
-    status === STATUS_ENTER$1 && !motionEnter || // Cancel leave
-    status === STATUS_LEAVE$1 && !motionLeave) {
-      setStatus(STATUS_NONE$1);
+    status === STATUS_APPEAR && !motionAppear || // Cancel enter
+    status === STATUS_ENTER && !motionEnter || // Cancel leave
+    status === STATUS_LEAVE && !motionLeave) {
+      setStatus(STATUS_NONE);
     }
   }, [motionAppear, motionEnter, motionLeave]);
   useEffect(function () {
@@ -12514,14 +12488,14 @@ function useStatus$1(supportMotion, visible, getElement, _ref) {
   }, []); // Trigger `onVisibleChanged`
 
   useEffect(function () {
-    if (asyncVisible !== undefined && status === STATUS_NONE$1) {
+    if (asyncVisible !== undefined && status === STATUS_NONE) {
       onVisibleChanged === null || onVisibleChanged === void 0 ? void 0 : onVisibleChanged(asyncVisible);
     }
   }, [asyncVisible, status]); // ============================ Styles ============================
 
   var mergedStyle = style;
 
-  if (eventHandlers[STEP_PREPARE$1] && step === STEP_START$1) {
+  if (eventHandlers[STEP_PREPARE] && step === STEP_START) {
     mergedStyle = _objectSpread2$1({
       transition: 'none'
     }, mergedStyle);
@@ -12530,7 +12504,7 @@ function useStatus$1(supportMotion, visible, getElement, _ref) {
   return [status, step, mergedStyle, asyncVisible !== null && asyncVisible !== void 0 ? asyncVisible : visible];
 }
 
-var DomWrapper$1 = /*#__PURE__*/function (_React$Component) {
+var DomWrapper = /*#__PURE__*/function (_React$Component) {
   _inherits(DomWrapper, _React$Component);
 
   var _super = _createSuper(DomWrapper);
@@ -12556,7 +12530,7 @@ var DomWrapper$1 = /*#__PURE__*/function (_React$Component) {
  * Default we use browser transition event support check.
  */
 
-function genCSSMotion$1(config) {
+function genCSSMotion(config) {
   var transitionSupport = config;
 
   if (_typeof$1(config) === 'object') {
@@ -12592,7 +12566,7 @@ function genCSSMotion$1(config) {
       }
     }
 
-    var _useStatus = useStatus$1(supportMotion, visible, getDomElement, props),
+    var _useStatus = useStatus(supportMotion, visible, getDomElement, props),
         _useStatus2 = _slicedToArray(_useStatus, 4),
         status = _useStatus2[0],
         statusStep = _useStatus2[1],
@@ -12616,7 +12590,7 @@ function genCSSMotion$1(config) {
     if (!children) {
       // No children
       motionChildren = null;
-    } else if (status === STATUS_NONE$1 || !isSupportTransition(props)) {
+    } else if (status === STATUS_NONE || !isSupportTransition(props)) {
       // Stable children
       if (mergedVisible) {
         motionChildren = children(_objectSpread2$1({}, mergedProps), setNodeRef);
@@ -12639,28 +12613,28 @@ function genCSSMotion$1(config) {
       // In motion
       var statusSuffix;
 
-      if (statusStep === STEP_PREPARE$1) {
+      if (statusStep === STEP_PREPARE) {
         statusSuffix = 'prepare';
-      } else if (isActive$1(statusStep)) {
+      } else if (isActive(statusStep)) {
         statusSuffix = 'active';
-      } else if (statusStep === STEP_START$1) {
+      } else if (statusStep === STEP_START) {
         statusSuffix = 'start';
       }
 
       motionChildren = children(_objectSpread2$1(_objectSpread2$1({}, mergedProps), {}, {
-        className: classnames(getTransitionName$2(motionName, status), (_classNames = {}, _defineProperty$1(_classNames, getTransitionName$2(motionName, "".concat(status, "-").concat(statusSuffix)), statusSuffix), _defineProperty$1(_classNames, motionName, typeof motionName === 'string'), _classNames)),
+        className: classnames(getTransitionName$1(motionName, status), (_classNames = {}, _defineProperty$1(_classNames, getTransitionName$1(motionName, "".concat(status, "-").concat(statusSuffix)), statusSuffix), _defineProperty$1(_classNames, motionName, typeof motionName === 'string'), _classNames)),
         style: statusStyle
       }), setNodeRef);
     }
 
-    return /*#__PURE__*/React.createElement(DomWrapper$1, {
+    return /*#__PURE__*/React.createElement(DomWrapper, {
       ref: wrapperNodeRef
     }, motionChildren);
   });
   CSSMotion.displayName = 'CSSMotion';
   return CSSMotion;
 }
-var CSSMotion$1 = genCSSMotion$1(supportTransition$1);
+var CSSMotion = genCSSMotion(supportTransition);
 
 // This icon file is generated automatically.
 var LoadingOutlined$2 = { "icon": { "tag": "svg", "attrs": { "viewBox": "0 0 1024 1024", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M988 548c-19.9 0-36-16.1-36-36 0-59.4-11.6-117-34.6-171.3a440.45 440.45 0 00-94.3-139.9 437.71 437.71 0 00-139.9-94.3C629 83.6 571.4 72 512 72c-19.9 0-36-16.1-36-36s16.1-36 36-36c69.1 0 136.2 13.5 199.3 40.3C772.3 66 827 103 874 150c47 47 83.9 101.8 109.7 162.7 26.7 63.1 40.2 130.2 40.2 199.3.1 19.9-16 36-35.9 36z" } }] }, "name": "loading", "theme": "outlined" };
@@ -13442,9 +13416,9 @@ Object.keys(presetPrimaryColors).forEach(function (key) {
   presetDarkPalettes[key].primary = presetDarkPalettes[key][5];
 });
 
-var MARK_KEY$1 = "rc-util-key";
+var MARK_KEY = "rc-util-key";
 
-function getContainer$1(option) {
+function getContainer(option) {
   if (option.attachTo) {
     return option.attachTo;
   }
@@ -13453,12 +13427,12 @@ function getContainer$1(option) {
   return head || document.body;
 }
 
-function injectCSS$1(css) {
+function injectCSS(css) {
   var _option$csp;
 
   var option = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
-  if (!canUseDom$1()) {
+  if (!canUseDom()) {
     return null;
   }
 
@@ -13471,7 +13445,7 @@ function injectCSS$1(css) {
   }
 
   styleNode.innerHTML = css;
-  var container = getContainer$1(option);
+  var container = getContainer(option);
   var firstChild = container.firstChild;
 
   if (option.prepend && firstChild) {
@@ -13482,20 +13456,20 @@ function injectCSS$1(css) {
 
   return styleNode;
 }
-var containerCache$1 = new Map();
-function updateCSS$1(css, key) {
+var containerCache = new Map();
+function updateCSS(css, key) {
   var option = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-  var container = getContainer$1(option); // Get real parent
+  var container = getContainer(option); // Get real parent
 
-  if (!containerCache$1.has(container)) {
-    var placeholderStyle = injectCSS$1('', option);
+  if (!containerCache.has(container)) {
+    var placeholderStyle = injectCSS('', option);
     var parentElement = placeholderStyle.parentElement;
-    containerCache$1.set(container, parentElement);
+    containerCache.set(container, parentElement);
     parentElement.removeChild(placeholderStyle);
   }
 
-  var existNode = _toConsumableArray(containerCache$1.get(container).children).find(function (node) {
-    return node.tagName === 'STYLE' && node[MARK_KEY$1] === key;
+  var existNode = _toConsumableArray(containerCache.get(container).children).find(function (node) {
+    return node.tagName === 'STYLE' && node[MARK_KEY] === key;
   });
 
   if (existNode) {
@@ -13514,8 +13488,8 @@ function updateCSS$1(css, key) {
     return existNode;
   }
 
-  var newNode = injectCSS$1(css, option);
-  newNode[MARK_KEY$1] = key;
+  var newNode = injectCSS(css, option);
+  newNode[MARK_KEY] = key;
   return newNode;
 }
 
@@ -13577,14 +13551,13 @@ var useInsertStyles = function useInsertStyles() {
       csp = _useContext.csp;
 
   useEffect(function () {
-    updateCSS$1(styleStr, '@ant-design-icons', {
+    updateCSS(styleStr, '@ant-design-icons', {
       prepend: true,
       csp: csp
     });
   }, []);
 };
 
-var _excluded$1 = ["icon", "className", "onClick", "style", "primaryColor", "secondaryColor"];
 var twoToneColorPalette = {
   primaryColor: '#333',
   secondaryColor: '#E6E6E6',
@@ -13610,7 +13583,7 @@ var IconBase = function IconBase(props) {
       style = props.style,
       primaryColor = props.primaryColor,
       secondaryColor = props.secondaryColor,
-      restProps = _objectWithoutProperties(props, _excluded$1);
+      restProps = _objectWithoutProperties(props, ["icon", "className", "onClick", "style", "primaryColor", "secondaryColor"]);
 
   var colors = twoToneColorPalette;
 
@@ -13673,7 +13646,6 @@ function getTwoToneColor() {
   return [colors.primaryColor, colors.secondaryColor];
 }
 
-var _excluded = ["className", "icon", "spin", "rotate", "tabIndex", "onClick", "twoToneColor"];
 // should move it to antd main repo?
 
 setTwoToneColor('#1890ff');
@@ -13687,7 +13659,7 @@ var Icon = /*#__PURE__*/React.forwardRef(function (props, ref) {
       tabIndex = props.tabIndex,
       onClick = props.onClick,
       twoToneColor = props.twoToneColor,
-      restProps = _objectWithoutProperties(props, _excluded);
+      restProps = _objectWithoutProperties(props, ["className", "icon", "spin", "rotate", "tabIndex", "onClick", "twoToneColor"]);
 
   var _React$useContext = React.useContext(IconContext),
       _React$useContext$pre = _React$useContext.prefixCls,
@@ -13710,10 +13682,10 @@ var Icon = /*#__PURE__*/React.forwardRef(function (props, ref) {
       primaryColor = _normalizeTwoToneColo2[0],
       secondaryColor = _normalizeTwoToneColo2[1];
 
-  return /*#__PURE__*/React.createElement("span", _objectSpread2$1(_objectSpread2$1({
+  return /*#__PURE__*/React.createElement("span", Object.assign({
     role: "img",
     "aria-label": icon.name
-  }, restProps), {}, {
+  }, restProps, {
     ref: ref,
     tabIndex: iconTabIndex,
     onClick: onClick,
@@ -13729,8 +13701,10 @@ Icon.displayName = 'AntdIcon';
 Icon.getTwoToneColor = getTwoToneColor;
 Icon.setTwoToneColor = setTwoToneColor;
 
+// GENERATE BY ./scripts/generate.ts
+
 var LoadingOutlined = function LoadingOutlined(props, ref) {
-  return /*#__PURE__*/React.createElement(Icon, _objectSpread2$1(_objectSpread2$1({}, props), {}, {
+  return /*#__PURE__*/React.createElement(Icon, Object.assign({}, props, {
     ref: ref,
     icon: LoadingOutlined$2
   }));
@@ -13742,8 +13716,10 @@ var LoadingOutlined$1 = /*#__PURE__*/React.forwardRef(LoadingOutlined);
 // This icon file is generated automatically.
 var CloseCircleFilled$2 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm165.4 618.2l-66-.3L512 563.4l-99.3 118.4-66.1.3c-4.4 0-8-3.5-8-8 0-1.9.7-3.7 1.9-5.2l130.1-155L340.5 359a8.32 8.32 0 01-1.9-5.2c0-4.4 3.6-8 8-8l66.1.3L512 464.6l99.3-118.4 66-.3c4.4 0 8 3.5 8 8 0 1.9-.7 3.7-1.9 5.2L553.5 514l130 155c1.2 1.5 1.9 3.3 1.9 5.2 0 4.4-3.6 8-8 8z" } }] }, "name": "close-circle", "theme": "filled" };
 
+// GENERATE BY ./scripts/generate.ts
+
 var CloseCircleFilled = function CloseCircleFilled(props, ref) {
-  return /*#__PURE__*/React.createElement(Icon, _objectSpread2$1(_objectSpread2$1({}, props), {}, {
+  return /*#__PURE__*/React.createElement(Icon, Object.assign({}, props, {
     ref: ref,
     icon: CloseCircleFilled$2
   }));
@@ -13755,8 +13731,10 @@ var CloseCircleFilled$1 = /*#__PURE__*/React.forwardRef(CloseCircleFilled);
 // This icon file is generated automatically.
 var CloseOutlined$2 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M563.8 512l262.5-312.9c4.4-5.2.7-13.1-6.1-13.1h-79.8c-4.7 0-9.2 2.1-12.3 5.7L511.6 449.8 295.1 191.7c-3-3.6-7.5-5.7-12.3-5.7H203c-6.8 0-10.5 7.9-6.1 13.1L459.4 512 196.9 824.9A7.95 7.95 0 00203 838h79.8c4.7 0 9.2-2.1 12.3-5.7l216.5-258.1 216.5 258.1c3 3.6 7.5 5.7 12.3 5.7h79.8c6.8 0 10.5-7.9 6.1-13.1L563.8 512z" } }] }, "name": "close", "theme": "outlined" };
 
+// GENERATE BY ./scripts/generate.ts
+
 var CloseOutlined = function CloseOutlined(props, ref) {
-  return /*#__PURE__*/React.createElement(Icon, _objectSpread2$1(_objectSpread2$1({}, props), {}, {
+  return /*#__PURE__*/React.createElement(Icon, Object.assign({}, props, {
     ref: ref,
     icon: CloseOutlined$2
   }));
@@ -13764,172 +13742,6 @@ var CloseOutlined = function CloseOutlined(props, ref) {
 
 CloseOutlined.displayName = 'CloseOutlined';
 var CloseOutlined$1 = /*#__PURE__*/React.forwardRef(CloseOutlined);
-
-function canUseDom() {
-  return !!(typeof window !== 'undefined' && window.document && window.document.createElement);
-}
-
-var MARK_KEY = "rc-util-key";
-
-function getMark() {
-  var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-      mark = _ref.mark;
-
-  if (mark) {
-    return mark.startsWith('data-') ? mark : "data-".concat(mark);
-  }
-
-  return MARK_KEY;
-}
-
-function getContainer(option) {
-  if (option.attachTo) {
-    return option.attachTo;
-  }
-
-  var head = document.querySelector('head');
-  return head || document.body;
-}
-
-function injectCSS(css) {
-  var _option$csp;
-
-  var option = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-
-  if (!canUseDom()) {
-    return null;
-  }
-
-  var styleNode = document.createElement('style');
-
-  if ((_option$csp = option.csp) === null || _option$csp === void 0 ? void 0 : _option$csp.nonce) {
-    var _option$csp2;
-
-    styleNode.nonce = (_option$csp2 = option.csp) === null || _option$csp2 === void 0 ? void 0 : _option$csp2.nonce;
-  }
-
-  styleNode.innerHTML = css;
-  var container = getContainer(option);
-  var firstChild = container.firstChild;
-
-  if (option.prepend && container.prepend) {
-    // Use `prepend` first
-    container.prepend(styleNode);
-  } else if (option.prepend && firstChild) {
-    // Fallback to `insertBefore` like IE not support `prepend`
-    container.insertBefore(styleNode, firstChild);
-  } else {
-    container.appendChild(styleNode);
-  }
-
-  return styleNode;
-}
-var containerCache = new Map();
-
-function findExistNode(key) {
-  var option = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-  var container = getContainer(option);
-  return Array.from(containerCache.get(container).children).find(function (node) {
-    return node.tagName === 'STYLE' && node.getAttribute(getMark(option)) === key;
-  });
-}
-function updateCSS(css, key) {
-  var option = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-  var container = getContainer(option); // Get real parent
-
-  if (!containerCache.has(container)) {
-    var placeholderStyle = injectCSS('', option);
-    var parentNode = placeholderStyle.parentNode;
-    containerCache.set(container, parentNode);
-    parentNode.removeChild(placeholderStyle);
-  }
-
-  var existNode = findExistNode(key, option);
-
-  if (existNode) {
-    var _option$csp3, _option$csp4;
-
-    if (((_option$csp3 = option.csp) === null || _option$csp3 === void 0 ? void 0 : _option$csp3.nonce) && existNode.nonce !== ((_option$csp4 = option.csp) === null || _option$csp4 === void 0 ? void 0 : _option$csp4.nonce)) {
-      var _option$csp5;
-
-      existNode.nonce = (_option$csp5 = option.csp) === null || _option$csp5 === void 0 ? void 0 : _option$csp5.nonce;
-    }
-
-    if (existNode.innerHTML !== css) {
-      existNode.innerHTML = css;
-    }
-
-    return existNode;
-  }
-
-  var newNode = injectCSS(css, option);
-  newNode.setAttribute(getMark(option), key);
-  return newNode;
-}
-
-var raf = function raf(callback) {
-  return +setTimeout(callback, 16);
-};
-
-var caf = function caf(num) {
-  return clearTimeout(num);
-};
-
-if (typeof window !== 'undefined' && 'requestAnimationFrame' in window) {
-  raf = function raf(callback) {
-    return window.requestAnimationFrame(callback);
-  };
-
-  caf = function caf(handle) {
-    return window.cancelAnimationFrame(handle);
-  };
-}
-
-var rafUUID = 0;
-var rafIds = new Map();
-
-function cleanup(id) {
-  rafIds.delete(id);
-}
-
-function wrapperRaf$1(callback) {
-  var times = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
-  rafUUID += 1;
-  var id = rafUUID;
-
-  function callRef(leftTimes) {
-    if (leftTimes === 0) {
-      // Clean up
-      cleanup(id); // Trigger
-
-      callback();
-    } else {
-      // Next raf
-      var realId = raf(function () {
-        callRef(leftTimes - 1);
-      }); // Bind real raf id
-
-      rafIds.set(id, realId);
-    }
-  }
-
-  callRef(times);
-  return id;
-}
-
-wrapperRaf$1.cancel = function (id) {
-  var realId = rafIds.get(id);
-  cleanup(realId);
-  return caf(realId);
-};
-
-function contains(root, n) {
-  if (!root) {
-    return false;
-  }
-
-  return root.contains(n);
-}
 
 function addEventListenerWrap(target, eventType, cb, option) {
   /* eslint camelcase: 2 */
@@ -13950,6 +13762,702 @@ function addEventListenerWrap(target, eventType, cb, option) {
   };
 }
 
+/**
+ * @ignore
+ * some key-codes definition and utils from closure-library
+ * @author yiminghe@gmail.com
+ */
+var KeyCode = {
+  /**
+   * MAC_ENTER
+   */
+  MAC_ENTER: 3,
+
+  /**
+   * BACKSPACE
+   */
+  BACKSPACE: 8,
+
+  /**
+   * TAB
+   */
+  TAB: 9,
+
+  /**
+   * NUMLOCK on FF/Safari Mac
+   */
+  NUM_CENTER: 12,
+
+  /**
+   * ENTER
+   */
+  ENTER: 13,
+
+  /**
+   * SHIFT
+   */
+  SHIFT: 16,
+
+  /**
+   * CTRL
+   */
+  CTRL: 17,
+
+  /**
+   * ALT
+   */
+  ALT: 18,
+
+  /**
+   * PAUSE
+   */
+  PAUSE: 19,
+
+  /**
+   * CAPS_LOCK
+   */
+  CAPS_LOCK: 20,
+
+  /**
+   * ESC
+   */
+  ESC: 27,
+
+  /**
+   * SPACE
+   */
+  SPACE: 32,
+
+  /**
+   * PAGE_UP
+   */
+  PAGE_UP: 33,
+
+  /**
+   * PAGE_DOWN
+   */
+  PAGE_DOWN: 34,
+
+  /**
+   * END
+   */
+  END: 35,
+
+  /**
+   * HOME
+   */
+  HOME: 36,
+
+  /**
+   * LEFT
+   */
+  LEFT: 37,
+
+  /**
+   * UP
+   */
+  UP: 38,
+
+  /**
+   * RIGHT
+   */
+  RIGHT: 39,
+
+  /**
+   * DOWN
+   */
+  DOWN: 40,
+
+  /**
+   * PRINT_SCREEN
+   */
+  PRINT_SCREEN: 44,
+
+  /**
+   * INSERT
+   */
+  INSERT: 45,
+
+  /**
+   * DELETE
+   */
+  DELETE: 46,
+
+  /**
+   * ZERO
+   */
+  ZERO: 48,
+
+  /**
+   * ONE
+   */
+  ONE: 49,
+
+  /**
+   * TWO
+   */
+  TWO: 50,
+
+  /**
+   * THREE
+   */
+  THREE: 51,
+
+  /**
+   * FOUR
+   */
+  FOUR: 52,
+
+  /**
+   * FIVE
+   */
+  FIVE: 53,
+
+  /**
+   * SIX
+   */
+  SIX: 54,
+
+  /**
+   * SEVEN
+   */
+  SEVEN: 55,
+
+  /**
+   * EIGHT
+   */
+  EIGHT: 56,
+
+  /**
+   * NINE
+   */
+  NINE: 57,
+
+  /**
+   * QUESTION_MARK
+   */
+  QUESTION_MARK: 63,
+
+  /**
+   * A
+   */
+  A: 65,
+
+  /**
+   * B
+   */
+  B: 66,
+
+  /**
+   * C
+   */
+  C: 67,
+
+  /**
+   * D
+   */
+  D: 68,
+
+  /**
+   * E
+   */
+  E: 69,
+
+  /**
+   * F
+   */
+  F: 70,
+
+  /**
+   * G
+   */
+  G: 71,
+
+  /**
+   * H
+   */
+  H: 72,
+
+  /**
+   * I
+   */
+  I: 73,
+
+  /**
+   * J
+   */
+  J: 74,
+
+  /**
+   * K
+   */
+  K: 75,
+
+  /**
+   * L
+   */
+  L: 76,
+
+  /**
+   * M
+   */
+  M: 77,
+
+  /**
+   * N
+   */
+  N: 78,
+
+  /**
+   * O
+   */
+  O: 79,
+
+  /**
+   * P
+   */
+  P: 80,
+
+  /**
+   * Q
+   */
+  Q: 81,
+
+  /**
+   * R
+   */
+  R: 82,
+
+  /**
+   * S
+   */
+  S: 83,
+
+  /**
+   * T
+   */
+  T: 84,
+
+  /**
+   * U
+   */
+  U: 85,
+
+  /**
+   * V
+   */
+  V: 86,
+
+  /**
+   * W
+   */
+  W: 87,
+
+  /**
+   * X
+   */
+  X: 88,
+
+  /**
+   * Y
+   */
+  Y: 89,
+
+  /**
+   * Z
+   */
+  Z: 90,
+
+  /**
+   * META
+   */
+  META: 91,
+
+  /**
+   * WIN_KEY_RIGHT
+   */
+  WIN_KEY_RIGHT: 92,
+
+  /**
+   * CONTEXT_MENU
+   */
+  CONTEXT_MENU: 93,
+
+  /**
+   * NUM_ZERO
+   */
+  NUM_ZERO: 96,
+
+  /**
+   * NUM_ONE
+   */
+  NUM_ONE: 97,
+
+  /**
+   * NUM_TWO
+   */
+  NUM_TWO: 98,
+
+  /**
+   * NUM_THREE
+   */
+  NUM_THREE: 99,
+
+  /**
+   * NUM_FOUR
+   */
+  NUM_FOUR: 100,
+
+  /**
+   * NUM_FIVE
+   */
+  NUM_FIVE: 101,
+
+  /**
+   * NUM_SIX
+   */
+  NUM_SIX: 102,
+
+  /**
+   * NUM_SEVEN
+   */
+  NUM_SEVEN: 103,
+
+  /**
+   * NUM_EIGHT
+   */
+  NUM_EIGHT: 104,
+
+  /**
+   * NUM_NINE
+   */
+  NUM_NINE: 105,
+
+  /**
+   * NUM_MULTIPLY
+   */
+  NUM_MULTIPLY: 106,
+
+  /**
+   * NUM_PLUS
+   */
+  NUM_PLUS: 107,
+
+  /**
+   * NUM_MINUS
+   */
+  NUM_MINUS: 109,
+
+  /**
+   * NUM_PERIOD
+   */
+  NUM_PERIOD: 110,
+
+  /**
+   * NUM_DIVISION
+   */
+  NUM_DIVISION: 111,
+
+  /**
+   * F1
+   */
+  F1: 112,
+
+  /**
+   * F2
+   */
+  F2: 113,
+
+  /**
+   * F3
+   */
+  F3: 114,
+
+  /**
+   * F4
+   */
+  F4: 115,
+
+  /**
+   * F5
+   */
+  F5: 116,
+
+  /**
+   * F6
+   */
+  F6: 117,
+
+  /**
+   * F7
+   */
+  F7: 118,
+
+  /**
+   * F8
+   */
+  F8: 119,
+
+  /**
+   * F9
+   */
+  F9: 120,
+
+  /**
+   * F10
+   */
+  F10: 121,
+
+  /**
+   * F11
+   */
+  F11: 122,
+
+  /**
+   * F12
+   */
+  F12: 123,
+
+  /**
+   * NUMLOCK
+   */
+  NUMLOCK: 144,
+
+  /**
+   * SEMICOLON
+   */
+  SEMICOLON: 186,
+
+  /**
+   * DASH
+   */
+  DASH: 189,
+
+  /**
+   * EQUALS
+   */
+  EQUALS: 187,
+
+  /**
+   * COMMA
+   */
+  COMMA: 188,
+
+  /**
+   * PERIOD
+   */
+  PERIOD: 190,
+
+  /**
+   * SLASH
+   */
+  SLASH: 191,
+
+  /**
+   * APOSTROPHE
+   */
+  APOSTROPHE: 192,
+
+  /**
+   * SINGLE_QUOTE
+   */
+  SINGLE_QUOTE: 222,
+
+  /**
+   * OPEN_SQUARE_BRACKET
+   */
+  OPEN_SQUARE_BRACKET: 219,
+
+  /**
+   * BACKSLASH
+   */
+  BACKSLASH: 220,
+
+  /**
+   * CLOSE_SQUARE_BRACKET
+   */
+  CLOSE_SQUARE_BRACKET: 221,
+
+  /**
+   * WIN_KEY
+   */
+  WIN_KEY: 224,
+
+  /**
+   * MAC_FF_META
+   */
+  MAC_FF_META: 224,
+
+  /**
+   * WIN_IME
+   */
+  WIN_IME: 229,
+  // ======================== Function ========================
+
+  /**
+   * whether text and modified key is entered at the same time.
+   */
+  isTextModifyingKeyEvent: function isTextModifyingKeyEvent(e) {
+    var keyCode = e.keyCode;
+
+    if (e.altKey && !e.ctrlKey || e.metaKey || // Function keys don't generate text
+    keyCode >= KeyCode.F1 && keyCode <= KeyCode.F12) {
+      return false;
+    } // The following keys are quite harmless, even in combination with
+    // CTRL, ALT or SHIFT.
+
+
+    switch (keyCode) {
+      case KeyCode.ALT:
+      case KeyCode.CAPS_LOCK:
+      case KeyCode.CONTEXT_MENU:
+      case KeyCode.CTRL:
+      case KeyCode.DOWN:
+      case KeyCode.END:
+      case KeyCode.ESC:
+      case KeyCode.HOME:
+      case KeyCode.INSERT:
+      case KeyCode.LEFT:
+      case KeyCode.MAC_FF_META:
+      case KeyCode.META:
+      case KeyCode.NUMLOCK:
+      case KeyCode.NUM_CENTER:
+      case KeyCode.PAGE_DOWN:
+      case KeyCode.PAGE_UP:
+      case KeyCode.PAUSE:
+      case KeyCode.PRINT_SCREEN:
+      case KeyCode.RIGHT:
+      case KeyCode.SHIFT:
+      case KeyCode.UP:
+      case KeyCode.WIN_KEY:
+      case KeyCode.WIN_KEY_RIGHT:
+        return false;
+
+      default:
+        return true;
+    }
+  },
+
+  /**
+   * whether character is entered.
+   */
+  isCharacterKey: function isCharacterKey(keyCode) {
+    if (keyCode >= KeyCode.ZERO && keyCode <= KeyCode.NINE) {
+      return true;
+    }
+
+    if (keyCode >= KeyCode.NUM_ZERO && keyCode <= KeyCode.NUM_MULTIPLY) {
+      return true;
+    }
+
+    if (keyCode >= KeyCode.A && keyCode <= KeyCode.Z) {
+      return true;
+    } // Safari sends zero key code for non-latin characters.
+
+
+    if (window.navigator.userAgent.indexOf('WebKit') !== -1 && keyCode === 0) {
+      return true;
+    }
+
+    switch (keyCode) {
+      case KeyCode.SPACE:
+      case KeyCode.QUESTION_MARK:
+      case KeyCode.NUM_PLUS:
+      case KeyCode.NUM_MINUS:
+      case KeyCode.NUM_PERIOD:
+      case KeyCode.NUM_DIVISION:
+      case KeyCode.SEMICOLON:
+      case KeyCode.DASH:
+      case KeyCode.EQUALS:
+      case KeyCode.COMMA:
+      case KeyCode.PERIOD:
+      case KeyCode.SLASH:
+      case KeyCode.APOSTROPHE:
+      case KeyCode.SINGLE_QUOTE:
+      case KeyCode.OPEN_SQUARE_BRACKET:
+      case KeyCode.BACKSLASH:
+      case KeyCode.CLOSE_SQUARE_BRACKET:
+        return true;
+
+      default:
+        return false;
+    }
+  }
+};
+
+var isMobile = (function () {
+  if (typeof navigator === 'undefined' || typeof window === 'undefined') {
+    return false;
+  }
+
+  var agent = navigator.userAgent || navigator.vendor || window.opera;
+
+  if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i.test(agent) || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw-(n|u)|c55\/|capi|ccwa|cdm-|cell|chtm|cldc|cmd-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc-s|devi|dica|dmob|do(c|p)o|ds(12|-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(-|_)|g1 u|g560|gene|gf-5|g-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd-(m|p|t)|hei-|hi(pt|ta)|hp( i|ip)|hs-c|ht(c(-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i-(20|go|ma)|i230|iac( |-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|-[a-w])|libw|lynx|m1-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|-([1-8]|c))|phil|pire|pl(ay|uc)|pn-2|po(ck|rt|se)|prox|psio|pt-g|qa-a|qc(07|12|21|32|60|-[2-7]|i-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h-|oo|p-)|sdk\/|se(c(-|0|1)|47|mc|nd|ri)|sgh-|shar|sie(-|m)|sk-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h-|v-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl-|tdg-|tel(i|m)|tim-|t-mo|to(pl|sh)|ts(70|m-|m3|m5)|tx-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas-|your|zeto|zte-/i.test(agent.substr(0, 4))) {
+    return true;
+  }
+
+  return false;
+});
+
+function useControlledState(defaultStateValue, option) {
+  var _ref = option || {},
+      defaultValue = _ref.defaultValue,
+      value = _ref.value,
+      onChange = _ref.onChange,
+      postState = _ref.postState;
+
+  var _React$useState = React.useState(function () {
+    if (value !== undefined) {
+      return value;
+    }
+
+    if (defaultValue !== undefined) {
+      return typeof defaultValue === 'function' ? defaultValue() : defaultValue;
+    }
+
+    return typeof defaultStateValue === 'function' ? defaultStateValue() : defaultStateValue;
+  }),
+      _React$useState2 = _slicedToArray(_React$useState, 2),
+      innerValue = _React$useState2[0],
+      setInnerValue = _React$useState2[1];
+
+  var mergedValue = value !== undefined ? value : innerValue;
+
+  if (postState) {
+    mergedValue = postState(mergedValue);
+  }
+
+  function triggerChange(newValue) {
+    setInnerValue(newValue);
+
+    if (mergedValue !== newValue && onChange) {
+      onChange(newValue, mergedValue);
+    }
+  } // Effect of reset value to `undefined`
+
+
+  var firstRenderRef = React.useRef(true);
+  React.useEffect(function () {
+    if (firstRenderRef.current) {
+      firstRenderRef.current = false;
+      return;
+    }
+
+    if (value === undefined) {
+      setInnerValue(value);
+    }
+  }, [value]);
+  return [mergedValue, triggerChange];
+}
+
+function contains(root, n) {
+  if (!root) {
+    return false;
+  }
+
+  return root.contains(n);
+}
+
 var Portal = forwardRef(function (props, ref) {
   var didUpdate = props.didUpdate,
       getContainer = props.getContainer,
@@ -13962,7 +14470,7 @@ var Portal = forwardRef(function (props, ref) {
 
   var initRef = useRef(false);
 
-  if (!initRef.current && canUseDom$1()) {
+  if (!initRef.current && canUseDom()) {
     containerRef.current = getContainer();
     initRef.current = true;
   } // [Legacy] Used by `rc-trigger`
@@ -14009,20 +14517,6 @@ function getAlignPopupClassName(builtinPlacements, prefixCls, align, isAlignPoin
 
   return '';
 }
-
-var isMobile = (function () {
-  if (typeof navigator === 'undefined' || typeof window === 'undefined') {
-    return false;
-  }
-
-  var agent = navigator.userAgent || navigator.vendor || window.opera;
-
-  if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i.test(agent) || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw-(n|u)|c55\/|capi|ccwa|cdm-|cell|chtm|cldc|cmd-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc-s|devi|dica|dmob|do(c|p)o|ds(12|-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(-|_)|g1 u|g560|gene|gf-5|g-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd-(m|p|t)|hei-|hi(pt|ta)|hp( i|ip)|hs-c|ht(c(-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i-(20|go|ma)|i230|iac( |-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|-[a-w])|libw|lynx|m1-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|-([1-8]|c))|phil|pire|pl(ay|uc)|pn-2|po(ck|rt|se)|prox|psio|pt-g|qa-a|qc(07|12|21|32|60|-[2-7]|i-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h-|oo|p-)|sdk\/|se(c(-|0|1)|47|mc|nd|ri)|sgh-|shar|sie(-|m)|sk-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h-|v-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl-|tdg-|tel(i|m)|tim-|t-mo|to(pl|sh)|ts(70|m-|m3|m5)|tx-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas-|your|zeto|zte-/i.test(agent.substr(0, 4))) {
-    return true;
-  }
-
-  return false;
-});
 
 function getMotion(_ref) {
   var prefixCls = _ref.prefixCls,
@@ -14075,7 +14569,7 @@ function Mask(props) {
     }));
   }
 
-  return /*#__PURE__*/React.createElement(CSSMotion$1, _extends$1({}, motion, {
+  return /*#__PURE__*/React.createElement(CSSMotion, _extends$1({}, motion, {
     visible: visible,
     removeOnLeave: true
   }), function (_ref) {
@@ -14207,7 +14701,7 @@ function getVendorPrefix() {
   return vendorPrefix;
 }
 
-function getTransitionName$1() {
+function getTransitionName() {
   return getVendorPrefix() ? "".concat(getVendorPrefix(), "TransitionProperty") : 'transitionProperty';
 }
 
@@ -14215,7 +14709,7 @@ function getTransformName() {
   return getVendorPrefix() ? "".concat(getVendorPrefix(), "Transform") : 'transform';
 }
 function setTransitionProperty(node, value) {
-  var name = getTransitionName$1();
+  var name = getTransitionName();
 
   if (name) {
     node.style[name] = value;
@@ -14239,7 +14733,7 @@ function setTransform(node, value) {
 }
 
 function getTransitionProperty(node) {
-  return node.style.transitionProperty || node.style[getTransitionName$1()];
+  return node.style.transitionProperty || node.style[getTransitionName()];
 }
 function getTransformXY(node) {
   var style = window.getComputedStyle(node, null);
@@ -15713,12 +16207,12 @@ var useVisibleStatus = (function (visible, doMeasure) {
   }
 
   function cancelRaf() {
-    wrapperRaf$2.cancel(rafRef.current);
+    wrapperRaf$1.cancel(rafRef.current);
   }
 
   function goNextStatus(callback) {
     cancelRaf();
-    rafRef.current = wrapperRaf$2(function () {
+    rafRef.current = wrapperRaf$1(function () {
       // Only align should be manually trigger
       setStatus(function (prev) {
         switch (status) {
@@ -15748,7 +16242,7 @@ var useVisibleStatus = (function (visible, doMeasure) {
     }
 
     if (status) {
-      rafRef.current = wrapperRaf$2( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee() {
+      rafRef.current = wrapperRaf$1( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee() {
         var index, nextStatus;
         return regenerator.wrap(function _callee$(_context) {
           while (1) {
@@ -15960,7 +16454,7 @@ var PopupInner = /*#__PURE__*/React.forwardRef(function (props, ref) {
     }, children);
   }
 
-  return /*#__PURE__*/React.createElement(CSSMotion$1, _extends$1({
+  return /*#__PURE__*/React.createElement(CSSMotion, _extends$1({
     visible: visible,
     ref: elementRef,
     leavedClassName: "".concat(prefixCls, "-hidden")
@@ -16033,7 +16527,7 @@ var MobilePopupInner = /*#__PURE__*/React.forwardRef(function (props, ref) {
     childNode = popupRender(childNode);
   }
 
-  return /*#__PURE__*/React.createElement(CSSMotion$1, _extends$1({
+  return /*#__PURE__*/React.createElement(CSSMotion, _extends$1({
     visible: visible,
     ref: elementRef,
     removeOnLeave: true
@@ -16381,7 +16875,7 @@ function generateTrigger(PortalComponent) {
       };
 
       _this.attachParent = function (popupContainer) {
-        wrapperRaf$2.cancel(_this.attachId);
+        wrapperRaf$1.cancel(_this.attachId);
         var _this$props3 = _this.props,
             getPopupContainer = _this$props3.getPopupContainer,
             getDocument = _this$props3.getDocument;
@@ -16403,7 +16897,7 @@ function generateTrigger(PortalComponent) {
           mountNode.appendChild(popupContainer);
         } else {
           // Retry after frame render in case parent not ready
-          _this.attachId = wrapperRaf$2(function () {
+          _this.attachId = wrapperRaf$1(function () {
             _this.attachParent(popupContainer);
           });
         }
@@ -16512,7 +17006,7 @@ function generateTrigger(PortalComponent) {
         this.clearDelayTimer();
         this.clearOutsideHandler();
         clearTimeout(this.mouseDownTimeout);
-        wrapperRaf$2.cancel(this.attachId);
+        wrapperRaf$1.cancel(this.attachId);
       }
     }, {
       key: "getPopupDomNode",
@@ -16863,608 +17357,6 @@ function cloneElement(element, props) {
   return replaceElement(element, element, props);
 }
 
-// Event wrapper. Copy from react source code
-
-function makePrefixMap(styleProp, eventName) {
-  var prefixes = {};
-  prefixes[styleProp.toLowerCase()] = eventName.toLowerCase();
-  prefixes["Webkit".concat(styleProp)] = "webkit".concat(eventName);
-  prefixes["Moz".concat(styleProp)] = "moz".concat(eventName);
-  prefixes["ms".concat(styleProp)] = "MS".concat(eventName);
-  prefixes["O".concat(styleProp)] = "o".concat(eventName.toLowerCase());
-  return prefixes;
-}
-
-function getVendorPrefixes(domSupport, win) {
-  var prefixes = {
-    animationend: makePrefixMap('Animation', 'AnimationEnd'),
-    transitionend: makePrefixMap('Transition', 'TransitionEnd')
-  };
-
-  if (domSupport) {
-    if (!('AnimationEvent' in win)) {
-      delete prefixes.animationend.animation;
-    }
-
-    if (!('TransitionEvent' in win)) {
-      delete prefixes.transitionend.transition;
-    }
-  }
-
-  return prefixes;
-}
-var vendorPrefixes = getVendorPrefixes(canUseDom(), typeof window !== 'undefined' ? window : {});
-var style = {};
-
-if (canUseDom()) {
-  var _document$createEleme = document.createElement('div');
-
-  style = _document$createEleme.style;
-}
-
-var prefixedEventNames = {};
-function getVendorPrefixedEventName(eventName) {
-  if (prefixedEventNames[eventName]) {
-    return prefixedEventNames[eventName];
-  }
-
-  var prefixMap = vendorPrefixes[eventName];
-
-  if (prefixMap) {
-    var stylePropList = Object.keys(prefixMap);
-    var len = stylePropList.length;
-
-    for (var i = 0; i < len; i += 1) {
-      var styleProp = stylePropList[i];
-
-      if (Object.prototype.hasOwnProperty.call(prefixMap, styleProp) && styleProp in style) {
-        prefixedEventNames[eventName] = prefixMap[styleProp];
-        return prefixedEventNames[eventName];
-      }
-    }
-  }
-
-  return '';
-}
-var internalAnimationEndName = getVendorPrefixedEventName('animationend');
-var internalTransitionEndName = getVendorPrefixedEventName('transitionend');
-var supportTransition = !!(internalAnimationEndName && internalTransitionEndName);
-var animationEndName = internalAnimationEndName || 'animationend';
-var transitionEndName = internalTransitionEndName || 'transitionend';
-function getTransitionName(transitionName, transitionType) {
-  if (!transitionName) return null;
-
-  if (_typeof$1(transitionName) === 'object') {
-    var type = transitionType.replace(/-\w/g, function (match) {
-      return match[1].toUpperCase();
-    });
-    return transitionName[type];
-  }
-
-  return "".concat(transitionName, "-").concat(transitionType);
-}
-
-var STATUS_NONE = 'none';
-var STATUS_APPEAR = 'appear';
-var STATUS_ENTER = 'enter';
-var STATUS_LEAVE = 'leave';
-var STEP_NONE = 'none';
-var STEP_PREPARE = 'prepare';
-var STEP_START = 'start';
-var STEP_ACTIVE = 'active';
-var STEP_ACTIVATED = 'end';
-
-function useMountStatus(defaultValue) {
-  var destroyRef = useRef(false);
-
-  var _useState = useState(defaultValue),
-      _useState2 = _slicedToArray(_useState, 2),
-      val = _useState2[0],
-      setVal = _useState2[1];
-
-  function setValue(next) {
-    if (!destroyRef.current) {
-      setVal(next);
-    }
-  }
-
-  useEffect(function () {
-    return function () {
-      destroyRef.current = true;
-    };
-  }, []);
-  return [val, setValue];
-}
-
-var useIsomorphicLayoutEffect = canUseDom() ? useLayoutEffect : useEffect;
-
-var useNextFrame = (function () {
-  var nextFrameRef = React.useRef(null);
-
-  function cancelNextFrame() {
-    wrapperRaf$1.cancel(nextFrameRef.current);
-  }
-
-  function nextFrame(callback) {
-    var delay = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2;
-    cancelNextFrame();
-    var nextFrameId = wrapperRaf$1(function () {
-      if (delay <= 1) {
-        callback({
-          isCanceled: function isCanceled() {
-            return nextFrameId !== nextFrameRef.current;
-          }
-        });
-      } else {
-        nextFrame(callback, delay - 1);
-      }
-    });
-    nextFrameRef.current = nextFrameId;
-  }
-
-  React.useEffect(function () {
-    return function () {
-      cancelNextFrame();
-    };
-  }, []);
-  return [nextFrame, cancelNextFrame];
-});
-
-var STEP_QUEUE = [STEP_PREPARE, STEP_START, STEP_ACTIVE, STEP_ACTIVATED];
-/** Skip current step */
-
-var SkipStep = false;
-/** Current step should be update in */
-
-var DoStep = true;
-function isActive(step) {
-  return step === STEP_ACTIVE || step === STEP_ACTIVATED;
-}
-var useStepQueue = (function (status, callback) {
-  var _useState = useMountStatus(STEP_NONE),
-      _useState2 = _slicedToArray(_useState, 2),
-      step = _useState2[0],
-      setStep = _useState2[1];
-
-  var _useNextFrame = useNextFrame(),
-      _useNextFrame2 = _slicedToArray(_useNextFrame, 2),
-      nextFrame = _useNextFrame2[0],
-      cancelNextFrame = _useNextFrame2[1];
-
-  function startQueue() {
-    setStep(STEP_PREPARE);
-  }
-
-  useIsomorphicLayoutEffect(function () {
-    if (step !== STEP_NONE && step !== STEP_ACTIVATED) {
-      var index = STEP_QUEUE.indexOf(step);
-      var nextStep = STEP_QUEUE[index + 1];
-      var result = callback(step);
-
-      if (result === SkipStep) {
-        // Skip when no needed
-        setStep(nextStep);
-      } else {
-        // Do as frame for step update
-        nextFrame(function (info) {
-          function doNext() {
-            // Skip since current queue is ood
-            if (info.isCanceled()) return;
-            setStep(nextStep);
-          }
-
-          if (result === true) {
-            doNext();
-          } else {
-            // Only promise should be async
-            Promise.resolve(result).then(doNext);
-          }
-        });
-      }
-    }
-  }, [status, step]);
-  React.useEffect(function () {
-    return function () {
-      cancelNextFrame();
-    };
-  }, []);
-  return [startQueue, step];
-});
-
-var useDomMotionEvents = (function (callback) {
-  var cacheElementRef = useRef(); // Cache callback
-
-  var callbackRef = useRef(callback);
-  callbackRef.current = callback; // Internal motion event handler
-
-  var onInternalMotionEnd = React.useCallback(function (event) {
-    callbackRef.current(event);
-  }, []); // Remove events
-
-  function removeMotionEvents(element) {
-    if (element) {
-      element.removeEventListener(transitionEndName, onInternalMotionEnd);
-      element.removeEventListener(animationEndName, onInternalMotionEnd);
-    }
-  } // Patch events
-
-
-  function patchMotionEvents(element) {
-    if (cacheElementRef.current && cacheElementRef.current !== element) {
-      removeMotionEvents(cacheElementRef.current);
-    }
-
-    if (element && element !== cacheElementRef.current) {
-      element.addEventListener(transitionEndName, onInternalMotionEnd);
-      element.addEventListener(animationEndName, onInternalMotionEnd); // Save as cache in case dom removed trigger by `motionDeadline`
-
-      cacheElementRef.current = element;
-    }
-  } // Clean up when removed
-
-
-  React.useEffect(function () {
-    return function () {
-      removeMotionEvents(cacheElementRef.current);
-    };
-  }, []);
-  return [patchMotionEvents, removeMotionEvents];
-});
-
-function useStatus(supportMotion, visible, getElement, _ref) {
-  var _ref$motionEnter = _ref.motionEnter,
-      motionEnter = _ref$motionEnter === void 0 ? true : _ref$motionEnter,
-      _ref$motionAppear = _ref.motionAppear,
-      motionAppear = _ref$motionAppear === void 0 ? true : _ref$motionAppear,
-      _ref$motionLeave = _ref.motionLeave,
-      motionLeave = _ref$motionLeave === void 0 ? true : _ref$motionLeave,
-      motionDeadline = _ref.motionDeadline,
-      motionLeaveImmediately = _ref.motionLeaveImmediately,
-      onAppearPrepare = _ref.onAppearPrepare,
-      onEnterPrepare = _ref.onEnterPrepare,
-      onLeavePrepare = _ref.onLeavePrepare,
-      onAppearStart = _ref.onAppearStart,
-      onEnterStart = _ref.onEnterStart,
-      onLeaveStart = _ref.onLeaveStart,
-      onAppearActive = _ref.onAppearActive,
-      onEnterActive = _ref.onEnterActive,
-      onLeaveActive = _ref.onLeaveActive,
-      onAppearEnd = _ref.onAppearEnd,
-      onEnterEnd = _ref.onEnterEnd,
-      onLeaveEnd = _ref.onLeaveEnd,
-      onVisibleChanged = _ref.onVisibleChanged;
-
-  // Used for outer render usage to avoid `visible: false & status: none` to render nothing
-  var _useState = useMountStatus(),
-      _useState2 = _slicedToArray(_useState, 2),
-      asyncVisible = _useState2[0],
-      setAsyncVisible = _useState2[1];
-
-  var _useState3 = useMountStatus(STATUS_NONE),
-      _useState4 = _slicedToArray(_useState3, 2),
-      status = _useState4[0],
-      setStatus = _useState4[1];
-
-  var _useState5 = useMountStatus(null),
-      _useState6 = _slicedToArray(_useState5, 2),
-      style = _useState6[0],
-      setStyle = _useState6[1];
-
-  var mountedRef = useRef(false);
-  var deadlineRef = useRef(null);
-  var destroyedRef = useRef(false); // =========================== Dom Node ===========================
-
-  var cacheElementRef = useRef(null);
-
-  function getDomElement() {
-    var element = getElement();
-    return element || cacheElementRef.current;
-  } // ========================== Motion End ==========================
-
-
-  var activeRef = useRef(false);
-
-  function onInternalMotionEnd(event) {
-    var element = getDomElement();
-
-    if (event && !event.deadline && event.target !== element) {
-      // event exists
-      // not initiated by deadline
-      // transitionEnd not fired by inner elements
-      return;
-    }
-
-    var canEnd;
-
-    if (status === STATUS_APPEAR && activeRef.current) {
-      canEnd = onAppearEnd === null || onAppearEnd === void 0 ? void 0 : onAppearEnd(element, event);
-    } else if (status === STATUS_ENTER && activeRef.current) {
-      canEnd = onEnterEnd === null || onEnterEnd === void 0 ? void 0 : onEnterEnd(element, event);
-    } else if (status === STATUS_LEAVE && activeRef.current) {
-      canEnd = onLeaveEnd === null || onLeaveEnd === void 0 ? void 0 : onLeaveEnd(element, event);
-    } // Only update status when `canEnd` and not destroyed
-
-
-    if (canEnd !== false && !destroyedRef.current) {
-      setStatus(STATUS_NONE);
-      setStyle(null);
-    }
-  }
-
-  var _useDomMotionEvents = useDomMotionEvents(onInternalMotionEnd),
-      _useDomMotionEvents2 = _slicedToArray(_useDomMotionEvents, 1),
-      patchMotionEvents = _useDomMotionEvents2[0]; // ============================= Step =============================
-
-
-  var eventHandlers = React.useMemo(function () {
-    var _ref2, _ref3, _ref4;
-
-    switch (status) {
-      case STATUS_APPEAR:
-        return _ref2 = {}, _defineProperty$1(_ref2, STEP_PREPARE, onAppearPrepare), _defineProperty$1(_ref2, STEP_START, onAppearStart), _defineProperty$1(_ref2, STEP_ACTIVE, onAppearActive), _ref2;
-
-      case STATUS_ENTER:
-        return _ref3 = {}, _defineProperty$1(_ref3, STEP_PREPARE, onEnterPrepare), _defineProperty$1(_ref3, STEP_START, onEnterStart), _defineProperty$1(_ref3, STEP_ACTIVE, onEnterActive), _ref3;
-
-      case STATUS_LEAVE:
-        return _ref4 = {}, _defineProperty$1(_ref4, STEP_PREPARE, onLeavePrepare), _defineProperty$1(_ref4, STEP_START, onLeaveStart), _defineProperty$1(_ref4, STEP_ACTIVE, onLeaveActive), _ref4;
-
-      default:
-        return {};
-    }
-  }, [status]);
-
-  var _useStepQueue = useStepQueue(status, function (newStep) {
-    // Only prepare step can be skip
-    if (newStep === STEP_PREPARE) {
-      var onPrepare = eventHandlers[STEP_PREPARE];
-
-      if (!onPrepare) {
-        return SkipStep;
-      }
-
-      return onPrepare(getDomElement());
-    } // Rest step is sync update
-
-
-    // Rest step is sync update
-    if (step in eventHandlers) {
-      var _eventHandlers$step;
-
-      setStyle(((_eventHandlers$step = eventHandlers[step]) === null || _eventHandlers$step === void 0 ? void 0 : _eventHandlers$step.call(eventHandlers, getDomElement(), null)) || null);
-    }
-
-    if (step === STEP_ACTIVE) {
-      // Patch events when motion needed
-      patchMotionEvents(getDomElement());
-
-      if (motionDeadline > 0) {
-        clearTimeout(deadlineRef.current);
-        deadlineRef.current = setTimeout(function () {
-          onInternalMotionEnd({
-            deadline: true
-          });
-        }, motionDeadline);
-      }
-    }
-
-    return DoStep;
-  }),
-      _useStepQueue2 = _slicedToArray(_useStepQueue, 2),
-      startStep = _useStepQueue2[0],
-      step = _useStepQueue2[1];
-
-  var active = isActive(step);
-  activeRef.current = active; // ============================ Status ============================
-  // Update with new status
-
-  useIsomorphicLayoutEffect(function () {
-    setAsyncVisible(visible);
-    var isMounted = mountedRef.current;
-    mountedRef.current = true;
-
-    if (!supportMotion) {
-      return;
-    }
-
-    var nextStatus; // Appear
-
-    if (!isMounted && visible && motionAppear) {
-      nextStatus = STATUS_APPEAR;
-    } // Enter
-
-
-    if (isMounted && visible && motionEnter) {
-      nextStatus = STATUS_ENTER;
-    } // Leave
-
-
-    if (isMounted && !visible && motionLeave || !isMounted && motionLeaveImmediately && !visible && motionLeave) {
-      nextStatus = STATUS_LEAVE;
-    } // Update to next status
-
-
-    if (nextStatus) {
-      setStatus(nextStatus);
-      startStep();
-    }
-  }, [visible]); // ============================ Effect ============================
-  // Reset when motion changed
-
-  useEffect(function () {
-    if ( // Cancel appear
-    status === STATUS_APPEAR && !motionAppear || // Cancel enter
-    status === STATUS_ENTER && !motionEnter || // Cancel leave
-    status === STATUS_LEAVE && !motionLeave) {
-      setStatus(STATUS_NONE);
-    }
-  }, [motionAppear, motionEnter, motionLeave]);
-  useEffect(function () {
-    return function () {
-      clearTimeout(deadlineRef.current);
-      destroyedRef.current = true;
-    };
-  }, []); // Trigger `onVisibleChanged`
-
-  useEffect(function () {
-    if (asyncVisible !== undefined && status === STATUS_NONE) {
-      onVisibleChanged === null || onVisibleChanged === void 0 ? void 0 : onVisibleChanged(asyncVisible);
-    }
-  }, [asyncVisible, status]); // ============================ Styles ============================
-
-  var mergedStyle = style;
-
-  if (eventHandlers[STEP_PREPARE] && step === STEP_START) {
-    mergedStyle = _objectSpread2$1({
-      transition: 'none'
-    }, mergedStyle);
-  }
-
-  return [status, step, mergedStyle, asyncVisible !== null && asyncVisible !== void 0 ? asyncVisible : visible];
-}
-
-var DomWrapper = /*#__PURE__*/function (_React$Component) {
-  _inherits(DomWrapper, _React$Component);
-
-  var _super = _createSuper(DomWrapper);
-
-  function DomWrapper() {
-    _classCallCheck(this, DomWrapper);
-
-    return _super.apply(this, arguments);
-  }
-
-  _createClass(DomWrapper, [{
-    key: "render",
-    value: function render() {
-      return this.props.children;
-    }
-  }]);
-
-  return DomWrapper;
-}(React.Component);
-
-/**
- * `transitionSupport` is used for none transition test case.
- * Default we use browser transition event support check.
- */
-
-function genCSSMotion(config) {
-  var transitionSupport = config;
-
-  if (_typeof$1(config) === 'object') {
-    transitionSupport = config.transitionSupport;
-  }
-
-  function isSupportTransition(props) {
-    return !!(props.motionName && transitionSupport);
-  }
-
-  var CSSMotion = /*#__PURE__*/React.forwardRef(function (props, ref) {
-    var _props$visible = props.visible,
-        visible = _props$visible === void 0 ? true : _props$visible,
-        _props$removeOnLeave = props.removeOnLeave,
-        removeOnLeave = _props$removeOnLeave === void 0 ? true : _props$removeOnLeave,
-        forceRender = props.forceRender,
-        children = props.children,
-        motionName = props.motionName,
-        leavedClassName = props.leavedClassName,
-        eventProps = props.eventProps;
-    var supportMotion = isSupportTransition(props); // Ref to the react node, it may be a HTMLElement
-
-    var nodeRef = useRef(); // Ref to the dom wrapper in case ref can not pass to HTMLElement
-
-    var wrapperNodeRef = useRef();
-
-    function getDomElement() {
-      try {
-        // Here we're avoiding call for findDOMNode since it's deprecated
-        // in strict mode. We're calling it only when node ref is not
-        // an instance of DOM HTMLElement. Otherwise use
-        // findDOMNode as a final resort
-        return nodeRef.current instanceof HTMLElement ? nodeRef.current : findDOMNode$1(wrapperNodeRef.current);
-      } catch (e) {
-        // Only happen when `motionDeadline` trigger but element removed.
-        return null;
-      }
-    }
-
-    var _useStatus = useStatus(supportMotion, visible, getDomElement, props),
-        _useStatus2 = _slicedToArray(_useStatus, 4),
-        status = _useStatus2[0],
-        statusStep = _useStatus2[1],
-        statusStyle = _useStatus2[2],
-        mergedVisible = _useStatus2[3]; // Record whether content has rendered
-    // Will return null for un-rendered even when `removeOnLeave={false}`
-
-
-    var renderedRef = React.useRef(mergedVisible);
-
-    if (mergedVisible) {
-      renderedRef.current = true;
-    } // ====================== Refs ======================
-
-
-    var setNodeRef = React.useCallback(function (node) {
-      nodeRef.current = node;
-      fillRef$1(ref, node);
-    }, []); // ===================== Render =====================
-
-    var motionChildren;
-
-    var mergedProps = _objectSpread2$1(_objectSpread2$1({}, eventProps), {}, {
-      visible: visible
-    });
-
-    if (!children) {
-      // No children
-      motionChildren = null;
-    } else if (status === STATUS_NONE || !isSupportTransition(props)) {
-      // Stable children
-      if (mergedVisible) {
-        motionChildren = children(_objectSpread2$1({}, mergedProps), setNodeRef);
-      } else if (!removeOnLeave && renderedRef.current) {
-        motionChildren = children(_objectSpread2$1(_objectSpread2$1({}, mergedProps), {}, {
-          className: leavedClassName
-        }), setNodeRef);
-      } else if (forceRender) {
-        motionChildren = children(_objectSpread2$1(_objectSpread2$1({}, mergedProps), {}, {
-          style: {
-            display: 'none'
-          }
-        }), setNodeRef);
-      } else {
-        motionChildren = null;
-      }
-    } else {
-      var _classNames;
-
-      // In motion
-      var statusSuffix;
-
-      if (statusStep === STEP_PREPARE) {
-        statusSuffix = 'prepare';
-      } else if (isActive(statusStep)) {
-        statusSuffix = 'active';
-      } else if (statusStep === STEP_START) {
-        statusSuffix = 'start';
-      }
-
-      motionChildren = children(_objectSpread2$1(_objectSpread2$1({}, mergedProps), {}, {
-        className: classnames(getTransitionName(motionName, status), (_classNames = {}, _defineProperty$1(_classNames, getTransitionName(motionName, "".concat(status, "-").concat(statusSuffix)), statusSuffix), _defineProperty$1(_classNames, motionName, typeof motionName === 'string'), _classNames)),
-        style: statusStyle
-      }), setNodeRef);
-    }
-
-    return /*#__PURE__*/React.createElement(DomWrapper, {
-      ref: wrapperNodeRef
-    }, motionChildren);
-  });
-  CSSMotion.displayName = 'CSSMotion';
-  return CSSMotion;
-}
-var CSSMotion = genCSSMotion(supportTransition);
-
 // https://stackoverflow.com/questions/46176165/ways-to-get-string-literal-type-of-array-values-without-enum-overhead
 var tuple$1 = function tuple() {
   for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
@@ -17478,11 +17370,11 @@ var PresetStatusColorTypes = tuple$1('success', 'processing', 'error', 'default'
 
 var PresetColorTypes = tuple$1('pink', 'red', 'yellow', 'orange', 'cyan', 'green', 'blue', 'purple', 'geekblue', 'magenta', 'volcano', 'gold', 'lime');
 
-var UnreachableException = /*#__PURE__*/_createClass(function UnreachableException(value) {
+var UnreachableException = function UnreachableException(value) {
   _classCallCheck(this, UnreachableException);
 
-  this.error = new Error("unreachable case: ".concat(JSON.stringify(value)));
-});
+  return new Error("unreachable case: ".concat(JSON.stringify(value)));
+};
 
 var __rest$5 = undefined && undefined.__rest || function (s, e) {
   var t = {};
@@ -17529,7 +17421,7 @@ var ButtonGroup = function ButtonGroup(props) {
 
       default:
         // eslint-disable-next-line no-console
-        console.warn(new UnreachableException(size).error);
+        console.warn(new UnreachableException(size));
     }
 
     var classes = classnames(prefixCls, (_classNames = {}, _defineProperty$1(_classNames, "".concat(prefixCls, "-").concat(sizeCls), sizeCls), _defineProperty$1(_classNames, "".concat(prefixCls, "-rtl"), direction === 'rtl'), _classNames), className);
@@ -17609,14 +17501,11 @@ var Wave = /*#__PURE__*/function (_React$Component) {
     _this.onClick = function (node, waveColor) {
       var _a, _b;
 
-      var _this$props = _this.props,
-          insertExtraNode = _this$props.insertExtraNode,
-          disabled = _this$props.disabled;
-
-      if (disabled || !node || isHidden(node) || node.className.indexOf('-leave') >= 0) {
+      if (!node || isHidden(node) || node.className.indexOf('-leave') >= 0) {
         return;
       }
 
+      var insertExtraNode = _this.props.insertExtraNode;
       _this.extraNode = document.createElement('div');
 
       var _assertThisInitialize = _assertThisInitialized(_this),
@@ -17714,8 +17603,8 @@ var Wave = /*#__PURE__*/function (_React$Component) {
       if (! /*#__PURE__*/React.isValidElement(children)) return children;
       var ref = _this.containerRef;
 
-      if (supportRef$1(children)) {
-        ref = composeRef$1(children.ref, _this.containerRef);
+      if (supportRef(children)) {
+        ref = composeRef(children.ref, _this.containerRef);
       }
 
       return cloneElement(children, {
@@ -17867,10 +17756,6 @@ function isString(str) {
 
 function isUnborderedButtonType(type) {
   return type === 'text' || type === 'link';
-}
-
-function isReactFragment(node) {
-  return /*#__PURE__*/React.isValidElement(node) && node.type === React.Fragment;
 } // Insert one space between two chinese characters automatically.
 
 
@@ -17889,10 +17774,10 @@ function insertSpace(child, needInserted) {
   }
 
   if (typeof child === 'string') {
-    return isTwoCNChar(child) ? /*#__PURE__*/React.createElement("span", null, child.split('').join(SPACE)) : /*#__PURE__*/React.createElement("span", null, child);
-  }
+    if (isTwoCNChar(child)) {
+      child = child.split('').join(SPACE);
+    }
 
-  if (isReactFragment(child)) {
     return /*#__PURE__*/React.createElement("span", null, child);
   }
 
@@ -17924,7 +17809,7 @@ function spaceChildren(children, needInserted) {
 }
 
 tuple$1('default', 'primary', 'ghost', 'dashed', 'link', 'text');
-tuple$1('default', 'circle', 'round');
+tuple$1('circle', 'round');
 tuple$1('submit', 'button', 'reset');
 
 var InternalButton = function InternalButton(props, ref) {
@@ -17933,11 +17818,9 @@ var InternalButton = function InternalButton(props, ref) {
   var _props$loading = props.loading,
       loading = _props$loading === void 0 ? false : _props$loading,
       customizePrefixCls = props.prefixCls,
-      _props$type = props.type,
-      type = _props$type === void 0 ? 'default' : _props$type,
+      type = props.type,
       danger = props.danger,
-      _props$shape = props.shape,
-      shape = _props$shape === void 0 ? 'default' : _props$shape,
+      shape = props.shape,
       customizeSize = props.size,
       className = props.className,
       children = props.children,
@@ -17968,6 +17851,7 @@ var InternalButton = function InternalButton(props, ref) {
       direction = _React$useContext.direction;
 
   var buttonRef = ref || /*#__PURE__*/React.createRef();
+  var delayTimeoutRef = React.useRef();
 
   var isNeedInserted = function isNeedInserted() {
     return React.Children.count(children) === 1 && !icon && !isUnborderedButtonType(type);
@@ -17991,38 +17875,33 @@ var InternalButton = function InternalButton(props, ref) {
   }; // =============== Update Loading ===============
 
 
-  var loadingOrDelay = _typeof$1(loading) === 'object' && loading.delay ? loading.delay || true : !!loading;
+  var loadingOrDelay;
+
+  if (_typeof$1(loading) === 'object' && loading.delay) {
+    loadingOrDelay = loading.delay || true;
+  } else {
+    loadingOrDelay = !!loading;
+  }
+
   React.useEffect(function () {
-    var delayTimer = null;
+    clearTimeout(delayTimeoutRef.current);
 
     if (typeof loadingOrDelay === 'number') {
-      delayTimer = window.setTimeout(function () {
-        delayTimer = null;
+      delayTimeoutRef.current = window.setTimeout(function () {
         setLoading(loadingOrDelay);
       }, loadingOrDelay);
     } else {
       setLoading(loadingOrDelay);
     }
-
-    return function () {
-      if (delayTimer) {
-        // in order to not perform a React state update on an unmounted component
-        // and clear timer after 'loadingOrDelay' updated.
-        window.clearTimeout(delayTimer);
-        delayTimer = null;
-      }
-    };
   }, [loadingOrDelay]);
   React.useEffect(fixTwoCNChar, [buttonRef]);
 
   var handleClick = function handleClick(e) {
     var _a;
 
-    var onClick = props.onClick,
-        disabled = props.disabled; // https://github.com/ant-design/ant-design/issues/30207
+    var onClick = props.onClick;
 
-    if (innerLoading || disabled) {
-      e.preventDefault();
+    if (innerLoading) {
       return;
     }
 
@@ -18032,16 +17911,23 @@ var InternalButton = function InternalButton(props, ref) {
   devWarning(!(typeof icon === 'string' && icon.length > 2), 'Button', "`icon` is using ReactNode instead of string naming in v4. Please check `".concat(icon, "` at https://ant.design/components/icon"));
   devWarning(!(ghost && isUnborderedButtonType(type)), 'Button', "`link` or `text` button can't be a `ghost` button.");
   var prefixCls = getPrefixCls('btn', customizePrefixCls);
-  var autoInsertSpace = autoInsertSpaceInButton !== false;
-  var sizeClassNameMap = {
-    large: 'lg',
-    small: 'sm',
-    middle: undefined
-  };
-  var sizeFullname = customizeSize || size;
-  var sizeCls = sizeFullname ? sizeClassNameMap[sizeFullname] || '' : '';
+  var autoInsertSpace = autoInsertSpaceInButton !== false; // large => lg
+  // small => sm
+
+  var sizeCls = '';
+
+  switch (customizeSize || size) {
+    case 'large':
+      sizeCls = 'lg';
+      break;
+
+    case 'small':
+      sizeCls = 'sm';
+      break;
+  }
+
   var iconType = innerLoading ? 'loading' : icon;
-  var classes = classnames(prefixCls, (_classNames = {}, _defineProperty$1(_classNames, "".concat(prefixCls, "-").concat(shape), shape !== 'default' && shape), _defineProperty$1(_classNames, "".concat(prefixCls, "-").concat(type), type), _defineProperty$1(_classNames, "".concat(prefixCls, "-").concat(sizeCls), sizeCls), _defineProperty$1(_classNames, "".concat(prefixCls, "-icon-only"), !children && children !== 0 && !!iconType), _defineProperty$1(_classNames, "".concat(prefixCls, "-background-ghost"), ghost && !isUnborderedButtonType(type)), _defineProperty$1(_classNames, "".concat(prefixCls, "-loading"), innerLoading), _defineProperty$1(_classNames, "".concat(prefixCls, "-two-chinese-chars"), hasTwoCNChar && autoInsertSpace), _defineProperty$1(_classNames, "".concat(prefixCls, "-block"), block), _defineProperty$1(_classNames, "".concat(prefixCls, "-dangerous"), !!danger), _defineProperty$1(_classNames, "".concat(prefixCls, "-rtl"), direction === 'rtl'), _classNames), className);
+  var classes = classnames(prefixCls, (_classNames = {}, _defineProperty$1(_classNames, "".concat(prefixCls, "-").concat(type), type), _defineProperty$1(_classNames, "".concat(prefixCls, "-").concat(shape), shape), _defineProperty$1(_classNames, "".concat(prefixCls, "-").concat(sizeCls), sizeCls), _defineProperty$1(_classNames, "".concat(prefixCls, "-icon-only"), !children && children !== 0 && !!iconType), _defineProperty$1(_classNames, "".concat(prefixCls, "-background-ghost"), ghost && !isUnborderedButtonType(type)), _defineProperty$1(_classNames, "".concat(prefixCls, "-loading"), innerLoading), _defineProperty$1(_classNames, "".concat(prefixCls, "-two-chinese-chars"), hasTwoCNChar && autoInsertSpace), _defineProperty$1(_classNames, "".concat(prefixCls, "-block"), block), _defineProperty$1(_classNames, "".concat(prefixCls, "-dangerous"), !!danger), _defineProperty$1(_classNames, "".concat(prefixCls, "-rtl"), direction === 'rtl'), _classNames), className);
   var iconNode = icon && !innerLoading ? icon : /*#__PURE__*/React.createElement(LoadingIcon, {
     existIcon: !!icon,
     prefixCls: prefixCls,
@@ -18069,9 +17955,7 @@ var InternalButton = function InternalButton(props, ref) {
     return buttonNode;
   }
 
-  return /*#__PURE__*/React.createElement(Wave, {
-    disabled: !!innerLoading
-  }, buttonNode);
+  return /*#__PURE__*/React.createElement(Wave, null, buttonNode);
 };
 
 var Button = /*#__PURE__*/React.forwardRef(InternalButton);
@@ -23940,680 +23824,6 @@ var generateConfig = {
   }
 };
 
-function useControlledState(defaultStateValue, option) {
-  var _ref = option || {},
-      defaultValue = _ref.defaultValue,
-      value = _ref.value,
-      onChange = _ref.onChange,
-      postState = _ref.postState;
-
-  var _React$useState = React.useState(function () {
-    if (value !== undefined) {
-      return value;
-    }
-
-    if (defaultValue !== undefined) {
-      return typeof defaultValue === 'function' ? defaultValue() : defaultValue;
-    }
-
-    return typeof defaultStateValue === 'function' ? defaultStateValue() : defaultStateValue;
-  }),
-      _React$useState2 = _slicedToArray(_React$useState, 2),
-      innerValue = _React$useState2[0],
-      setInnerValue = _React$useState2[1];
-
-  var mergedValue = value !== undefined ? value : innerValue;
-
-  if (postState) {
-    mergedValue = postState(mergedValue);
-  }
-
-  function triggerChange(newValue) {
-    setInnerValue(newValue);
-
-    if (mergedValue !== newValue && onChange) {
-      onChange(newValue, mergedValue);
-    }
-  } // Effect of reset value to `undefined`
-
-
-  var firstRenderRef = React.useRef(true);
-  React.useEffect(function () {
-    if (firstRenderRef.current) {
-      firstRenderRef.current = false;
-      return;
-    }
-
-    if (value === undefined) {
-      setInnerValue(value);
-    }
-  }, [value]);
-  return [mergedValue, triggerChange];
-}
-
-/**
- * @ignore
- * some key-codes definition and utils from closure-library
- * @author yiminghe@gmail.com
- */
-var KeyCode = {
-  /**
-   * MAC_ENTER
-   */
-  MAC_ENTER: 3,
-
-  /**
-   * BACKSPACE
-   */
-  BACKSPACE: 8,
-
-  /**
-   * TAB
-   */
-  TAB: 9,
-
-  /**
-   * NUMLOCK on FF/Safari Mac
-   */
-  NUM_CENTER: 12,
-
-  /**
-   * ENTER
-   */
-  ENTER: 13,
-
-  /**
-   * SHIFT
-   */
-  SHIFT: 16,
-
-  /**
-   * CTRL
-   */
-  CTRL: 17,
-
-  /**
-   * ALT
-   */
-  ALT: 18,
-
-  /**
-   * PAUSE
-   */
-  PAUSE: 19,
-
-  /**
-   * CAPS_LOCK
-   */
-  CAPS_LOCK: 20,
-
-  /**
-   * ESC
-   */
-  ESC: 27,
-
-  /**
-   * SPACE
-   */
-  SPACE: 32,
-
-  /**
-   * PAGE_UP
-   */
-  PAGE_UP: 33,
-
-  /**
-   * PAGE_DOWN
-   */
-  PAGE_DOWN: 34,
-
-  /**
-   * END
-   */
-  END: 35,
-
-  /**
-   * HOME
-   */
-  HOME: 36,
-
-  /**
-   * LEFT
-   */
-  LEFT: 37,
-
-  /**
-   * UP
-   */
-  UP: 38,
-
-  /**
-   * RIGHT
-   */
-  RIGHT: 39,
-
-  /**
-   * DOWN
-   */
-  DOWN: 40,
-
-  /**
-   * PRINT_SCREEN
-   */
-  PRINT_SCREEN: 44,
-
-  /**
-   * INSERT
-   */
-  INSERT: 45,
-
-  /**
-   * DELETE
-   */
-  DELETE: 46,
-
-  /**
-   * ZERO
-   */
-  ZERO: 48,
-
-  /**
-   * ONE
-   */
-  ONE: 49,
-
-  /**
-   * TWO
-   */
-  TWO: 50,
-
-  /**
-   * THREE
-   */
-  THREE: 51,
-
-  /**
-   * FOUR
-   */
-  FOUR: 52,
-
-  /**
-   * FIVE
-   */
-  FIVE: 53,
-
-  /**
-   * SIX
-   */
-  SIX: 54,
-
-  /**
-   * SEVEN
-   */
-  SEVEN: 55,
-
-  /**
-   * EIGHT
-   */
-  EIGHT: 56,
-
-  /**
-   * NINE
-   */
-  NINE: 57,
-
-  /**
-   * QUESTION_MARK
-   */
-  QUESTION_MARK: 63,
-
-  /**
-   * A
-   */
-  A: 65,
-
-  /**
-   * B
-   */
-  B: 66,
-
-  /**
-   * C
-   */
-  C: 67,
-
-  /**
-   * D
-   */
-  D: 68,
-
-  /**
-   * E
-   */
-  E: 69,
-
-  /**
-   * F
-   */
-  F: 70,
-
-  /**
-   * G
-   */
-  G: 71,
-
-  /**
-   * H
-   */
-  H: 72,
-
-  /**
-   * I
-   */
-  I: 73,
-
-  /**
-   * J
-   */
-  J: 74,
-
-  /**
-   * K
-   */
-  K: 75,
-
-  /**
-   * L
-   */
-  L: 76,
-
-  /**
-   * M
-   */
-  M: 77,
-
-  /**
-   * N
-   */
-  N: 78,
-
-  /**
-   * O
-   */
-  O: 79,
-
-  /**
-   * P
-   */
-  P: 80,
-
-  /**
-   * Q
-   */
-  Q: 81,
-
-  /**
-   * R
-   */
-  R: 82,
-
-  /**
-   * S
-   */
-  S: 83,
-
-  /**
-   * T
-   */
-  T: 84,
-
-  /**
-   * U
-   */
-  U: 85,
-
-  /**
-   * V
-   */
-  V: 86,
-
-  /**
-   * W
-   */
-  W: 87,
-
-  /**
-   * X
-   */
-  X: 88,
-
-  /**
-   * Y
-   */
-  Y: 89,
-
-  /**
-   * Z
-   */
-  Z: 90,
-
-  /**
-   * META
-   */
-  META: 91,
-
-  /**
-   * WIN_KEY_RIGHT
-   */
-  WIN_KEY_RIGHT: 92,
-
-  /**
-   * CONTEXT_MENU
-   */
-  CONTEXT_MENU: 93,
-
-  /**
-   * NUM_ZERO
-   */
-  NUM_ZERO: 96,
-
-  /**
-   * NUM_ONE
-   */
-  NUM_ONE: 97,
-
-  /**
-   * NUM_TWO
-   */
-  NUM_TWO: 98,
-
-  /**
-   * NUM_THREE
-   */
-  NUM_THREE: 99,
-
-  /**
-   * NUM_FOUR
-   */
-  NUM_FOUR: 100,
-
-  /**
-   * NUM_FIVE
-   */
-  NUM_FIVE: 101,
-
-  /**
-   * NUM_SIX
-   */
-  NUM_SIX: 102,
-
-  /**
-   * NUM_SEVEN
-   */
-  NUM_SEVEN: 103,
-
-  /**
-   * NUM_EIGHT
-   */
-  NUM_EIGHT: 104,
-
-  /**
-   * NUM_NINE
-   */
-  NUM_NINE: 105,
-
-  /**
-   * NUM_MULTIPLY
-   */
-  NUM_MULTIPLY: 106,
-
-  /**
-   * NUM_PLUS
-   */
-  NUM_PLUS: 107,
-
-  /**
-   * NUM_MINUS
-   */
-  NUM_MINUS: 109,
-
-  /**
-   * NUM_PERIOD
-   */
-  NUM_PERIOD: 110,
-
-  /**
-   * NUM_DIVISION
-   */
-  NUM_DIVISION: 111,
-
-  /**
-   * F1
-   */
-  F1: 112,
-
-  /**
-   * F2
-   */
-  F2: 113,
-
-  /**
-   * F3
-   */
-  F3: 114,
-
-  /**
-   * F4
-   */
-  F4: 115,
-
-  /**
-   * F5
-   */
-  F5: 116,
-
-  /**
-   * F6
-   */
-  F6: 117,
-
-  /**
-   * F7
-   */
-  F7: 118,
-
-  /**
-   * F8
-   */
-  F8: 119,
-
-  /**
-   * F9
-   */
-  F9: 120,
-
-  /**
-   * F10
-   */
-  F10: 121,
-
-  /**
-   * F11
-   */
-  F11: 122,
-
-  /**
-   * F12
-   */
-  F12: 123,
-
-  /**
-   * NUMLOCK
-   */
-  NUMLOCK: 144,
-
-  /**
-   * SEMICOLON
-   */
-  SEMICOLON: 186,
-
-  /**
-   * DASH
-   */
-  DASH: 189,
-
-  /**
-   * EQUALS
-   */
-  EQUALS: 187,
-
-  /**
-   * COMMA
-   */
-  COMMA: 188,
-
-  /**
-   * PERIOD
-   */
-  PERIOD: 190,
-
-  /**
-   * SLASH
-   */
-  SLASH: 191,
-
-  /**
-   * APOSTROPHE
-   */
-  APOSTROPHE: 192,
-
-  /**
-   * SINGLE_QUOTE
-   */
-  SINGLE_QUOTE: 222,
-
-  /**
-   * OPEN_SQUARE_BRACKET
-   */
-  OPEN_SQUARE_BRACKET: 219,
-
-  /**
-   * BACKSLASH
-   */
-  BACKSLASH: 220,
-
-  /**
-   * CLOSE_SQUARE_BRACKET
-   */
-  CLOSE_SQUARE_BRACKET: 221,
-
-  /**
-   * WIN_KEY
-   */
-  WIN_KEY: 224,
-
-  /**
-   * MAC_FF_META
-   */
-  MAC_FF_META: 224,
-
-  /**
-   * WIN_IME
-   */
-  WIN_IME: 229,
-  // ======================== Function ========================
-
-  /**
-   * whether text and modified key is entered at the same time.
-   */
-  isTextModifyingKeyEvent: function isTextModifyingKeyEvent(e) {
-    var keyCode = e.keyCode;
-
-    if (e.altKey && !e.ctrlKey || e.metaKey || // Function keys don't generate text
-    keyCode >= KeyCode.F1 && keyCode <= KeyCode.F12) {
-      return false;
-    } // The following keys are quite harmless, even in combination with
-    // CTRL, ALT or SHIFT.
-
-
-    switch (keyCode) {
-      case KeyCode.ALT:
-      case KeyCode.CAPS_LOCK:
-      case KeyCode.CONTEXT_MENU:
-      case KeyCode.CTRL:
-      case KeyCode.DOWN:
-      case KeyCode.END:
-      case KeyCode.ESC:
-      case KeyCode.HOME:
-      case KeyCode.INSERT:
-      case KeyCode.LEFT:
-      case KeyCode.MAC_FF_META:
-      case KeyCode.META:
-      case KeyCode.NUMLOCK:
-      case KeyCode.NUM_CENTER:
-      case KeyCode.PAGE_DOWN:
-      case KeyCode.PAGE_UP:
-      case KeyCode.PAUSE:
-      case KeyCode.PRINT_SCREEN:
-      case KeyCode.RIGHT:
-      case KeyCode.SHIFT:
-      case KeyCode.UP:
-      case KeyCode.WIN_KEY:
-      case KeyCode.WIN_KEY_RIGHT:
-        return false;
-
-      default:
-        return true;
-    }
-  },
-
-  /**
-   * whether character is entered.
-   */
-  isCharacterKey: function isCharacterKey(keyCode) {
-    if (keyCode >= KeyCode.ZERO && keyCode <= KeyCode.NINE) {
-      return true;
-    }
-
-    if (keyCode >= KeyCode.NUM_ZERO && keyCode <= KeyCode.NUM_MULTIPLY) {
-      return true;
-    }
-
-    if (keyCode >= KeyCode.A && keyCode <= KeyCode.Z) {
-      return true;
-    } // Safari sends zero key code for non-latin characters.
-
-
-    if (window.navigator.userAgent.indexOf('WebKit') !== -1 && keyCode === 0) {
-      return true;
-    }
-
-    switch (keyCode) {
-      case KeyCode.SPACE:
-      case KeyCode.QUESTION_MARK:
-      case KeyCode.NUM_PLUS:
-      case KeyCode.NUM_MINUS:
-      case KeyCode.NUM_PERIOD:
-      case KeyCode.NUM_DIVISION:
-      case KeyCode.SEMICOLON:
-      case KeyCode.DASH:
-      case KeyCode.EQUALS:
-      case KeyCode.COMMA:
-      case KeyCode.PERIOD:
-      case KeyCode.SLASH:
-      case KeyCode.APOSTROPHE:
-      case KeyCode.SINGLE_QUOTE:
-      case KeyCode.OPEN_SQUARE_BRACKET:
-      case KeyCode.BACKSLASH:
-      case KeyCode.CLOSE_SQUARE_BRACKET:
-        return true;
-
-      default:
-        return false;
-    }
-  }
-};
-
 var PanelContext = /*#__PURE__*/React.createContext({});
 
 var HIDDEN_STYLE = {
@@ -24879,7 +24089,7 @@ function waitElementReady(element, callback) {
     if (isVisible(element)) {
       callback();
     } else {
-      id = wrapperRaf$2(function () {
+      id = wrapperRaf$1(function () {
         tryOrNextFrame();
       });
     }
@@ -24887,7 +24097,7 @@ function waitElementReady(element, callback) {
 
   tryOrNextFrame();
   return function () {
-    wrapperRaf$2.cancel(id);
+    wrapperRaf$1.cancel(id);
   };
 }
 /* eslint-disable no-param-reassign */
@@ -25447,17 +24657,6 @@ function TimeHeader(props) {
     format: format,
     generateConfig: generateConfig
   }) : "\xA0");
-}
-
-function useMemo(getValue, condition, shouldUpdate) {
-  var cacheRef = React.useRef({});
-
-  if (!('value' in cacheRef.current) || shouldUpdate(cacheRef.current.condition, condition)) {
-    cacheRef.current.value = getValue();
-    cacheRef.current.condition = condition;
-  }
-
-  return cacheRef.current.value;
 }
 
 function TimeUnitColumn(props) {
@@ -26855,17 +26054,16 @@ function PickerPanel(props) {
       var now = generateConfig.getNow();
       if (!date) return now; // When value is null and set showTime
 
-      // When value is null and set showTime
       if (!mergedValue && showTime) {
         if (_typeof$1(showTime) === 'object') {
-          return setDateTime(generateConfig, Array.isArray(date) ? date[0] : date, showTime.defaultValue || now);
+          return setDateTime(generateConfig, date, showTime.defaultValue || now);
         }
 
         if (defaultValue) {
-          return setDateTime(generateConfig, Array.isArray(date) ? date[0] : date, defaultValue);
+          return setDateTime(generateConfig, date, defaultValue);
         }
 
-        return setDateTime(generateConfig, Array.isArray(date) ? date[0] : date, now);
+        return setDateTime(generateConfig, date, now);
       }
 
       return date;
@@ -27575,8 +26773,7 @@ function InnerPicker(props) {
   var formatList = toArray$1(getDefaultFormat(format, picker, showTime, use12Hours)); // Panel ref
 
   var panelDivRef = React.useRef(null);
-  var inputDivRef = React.useRef(null);
-  var containerRef = React.useRef(null); // Real value
+  var inputDivRef = React.useRef(null); // Real value
 
   var _useMergedState = useControlledState(null, {
     value: value,
@@ -27701,12 +26898,10 @@ function InnerPicker(props) {
     triggerOpen: triggerOpen,
     forwardKeyDown: forwardKeyDown,
     isClickOutside: function isClickOutside(target) {
-      return !elementsContains([panelDivRef.current, inputDivRef.current, containerRef.current], target);
+      return !elementsContains([panelDivRef.current, inputDivRef.current], target);
     },
     onSubmit: function onSubmit() {
-      if ( // When user typing disabledDate with keyboard and enter, this value will be empty
-      !selectedValue || // Normal disabled check
-      disabledDate && disabledDate(selectedValue)) {
+      if (disabledDate && disabledDate(selectedValue)) {
         return false;
       }
 
@@ -27841,8 +27036,7 @@ function InnerPicker(props) {
         triggerChange(null);
         triggerOpen(false);
       },
-      className: "".concat(prefixCls, "-clear"),
-      role: "button"
+      className: "".concat(prefixCls, "-clear")
     }, clearIcon || /*#__PURE__*/React.createElement("span", {
       className: "".concat(prefixCls, "-clear-btn")
     }));
@@ -27886,7 +27080,6 @@ function InnerPicker(props) {
     popupPlacement: popupPlacement,
     direction: direction
   }, /*#__PURE__*/React.createElement("div", {
-    ref: containerRef,
     className: classnames(prefixCls, className, (_classNames2 = {}, _defineProperty$1(_classNames2, "".concat(prefixCls, "-disabled"), disabled), _defineProperty$1(_classNames2, "".concat(prefixCls, "-focused"), focused), _defineProperty$1(_classNames2, "".concat(prefixCls, "-rtl"), direction === 'rtl'), _classNames2)),
     style: style,
     onMouseDown: onMouseDown,
@@ -27929,11 +27122,7 @@ var Picker = /*#__PURE__*/function (_React$Component) {
 
     _classCallCheck(this, Picker);
 
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    _this = _super.call.apply(_super, [this].concat(args));
+    _this = _super.apply(this, arguments);
     _this.pickerRef = /*#__PURE__*/React.createRef();
 
     _this.focus = function () {
@@ -28236,8 +27425,6 @@ function InnerRangePicker(props) {
       onCalendarChange = props.onCalendarChange,
       _onFocus = props.onFocus,
       onBlur = props.onBlur,
-      onMouseEnter = props.onMouseEnter,
-      onMouseLeave = props.onMouseLeave,
       _onOk = props.onOk,
       _onKeyDown = props.onKeyDown,
       components = props.components,
@@ -28309,7 +27496,6 @@ function InnerRangePicker(props) {
       } // Fill disabled unit
 
 
-      // Fill disabled unit
       for (var i = 0; i < 2; i += 1) {
         if (mergedDisabled[i] && !getValue(postValues, i) && !getValue(allowEmpty, i)) {
           postValues = updateValues(postValues, generateConfig.getNow(), i);
@@ -28635,7 +27821,7 @@ function InnerRangePicker(props) {
       forwardKeyDown: forwardKeyDown,
       onBlur: onBlur,
       isClickOutside: function isClickOutside(target) {
-        return !elementsContains([panelDivRef.current, startInputDivRef.current, endInputDivRef.current, containerRef.current], target);
+        return !elementsContains([panelDivRef.current, startInputDivRef.current, endInputDivRef.current], target);
       },
       onFocus: function onFocus(e) {
         setMergedActivePickerIndex(index);
@@ -28863,7 +28049,8 @@ function InnerRangePicker(props) {
       onOk: null,
       onSelect: undefined,
       onChange: undefined,
-      defaultValue: mergedActivePickerIndex === 0 ? getValue(selectedValue, 1) : getValue(selectedValue, 0)
+      defaultValue: mergedActivePickerIndex === 0 ? getValue(selectedValue, 1) : getValue(selectedValue, 0),
+      defaultPickerValue: undefined
     })));
   }
 
@@ -29069,8 +28256,6 @@ function InnerRangePicker(props) {
     className: classnames(prefixCls, "".concat(prefixCls, "-range"), className, (_classNames2 = {}, _defineProperty$1(_classNames2, "".concat(prefixCls, "-disabled"), mergedDisabled[0] && mergedDisabled[1]), _defineProperty$1(_classNames2, "".concat(prefixCls, "-focused"), mergedActivePickerIndex === 0 ? startFocused : endFocused), _defineProperty$1(_classNames2, "".concat(prefixCls, "-rtl"), direction === 'rtl'), _classNames2)),
     style: style,
     onClick: onPickerClick,
-    onMouseEnter: onMouseEnter,
-    onMouseLeave: onMouseLeave,
     onMouseDown: onPickerMouseDown
   }, getDataOrAriaProps(props)), /*#__PURE__*/React.createElement("div", {
     className: classnames("".concat(prefixCls, "-input"), (_classNames3 = {}, _defineProperty$1(_classNames3, "".concat(prefixCls, "-input-active"), mergedActivePickerIndex === 0), _defineProperty$1(_classNames3, "".concat(prefixCls, "-input-placeholder"), !!startHoverValue), _classNames3)),
@@ -29125,11 +28310,7 @@ var RangePicker$1 = /*#__PURE__*/function (_React$Component) {
 
     _classCallCheck(this, RangePicker);
 
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    _this = _super.call.apply(_super, [this].concat(args));
+    _this = _super.apply(this, arguments);
     _this.pickerRef = /*#__PURE__*/React.createRef();
 
     _this.focus = function () {
@@ -29318,8 +28499,10 @@ function PickerTag(props) {
 // This icon file is generated automatically.
 var CalendarOutlined$2 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M880 184H712v-64c0-4.4-3.6-8-8-8h-56c-4.4 0-8 3.6-8 8v64H384v-64c0-4.4-3.6-8-8-8h-56c-4.4 0-8 3.6-8 8v64H144c-17.7 0-32 14.3-32 32v664c0 17.7 14.3 32 32 32h736c17.7 0 32-14.3 32-32V216c0-17.7-14.3-32-32-32zm-40 656H184V460h656v380zM184 392V256h128v48c0 4.4 3.6 8 8 8h56c4.4 0 8-3.6 8-8v-48h256v48c0 4.4 3.6 8 8 8h56c4.4 0 8-3.6 8-8v-48h128v136H184z" } }] }, "name": "calendar", "theme": "outlined" };
 
+// GENERATE BY ./scripts/generate.ts
+
 var CalendarOutlined = function CalendarOutlined(props, ref) {
-  return /*#__PURE__*/React.createElement(Icon, _objectSpread2$1(_objectSpread2$1({}, props), {}, {
+  return /*#__PURE__*/React.createElement(Icon, Object.assign({}, props, {
     ref: ref,
     icon: CalendarOutlined$2
   }));
@@ -29331,8 +28514,10 @@ var CalendarOutlined$1 = /*#__PURE__*/React.forwardRef(CalendarOutlined);
 // This icon file is generated automatically.
 var ClockCircleOutlined$2 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z" } }, { "tag": "path", "attrs": { "d": "M686.7 638.6L544.1 535.5V288c0-4.4-3.6-8-8-8H488c-4.4 0-8 3.6-8 8v275.4c0 2.6 1.2 5 3.3 6.5l165.4 120.6c3.6 2.6 8.6 1.8 11.2-1.7l28.6-39c2.6-3.7 1.8-8.7-1.8-11.2z" } }] }, "name": "clock-circle", "theme": "outlined" };
 
+// GENERATE BY ./scripts/generate.ts
+
 var ClockCircleOutlined = function ClockCircleOutlined(props, ref) {
-  return /*#__PURE__*/React.createElement(Icon, _objectSpread2$1(_objectSpread2$1({}, props), {}, {
+  return /*#__PURE__*/React.createElement(Icon, Object.assign({}, props, {
     ref: ref,
     icon: ClockCircleOutlined$2
   }));
@@ -29431,9 +28616,16 @@ function generatePicker$1(generateConfig) {
           }
         };
 
-        _this.renderPicker = function (contextLocale) {
-          var locale = _extends$1(_extends$1({}, contextLocale), _this.props.locale);
+        _this.getDefaultLocale = function () {
+          var locale$1 = _this.props.locale;
 
+          var result = _extends$1(_extends$1({}, locale), locale$1);
+
+          result.lang = _extends$1(_extends$1({}, result.lang), (locale$1 || {}).lang);
+          return result;
+        };
+
+        _this.renderPicker = function (locale) {
           var _this$context = _this.context,
               getPrefixCls = _this$context.getPrefixCls,
               direction = _this$context.direction,
@@ -29481,6 +28673,14 @@ function generatePicker$1(generateConfig) {
               placeholder: getPlaceholder(mergedPicker, locale, placeholder),
               suffixIcon: mergedPicker === 'time' ? /*#__PURE__*/React.createElement(ClockCircleOutlined$1, null) : /*#__PURE__*/React.createElement(CalendarOutlined$1, null),
               clearIcon: /*#__PURE__*/React.createElement(CloseCircleFilled$1, null),
+              allowClear: true,
+              transitionName: "".concat(rootPrefixCls, "-slide-up")
+            }, additionalProps, restProps, additionalOverrideProps, {
+              locale: locale.lang,
+              className: classnames((_classNames = {}, _defineProperty$1(_classNames, "".concat(prefixCls, "-").concat(mergedSize), mergedSize), _defineProperty$1(_classNames, "".concat(prefixCls, "-borderless"), !bordered), _classNames), className),
+              prefixCls: prefixCls,
+              getPopupContainer: customizeGetPopupContainer || getPopupContainer,
+              generateConfig: generateConfig,
               prevIcon: /*#__PURE__*/React.createElement("span", {
                 className: "".concat(prefixCls, "-prev-icon")
               }),
@@ -29493,14 +28693,6 @@ function generatePicker$1(generateConfig) {
               superNextIcon: /*#__PURE__*/React.createElement("span", {
                 className: "".concat(prefixCls, "-super-next-icon")
               }),
-              allowClear: true,
-              transitionName: "".concat(rootPrefixCls, "-slide-up")
-            }, additionalProps, restProps, additionalOverrideProps, {
-              locale: locale.lang,
-              className: classnames((_classNames = {}, _defineProperty$1(_classNames, "".concat(prefixCls, "-").concat(mergedSize), mergedSize), _defineProperty$1(_classNames, "".concat(prefixCls, "-borderless"), !bordered), _classNames), className),
-              prefixCls: prefixCls,
-              getPopupContainer: customizeGetPopupContainer || getPopupContainer,
-              generateConfig: generateConfig,
               components: Components,
               direction: direction
             }));
@@ -29516,7 +28708,7 @@ function generatePicker$1(generateConfig) {
         value: function render() {
           return /*#__PURE__*/React.createElement(LocaleReceiver, {
             componentName: "DatePicker",
-            defaultLocale: locale
+            defaultLocale: this.getDefaultLocale
           }, this.renderPicker);
         }
       }]);
@@ -29552,8 +28744,10 @@ function generatePicker$1(generateConfig) {
 // This icon file is generated automatically.
 var SwapRightOutlined$2 = { "icon": { "tag": "svg", "attrs": { "viewBox": "0 0 1024 1024", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M873.1 596.2l-164-208A32 32 0 00684 376h-64.8c-6.7 0-10.4 7.7-6.3 13l144.3 183H152c-4.4 0-8 3.6-8 8v60c0 4.4 3.6 8 8 8h695.9c26.8 0 41.7-30.8 25.2-51.8z" } }] }, "name": "swap-right", "theme": "outlined" };
 
+// GENERATE BY ./scripts/generate.ts
+
 var SwapRightOutlined = function SwapRightOutlined(props, ref) {
-  return /*#__PURE__*/React.createElement(Icon, _objectSpread2$1(_objectSpread2$1({}, props), {}, {
+  return /*#__PURE__*/React.createElement(Icon, Object.assign({}, props, {
     ref: ref,
     icon: SwapRightOutlined$2
   }));
@@ -29600,9 +28794,16 @@ function generateRangePicker(generateConfig) {
         }
       };
 
-      _this.renderPicker = function (contextLocale) {
-        var locale = _extends$1(_extends$1({}, contextLocale), _this.props.locale);
+      _this.getDefaultLocale = function () {
+        var locale$1 = _this.props.locale;
 
+        var result = _extends$1(_extends$1({}, locale), locale$1);
+
+        result.lang = _extends$1(_extends$1({}, result.lang), (locale$1 || {}).lang);
+        return result;
+      };
+
+      _this.renderPicker = function (locale) {
         var _this$context = _this.context,
             getPrefixCls = _this$context.getPrefixCls,
             direction = _this$context.direction,
@@ -29646,6 +28847,14 @@ function generateRangePicker(generateConfig) {
             placeholder: getRangePlaceholder(picker, locale, placeholder),
             suffixIcon: picker === 'time' ? /*#__PURE__*/React.createElement(ClockCircleOutlined$1, null) : /*#__PURE__*/React.createElement(CalendarOutlined$1, null),
             clearIcon: /*#__PURE__*/React.createElement(CloseCircleFilled$1, null),
+            allowClear: true,
+            transitionName: "".concat(rootPrefixCls, "-slide-up")
+          }, restProps, additionalOverrideProps, {
+            className: classnames((_classNames = {}, _defineProperty$1(_classNames, "".concat(prefixCls, "-").concat(mergedSize), mergedSize), _defineProperty$1(_classNames, "".concat(prefixCls, "-borderless"), !bordered), _classNames), className),
+            locale: locale.lang,
+            prefixCls: prefixCls,
+            getPopupContainer: customGetPopupContainer || getPopupContainer,
+            generateConfig: generateConfig,
             prevIcon: /*#__PURE__*/React.createElement("span", {
               className: "".concat(prefixCls, "-prev-icon")
             }),
@@ -29658,14 +28867,6 @@ function generateRangePicker(generateConfig) {
             superNextIcon: /*#__PURE__*/React.createElement("span", {
               className: "".concat(prefixCls, "-super-next-icon")
             }),
-            allowClear: true,
-            transitionName: "".concat(rootPrefixCls, "-slide-up")
-          }, restProps, additionalOverrideProps, {
-            className: classnames((_classNames = {}, _defineProperty$1(_classNames, "".concat(prefixCls, "-").concat(mergedSize), mergedSize), _defineProperty$1(_classNames, "".concat(prefixCls, "-borderless"), !bordered), _classNames), className),
-            locale: locale.lang,
-            prefixCls: prefixCls,
-            getPopupContainer: customGetPopupContainer || getPopupContainer,
-            generateConfig: generateConfig,
             components: Components,
             direction: direction
           }));
@@ -29680,7 +28881,7 @@ function generateRangePicker(generateConfig) {
       value: function render() {
         return /*#__PURE__*/React.createElement(LocaleReceiver, {
           componentName: "DatePicker",
-          defaultLocale: locale
+          defaultLocale: this.getDefaultLocale
         }, this.renderPicker);
       }
     }]);

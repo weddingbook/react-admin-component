@@ -3,7 +3,7 @@ import './SelectBox.scss';
 export interface ISelectBoxOption {
     value: any;
     name: string;
-	optgroup?: string;
+    optgroup?: string;
     additionalHtml?: {
         position?: 'before' | 'after';
         html: JSX.Element;

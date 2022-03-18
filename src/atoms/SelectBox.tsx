@@ -6,6 +6,7 @@ import Input from './Input';
 export interface ISelectBoxOption {
 	value: any;
 	name: string;
+    optgroup?: string;
 	additionalHtml?: {
 		position?: 'before' | 'after';
 		html: JSX.Element

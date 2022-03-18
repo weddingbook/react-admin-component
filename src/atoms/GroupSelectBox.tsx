@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, CSSProperties } from 'react';
 import './GroupSelectBox.scss';
 import Icon from 'react-eva-icons';
 import Input from './Input';
-import { ISelectBoxOption } from './../../dist/atoms/SelectBox.d';
+import { ISelectBoxOption } from './SelectBox';
 
 type Props = {
 	options: ISelectBoxOption[];
