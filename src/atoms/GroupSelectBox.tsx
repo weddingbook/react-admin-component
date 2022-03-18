@@ -2,16 +2,8 @@ import React, { useState, useRef, useEffect, CSSProperties } from 'react';
 import './GroupSelectBox.scss';
 import Icon from 'react-eva-icons';
 import Input from './Input';
+import { ISelectBoxOption } from './../../dist/atoms/SelectBox.d';
 
-export interface ISelectBoxOption {
-	value: any;
-	name: string;
-	optgroup: string;
-	// additionalHtml?: {
-	// 	position?: 'before' | 'after';
-	// 	html: JSX.Element
-	// };
-}
 type Props = {
 	options: ISelectBoxOption[];
 	selectedOption: ISelectBoxOption;
@@ -37,6 +29,7 @@ const GroupSelectBox = ({
 	const groupedOptions = {};
 
 	options.forEach((option) => {
+		if (!option.optgroup) return;
 		if (!groupedOptions[option.optgroup]) groupedOptions[option.optgroup] = [];
 		groupedOptions[option.optgroup].push({
 			value: option.value,
