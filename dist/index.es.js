@@ -2225,15 +2225,13 @@ var SelectBox = function (_a) {
     };
     {
         return disabled
-            ? React__default.createElement(Input, { disabled: true })
+            ? React__default.createElement(Input, { disabled: true, value: selectedOption.name })
             : React__default.createElement("div", { tabIndex: 0, ref: selectBoxRef, className: 'select-box', onClick: onToggleSelectBox, style: __assign({}, style) },
                 React__default.createElement("div", { ref: selectedRef, className: 'selected-item' }, additionalHtml
                     ? React__default.createElement(React__default.Fragment, null,
                         additionalHtml.position === 'before' &&
                             additionalHtml.html,
-                        React__default.createElement("span", { style: { margin: additionalHtml.position === 'before' ? '0 0 0 8px' : '0 8px 0 0' } },
-                            selectedOption.name,
-                            " 12"),
+                        React__default.createElement("span", { style: { margin: additionalHtml.position === 'before' ? '0 0 0 8px' : '0 8px 0 0' } }, selectedOption.name),
                         additionalHtml.position === 'after' &&
                             additionalHtml.html)
                     : selectedOption.name),
@@ -2382,7 +2380,7 @@ var GroupSelectBox = function (_a) {
         setShowList(!isShowList);
     };
     // console.log('object', groupedOptions, selectedOption);
-    return disabled ? (React__default.createElement(Input, { disabled: true })) : (React__default.createElement("div", { tabIndex: 0, ref: selectBoxRef, className: 'select-box', onClick: onToggleSelectBox, style: __assign({}, style) },
+    return disabled ? (React__default.createElement(Input, { disabled: true, value: selectedOption.name })) : (React__default.createElement("div", { tabIndex: 0, ref: selectBoxRef, className: 'select-box', onClick: onToggleSelectBox, style: __assign({}, style) },
         React__default.createElement("div", { ref: selectedRef, className: 'selected-item' }, selectedOption.name),
         React__default.createElement(Icon$1, { name: 'arrow-ios-downward-outline', size: '18' }),
         isShowList && (React__default.createElement("ul", { ref: selectListRef, className: "list list-" + listPosition, style: { height: "" + (listHeight + 'px') } }, Object.keys(groupedOptions).map(function (group, index) {
