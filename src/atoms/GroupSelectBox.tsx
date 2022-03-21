@@ -115,7 +115,7 @@ const GroupSelectBox = ({
 	// console.log('object', groupedOptions, selectedOption);
 
 	return disabled ? (
-		<Input disabled={true} />
+		<Input disabled={true} value={selectedOption.name} />
 	) : (
 		<div
 			tabIndex={0}

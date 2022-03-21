@@ -90,7 +90,7 @@ const SelectBox = ({ options, selectedOption, style, onSelectOptionSet, disabled
     };
     {
         return disabled
-            ? <Input disabled={true} />
+            ? <Input disabled={true} value={selectedOption.name} />
             : <div tabIndex={0} ref={selectBoxRef} className='select-box' onClick={onToggleSelectBox} style={{ ...style }}>
                 <div
                     ref={selectedRef}
@@ -102,7 +102,7 @@ const SelectBox = ({ options, selectedOption, style, onSelectOptionSet, disabled
 								additionalHtml.html
 							}
 							<span style={{margin: additionalHtml.position === 'before' ? '0 0 0 8px' : '0 8px 0 0'}}>
-								{selectedOption.name} 12
+								{selectedOption.name}
 							</span>
 							{additionalHtml.position === 'after' && 
 								additionalHtml.html
