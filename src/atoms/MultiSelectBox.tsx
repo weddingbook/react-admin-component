@@ -81,8 +81,10 @@ const MultiSelectBox = ({
 			'auto-complete-wrap'
 		) as HTMLCollectionOf<HTMLElement>;
 		if (selectedRef.current) {
-			autoElements[0].style.height =
-				selectedRef.current?.clientHeight + 18 + 'px';
+			if (selectedRef.current.clientHeight + 18 > 55) {
+				// input box more 2 lines
+				autoElements[0].style.height = selectedRef.current?.clientHeight + 18 + 'px';
+			}
 		}
 		if (selectedOptions.length > 0) {
 			const child = selectedRef.current?.children!;
@@ -139,6 +141,7 @@ const MultiSelectBox = ({
 					value={inputValue}
 					inputStyle={{
 						...rest.inputStyle,
+						padding: '2px 0',
 						height: '100%',
 					}}
 					onFocus={onFocusInput}

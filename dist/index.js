@@ -2473,8 +2473,10 @@ var MultiSelectBox = function (_a) {
         var _a, _b;
         var autoElements = document.getElementsByClassName('auto-complete-wrap');
         if (selectedRef.current) {
-            autoElements[0].style.height =
-                ((_a = selectedRef.current) === null || _a === void 0 ? void 0 : _a.clientHeight) + 18 + 'px';
+            if (selectedRef.current.clientHeight + 18 > 55) {
+                // input box more 2 lines
+                autoElements[0].style.height = ((_a = selectedRef.current) === null || _a === void 0 ? void 0 : _a.clientHeight) + 18 + 'px';
+            }
         }
         if (selectedOptions.length > 0) {
             var child = (_b = selectedRef.current) === null || _b === void 0 ? void 0 : _b.children;
@@ -2505,7 +2507,7 @@ var MultiSelectBox = function (_a) {
             selectedOptions.length > 0 && (React__default['default'].createElement("div", { className: 'selected-option-wrap', ref: selectedRef }, selectedOptions.map(function (option) { return (React__default['default'].createElement("span", { className: 'selected-option-name', key: "multi-select-selected-" + option.value },
                 selectPrefix,
                 option.name)); }))),
-            React__default['default'].createElement(Input, __assign({}, rest, { style: { width: '100%' }, className: 'auto-complete-input', value: inputValue, inputStyle: __assign(__assign({}, rest.inputStyle), { height: '100%' }), onFocus: onFocusInput, onChange: function (e) { return setInputValue(e.target.value); }, onKeyDown: function (e) {
+            React__default['default'].createElement(Input, __assign({}, rest, { style: { width: '100%' }, className: 'auto-complete-input', value: inputValue, inputStyle: __assign(__assign({}, rest.inputStyle), { padding: '2px 0', height: '100%' }), onFocus: onFocusInput, onChange: function (e) { return setInputValue(e.target.value); }, onKeyDown: function (e) {
                     if (e.keyCode === 8 &&
                         inputValue === '' &&
                         selectedOptions.length > 0) {
