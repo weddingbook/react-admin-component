@@ -2468,7 +2468,7 @@ var MultiSelectBox = function (_a) {
             return option.name.toLocaleLowerCase().indexOf(inputValue.toLowerCase()) !==
                 -1;
         }));
-    }, [inputValue]);
+    }, [inputValue, options]);
     React.useEffect(function () {
         var _a, _b;
         var autoElements = document.getElementsByClassName('auto-complete-wrap');

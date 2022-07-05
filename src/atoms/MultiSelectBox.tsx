@@ -81,7 +81,7 @@ const MultiSelectBox = ({
 					-1
 			)
 		);
-	}, [inputValue]);
+	}, [inputValue, options]);
 
 	useEffect(() => {
 		let autoElements = document.getElementsByClassName(
