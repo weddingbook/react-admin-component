@@ -19,6 +19,10 @@ interface Props extends InputProps {
 		className?: string;
 		style?: React.CSSProperties;
 		action: (value: string) => void;
+		callback?: {
+			focus?: boolean;
+			removeInput?: boolean;
+		}
 	}
 }
 const MultiSelectBox = ({
@@ -196,7 +200,17 @@ const MultiSelectBox = ({
 				<button 
 					className={`bottom-button ${bottomButton.className ? bottomButton.className : ''}`}
 					style={bottomButton.style} 
-					onClick={() => bottomButton.action(inputValue)}
+					onClick={() => {
+						bottomButton.action(inputValue);
+						if (bottomButton.callback) {
+							if (bottomButton.callback.focus) {
+								setFocusInput();
+							}
+							if (bottomButton.callback.removeInput) {
+								setInputValue('');
+							}
+						}
+					}}
 				>
 					{bottomButton.title}
 				</button>
