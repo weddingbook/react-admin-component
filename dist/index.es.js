@@ -2495,15 +2495,16 @@ var MultiSelectBox = function (_a) {
             })) : (React__default.createElement("li", null, "No result found"))),
             bottomButton &&
                 React__default.createElement("button", { className: "bottom-button " + (bottomButton.className ? bottomButton.className : ''), style: bottomButton.style, onClick: function () {
-                        bottomButton.action(inputValue);
-                        if (bottomButton.callback) {
-                            if (bottomButton.callback.focus) {
-                                onFocusInput();
+                        bottomButton.action(inputValue, function () {
+                            if (bottomButton.callback) {
+                                if (bottomButton.callback.focus) {
+                                    onFocusInput();
+                                }
+                                if (bottomButton.callback.removeInput) {
+                                    setInputValue('');
+                                }
                             }
-                            if (bottomButton.callback.removeInput) {
-                                setInputValue('');
-                            }
-                        }
+                        });
                     } }, bottomButton.title))));
 };
 

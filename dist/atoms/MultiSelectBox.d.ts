@@ -16,7 +16,7 @@ interface Props extends InputProps {
         title: string;
         className?: string;
         style?: React.CSSProperties;
-        action: (value: string) => void;
+        action: (value: string, callback?: () => void) => void;
         callback?: {
             focus?: boolean;
             removeInput?: boolean;
