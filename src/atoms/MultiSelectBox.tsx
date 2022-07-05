@@ -14,6 +14,12 @@ interface Props extends InputProps {
 	selectedOptions: ISelectBoxOption[];
 	setSelectedOptions: React.Dispatch<React.SetStateAction<ISelectBoxOption[]>>;
 	clickOption?: (item: ISelectBoxOption) => void;
+	bottomButton?: {
+		title: string;
+		className?: string;
+		style?: React.CSSProperties;
+		action: () => void;
+	}
 }
 const MultiSelectBox = ({
 	width,
@@ -24,6 +30,7 @@ const MultiSelectBox = ({
 	selectedOptions,
 	setSelectedOptions,
 	clickOption,
+	bottomButton,
 	...rest
 }: Props) => {
 	const [inputValue, setInputValue] = useState('');
@@ -159,29 +166,42 @@ const MultiSelectBox = ({
 					}}
 				/>
 			</div>
-			<ul
-				className='auto-complete-list'
+			<div
+				className={`auto-complete-list-wrap ${bottomButton ? 'has-bottom-button' : ''}`}
 				style={{ display: showOptions ? 'block' : 'none' }}
-				ref={optionRef}>
-				{filtered.length > 0 ? (
-					filtered.map((item) => (
-						<li
-							className={isSelected(item) ? 'selected' : ''}
-							onClick={() => onClickList(item)}
-							key={`multi-select-option-${item.value}`}>
-							{item.additionalHtml?.position === 'before' && item.additionalHtml.html}
-							<span style={{ marginRight: 6 }}>{item.name}</span>
-							{item.additionalHtml?.position === 'after' && item.additionalHtml.html}
-							<span
-								style={{ display: isSelected(item) ? 'inline-block' : 'none' }}>
-								<Icon name='checkmark-outline' size='14' fill='#296df1' />
-							</span>
-						</li>
-					))
-				) : (
-					<li>No result found</li>
-				)}
-			</ul>
+			>
+				<ul
+					className='auto-complete-list'
+					ref={optionRef}>
+					{filtered.length > 0 ? (
+						filtered.map((item) => (
+							<li
+								className={isSelected(item) ? 'selected' : ''}
+								onClick={() => onClickList(item)}
+								key={`multi-select-option-${item.value}`}>
+								{item.additionalHtml?.position === 'before' && item.additionalHtml.html}
+								<span style={{ marginRight: 6 }}>{item.name}</span>
+								{item.additionalHtml?.position === 'after' && item.additionalHtml.html}
+								<span
+									style={{ display: isSelected(item) ? 'inline-block' : 'none' }}>
+									<Icon name='checkmark-outline' size='14' fill='#296df1' />
+								</span>
+							</li>
+						))
+					) : (
+						<li>No result found</li>
+					)}
+				</ul>
+				{bottomButton && 
+				<button 
+					className={`bottom-button ${bottomButton.className ? bottomButton.className : ''}`}
+					style={bottomButton.style} 
+					onClick={bottomButton.action}
+				>
+					{bottomButton.title}
+				</button>
+				}
+			</div>
 		</div>
 	);
 };

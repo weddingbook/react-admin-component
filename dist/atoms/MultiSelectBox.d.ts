@@ -12,6 +12,12 @@ interface Props extends InputProps {
     selectedOptions: ISelectBoxOption[];
     setSelectedOptions: React.Dispatch<React.SetStateAction<ISelectBoxOption[]>>;
     clickOption?: (item: ISelectBoxOption) => void;
+    bottomButton?: {
+        title: string;
+        className?: string;
+        style?: React.CSSProperties;
+        action: () => void;
+    };
 }
-declare const MultiSelectBox: ({ width, height, selectPrefix, multiSelect, options, selectedOptions, setSelectedOptions, clickOption, ...rest }: Props) => JSX.Element;
+declare const MultiSelectBox: ({ width, height, selectPrefix, multiSelect, options, selectedOptions, setSelectedOptions, clickOption, bottomButton, ...rest }: Props) => JSX.Element;
 export default MultiSelectBox;

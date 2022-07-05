@@ -187,6 +187,12 @@ export const MultiSelectBoxStory = () => {
 			selectedOptions={selectedOptions}
 			setSelectedOptions={setSelectedOptions}
 			selectPrefix='@'
+			bottomButton={{
+				title: 'button',
+				action: () => {
+					alert('click button');
+				}
+			}}
 			clickOption={(item) => {
 				if (
 					selectedOptions.filter((option) => option.value === item.value).length

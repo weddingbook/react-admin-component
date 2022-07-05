@@ -1962,7 +1962,7 @@ Icon.propTypes = {
 	animation: _propTypes2.default.object,
 	fill: _propTypes2.default.string,
 	name: _propTypes2.default.string,
-	size: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.number])
+	size: _propTypes2.default.string
 };
 
 Icon.defaultProps = {
@@ -2393,7 +2393,7 @@ var GroupSelectBox = function (_a) {
 };
 
 var MultiSelectBox = function (_a) {
-    var width = _a.width, height = _a.height, _b = _a.selectPrefix, selectPrefix = _b === void 0 ? '' : _b; _a.multiSelect; var options = _a.options, selectedOptions = _a.selectedOptions, setSelectedOptions = _a.setSelectedOptions, clickOption = _a.clickOption, rest = __rest$7(_a, ["width", "height", "selectPrefix", "multiSelect", "options", "selectedOptions", "setSelectedOptions", "clickOption"]);
+    var width = _a.width, height = _a.height, _b = _a.selectPrefix, selectPrefix = _b === void 0 ? '' : _b; _a.multiSelect; var options = _a.options, selectedOptions = _a.selectedOptions, setSelectedOptions = _a.setSelectedOptions, clickOption = _a.clickOption, bottomButton = _a.bottomButton, rest = __rest$7(_a, ["width", "height", "selectPrefix", "multiSelect", "options", "selectedOptions", "setSelectedOptions", "clickOption", "bottomButton"]);
     var _d = useState(''), inputValue = _d[0], setInputValue = _d[1];
     var _e = useState(false), showOptions = _e[0], setShowOptions = _e[1];
     var optionRef = useRef(null);
@@ -2483,15 +2483,18 @@ var MultiSelectBox = function (_a) {
                         setSelectedOptions(selectedOptions.slice(0, selectedOptions.length - 1));
                     }
                 } }))),
-        React__default.createElement("ul", { className: 'auto-complete-list', style: { display: showOptions ? 'block' : 'none' }, ref: optionRef }, filtered.length > 0 ? (filtered.map(function (item) {
-            var _a, _b;
-            return (React__default.createElement("li", { className: isSelected(item) ? 'selected' : '', onClick: function () { return onClickList(item); }, key: "multi-select-option-" + item.value },
-                ((_a = item.additionalHtml) === null || _a === void 0 ? void 0 : _a.position) === 'before' && item.additionalHtml.html,
-                React__default.createElement("span", { style: { marginRight: 6 } }, item.name),
-                ((_b = item.additionalHtml) === null || _b === void 0 ? void 0 : _b.position) === 'after' && item.additionalHtml.html,
-                React__default.createElement("span", { style: { display: isSelected(item) ? 'inline-block' : 'none' } },
-                    React__default.createElement(Icon$1, { name: 'checkmark-outline', size: '14', fill: '#296df1' }))));
-        })) : (React__default.createElement("li", null, "No result found")))));
+        React__default.createElement("div", { className: "auto-complete-list-wrap " + (bottomButton ? 'has-bottom-button' : ''), style: { display: showOptions ? 'block' : 'none' } },
+            React__default.createElement("ul", { className: 'auto-complete-list', ref: optionRef }, filtered.length > 0 ? (filtered.map(function (item) {
+                var _a, _b;
+                return (React__default.createElement("li", { className: isSelected(item) ? 'selected' : '', onClick: function () { return onClickList(item); }, key: "multi-select-option-" + item.value },
+                    ((_a = item.additionalHtml) === null || _a === void 0 ? void 0 : _a.position) === 'before' && item.additionalHtml.html,
+                    React__default.createElement("span", { style: { marginRight: 6 } }, item.name),
+                    ((_b = item.additionalHtml) === null || _b === void 0 ? void 0 : _b.position) === 'after' && item.additionalHtml.html,
+                    React__default.createElement("span", { style: { display: isSelected(item) ? 'inline-block' : 'none' } },
+                        React__default.createElement(Icon$1, { name: 'checkmark-outline', size: '14', fill: '#296df1' }))));
+            })) : (React__default.createElement("li", null, "No result found"))),
+            bottomButton &&
+                React__default.createElement("button", { className: "bottom-button " + (bottomButton.className ? bottomButton.className : ''), style: bottomButton.style, onClick: bottomButton.action }, bottomButton.title))));
 };
 
 var SwitchButton = function (_a) {
@@ -16479,8 +16482,8 @@ var PopupInner = /*#__PURE__*/React.forwardRef(function (props, ref) {
       className: mergedClassName,
       onMouseEnter: onMouseEnter,
       onMouseLeave: onMouseLeave,
-      onMouseDownCapture: onMouseDown,
-      onTouchStartCapture: onTouchStart,
+      onMouseDown: onMouseDown,
+      onTouchStart: onTouchStart,
       style: _objectSpread2$1(_objectSpread2$1({}, motionStyle), mergedStyle)
     }, childNode));
   });
@@ -17499,7 +17502,7 @@ var Wave = /*#__PURE__*/function (_React$Component) {
     _this.destroyed = false;
 
     _this.onClick = function (node, waveColor) {
-      var _a, _b;
+      var _a;
 
       if (!node || isHidden(node) || node.className.indexOf('-leave') >= 0) {
         return;
@@ -17522,7 +17525,7 @@ var Wave = /*#__PURE__*/function (_React$Component) {
       waveColor !== 'transparent') {
         extraNode.style.borderColor = waveColor;
         var nodeRoot = ((_a = node.getRootNode) === null || _a === void 0 ? void 0 : _a.call(node)) || node.ownerDocument;
-        var nodeBody = nodeRoot instanceof Document ? nodeRoot.body : (_b = nodeRoot.firstChild) !== null && _b !== void 0 ? _b : nodeRoot;
+        var nodeBody = nodeRoot instanceof Document ? nodeRoot.body : nodeRoot;
         styleForPseudo = updateCSS("\n      [".concat(getPrefixCls(''), "-click-animating-without-extra-node='true']::after, .").concat(getPrefixCls(''), "-click-animating-node {\n        --antd-wave-shadow-color: ").concat(waveColor, ";\n      }"), 'antd-wave', {
           csp: _this.csp,
           attachTo: nodeBody
@@ -17927,7 +17930,7 @@ var InternalButton = function InternalButton(props, ref) {
   }
 
   var iconType = innerLoading ? 'loading' : icon;
-  var classes = classnames(prefixCls, (_classNames = {}, _defineProperty$1(_classNames, "".concat(prefixCls, "-").concat(type), type), _defineProperty$1(_classNames, "".concat(prefixCls, "-").concat(shape), shape), _defineProperty$1(_classNames, "".concat(prefixCls, "-").concat(sizeCls), sizeCls), _defineProperty$1(_classNames, "".concat(prefixCls, "-icon-only"), !children && children !== 0 && !!iconType), _defineProperty$1(_classNames, "".concat(prefixCls, "-background-ghost"), ghost && !isUnborderedButtonType(type)), _defineProperty$1(_classNames, "".concat(prefixCls, "-loading"), innerLoading), _defineProperty$1(_classNames, "".concat(prefixCls, "-two-chinese-chars"), hasTwoCNChar && autoInsertSpace), _defineProperty$1(_classNames, "".concat(prefixCls, "-block"), block), _defineProperty$1(_classNames, "".concat(prefixCls, "-dangerous"), !!danger), _defineProperty$1(_classNames, "".concat(prefixCls, "-rtl"), direction === 'rtl'), _classNames), className);
+  var classes = classnames(prefixCls, (_classNames = {}, _defineProperty$1(_classNames, "".concat(prefixCls, "-").concat(type), type), _defineProperty$1(_classNames, "".concat(prefixCls, "-").concat(shape), shape), _defineProperty$1(_classNames, "".concat(prefixCls, "-").concat(sizeCls), sizeCls), _defineProperty$1(_classNames, "".concat(prefixCls, "-icon-only"), !children && children !== 0 && iconType), _defineProperty$1(_classNames, "".concat(prefixCls, "-background-ghost"), ghost && !isUnborderedButtonType(type)), _defineProperty$1(_classNames, "".concat(prefixCls, "-loading"), innerLoading), _defineProperty$1(_classNames, "".concat(prefixCls, "-two-chinese-chars"), hasTwoCNChar && autoInsertSpace), _defineProperty$1(_classNames, "".concat(prefixCls, "-block"), block), _defineProperty$1(_classNames, "".concat(prefixCls, "-dangerous"), !!danger), _defineProperty$1(_classNames, "".concat(prefixCls, "-rtl"), direction === 'rtl'), _classNames), className);
   var iconNode = icon && !innerLoading ? icon : /*#__PURE__*/React.createElement(LoadingIcon, {
     existIcon: !!icon,
     prefixCls: prefixCls,

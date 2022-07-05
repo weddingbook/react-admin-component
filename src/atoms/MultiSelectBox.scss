@@ -49,19 +49,38 @@
 			background-color: transparent;
 		}
 	}
-	.auto-complete-list {
-        overflow: auto;
-        height: 200px;
-        z-index: 99;
+	.auto-complete-list-wrap {
 		display: none;
+		overflow: auto;
 		position: absolute;
 		left: 0;
 		right: 0;
 		top: 100%;
+        height: 200px;
+        z-index: 99;
 		border: 1px solid $gray20;
 		background-color: #fff;
 		border-radius: 4px;
 		box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.5);
+		&.has-bottom-button {
+			// .auto-complete-list {
+				
+			// }
+		}
+		.bottom-button {
+			position: sticky;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			padding: 10px 12px;
+			width: 100%;
+			height: 40px;
+			color: #fff;
+			background-color: $blue60;
+		}
+	}
+	.auto-complete-list {
+        // overflow: auto;
 		> li {
 			padding: 10px 12px;
 			line-height: 21px;
