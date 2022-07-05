@@ -2498,7 +2498,7 @@ var MultiSelectBox = function (_a) {
                         bottomButton.action(inputValue);
                         if (bottomButton.callback) {
                             if (bottomButton.callback.focus) {
-                                setFocusInput();
+                                onFocusInput();
                             }
                             if (bottomButton.callback.removeInput) {
                                 setInputValue('');
