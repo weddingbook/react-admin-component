@@ -18,7 +18,7 @@ interface Props extends InputProps {
 		title: string;
 		className?: string;
 		style?: React.CSSProperties;
-		action: () => void;
+		action: (value: string) => void;
 	}
 }
 const MultiSelectBox = ({
@@ -196,7 +196,7 @@ const MultiSelectBox = ({
 				<button 
 					className={`bottom-button ${bottomButton.className ? bottomButton.className : ''}`}
 					style={bottomButton.style} 
-					onClick={bottomButton.action}
+					onClick={() => bottomButton.action(inputValue)}
 				>
 					{bottomButton.title}
 				</button>

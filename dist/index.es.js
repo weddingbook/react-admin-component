@@ -2494,7 +2494,7 @@ var MultiSelectBox = function (_a) {
                         React__default.createElement(Icon$1, { name: 'checkmark-outline', size: '14', fill: '#296df1' }))));
             })) : (React__default.createElement("li", null, "No result found"))),
             bottomButton &&
-                React__default.createElement("button", { className: "bottom-button " + (bottomButton.className ? bottomButton.className : ''), style: bottomButton.style, onClick: bottomButton.action }, bottomButton.title))));
+                React__default.createElement("button", { className: "bottom-button " + (bottomButton.className ? bottomButton.className : ''), style: bottomButton.style, onClick: function () { return bottomButton.action(inputValue); } }, bottomButton.title))));
 };
 
 var SwitchButton = function (_a) {

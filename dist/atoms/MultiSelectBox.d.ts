@@ -16,7 +16,7 @@ interface Props extends InputProps {
         title: string;
         className?: string;
         style?: React.CSSProperties;
-        action: () => void;
+        action: (value: string) => void;
     };
 }
 declare const MultiSelectBox: ({ width, height, selectPrefix, multiSelect, options, selectedOptions, setSelectedOptions, clickOption, bottomButton, ...rest }: Props) => JSX.Element;
