@@ -13,6 +13,7 @@ export interface ISelectBoxOption {
 	};
 }
 type Props = {
+    id?: string;
     options: ISelectBoxOption[],
     selectedOption: ISelectBoxOption,
     style?: CSSProperties
@@ -20,7 +21,7 @@ type Props = {
     disabled?: boolean
 }
 
-const SelectBox = ({ options, selectedOption, style, onSelectOptionSet, disabled }: Props) => {
+const SelectBox = ({ id, options, selectedOption, style, onSelectOptionSet, disabled }: Props) => {
     const selectedRef = useRef<HTMLDivElement>(null)
     const selectBoxRef = useRef<HTMLDivElement>(null)
     const selectListRef = useRef<HTMLUListElement>(null)
@@ -122,7 +123,7 @@ const SelectBox = ({ options, selectedOption, style, onSelectOptionSet, disabled
                 >
                     {options.map(option => (
                         <li
-                            key={option.name}
+                            key={id ? `${id}-${option.value}` : `${option.name}-${option.value}`}
                             onClick={() => { onClickOption(option) }}
                             className={`${selectedOption.value === option.value ? 'selected' : ''}`}
                         >

@@ -2,7 +2,8 @@ import React from 'react';
 import { ISelectBoxOption } from '../index';
 declare const _default: {
     title: string;
-    component: ({ options, selectedOption, style, onSelectOptionSet, disabled }: {
+    component: ({ id, options, selectedOption, style, onSelectOptionSet, disabled }: {
+        id?: string | undefined;
         options: ISelectBoxOption[];
         selectedOption: ISelectBoxOption;
         style?: React.CSSProperties | undefined;
