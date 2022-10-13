@@ -34,6 +34,7 @@ const GroupSelectBox = ({
 		groupedOptions[option.optgroup].push({
 			value: option.value,
 			name: option.name,
+			disable: option.disable ? option.disable : false
 		});
 	});
 
@@ -138,12 +139,12 @@ const GroupSelectBox = ({
 								{groupedOptions[group].map((option: any) => {
 									return (
 										<option
-											className={`option-item ${
-												selectedOption.value === option.value ? 'selected' : ''
-											}`}
+											className={`option-item ${selectedOption.value === option.value ? 'selected' : ''} ${option.disable ? 'disable' : ''}`}
 											key={option.name}
 											onClick={() => {
-												onClickOption(option, group);
+												if (!option.disable) {
+													onClickOption(option, group);
+												}
 											}}>
 											{option.name}
 										</option>

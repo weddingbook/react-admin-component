@@ -63,6 +63,10 @@ $selectArrowSvg: "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><g
                     font-weight: 700;
                     color: $blue60;
                 }
+                &.disable {
+                    color: $gray30;
+                    background-color: $gray10;
+                }
             }
         }
     }

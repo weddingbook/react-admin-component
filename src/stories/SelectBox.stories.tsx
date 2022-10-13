@@ -47,6 +47,7 @@ const options = [
 		value: 'G1-1',
 		name: 'One',
 		optgroup: 'Group 1',
+		disable: true
 	},
 	{
 		value: 'G1-2',
@@ -57,6 +58,7 @@ const options = [
 		value: 'G1-3',
 		name: 'Three',
 		optgroup: 'Group 1',
+		disable: true
 	},
 	{
 		value: 'G1-4',
