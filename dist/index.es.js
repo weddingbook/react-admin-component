@@ -2311,6 +2311,7 @@ var GroupSelectBox = function (_a) {
         groupedOptions[option.optgroup].push({
             value: option.value,
             name: option.name,
+            disable: option.disable ? option.disable : false
         });
     });
     var selectItem = selectedRef.current;
@@ -2385,8 +2386,10 @@ var GroupSelectBox = function (_a) {
         React__default.createElement(Icon$1, { name: 'arrow-ios-downward-outline', size: '18' }),
         isShowList && (React__default.createElement("ul", { ref: selectListRef, className: "list list-" + listPosition, style: { height: "" + (listHeight + 'px') } }, Object.keys(groupedOptions).map(function (group, index) {
             return (React__default.createElement("optgroup", { className: 'option', key: index, label: group }, groupedOptions[group].map(function (option) {
-                return (React__default.createElement("option", { className: "option-item " + (selectedOption.value === option.value ? 'selected' : ''), key: option.name, onClick: function () {
-                        onClickOption(option, group);
+                return (React__default.createElement("option", { className: "option-item " + (selectedOption.value === option.value ? 'selected' : '') + " " + (option.disable ? 'disable' : ''), key: option.name, onClick: function () {
+                        if (!option.disable) {
+                            onClickOption(option, group);
+                        }
                     } }, option.name));
             })));
         })))));

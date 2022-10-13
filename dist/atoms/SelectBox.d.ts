@@ -4,6 +4,7 @@ export interface ISelectBoxOption {
     value: any;
     name: string;
     optgroup?: string;
+    disable?: boolean;
     additionalHtml?: {
         position?: 'before' | 'after';
         html: JSX.Element;
