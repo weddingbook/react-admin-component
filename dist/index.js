@@ -2332,18 +2332,22 @@ var GroupSelectBox = function (_a) {
     var selectListRef = React.useRef(null);
     var _b = React.useState(false), isShowList = _b[0], setShowList = _b[1];
     var _c = React.useState('bottom'), listPosition = _c[0], setListPosition = _c[1];
-    // const additionalHtml = selectedOption.additionalHtml;
+    var additionalHtml = selectedOption.additionalHtml || { position: null, html: null };
     var groupedOptions = {};
     options.forEach(function (option) {
         if (!option.optgroup)
             return;
         if (!groupedOptions[option.optgroup])
             groupedOptions[option.optgroup] = [];
-        groupedOptions[option.optgroup].push({
+        var item = {
             value: option.value,
             name: option.name,
             disable: option.disable ? option.disable : false
-        });
+        };
+        if (option.additionalHtml) {
+            item.additionalHtml = option.additionalHtml;
+        }
+        groupedOptions[option.optgroup].push(item);
     });
     var selectItem = selectedRef.current;
     var listHeight;
@@ -2363,7 +2367,7 @@ var GroupSelectBox = function (_a) {
     }, [isShowList]);
     var onClickOption = function (option, group) {
         onSelectOptionSet(option, group);
-        selectItem && (selectItem.style.marginBottom = '0');
+        // selectItem && (selectItem.style.marginBottom = '0');
         setShowList(false);
     };
     var onToggleSelectBox = function () {
@@ -2413,16 +2417,59 @@ var GroupSelectBox = function (_a) {
     };
     // console.log('object', groupedOptions, selectedOption);
     return disabled ? (React__default['default'].createElement(Input, { disabled: true, value: selectedOption.name })) : (React__default['default'].createElement("div", { tabIndex: 0, ref: selectBoxRef, className: 'select-box', onClick: onToggleSelectBox, style: __assign({}, style) },
-        React__default['default'].createElement("div", { ref: selectedRef, className: 'selected-item' }, selectedOption.name),
+        React__default['default'].createElement("div", { ref: selectedRef, className: 'selected-item' },
+            React__default['default'].createElement(React__default['default'].Fragment, null, additionalHtml.position === 'before' &&
+                additionalHtml.html),
+            React__default['default'].createElement("span", { style: { margin: (additionalHtml.position === 'before' && additionalHtml.position !== null) ? '0 0 0 8px' : '0 8px 0 0' } }, selectedOption.name),
+            React__default['default'].createElement(React__default['default'].Fragment, null, additionalHtml.position === 'after' &&
+                additionalHtml.html)),
         React__default['default'].createElement(Icon$1, { name: 'arrow-ios-downward-outline', size: '18' }),
         isShowList && (React__default['default'].createElement("ul", { ref: selectListRef, className: "list list-" + listPosition, style: { height: "" + (listHeight + 'px') } }, Object.keys(groupedOptions).map(function (group, index) {
-            return (React__default['default'].createElement("optgroup", { className: 'option', key: index, label: group }, groupedOptions[group].map(function (option) {
-                return (React__default['default'].createElement("option", { className: "option-item " + (selectedOption.value === option.value ? 'selected' : '') + " " + (option.disable ? 'disable' : ''), key: option.name, onClick: function () {
-                        if (!option.disable) {
-                            onClickOption(option, group);
-                        }
-                    } }, option.name));
-            })));
+            return (React__default['default'].createElement("li", { className: "option list-group", key: "list-group-" + group + "-" + index },
+                React__default['default'].createElement("span", { className: "group-select-label" }, group),
+                React__default['default'].createElement("ul", null, groupedOptions[group].map(function (option) {
+                    return (React__default['default'].createElement("li", { className: "option-item " + (selectedOption.value === option.value ? 'selected' : '') + " " + (option.disable ? 'disable' : ''), key: option.name, onClick: function () {
+                            if (!option.disable) {
+                                onClickOption(option, group);
+                            }
+                        } }, option.additionalHtml !== undefined
+                        ? React__default['default'].createElement(React__default['default'].Fragment, null,
+                            option.additionalHtml.position === 'before' &&
+                                option.additionalHtml.html,
+                            React__default['default'].createElement("span", { style: { margin: option.additionalHtml.position === 'before' ? '0 0 0 8px' : '0 8px 0 0' } }, option.name),
+                            option.additionalHtml.position === 'after' &&
+                                option.additionalHtml.html)
+                        : option.name));
+                })))
+            // <optgroup className='option' key={index} label={group}>
+            // 	{groupedOptions[group].map((option: any) => {
+            // 		return (
+            // 			<option
+            // 				className={`option-item ${selectedOption.value === option.value ? 'selected' : ''} ${option.disable ? 'disable' : ''}`}
+            // 				key={option.name}
+            // 				onClick={() => {
+            // 					if (!option.disable) {
+            // 						onClickOption(option, group);
+            // 					}
+            // 				}}>
+            // 				{option.additionalHtml !== undefined
+            // 					? <>
+            // 						{option.additionalHtml.position === 'before' && 
+            // 							option.additionalHtml.html
+            // 						}
+            // 							{option.name}
+            // 						{option.additionalHtml.position === 'after' && 
+            // 							option.additionalHtml.html
+            // 						}
+            // 					</>
+            // 					: option.name
+            // 				}
+            // 				{/* {option.name} */}
+            // 			</option>
+            // 		);
+            // 	})}
+            // </optgroup>
+            );
         })))));
 };
 
