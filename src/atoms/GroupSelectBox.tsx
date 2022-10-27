@@ -24,18 +24,22 @@ const GroupSelectBox = ({
 	const selectListRef = useRef<HTMLUListElement>(null);
 	const [isShowList, setShowList] = useState<boolean>(false);
 	const [listPosition, setListPosition] = useState<'top' | 'bottom'>('bottom');
-	// const additionalHtml = selectedOption.additionalHtml;
+	const additionalHtml = selectedOption.additionalHtml || {position: null, html: null};
 
 	const groupedOptions = {};
 
 	options.forEach((option) => {
 		if (!option.optgroup) return;
 		if (!groupedOptions[option.optgroup]) groupedOptions[option.optgroup] = [];
-		groupedOptions[option.optgroup].push({
+		const item: any = {
 			value: option.value,
 			name: option.name,
 			disable: option.disable ? option.disable : false
-		});
+		};
+		if (option.additionalHtml) {
+			item.additionalHtml = option.additionalHtml;
+		}
+		groupedOptions[option.optgroup].push(item);
 	});
 
 	let selectItem = selectedRef.current;
@@ -63,7 +67,7 @@ const GroupSelectBox = ({
 		group: string
 	) => {
 		onSelectOptionSet(option, group);
-		selectItem && (selectItem.style.marginBottom = '0');
+		// selectItem && (selectItem.style.marginBottom = '0');
 		setShowList(false);
 	};
 	const onToggleSelectBox = () => {
@@ -124,9 +128,23 @@ const GroupSelectBox = ({
 			className='select-box'
 			onClick={onToggleSelectBox}
 			style={{ ...style }}>
+			
 			<div ref={selectedRef} className='selected-item'>
-				{selectedOption.name}
+				<>
+				{additionalHtml.position === 'before' && 
+					additionalHtml.html
+				}
+				</>
+				<span style={{margin: (additionalHtml.position === 'before' && additionalHtml.position !== null) ? '0 0 0 8px' : '0 8px 0 0'}}>
+					{selectedOption.name}
+				</span>
+				<>
+				{additionalHtml.position === 'after' && 
+					additionalHtml.html
+				}
+				</>
 			</div>
+			
 			<Icon name='arrow-ios-downward-outline' size='18' />
 			{isShowList && (
 				<ul
@@ -135,22 +153,69 @@ const GroupSelectBox = ({
 					style={{ height: `${listHeight + 'px'}` }}>
 					{Object.keys(groupedOptions).map((group, index) => {
 						return (
-							<optgroup className='option' key={index} label={group}>
-								{groupedOptions[group].map((option: any) => {
-									return (
-										<option
-											className={`option-item ${selectedOption.value === option.value ? 'selected' : ''} ${option.disable ? 'disable' : ''}`}
-											key={option.name}
-											onClick={() => {
-												if (!option.disable) {
-													onClickOption(option, group);
+							<li className="option list-group" key={`list-group-${group}-${index}`}>
+								<span className="group-select-label">{group}</span>
+								<ul>
+								 	{groupedOptions[group].map((option: any) => {
+										return (
+											<li
+												className={`option-item ${selectedOption.value === option.value ? 'selected' : ''} ${option.disable ? 'disable' : ''}`}
+												key={option.name}
+												onClick={() => {
+													if (!option.disable) {
+														onClickOption(option, group);
+													}
+												}}>
+												{option.additionalHtml !== undefined
+													? <>
+														{option.additionalHtml.position === 'before' && 
+															option.additionalHtml.html
+														}
+														<span style={{margin: option.additionalHtml.position === 'before' ? '0 0 0 8px' : '0 8px 0 0'}}>
+															{option.name}
+														</span>
+														{option.additionalHtml.position === 'after' && 
+															option.additionalHtml.html
+														}
+													</>
+													: option.name
 												}
-											}}>
-											{option.name}
-										</option>
-									);
-								})}
-							</optgroup>
+												{/* {option.name} */}
+											</li>
+										);
+									})}
+								</ul>
+							</li>
+							// <optgroup className='option' key={index} label={group}>
+							// 	{groupedOptions[group].map((option: any) => {
+							// 		return (
+							// 			<option
+							// 				className={`option-item ${selectedOption.value === option.value ? 'selected' : ''} ${option.disable ? 'disable' : ''}`}
+							// 				key={option.name}
+							// 				onClick={() => {
+							// 					if (!option.disable) {
+							// 						onClickOption(option, group);
+							// 					}
+							// 				}}>
+							// 				{option.additionalHtml !== undefined
+							// 					? <>
+							// 						{option.additionalHtml.position === 'before' && 
+							// 							option.additionalHtml.html
+							// 						}
+													
+							// 							{option.name}
+													
+							// 						{option.additionalHtml.position === 'after' && 
+							// 							option.additionalHtml.html
+							// 						}
+							// 					</>
+							// 					: option.name
+							// 				}
+							// 				{/* {option.name} */}
+							// 			</option>
+							// 		);
+							// 	})}
+							// </optgroup>
 						);
 					})}
 				</ul>

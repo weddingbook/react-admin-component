@@ -42,7 +42,7 @@ const optionList3: ISelectBoxOption[] = [
 	},
 ];
 
-const options = [
+const options: ISelectBoxOption[] = [
 	{
 		value: 'G1-1',
 		name: 'One',
@@ -52,6 +52,10 @@ const options = [
 	{
 		value: 'G1-2',
 		name: 'Two',
+		additionalHtml: {
+			position: 'after',
+			html: <span style={{ color: 'blue' }}>additional html after</span>,
+		},
 		optgroup: 'Group 1',
 	},
 	{
@@ -68,6 +72,10 @@ const options = [
 	{
 		value: 'G2-1',
 		name: 'One',
+		additionalHtml: {
+			position: 'before',
+			html: <span style={{ color: 'red' }}>additional html before</span>,
+		},
 		optgroup: 'Group 2',
 	},
 	{
@@ -211,14 +219,9 @@ export const MultiSelectBoxStory = () => {
 };
 
 export const GroupSelectBoxStoryBox = () => {
-	const [selectedOption, onSelectedOptionSet] = useState({
-		name: 'G2-4',
-		value: 'Four',
-		optgroup: 'Group 4',
-	});
+	const [selectedOption, onSelectedOptionSet] = useState(options[1]);
 
 	const onSet = (option: any, group: any) => {
-		console.log('object', option, group);
 		onSelectedOptionSet(option);
 	};
 	return (

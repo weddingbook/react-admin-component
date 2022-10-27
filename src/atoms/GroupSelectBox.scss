@@ -51,7 +51,13 @@ $selectArrowSvg: "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><g
             margin-top: 1px;
             top: 100%;
         }
-        .option{
+        .group-select-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 23px;
+        }
+        .option {
             padding: 5px 12px;     
             .option-item {
                 padding: 10px 20px;
